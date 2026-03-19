@@ -25,3 +25,27 @@ body {
   color: var(--secondary);
   font-family: var(--font-poppins), sans-serif;
 }
+
+.bg-hero {
+  background-image: url("/figma-assets/frame-3-hero.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-about {
+  background-image: url("/figma-assets/frame-1-about.jpg");
+  background-size: cover;
+  background-position: 35%;
+}
+
+.bg-services {
+  background-image: url("/figma-assets/frame-5-services.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-drivers {
+  background-image: url("/figma-assets/frame-7-drivers.png");
+  background-size: cover;
+  background-position: center;
+}

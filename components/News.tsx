@@ -1,22 +1,22 @@
 import NewsCard from "./NewsCard";
 import { newsItems } from "./newsItems";
 
-export default function Frame6LatestNews() {
+export default function News() {
   return (
     <section className="bg-primary relative isolate min-h-[665px] w-full py-20" id="news">
       <div className="mx-auto mb-8 flex w-full max-w-[1344px] items-center justify-center gap-16 px-[clamp(20px,4vw,48px)] max-[900px]:justify-start max-[900px]:gap-[22px]">
         <button
           type="button"
           aria-label="Previous"
-          className="text-accent border-accent h-[34px] w-[57px] cursor-pointer rounded-full border-2 bg-transparent text-[18px] leading-none"
+          className="text-accent border-accent h-[34px] w-[57px] cursor-pointer rounded-full border-2 bg-transparent text-[18px] leading-none hover:text-black hover:bg-accent transition-all duration-300"
         >
           &larr;
         </button>
-        <h2 className="m-0 text-[28px] leading-[1.2] font-bold uppercase">LATEST NEWS</h2>
+        <h2 className="m-0 text-[28px] leading-[1.2] font-bold uppercase">Latest news</h2>
         <button
           type="button"
           aria-label="Next"
-          className="text-accent border-accent h-[34px] w-[57px] cursor-pointer rounded-full border-2 bg-transparent text-[18px] leading-none"
+          className="text-accent border-accent h-[34px] w-[57px] cursor-pointer rounded-full border-2 bg-transparent text-[18px] leading-none hover:text-black hover:bg-accent transition-all duration-300"
         >
           &rarr;
         </button>

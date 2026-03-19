@@ -1,10 +1,10 @@
-import Footer from "./components/homepage/Footer";
-import About from "./components/homepage/About";
-import Hero from "./components/homepage/Hero";
-import Experience from "./components/homepage/Experience";
-import Services from "./components/homepage/Services";
-import News from "./components/homepage/News";
-import Drivers from "./components/homepage/Drivers";
+import Footer from "@/components/Footer";
+import About from "@/components/About";
+import Hero from "@/components/Hero";
+import Experience from "@/components/Experience";
+import Services from "@/components/Services";
+import News from "@/components/News";
+import Drivers from "@/components/Drivers";
 
 export default function Home() {
   return (
