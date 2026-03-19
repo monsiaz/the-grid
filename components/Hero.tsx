@@ -5,6 +5,7 @@ type HeroProps = {
   backgroundImage: string;
   title: React.ReactNode;
   description?: string;
+  children?: React.ReactNode;
   minHeightClassName?: string;
   contentClassName?: string;
   titleClassName?: string;
@@ -12,6 +13,7 @@ type HeroProps = {
   overlayClassName?: string;
   headerAnchorPrefix?: string;
   activeHeaderItem?: "about" | "services" | "drivers" | "news" | "contact";
+  footerSlot?: React.ReactNode;
   cta?: {
     href: string;
     label: string;
@@ -23,6 +25,7 @@ export default function Hero({
   backgroundImage,
   title,
   description,
+  children,
   minHeightClassName = "min-h-[460px]",
   contentClassName = "my-32 max-w-[680px] text-left",
   titleClassName = "font-[var(--font-league-spartan)] text-[64px] leading-none font-bold uppercase drop-shadow-[4px_4px_8px_rgba(0,0,0,0.1)] max-[1200px]:text-[clamp(44px,6vw,64px)]",
@@ -30,6 +33,7 @@ export default function Hero({
   overlayClassName = "bg-black/40",
   headerAnchorPrefix,
   activeHeaderItem,
+  footerSlot,
   cta,
 }: HeroProps) {
   return (
@@ -51,8 +55,10 @@ export default function Hero({
               {cta.label}
             </Link>
           ) : null}
+          {children}
         </div>
       </div>
+      {footerSlot}
     </section>
   );
 }

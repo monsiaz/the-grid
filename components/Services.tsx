@@ -11,7 +11,7 @@ export default function Services() {
           <p className="m-0">Commercial development</p>
         </div>
         <Link
-          href="#"
+          href="/services"
           className="text-accent border-accent inline-flex cursor-pointer items-center justify-center rounded-full border-2 bg-black/20 px-9 py-4 text-base leading-[1.2] no-underline uppercase hover:text-black hover:bg-accent transition-all duration-300"
         >
           Learn more

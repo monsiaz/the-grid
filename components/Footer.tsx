@@ -1,8 +1,13 @@
 import Link from "next/link";
 
-export default function Footer() {
+type FooterProps = {
+  className?: string;
+  id?: string;
+};
+
+export default function Footer({ className, id = "contact" }: FooterProps) {
   return (
-    <footer className="bg-primary flex min-h-[76px] items-center py-5" id="contact">
+    <footer className={`flex min-h-[76px] items-center py-5 ${className ?? "bg-primary"}`} id={id}>
       <div className="mx-auto flex w-full max-w-[1344px] items-center justify-between gap-4 px-[clamp(20px,4vw,48px)] max-[900px]:flex-col max-[900px]:items-start">
         <div className="flex items-center gap-4 text-xs leading-none uppercase">
           <Link href="#" aria-label="Instagram" className="text-secondary no-underline">
