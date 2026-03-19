@@ -12,22 +12,22 @@ type CaseStudy = {
 const valueCards = [
   {
     title: "Partnerships &\nStructuring",
-    image: "/figma-assets/services/value-partnerships.jpg",
+    image: "/images/services/value-partnerships.jpg",
     alt: "Partnerships and structuring",
   },
   {
     title: "Network &\nIntroductions",
-    image: "/figma-assets/services/value-network.jpg",
+    image: "/images/services/value-network.jpg",
     alt: "Network and introductions",
   },
   {
     title: "Activation &\nContent",
-    image: "/figma-assets/services/value-activation.jpg",
+    image: "/images/services/value-activation.jpg",
     alt: "Activation and content",
   },
   {
     title: "Private\nExperiences",
-    image: "/figma-assets/services/value-private.jpg",
+    image: "/images/services/value-private.jpg",
     alt: "Private experiences",
   },
 ];
@@ -35,20 +35,20 @@ const valueCards = [
 const caseStudies: CaseStudy[] = [
   {
     title: "",
-    image: "/figma-assets/services/case-left.jpg",
+    image: "/images/services/case-left.jpg",
     alt: "Case study preview",
     dimmed: true,
   },
   {
     title: "Scuderia Alpha Tauri x Fantom",
-    image: "/figma-assets/services/case-center.jpg",
+    image: "/images/services/case-center.jpg",
     alt: "Scuderia Alpha Tauri x Fantom",
     description:
       "During the 2022 season, The Grid structured the partnership between fintech company Fantom and Scuderia AlphaTauri, positioning Fantom as one of the team's main sponsors. Throughout the year, the brand gained high-profile visibility through Pierre Gasly and Yuki Tsunoda, with logo placement on their helmets and on the AT03's nose and halo.",
   },
   {
     title: "Nyck de Vries x Omnes",
-    image: "/figma-assets/services/case-right.jpg",
+    image: "/images/services/case-right.jpg",
     alt: "Nyck de Vries x Omnes",
     dimmed: true,
   },

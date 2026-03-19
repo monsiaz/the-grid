@@ -3,27 +3,27 @@ import ServicesCardGridFrame from "./ServicesCardGridFrame";
 const talentCards = [
   {
     title: "Mentorship",
-    image: "/figma-assets/services/talent-mentorship.jpg",
+    image: "/images/services/talent-mentorship.jpg",
     alt: "Mentorship",
   },
   {
     title: "Commercial",
-    image: "/figma-assets/services/talent-commercial.jpg",
+    image: "/images/services/talent-commercial.jpg",
     alt: "Commercial",
   },
   {
     title: "Network",
-    image: "/figma-assets/services/talent-network.jpg",
+    image: "/images/services/talent-network.jpg",
     alt: "Network",
   },
   {
     title: "Contracts",
-    image: "/figma-assets/services/talent-contracts.jpg",
+    image: "/images/services/talent-contracts.jpg",
     alt: "Contracts",
   },
   {
     title: "Branding",
-    image: "/figma-assets/services/talent-branding.jpg",
+    image: "/images/services/talent-branding.jpg",
     alt: "Branding",
   },
 ];

@@ -3,7 +3,7 @@ import Hero from "@/components/Hero";
 export default function ServicesHeroFrame() {
   return (
     <Hero
-      backgroundImage="/figma-assets/frame-3-hero.jpg"
+      backgroundImage="/images/frame-3-hero.jpg"
       minHeightClassName="min-h-[800px]"
       overlayClassName="bg-black/30"
       headerAnchorPrefix="/"

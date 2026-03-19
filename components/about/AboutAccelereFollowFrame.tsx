@@ -2,11 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 const socialImages = [
-  "/figma-assets/about/instagram-1.jpg",
-  "/figma-assets/about/instagram-2.jpg",
-  "/figma-assets/about/instagram-3.jpg",
-  "/figma-assets/about/instagram-4.jpg",
-  "/figma-assets/about/instagram-5.jpg",
+  "/images/about/instagram-1.jpg",
+  "/images/about/instagram-2.jpg",
+  "/images/about/instagram-3.jpg",
+  "/images/about/instagram-4.jpg",
+  "/images/about/instagram-5.jpg",
 ];
 
 const gridOrder = [
@@ -43,7 +43,7 @@ export default function AboutAccelereFollowFrame() {
 
           <div className="grid items-center gap-7 min-[900px]:grid-cols-[432px_1fr]">
             <Image
-              src="/figma-assets/about/accelere-portrait.jpg"
+              src="/images/about/accelere-portrait.jpg"
               alt="Pierre Gasly"
               width={432}
               height={500}

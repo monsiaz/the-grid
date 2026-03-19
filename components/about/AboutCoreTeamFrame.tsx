@@ -14,21 +14,21 @@ const coreAreas: CoreArea[] = [
     id: "sport-management",
     number: "01",
     title: "Sport\nManagement",
-    image: "/figma-assets/about/core-sport-management.jpg",
+    image: "/images/about/core-sport-management.jpg",
     text: "We guide drivers to the highest level of motorsport. Built on over two decades of experience, our deep understanding of the racing ecosystem allows us to identify talent early and shape tailored career strategies. Each driver is unique: one profile, one strategy.",
   },
   {
     id: "image-branding",
     number: "02",
     title: "Image &\nBranding",
-    image: "/figma-assets/about/core-image-branding.jpg",
+    image: "/images/about/core-image-branding.jpg",
     text: "We build influential profiles on and off the track. Through tailored positioning, media strategy and long-term personal branding, we strengthen the visibility, credibility and influence of drivers and rights holders.",
   },
   {
     id: "commercial-development",
     number: "03",
     title: "Commercial\nDevelopment",
-    image: "/figma-assets/about/core-commercial-development.jpg",
+    image: "/images/about/core-commercial-development.jpg",
     text: "We create high-impact partnerships across the motorsport ecosystem. By connecting drivers, brands and key stakeholders, we structure collaborations that generate long-term value for all parties involved.",
   },
 ];
@@ -43,12 +43,12 @@ const teamMembers: TeamMember[] = [
   {
     name: "Jérémy Satis",
     role: "Driver Agent",
-    image: "/figma-assets/about/team-jeremy.jpg",
+    image: "/images/about/team-jeremy.jpg",
   },
   {
     name: "Laura Fredel",
     role: "Marketing Associate",
-    image: "/figma-assets/about/team-laura.jpg",
+    image: "/images/about/team-laura.jpg",
   },
 ];
 
