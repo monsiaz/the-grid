@@ -4,7 +4,7 @@ export default function ContactPage() {
   return (
     <main className="bg-primary text-secondary w-full overflow-x-hidden">
       <ContactHeroFrame
-        backgroundImage="/images/contact/frame-3.png"
+        backgroundImage="/images/contact/backdrop.webp"
         title={
           <>
             Get <span className="text-muted">in touch</span>

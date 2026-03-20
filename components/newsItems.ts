@@ -8,31 +8,31 @@ export const newsItems: NewsItem[] = [
   {
     title: "ISACK HADJAR FEATURING GQ MIDDLE EAST COVER",
     excerpt: "Isack Hadjar's presence extends beyond the circuit...",
-    image: "/images/news-1.png",
+    image: "/images/news-1.webp",
   },
   {
     title: "THE GRID SPANISH FORMULA 4 LINE-UP UNVEILED",
     excerpt: "The 2026 Spanish F4 Championship will see three...",
-    image: "/images/news-2.png",
+    image: "/images/news-2.webp",
   },
   {
     title: "PIERRE GASLY SPECIAL HELMET DESIGN X AIX INVESTMENT",
     excerpt: "For the final race of the 2025 season in Abu Dhabi, Pierre Gasly...",
-    image: "/images/news-3.png",
+    image: "/images/news-3.webp",
   },
   {
     title: "KUSH MAINI COMPLETES HIS FIRST OFFICIAL F1 SESSION",
     excerpt: "Kush Maini, Alpine's 2025 Test & Reserve Driver, will complete",
-    image: "/images/news-4.png",
+    image: "/images/news-4.webp",
   },
   {
     title: "ISACK HADJAR TO DRIVE FOR RED BULL RACING IN 2026",
     excerpt: "The curtain came down on the Formula 1 season with the...",
-    image: "/images/news-5.png",
+    image: "/images/news-5.webp",
   },
   {
     title: "ISACK HADJAR FEATURING GQ MIDDLE EAST COVER",
     excerpt: "Isack Hadjar's presence extends beyond the circuit...",
-    image: "/images/news-6.png",
+    image: "/images/news-6.webp",
   },
 ];

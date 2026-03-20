@@ -1,9 +1,11 @@
+export type DriverCountryCode = "FR" | "IN" | "GB" | "US" | "PL";
+
 export type DriverCardData = {
   slug: string;
   name: string;
   role: string;
   image: string;
-  flags: string[];
+  flags: DriverCountryCode[];
   instagramUrl: string;
 };
 
@@ -23,125 +25,117 @@ export type DriverDetailData = {
   careerPodiums: string;
 };
 
-const flag = {
-  fr: "/images/drivers/flag-fr.svg",
-  in: "/images/drivers/flag-in.svg",
-  gb: "/images/drivers/flag-gb.svg",
-  us: "/images/drivers/flag-us.svg",
-  pl: "/images/drivers/flag-pl.svg",
-};
-
 export const driversCards: DriverCardData[] = [
   {
     slug: "pierre-gasly",
     name: "PIERRE GASLY",
     role: "BWT ALPINE FORMULA 1 DRIVER",
-    image: "/images/drivers/driver-01-gasly.jpg",
-    flags: [flag.fr],
+    image: "/images/drivers/driver-01-gasly.webp",
+    flags: ["FR"],
     instagramUrl: "https://www.instagram.com/pierregasly/",
   },
   {
     slug: "isack-hadjar",
     name: "ISACK HADJAR",
     role: "ORACLE RED BULL RACING FORMULA 1 DRIVER",
-    image: "/images/drivers/driver-02-hadjar.jpg",
-    flags: [flag.fr],
+    image: "/images/drivers/driver-02-hadjar.webp",
+    flags: ["FR"],
     instagramUrl: "https://www.instagram.com/isackhadjar/",
   },
   {
     slug: "kush-maini",
     name: "KUSH MAINI",
     role: "ART GRAND PRIX FORMULA 2 DRIVER BWT ALPINE F1 TEAM & MAHINDRA FE TEAM RESERVE DRIVER",
-    image: "/images/drivers/driver-03-maini.jpg",
-    flags: [flag.in],
+    image: "/images/drivers/driver-03-maini.webp",
+    flags: ["IN"],
     instagramUrl: "https://www.instagram.com/kushmaini/",
   },
   {
     slug: "fred-makowiecki",
     name: "FRED MAKOWIECKI",
     role: "ALPINE ENDURANCE TEAM WEC DRIVER",
-    image: "/images/drivers/driver-04-makowiecki.jpg",
-    flags: [flag.fr],
+    image: "/images/drivers/driver-04-makowiecki.webp",
+    flags: ["FR"],
     instagramUrl: "https://www.instagram.com/fredmakowiecki/",
   },
   {
     slug: "alessandro-giusti",
     name: "ALESSANDRO GIUSTI",
     role: "MP MOTORSPORT FORMULA 3 DRIVER WILLIAMS RACING DRIVER ACADEMY TALENT",
-    image: "/images/drivers/driver-05-giusti.jpg",
-    flags: [flag.fr],
+    image: "/images/drivers/driver-05-giusti.webp",
+    flags: ["FR"],
     instagramUrl: "https://www.instagram.com/alessandrogiusti_/",
   },
   {
     slug: "enzo-deligny",
     name: "ENZO DELIGNY",
     role: "VAN AMERSFOORT RACING FORMULA 3 DRIVER",
-    image: "/images/drivers/driver-06-deligny.jpg",
-    flags: [flag.fr],
+    image: "/images/drivers/driver-06-deligny.webp",
+    flags: ["FR"],
     instagramUrl: "https://www.instagram.com/enzo.deligny/",
   },
   {
     slug: "andrea-dupe",
     name: "ANDREA DUPE",
     role: "VAN AMERSFOORT RACING FREC DRIVER",
-    image: "/images/drivers/driver-07-dupe.jpg",
-    flags: [flag.fr],
+    image: "/images/drivers/driver-07-dupe.webp",
+    flags: ["FR"],
     instagramUrl: "https://www.instagram.com/andrea.dupe/",
   },
   {
     slug: "nathan-tye",
     name: "NATHAN TYE",
     role: "DRIVEX FORMULA 4 DRIVER",
-    image: "/images/drivers/driver-08-tye.jpg",
-    flags: [flag.gb],
+    image: "/images/drivers/driver-08-tye.webp",
+    flags: ["GB"],
     instagramUrl: "https://www.instagram.com/nathantye_",
   },
   {
     slug: "vivek-kanthan",
     name: "VIVEK KANTHAN",
     role: "CAMPOS RACING FORMULA 4 DRIVER",
-    image: "/images/drivers/driver-09-kanthan.jpg",
-    flags: [flag.us],
+    image: "/images/drivers/driver-09-kanthan.webp",
+    flags: ["US"],
     instagramUrl: "https://www.instagram.com/vivekkanthan/",
   },
   {
     slug: "jack-iliffe",
     name: "JACK ILIFFE",
     role: "FFSA FORMULA 4 DRIVER",
-    image: "/images/drivers/driver-10-iliffe.jpg",
-    flags: [flag.us],
+    image: "/images/drivers/driver-10-iliffe.webp",
+    flags: ["US"],
     instagramUrl: "https://www.instagram.com/jackiliffe/",
   },
   {
     slug: "louis-cochet",
     name: "LOUIS COCHET",
     role: "MP MOTORSPORT FORMULA 4 DRIVER",
-    image: "/images/drivers/driver-11-cochet.jpg",
-    flags: [flag.fr],
+    image: "/images/drivers/driver-11-cochet.webp",
+    flags: ["FR"],
     instagramUrl: "https://www.instagram.com/louis.cochet/",
   },
   {
     slug: "luka-scelles",
     name: "LUKA SCELLES",
     role: "VICTORY LANE OK DRIVER",
-    image: "/images/drivers/driver-12-scelles.jpg",
-    flags: [flag.fr],
+    image: "/images/drivers/driver-12-scelles.webp",
+    flags: ["FR"],
     instagramUrl: "https://www.instagram.com/lukascelles/",
   },
   {
     slug: "alex-truchot",
     name: "ALEX TRUCHOT",
     role: "PREMA RACING OK-J DRIVER",
-    image: "/images/drivers/driver-13-truchot.jpg",
-    flags: [flag.fr, flag.us],
+    image: "/images/drivers/driver-13-truchot.webp",
+    flags: ["FR", "US"],
     instagramUrl: "https://www.instagram.com/alextruchot/",
   },
   {
     slug: "stan-ratajski",
     name: "STAN RATAJSKI",
     role: "KART REPUBLIC OK-J DRIVER",
-    image: "/images/drivers/driver-14-ratajski.jpg",
-    flags: [flag.fr, flag.pl],
+    image: "/images/drivers/driver-14-ratajski.webp",
+    flags: ["FR", "PL"],
     instagramUrl: "https://www.instagram.com/stanratajski/",
   },
 ];
@@ -156,28 +150,28 @@ export const driversFrames: string[][] = [
 export const detailNews = [
   {
     title: "PIERRE GASLY'S ABU DHABI SPECIAL HELMET",
-    image: "/images/drivers/detail-news-1.jpg",
+    image: "/images/drivers/detail-news-1.webp",
   },
   {
     title: "SPECIAL HELMET DESIGN FOR PIERRE GASLY IN BRAZIL",
-    image: "/images/drivers/detail-news-2.jpg",
+    image: "/images/drivers/detail-news-2.webp",
   },
   {
     title: "PIERRE GASLY X H. MOSER & CIE: AN EXCLUSIVE TIMEPIECE",
-    image: "/images/drivers/detail-news-3.jpg",
+    image: "/images/drivers/detail-news-3.webp",
   },
 ];
 
 export const detailGallery = {
-  left: "/images/drivers/detail-gallery-left.jpg",
-  center: "/images/drivers/detail-gallery-main.jpg",
-  right: "/images/drivers/detail-gallery-right.jpg",
+  left: "/images/drivers/detail-gallery-left.webp",
+  center: "/images/drivers/detail-gallery-main.webp",
+  right: "/images/drivers/detail-gallery-right.webp",
 };
 
 export const detailImages = {
-  profile: "/images/drivers/detail-profile-gasly.jpg",
-  career: "/images/drivers/detail-career-image.jpg",
-  agency: "/images/drivers/detail-agency-image.jpg",
+  profile: "/images/drivers/detail-profile-gasly.webp",
+  career: "/images/drivers/detail-career-image.webp",
+  agency: "/images/drivers/detail-agency-image.webp",
 };
 
 const gaslyDetail: DriverDetailData = {

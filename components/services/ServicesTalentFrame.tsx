@@ -3,27 +3,27 @@ import ServicesCardGridFrame from "./ServicesCardGridFrame";
 const talentCards = [
   {
     title: "Mentorship",
-    image: "/images/services/talent-mentorship.jpg",
+    image: "/images/services/talent-mentorship.webp",
     alt: "Mentorship",
   },
   {
     title: "Commercial",
-    image: "/images/services/talent-commercial.jpg",
+    image: "/images/services/talent-commercial.webp",
     alt: "Commercial",
   },
   {
     title: "Network",
-    image: "/images/services/talent-network.jpg",
+    image: "/images/services/talent-network.webp",
     alt: "Network",
   },
   {
     title: "Contracts",
-    image: "/images/services/talent-contracts.jpg",
+    image: "/images/services/talent-contracts.webp",
     alt: "Contracts",
   },
   {
     title: "Branding",
-    image: "/images/services/talent-branding.jpg",
+    image: "/images/services/talent-branding.webp",
     alt: "Branding",
   },
 ];

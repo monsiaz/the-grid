@@ -3,7 +3,7 @@ import Hero from "@/components/Hero";
 export default function DriversHeroFrame() {
   return (
     <Hero
-      backgroundImage="/images/drivers/hero-collage.jpg"
+      backgroundImage="/images/drivers/hero-collage.webp"
       title={
         <>
           FOR <span className="text-muted">DESERVING</span> DRIVERS

@@ -4,7 +4,7 @@ export default function AboutAccelereBannerFrame() {
   return (
     <section className="relative min-h-[800px] w-full overflow-hidden">
       <Image
-        src="/images/about/accelere-banner.jpg"
+        src="/images/about/accelere-banner.webp"
         alt="ACCÉLÈRE motorsport initiative"
         fill
         sizes="100vw"

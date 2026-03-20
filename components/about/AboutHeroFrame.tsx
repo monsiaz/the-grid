@@ -3,7 +3,7 @@ import Hero from "@/components/Hero";
 export default function AboutHeroFrame() {
   return (
     <Hero
-      backgroundImage="/images/about/frame-hero.jpg"
+      backgroundImage="/images/about/hero.webp"
       minHeightClassName="min-h-[800px]"
       overlayClassName="bg-black/30"
       headerAnchorPrefix="/"

@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <main className="bg-primary text-secondary w-full overflow-x-hidden">
       <Hero
-        backgroundImage="/images/frame-3-hero.jpg"
+        backgroundImage="/images/hero.webp"
         title="Opening the gates to elite motorsport"
       />
       <About />

@@ -27,25 +27,25 @@ body {
 }
 
 .bg-hero {
-  background-image: url("/images/frame-3-hero.jpg");
+  background-image: url("/images/hero.webp");
   background-size: cover;
   background-position: center;
 }
 
 .bg-about {
-  background-image: url("/images/frame-1-about.jpg");
+  background-image: url("/images/about.webp");
   background-size: cover;
   background-position: 35%;
 }
 
 .bg-services {
-  background-image: url("/images/frame-5-services.png");
+  background-image: url("/images/services.webp");
   background-size: cover;
   background-position: center;
 }
 
 .bg-drivers {
-  background-image: url("/images/frame-7-drivers.png");
+  background-image: url("/images/drivers.webp");
   background-size: cover;
   background-position: center;
 }
