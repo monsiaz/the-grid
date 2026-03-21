@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 type CoreArea = {
   id: string;
@@ -94,7 +95,7 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
           className="text-accent border-accent inline-flex w-fit items-center justify-center rounded-full border-2 px-4 py-1 text-[22px] leading-[1.2] no-underline transition-all duration-300 hover:bg-accent hover:text-black"
           aria-label={`Learn more about ${member.name}`}
         >
-          →
+          <ArrowRight className="h-5 w-5 shrink-0" aria-hidden />
         </Link>
       </div>
     </article>

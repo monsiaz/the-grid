@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import { ChevronDown } from "lucide-react";
 
 export default function AboutHeroFrame() {
   return (
@@ -17,7 +18,12 @@ export default function AboutHeroFrame() {
       }
       description="We are a 360° motorsport management and marketing agency operating globally. We build elite careers for deserving drivers and develop strategic partnerships across the ecosystem."
       descriptionClassName="m-0 text-center text-base leading-[1.4] uppercase"
-      cta={{ href: "#about-core", label: "↓", className: "mt-0 px-3 py-2" }}
+      cta={{
+        href: "#about-core",
+        ariaLabel: "Scroll to who we are",
+        label: <ChevronDown className="h-5 w-5 shrink-0" aria-hidden />,
+        className: "mt-0 px-3 py-2",
+      }}
     />
   );
 }

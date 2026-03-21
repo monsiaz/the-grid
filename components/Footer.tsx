@@ -24,7 +24,7 @@ export default function Footer({ className, id = "contact" }: FooterProps) {
         <div className="flex items-center gap-3 text-base leading-[1.2] whitespace-nowrap uppercase max-[900px]:text-xs max-[900px]:whitespace-normal">
           <span>(C) 2026 THE GRID AGENCY, ALL RIGHTS RESERVED</span>
           <span className="bg-secondary block h-4 w-px" />
-          <Link href="#" className="text-secondary no-underline">
+          <Link href="/privacy-policy" className="text-secondary no-underline">
             PRIVACY POLICY
           </Link>
         </div>

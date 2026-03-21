@@ -2,7 +2,7 @@ import Image from "next/image";
 import type { DriverDetailData } from "../driversData";
 import { detailImages } from "../driversData";
 
-type DriverDetailCareerFrameProps = {
+type DriverDetailCareerProps = {
   detail: DriverDetailData;
 };
 
@@ -15,7 +15,7 @@ function StatItem({ value, label }: { value: string; label: string }) {
   );
 }
 
-export default function DriverDetailCareerFrame({ detail }: DriverDetailCareerFrameProps) {
+export default function DriverDetailCareer({ detail }: DriverDetailCareerProps) {
   return (
     <section className="grid grid-cols-3 gap-10 max-[1200px]:grid-cols-1">
       <div>

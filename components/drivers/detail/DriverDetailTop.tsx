@@ -1,18 +1,19 @@
 import Image from "next/image";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { DriverCardData, DriverDetailData } from "../driversData";
 import { detailGallery, detailImages, detailNews } from "../driversData";
-import DetailProfileCardFrame from "./DetailProfileCardFrame";
+import DetailProfileCard from "./DetailProfileCard";
 
-type DriverDetailTopFrameProps = {
+type DriverDetailTopProps = {
   driver: DriverCardData;
   detail: DriverDetailData;
 };
 
-export default function DriverDetailTopFrame({ driver, detail }: DriverDetailTopFrameProps) {
+export default function DriverDetailTop({ driver, detail }: DriverDetailTopProps) {
   return (
     <section className="grid grid-cols-2 gap-10 max-[1200px]:grid-cols-1">
       <div className="grid grid-cols-[318px_1fr] gap-10 max-[700px]:grid-cols-1">
-        <DetailProfileCardFrame driver={driver} image={detailImages.profile} />
+        <DetailProfileCard driver={driver} image={detailImages.profile} />
         <div className="grid grid-cols-[1fr_2px] gap-3 overflow-hidden max-[700px]:grid-cols-1">
           <div>
             <h2 className="m-0 text-2xl leading-[1.2] font-bold uppercase">{detail.profileTitle}</h2>
@@ -61,7 +62,10 @@ export default function DriverDetailTopFrame({ driver, detail }: DriverDetailTop
               />
             </div>
           </div>
-          <div className="text-center text-[22px] leading-[1.2]">← →</div>
+          <div className="flex items-center justify-center gap-2 text-[22px] leading-[1.2]" aria-hidden>
+            <ChevronLeft className="h-[1em] w-[1em] shrink-0" />
+            <ChevronRight className="h-[1em] w-[1em] shrink-0" />
+          </div>
         </div>
 
         <div>

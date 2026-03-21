@@ -1,12 +1,12 @@
 import Footer from "@/components/Footer";
-import DriversGridFrame from "@/components/drivers/DriversGridFrame";
-import DriversHeroFrame from "@/components/drivers/DriversHeroFrame";
+import DriversGrid from "@/components/drivers/DriversGrid";
+import DriversHero from "@/components/drivers/DriversHero";
 
 export default function DriversPage() {
   return (
     <main className="bg-primary text-secondary w-full overflow-x-hidden">
-      <DriversHeroFrame />
-      <DriversGridFrame />
+      <DriversHero />
+      <DriversGrid />
       <Footer />
     </main>
   );

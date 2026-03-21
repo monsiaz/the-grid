@@ -1,10 +1,11 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
 import type { DriverCardData, DriverDetailData } from "../driversData";
-import DriverDetailAgencyFrame from "./DriverDetailAgencyFrame";
-import DriverDetailCareerFrame from "./DriverDetailCareerFrame";
-import DriverDetailTopFrame from "./DriverDetailTopFrame";
+import DriverDetailAgency from "./DriverDetailAgency";
+import DriverDetailCareer from "./DriverDetailCareer";
+import DriverDetailTop from "./DriverDetailTop";
 
 type DriverDetailPageProps = {
   driver: DriverCardData;
@@ -18,15 +19,15 @@ export default function DriverDetailPage({ driver, detail }: DriverDetailPagePro
       <section className="mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)] pt-10 pb-20">
         <Link
           href="/drivers"
-          className="text-accent border-accent mb-16 inline-flex h-[34px] w-[57px] items-center justify-center rounded-full border-2 text-[18px] no-underline transition-all duration-300 hover:bg-accent hover:text-black"
+          className="text-accent border-accent mb-16 inline-flex h-[34px] w-[57px] items-center justify-center rounded-full border-2 no-underline transition-all duration-300 hover:bg-accent hover:text-black"
           aria-label="Back to drivers"
         >
-          ←
+          <ChevronLeft className="h-5 w-5 shrink-0" aria-hidden />
         </Link>
         <div className="grid gap-16">
-          <DriverDetailTopFrame driver={driver} detail={detail} />
-          <DriverDetailCareerFrame detail={detail} />
-          <DriverDetailAgencyFrame detail={detail} />
+          <DriverDetailTop driver={driver} detail={detail} />
+          <DriverDetailCareer detail={detail} />
+          <DriverDetailAgency detail={detail} />
         </div>
       </section>
       <Footer />

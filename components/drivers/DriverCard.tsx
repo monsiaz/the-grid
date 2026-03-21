@@ -3,12 +3,12 @@ import Link from "next/link";
 import DriverFlags from "./DriverFlags";
 import type { DriverCardData } from "./driversData";
 
-type DriverCardFrameProps = {
+type DriverCardProps = {
   driver: DriverCardData;
   compact?: boolean;
 };
 
-export default function DriverCardFrame({ driver, compact = false }: DriverCardFrameProps) {
+export default function DriverCard({ driver, compact = false }: DriverCardProps) {
   return (
     <article
       className={`bg-primary border-secondary flex flex-col overflow-hidden rounded-[32px] border ${
@@ -46,7 +46,7 @@ export default function DriverCardFrame({ driver, compact = false }: DriverCardF
             aria-label={`${driver.name} Instagram`}
             className="inline-flex h-8 w-8 items-center justify-center text-lg uppercase no-underline"
           >
-            IG
+            <Image src="/images/instagram.svg" alt="Instagram" width={24} height={24} />
           </Link>
         </div>
       </div>

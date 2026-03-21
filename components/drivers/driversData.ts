@@ -140,7 +140,7 @@ export const driversCards: DriverCardData[] = [
   },
 ];
 
-export const driversFrames: string[][] = [
+export const driversGridRows: string[][] = [
   ["pierre-gasly", "isack-hadjar", "kush-maini", "fred-makowiecki"],
   ["alessandro-giusti", "enzo-deligny", "andrea-dupe", "nathan-tye"],
   ["vivek-kanthan", "jack-iliffe", "louis-cochet", "luka-scelles"],

@@ -2,11 +2,11 @@ import Image from "next/image";
 import type { DriverDetailData } from "../driversData";
 import { detailImages } from "../driversData";
 
-type DriverDetailAgencyFrameProps = {
+type DriverDetailAgencyProps = {
   detail: DriverDetailData;
 };
 
-export default function DriverDetailAgencyFrame({ detail }: DriverDetailAgencyFrameProps) {
+export default function DriverDetailAgency({ detail }: DriverDetailAgencyProps) {
   return (
     <section className="grid grid-cols-[888px_1fr] gap-10 max-[1200px]:grid-cols-1">
       <div className="relative min-h-[546px] max-[1200px]:min-h-[420px]">

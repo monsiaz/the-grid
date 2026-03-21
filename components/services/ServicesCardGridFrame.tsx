@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 
 type ServiceCard = {
   title: string;
@@ -34,7 +35,9 @@ function ServiceImageCard({ card, imageHeightClassName, bodyPaddingClassName }: 
       <div className={`bg-primary ${bodyPaddingClassName}`}>
         <div className="flex items-center justify-between gap-4">
           <h3 className="m-0 text-base leading-[1.2] font-bold uppercase whitespace-pre-line">{card.title}</h3>
-          <span className="text-accent border-accent inline-flex rounded-full border-2 px-3 py-1 text-base leading-[1.2]">→</span>
+          <span className="text-accent border-accent inline-flex rounded-full border-2 px-3 py-1 text-base leading-[1.2]" aria-hidden>
+            <ArrowRight className="h-4 w-4 shrink-0" />
+          </span>
         </div>
       </div>
     </article>

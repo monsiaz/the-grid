@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
+import { ChevronDown } from "lucide-react";
 
-export default function DriversHeroFrame() {
+export default function DriversHero() {
   return (
     <Hero
       backgroundImage="/images/drivers/hero-collage.webp"
@@ -17,8 +18,9 @@ export default function DriversHeroFrame() {
       activeHeaderItem="drivers"
       cta={{
         href: "#drivers-grid",
-        label: "↓",
-        className: "h-[34px] w-[57px] px-0 py-0 text-[20px]",
+        ariaLabel: "Scroll to drivers grid",
+        label: <ChevronDown className="h-5 w-5 shrink-0" aria-hidden />,
+        className: "h-[34px] w-[57px] px-0 py-0",
       }}
     />
   );

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
 import type { NewsDetailData } from "../newsData";
 
 type NewsDetailTopFrameProps = {
@@ -17,9 +18,9 @@ export default function NewsDetailTopFrame({ detail }: NewsDetailTopFrameProps) 
         <Link
           href="/news"
           aria-label="Back to news"
-          className="text-accent border-accent inline-flex h-[34px] w-[57px] items-center justify-center rounded-full border-2 text-[22px] no-underline transition-all duration-300 hover:bg-accent hover:text-black"
+          className="text-accent border-accent inline-flex h-[34px] w-[57px] items-center justify-center rounded-full border-2 no-underline transition-all duration-300 hover:bg-accent hover:text-black"
         >
-          ←
+          <ChevronLeft className="h-5 w-5 shrink-0" aria-hidden />
         </Link>
 
         <div className="grid gap-4">

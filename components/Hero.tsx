@@ -16,8 +16,9 @@ type HeroProps = {
   footerSlot?: React.ReactNode;
   cta?: {
     href: string;
-    label: string;
+    label: React.ReactNode;
     className?: string;
+    ariaLabel?: string;
   };
 };
 
@@ -50,6 +51,7 @@ export default function Hero({
           {cta ? (
             <Link
               href={cta.href}
+              aria-label={cta.ariaLabel}
               className={`mt-8 inline-flex items-center justify-center rounded-full border-2 border-accent px-4 py-3 text-[22px] leading-[1.2] text-accent no-underline transition-all duration-300 hover:bg-accent hover:text-black ${cta.className ?? ""}`}
             >
               {cta.label}

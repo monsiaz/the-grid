@@ -3,12 +3,12 @@ import Link from "next/link";
 import DriverFlags from "../DriverFlags";
 import type { DriverCardData } from "../driversData";
 
-type DetailProfileCardFrameProps = {
+type DetailProfileCardProps = {
   driver: DriverCardData;
   image: string;
 };
 
-export default function DetailProfileCardFrame({ driver, image }: DetailProfileCardFrameProps) {
+export default function DetailProfileCard({ driver, image }: DetailProfileCardProps) {
   return (
     <article className="bg-primary border-secondary flex h-full w-full max-w-[318px] flex-col overflow-hidden rounded-[32px] border">
       <div className="relative flex-1">
