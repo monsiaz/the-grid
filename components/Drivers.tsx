@@ -11,7 +11,7 @@ export default function Drivers() {
           drivers
         </h2>
         <Link
-          href="#"
+          href="/drivers"
           className="text-accent border-accent inline-flex cursor-pointer items-center justify-center rounded-full border-2 bg-black/20 px-9 py-4 text-base leading-[1.2] no-underline uppercase hover:text-black hover:bg-accent transition-all duration-300"
         >
           Meet our drivers

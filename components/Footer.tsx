@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 type FooterProps = {
   className?: string;
@@ -11,13 +12,13 @@ export default function Footer({ className, id = "contact" }: FooterProps) {
       <div className="mx-auto flex w-full max-w-[1344px] items-center justify-between gap-4 px-[clamp(20px,4vw,48px)] max-[900px]:flex-col max-[900px]:items-start">
         <div className="flex items-center gap-4 text-xs leading-none uppercase">
           <Link href="#" aria-label="Instagram" className="text-secondary no-underline">
-            IG
+            <Image src="/images/instagram.svg" alt="Instagram" width={24} height={24} />
           </Link>
           <Link href="#" aria-label="LinkedIn" className="text-secondary no-underline">
-            IN
+            <Image src="/images/linkedin.svg" alt="LinkedIn" width={24} height={24} />
           </Link>
           <Link href="mailto:contact@thegrid.agency" aria-label="Email" className="text-secondary no-underline">
-            MAIL
+            <Image src="/images/email.svg" alt="Email" width={24} height={24} />
           </Link>
         </div>
         <div className="flex items-center gap-3 text-base leading-[1.2] whitespace-nowrap uppercase max-[900px]:text-xs max-[900px]:whitespace-normal">
