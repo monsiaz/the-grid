@@ -1,8 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { DriverCardData, DriverDetailData } from "../driversData";
 import { detailGallery, detailImages, detailNews } from "../driversData";
 import DetailProfileCard from "./DetailProfileCard";
+import {
+  motion,
+  fadeUp,
+  slideInLeft,
+  slideInRight,
+  staggerContainer,
+  smoothTransition,
+  viewport,
+} from "../../motion";
 
 type DriverDetailTopProps = {
   driver: DriverCardData;
@@ -13,8 +24,21 @@ export default function DriverDetailTop({ driver, detail }: DriverDetailTopProps
   return (
     <section className="grid grid-cols-2 gap-10 max-[1200px]:grid-cols-1">
       <div className="grid grid-cols-[318px_1fr] gap-10 max-[700px]:grid-cols-1">
-        <DetailProfileCard driver={driver} image={detailImages.profile} />
-        <div className="grid grid-cols-[1fr_2px] gap-3 overflow-hidden max-[700px]:grid-cols-1">
+        <motion.div
+          variants={slideInLeft}
+          initial="hidden"
+          animate="visible"
+          transition={smoothTransition}
+        >
+          <DetailProfileCard driver={driver} image={detailImages.profile} />
+        </motion.div>
+        <motion.div
+          className="grid grid-cols-[1fr_2px] gap-3 overflow-hidden max-[700px]:grid-cols-1"
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          transition={{ ...smoothTransition, delay: 0.2 }}
+        >
           <div>
             <h2 className="m-0 text-2xl leading-[1.2] font-bold uppercase">{detail.profileTitle}</h2>
             <div className="mt-4 space-y-4 text-base leading-[1.4] font-light">
@@ -28,10 +52,16 @@ export default function DriverDetailTop({ driver, detail }: DriverDetailTopProps
           <div className="bg-white/10 max-[700px]:hidden">
             <div className="bg-soft h-[200px] w-full" />
           </div>
-        </div>
+        </motion.div>
       </div>
 
-      <div className="grid gap-6">
+      <motion.div
+        className="grid gap-6"
+        variants={slideInRight}
+        initial="hidden"
+        animate="visible"
+        transition={{ ...smoothTransition, delay: 0.15 }}
+      >
         <div className="grid gap-2">
           <div className="grid grid-cols-[120px_1fr_120px] items-center max-[700px]:grid-cols-1">
             <div className="relative h-[173px] opacity-50 max-[700px]:hidden">
@@ -43,14 +73,20 @@ export default function DriverDetailTop({ driver, detail }: DriverDetailTopProps
                 sizes="120px"
               />
             </div>
-            <div className="relative h-[317px]">
-              <Image
-                src={detailGallery.center}
-                alt="Driver gallery center"
-                fill
-                className="object-cover"
-                sizes="(max-width: 700px) 100vw, 420px"
-              />
+            <div className="relative h-[317px] overflow-hidden">
+              <motion.div
+                className="relative h-full w-full"
+                whileHover={{ scale: 1.04 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              >
+                <Image
+                  src={detailGallery.center}
+                  alt="Driver gallery center"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 700px) 100vw, 420px"
+                />
+              </motion.div>
             </div>
             <div className="relative h-[173px] opacity-50 max-[700px]:hidden">
               <Image
@@ -70,23 +106,38 @@ export default function DriverDetailTop({ driver, detail }: DriverDetailTopProps
 
         <div>
           <h3 className="m-0 text-xl leading-[1.2] font-bold uppercase">Latest news</h3>
-          <div className="mt-4 grid grid-cols-3 gap-5 max-[900px]:grid-cols-1">
+          <motion.div
+            className="mt-4 grid grid-cols-3 gap-5 max-[900px]:grid-cols-1"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+          >
             {detailNews.map((item) => (
-              <article
+              <motion.article
                 key={item.title}
                 className="bg-primary border-secondary flex flex-col overflow-hidden rounded-[32px] border max-[900px]:min-h-[220px]"
+                variants={fadeUp}
+                transition={smoothTransition}
+                whileHover={{ y: -6, transition: { duration: 0.3, ease: "easeOut" } }}
               >
-                <div className="relative min-h-[216px] flex-1">
-                  <Image src={item.image} alt={item.title} fill className="object-cover" sizes="(max-width: 900px) 100vw, 204px" />
+                <div className="relative min-h-[216px] flex-1 overflow-hidden">
+                  <motion.div
+                    className="relative h-full w-full"
+                    whileHover={{ scale: 1.06 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                  >
+                    <Image src={item.image} alt={item.title} fill className="object-cover" sizes="(max-width: 900px) 100vw, 204px" />
+                  </motion.div>
                 </div>
                 <div className="bg-primary p-5">
                   <h4 className="m-0 text-base leading-[1.2] font-medium uppercase">{item.title}</h4>
                 </div>
-              </article>
+              </motion.article>
             ))}
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

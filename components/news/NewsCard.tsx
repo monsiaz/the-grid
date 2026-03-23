@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { motion, fadeUp, smoothTransition } from "../motion";
 
-type NewsCardFrameProps = {
+type NewsCardProps = {
   href: string;
   title: string;
   image: string;
@@ -10,23 +13,28 @@ type NewsCardFrameProps = {
   titleClassName?: string;
 };
 
-export default function NewsCardFrame({
+export default function NewsCard({
   href,
   title,
   image,
   cardClassName,
   imageWrapClassName = "h-[200px]",
   titleClassName,
-}: NewsCardFrameProps) {
+}: NewsCardProps) {
   return (
-    <article className={`overflow-hidden rounded-[32px] border border-secondary ${cardClassName ?? ""}`}>
+    <motion.article
+      className={`overflow-hidden rounded-[32px] border border-secondary ${cardClassName ?? ""}`}
+      variants={fadeUp}
+      transition={smoothTransition}
+      whileHover={{ y: -6, transition: { duration: 0.3, ease: "easeOut" } }}
+    >
       <Link href={href} className="group flex h-full flex-col bg-primary text-secondary no-underline">
         <div className={`relative w-full shrink-0 overflow-hidden ${imageWrapClassName}`}>
           <Image
             src={image}
             alt={title}
             fill
-            className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
           />
         </div>
@@ -36,12 +44,11 @@ export default function NewsCardFrame({
           >
             {title}
           </h3>
-          <span className="text-[14px] leading-[1.2] font-bold uppercase underline underline-offset-2">
+          <span className="text-[14px] leading-[1.2] font-bold uppercase underline underline-offset-2 transition-colors duration-300 group-hover:text-accent">
             Learn more
           </span>
         </div>
       </Link>
-    </article>
+    </motion.article>
   );
 }
-

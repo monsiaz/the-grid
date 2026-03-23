@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import DriverFlags from "../DriverFlags";
 import type { DriverCardData } from "../driversData";
+import { motion } from "../../motion";
 
 type DetailProfileCardProps = {
   driver: DriverCardData;
@@ -11,8 +14,14 @@ type DetailProfileCardProps = {
 export default function DetailProfileCard({ driver, image }: DetailProfileCardProps) {
   return (
     <article className="bg-primary border-secondary flex h-full w-full max-w-[318px] flex-col overflow-hidden rounded-[32px] border">
-      <div className="relative flex-1">
-        <Image src={image} alt={driver.name} fill className="object-cover" sizes="(max-width: 900px) 100vw, 318px" />
+      <div className="relative flex-1 overflow-hidden">
+        <motion.div
+          className="relative h-full w-full"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          <Image src={image} alt={driver.name} fill className="object-cover" sizes="(max-width: 900px) 100vw, 318px" />
+        </motion.div>
       </div>
       <div className="p-6">
         <div className="flex items-start justify-between gap-4">
@@ -33,7 +42,7 @@ export default function DetailProfileCard({ driver, image }: DetailProfileCardPr
           target="_blank"
           rel="noreferrer"
           aria-label={`${driver.name} Instagram`}
-          className="mt-4 inline-flex h-8 w-8 items-center justify-center text-lg uppercase no-underline"
+          className="mt-4 inline-flex h-8 w-8 items-center justify-center text-lg uppercase no-underline transition-transform duration-300 hover:scale-110"
         >
           IG
         </Link>

@@ -1,8 +1,8 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import NewsCardsRowFrame from "./NewsCardsRowFrame";
-import NewsFeaturedGridFrame from "./NewsFeaturedGridFrame";
-import NewsHeadingFrame from "./NewsHeadingFrame";
+import NewsCardsRow from "./NewsCardsRow";
+import NewsFeaturedGrid from "./NewsFeaturedGrid";
+import NewsHeading from "./NewsHeading";
 import { newsCards } from "./newsData";
 
 export default function NewsListingPage() {
@@ -14,11 +14,11 @@ export default function NewsListingPage() {
       <Header activeItem="news" />
       <section className="mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)] pt-20 pb-24">
         <div className="grid gap-16">
-          <NewsHeadingFrame />
+          <NewsHeading />
           <div className="grid gap-7">
-            <NewsFeaturedGridFrame cards={featuredCards} />
+            <NewsFeaturedGrid cards={featuredCards} />
             {rowCards.map((row, index) => (
-              <NewsCardsRowFrame key={index} cards={row} />
+              <NewsCardsRow key={index} cards={row} />
             ))}
           </div>
         </div>

@@ -1,8 +1,8 @@
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
-import ContactFormFrame from "@/components/contact/ContactFormFrame";
+import ContactForm from "@/components/contact/ContactForm";
 
-type ContactHeroFrameProps = {
+type ContactHeroProps = {
   backgroundImage: string;
   title: React.ReactNode;
   firstNameLabel: string;
@@ -12,7 +12,7 @@ type ContactHeroFrameProps = {
   sendLabel: string;
 };
 
-export default function ContactHeroFrame({
+export default function ContactHero({
   backgroundImage,
   title,
   firstNameLabel,
@@ -20,7 +20,7 @@ export default function ContactHeroFrame({
   emailLabel,
   messageLabel,
   sendLabel,
-}: ContactHeroFrameProps) {
+}: ContactHeroProps) {
   return (
     <Hero
       backgroundImage={backgroundImage}
@@ -33,7 +33,7 @@ export default function ContactHeroFrame({
       title={title}
       footerSlot={<Footer className="relative z-20 bg-transparent" id="contact-page-footer" />}
     >
-      <ContactFormFrame
+      <ContactForm
         firstNameLabel={firstNameLabel}
         lastNameLabel={lastNameLabel}
         emailLabel={emailLabel}

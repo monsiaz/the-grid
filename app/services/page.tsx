@@ -1,16 +1,16 @@
 import Footer from "@/components/Footer";
-import ServicesHeroFrame from "@/components/services/ServicesHeroFrame";
-import ServicesTalentFrame from "@/components/services/ServicesTalentFrame";
-import ServicesPartnerFrame from "@/components/services/ServicesPartnerFrame";
-import ServicesValueFrame from "@/components/services/ServicesValueFrame";
+import ServicesHero from "@/components/services/ServicesHero";
+import ServicesPartner from "@/components/services/ServicesPartner";
+import ServicesTalent from "@/components/services/ServicesTalent";
+import ServicesValue from "@/components/services/ServicesValue";
 
 export default function ServicesPage() {
   return (
     <main className="bg-primary text-secondary w-full overflow-x-hidden">
-      <ServicesHeroFrame />
-      <ServicesTalentFrame />
-      <ServicesPartnerFrame />
-      <ServicesValueFrame />
+      <ServicesHero />
+      <ServicesTalent />
+      <ServicesPartner />
+      <ServicesValue />
       <Footer />
     </main>
   );

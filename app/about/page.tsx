@@ -1,16 +1,16 @@
 import Footer from "@/components/Footer";
-import AboutHeroFrame from "@/components/about/AboutHeroFrame";
-import AboutCoreTeamFrame from "@/components/about/AboutCoreTeamFrame";
-import AboutAccelereBannerFrame from "@/components/about/AboutAccelereBannerFrame";
-import AboutAccelereFollowFrame from "@/components/about/AboutAccelereFollowFrame";
+import AboutAccelereBanner from "@/components/about/AboutAccelereBanner";
+import AboutAccelereFollow from "@/components/about/AboutAccelereFollow";
+import AboutCoreTeam from "@/components/about/AboutCoreTeam";
+import AboutHero from "@/components/about/AboutHero";
 
 export default function AboutPage() {
   return (
     <main className="bg-primary text-secondary w-full overflow-x-hidden">
-      <AboutHeroFrame />
-      <AboutCoreTeamFrame />
-      <AboutAccelereBannerFrame />
-      <AboutAccelereFollowFrame />
+      <AboutHero />
+      <AboutCoreTeam />
+      <AboutAccelereBanner />
+      <AboutAccelereFollow />
       <Footer />
     </main>
   );

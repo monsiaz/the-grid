@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import DriverFlags from "./DriverFlags";
 import type { DriverCardData } from "./driversData";
+import { motion, fadeUp, smoothTransition } from "../motion";
 
 type DriverCardProps = {
   driver: DriverCardData;
@@ -10,13 +13,22 @@ type DriverCardProps = {
 
 export default function DriverCard({ driver, compact = false }: DriverCardProps) {
   return (
-    <article
+    <motion.article
       className={`bg-primary border-secondary flex flex-col overflow-hidden rounded-[32px] border ${
         compact ? "min-h-[460px]" : "min-h-[488px]"
       } max-[900px]:min-h-0`}
+      variants={fadeUp}
+      transition={smoothTransition}
+      whileHover={{ y: -8, transition: { duration: 0.3, ease: "easeOut" } }}
     >
-      <div className="relative aspect-square w-full">
-        <Image src={driver.image} alt={driver.name} fill className="object-cover" sizes="(max-width: 900px) 100vw, 25vw" />
+      <div className="relative aspect-square w-full overflow-hidden">
+        <motion.div
+          className="relative h-full w-full"
+          whileHover={{ scale: 1.06 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          <Image src={driver.image} alt={driver.name} fill className="object-cover" sizes="(max-width: 900px) 100vw, 25vw" />
+        </motion.div>
       </div>
       <div className="flex flex-1 flex-col justify-between p-6">
         <div className="flex items-start justify-between gap-4">
@@ -35,7 +47,7 @@ export default function DriverCard({ driver, compact = false }: DriverCardProps)
         <div className="mt-4 flex items-center justify-between">
           <Link
             href={`/drivers/${driver.slug}`}
-            className="text-accent border-accent inline-flex items-center justify-center rounded-full border-2 bg-black/20 px-5 py-3 text-base leading-[1.2] uppercase no-underline transition-all duration-300 hover:bg-accent hover:text-black"
+            className="text-accent border-accent inline-flex items-center justify-center rounded-full border-2 bg-black/20 px-5 py-3 text-base leading-[1.2] uppercase no-underline transition-all duration-300 hover:bg-accent hover:text-black hover:scale-105"
           >
             Learn more
           </Link>
@@ -44,12 +56,12 @@ export default function DriverCard({ driver, compact = false }: DriverCardProps)
             target="_blank"
             rel="noreferrer"
             aria-label={`${driver.name} Instagram`}
-            className="inline-flex h-8 w-8 items-center justify-center text-lg uppercase no-underline"
+            className="inline-flex h-8 w-8 items-center justify-center text-lg uppercase no-underline transition-transform duration-300 hover:scale-110"
           >
             <Image src="/images/instagram.svg" alt="Instagram" width={24} height={24} />
           </Link>
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }

@@ -1,4 +1,4 @@
-import ServicesCardGridFrame from "./ServicesCardGridFrame";
+import ServicesCardGrid from "./ServicesCardGrid";
 
 const talentCards = [
   {
@@ -28,9 +28,9 @@ const talentCards = [
   },
 ];
 
-export default function ServicesTalentFrame() {
+export default function ServicesTalent() {
   return (
-    <ServicesCardGridFrame
+    <ServicesCardGrid
       id="services-talent"
       heading={
         <>

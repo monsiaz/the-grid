@@ -1,9 +1,9 @@
-import ContactHeroFrame from "@/components/contact/ContactHeroFrame";
+import ContactHero from "@/components/contact/ContactHero";
 
 export default function ContactPage() {
   return (
     <main className="bg-primary text-secondary w-full overflow-x-hidden">
-      <ContactHeroFrame
+      <ContactHero
         backgroundImage="/images/contact/backdrop.webp"
         title={
           <>
