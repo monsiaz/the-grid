@@ -6,7 +6,7 @@ import AboutHero from "@/components/about/AboutHero";
 
 export default function AboutPage() {
   return (
-    <main className="bg-primary text-secondary w-full overflow-x-hidden">
+    <main className="bg-primary text-secondary w-full ">
       <AboutHero />
       <AboutCoreTeam />
       <AboutAccelereBanner />

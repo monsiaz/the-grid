@@ -6,7 +6,7 @@ import ServicesValue from "@/components/services/ServicesValue";
 
 export default function ServicesPage() {
   return (
-    <main className="bg-primary text-secondary w-full overflow-x-hidden">
+    <main className="bg-primary text-secondary w-full ">
       <ServicesHero />
       <ServicesTalent />
       <ServicesPartner />

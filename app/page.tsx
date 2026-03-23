@@ -8,7 +8,7 @@ import Drivers from "@/components/Drivers";
 
 export default function Home() {
   return (
-    <main className="bg-primary text-secondary w-full overflow-x-hidden">
+    <main className="bg-primary text-secondary w-full ">
       <Hero
         backgroundImage="/images/hero.webp"
         title="Opening the gates to elite motorsport"

@@ -11,7 +11,7 @@ type NewsDetailPageProps = {
 
 export default function NewsDetailPage({ detail }: NewsDetailPageProps) {
   return (
-    <main className="bg-primary text-secondary w-full overflow-x-hidden">
+    <main className="bg-primary text-secondary w-full ">
       <Header activeItem="news" />
       <section className="mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)] pt-20 pb-24">
         <div className="grid gap-10">
