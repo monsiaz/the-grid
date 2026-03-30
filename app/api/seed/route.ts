@@ -8,6 +8,8 @@ export async function POST() {
   }
 
   const payload = await getPayloadClient();
+  const adminEmail = process.env.PAYLOAD_ADMIN_EMAIL || "admin@thegrid.agency";
+  const adminPassword = process.env.PAYLOAD_ADMIN_PASSWORD || "changeme123";
 
   // Create admin user
   const existingUsers = await payload.find({ collection: "users", limit: 1 });
@@ -15,8 +17,8 @@ export async function POST() {
     await payload.create({
       collection: "users",
       data: {
-        email: "admin@thegrid.agency",
-        password: "changeme123",
+        email: adminEmail,
+        password: adminPassword,
       },
     });
   }
