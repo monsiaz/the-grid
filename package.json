@@ -2,9 +2,13 @@
   "name": "the-grid",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "generate:importmap": "node --import tsx/esm ./node_modules/payload/dist/bin/index.js generate:importmap",
+    "build": "pnpm generate:importmap && next build",
     "start": "next start",
     "lint": "eslint",
     "seed": "curl -s -X POST http://localhost:3000/api/seed"
