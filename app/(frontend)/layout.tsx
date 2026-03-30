@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { League_Spartan, Poppins } from "next/font/google";
-import "../globals.css";
+import "./globals.css";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description: "THE GRID motorsport agency",
 };
 
-export default function RootLayout({
+export default function FrontendLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
