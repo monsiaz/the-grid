@@ -3,14 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import DriverFlags from "../DriverFlags";
-type DriverCardData = {
-  slug: string;
-  name: string;
-  role: string;
-  image: string;
-  flags: string[];
-  instagramUrl: string;
-};
+import type { DriverCardData } from "../driversData";
 import { motion } from "../../motion";
 
 type DetailProfileCardProps = {

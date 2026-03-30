@@ -1,19 +1,11 @@
 "use client";
 
 import DriverCard from "./DriverCard";
+import type { DriverCardData } from "./driversData";
 import { motion, staggerContainer, viewport } from "../motion";
 
-type DriverData = {
-  slug: string;
-  name: string;
-  role: string;
-  image: string;
-  flags: string[];
-  instagramUrl: string;
-};
-
 type DriversCardsRowProps = {
-  drivers: DriverData[];
+  drivers: DriverCardData[];
   compact?: boolean;
 };
 

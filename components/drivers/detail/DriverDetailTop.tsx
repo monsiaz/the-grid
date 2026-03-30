@@ -2,30 +2,7 @@
 
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-type DriverCardData = {
-  slug: string;
-  name: string;
-  role: string;
-  image: string;
-  flags: string[];
-  instagramUrl: string;
-};
-
-type DriverDetailData = {
-  slug: string;
-  profileTitle: string;
-  profileParagraphs: string[];
-  careerTitle: string;
-  careerParagraphs: string[];
-  transitionTitle: string;
-  transitionParagraph: string;
-  agencyTitle: string;
-  agencyParagraphs: string[];
-  highestFinish: string;
-  careerPoints: string;
-  grandPrixEntered: string;
-  careerPodiums: string;
-};
+import type { DriverCardData, DriverDetailData } from "../driversData";
 
 const detailImages = {
   profile: "/images/drivers/detail-profile-gasly.webp",

@@ -1,16 +1,8 @@
 import DriversCardsRow from "./DriversCardsRow";
-
-type DriverData = {
-  slug: string;
-  name: string;
-  role: string;
-  image: string;
-  flags: string[];
-  instagramUrl: string;
-};
+import type { DriverCardData } from "./driversData";
 
 type DriversGridProps = {
-  gridRows: DriverData[][];
+  gridRows: DriverCardData[][];
 };
 
 export default function DriversGrid({ gridRows }: DriversGridProps) {
