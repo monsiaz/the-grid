@@ -1,6 +1,7 @@
 import { buildConfig } from "payload";
 import { sqliteAdapter } from "@payloadcms/db-sqlite";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import sharp from "sharp";
 
 import { Users } from "./collections/Users";
@@ -31,10 +32,23 @@ export default buildConfig({
     outputFile: "payload-types.ts",
   },
   db: sqliteAdapter({
+    push: true,
     client: {
       url: process.env.DATABASE_URI || "file:./payload.db",
       authToken: process.env.TURSO_AUTH_TOKEN,
     },
   }),
   sharp,
+  plugins: [
+    ...(process.env.BLOB_READ_WRITE_TOKEN
+      ? [
+          vercelBlobStorage({
+            collections: {
+              media: true,
+            },
+            token: process.env.BLOB_READ_WRITE_TOKEN,
+          }),
+        ]
+      : []),
+  ],
 });
