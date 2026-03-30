@@ -4,7 +4,30 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
-import type { DriverCardData, DriverDetailData } from "../driversData";
+type DriverCardData = {
+  slug: string;
+  name: string;
+  role: string;
+  image: string;
+  flags: string[];
+  instagramUrl: string;
+};
+
+type DriverDetailData = {
+  slug: string;
+  profileTitle: string;
+  profileParagraphs: string[];
+  careerTitle: string;
+  careerParagraphs: string[];
+  transitionTitle: string;
+  transitionParagraph: string;
+  agencyTitle: string;
+  agencyParagraphs: string[];
+  highestFinish: string;
+  careerPoints: string;
+  grandPrixEntered: string;
+  careerPodiums: string;
+};
 import DriverDetailAgency from "./DriverDetailAgency";
 import DriverDetailCareer from "./DriverDetailCareer";
 import DriverDetailTop from "./DriverDetailTop";

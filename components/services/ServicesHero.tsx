@@ -1,10 +1,16 @@
 import Hero from "@/components/Hero";
 import { ChevronDown } from "lucide-react";
 
-export default function ServicesHero() {
+type ServicesHeroProps = {
+  title?: string | null;
+  description?: string | null;
+  backgroundImage?: string | null;
+};
+
+export default function ServicesHero({ title, description, backgroundImage }: ServicesHeroProps) {
   return (
     <Hero
-      backgroundImage="/images/hero.webp"
+      backgroundImage={backgroundImage || "/images/hero.webp"}
       minHeightClassName="min-h-[800px]"
       overlayClassName="bg-black/30"
       headerAnchorPrefix="/"
@@ -13,10 +19,10 @@ export default function ServicesHero() {
       titleClassName="font-[var(--font-league-spartan)] text-[64px] leading-none font-bold uppercase drop-shadow-[4px_4px_8px_rgba(0,0,0,0.1)] max-[1200px]:text-[clamp(44px,6vw,64px)]"
       title={
         <>
-          One-stop <span className="text-muted">shop</span>
+          {title || "One-stop"} <span className="text-muted">shop</span>
         </>
       }
-      description="On and beyond the track, we operate across the motorsport ecosystem - from elite talent management to high-impact brand strategy and commercial partnerships."
+      description={description || undefined}
       descriptionClassName="m-0 text-center text-base leading-[1.4] uppercase"
       cta={{
         href: "#services-talent",

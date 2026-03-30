@@ -3,7 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
-import type { NewsDetailData } from "../newsData";
+type NewsDetailData = {
+  slug: string;
+  title: string;
+  date: string;
+  heroImage: string;
+  introParagraphs: string[];
+  bodyParagraphs: string[];
+  galleryImages: string[];
+};
 import {
   motion,
   fadeUp,

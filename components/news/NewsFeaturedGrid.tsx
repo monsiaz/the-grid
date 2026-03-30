@@ -1,11 +1,17 @@
 "use client";
 
 import NewsCard from "./NewsCard";
-import { getNewsDetailHref, type NewsCardItem } from "./newsData";
 import { motion, staggerContainer, viewport } from "../motion";
 
+type NewsCardData = {
+  slug: string;
+  title: string;
+  image: string;
+  category: "sporting" | "commercial";
+};
+
 type NewsFeaturedGridProps = {
-  cards: NewsCardItem[];
+  cards: NewsCardData[];
 };
 
 export default function NewsFeaturedGrid({ cards }: NewsFeaturedGridProps) {
@@ -25,7 +31,7 @@ export default function NewsFeaturedGrid({ cards }: NewsFeaturedGridProps) {
         viewport={viewport}
       >
         <NewsCard
-          href={getNewsDetailHref(first.slug)}
+          href={`/news/${first.slug}`}
           title={first.title}
           image={first.image}
           cardClassName="h-[628px]"
@@ -36,18 +42,18 @@ export default function NewsFeaturedGrid({ cards }: NewsFeaturedGridProps) {
           className="grid gap-7"
           variants={staggerContainer}
         >
-          <NewsCard href={getNewsDetailHref(second.slug)} title={second.title} image={second.image} cardClassName="h-[300px]" />
-          <NewsCard href={getNewsDetailHref(third.slug)} title={third.title} image={third.image} cardClassName="h-[300px]" />
+          <NewsCard href={`/news/${second.slug}`} title={second.title} image={second.image} cardClassName="h-[300px]" />
+          <NewsCard href={`/news/${third.slug}`} title={third.title} image={third.image} cardClassName="h-[300px]" />
         </motion.div>
 
         <motion.div
           className="grid gap-7"
           variants={staggerContainer}
         >
-          <NewsCard href={getNewsDetailHref(fourth.slug)} title={fourth.title} image={fourth.image} cardClassName="h-[300px]" />
+          <NewsCard href={`/news/${fourth.slug}`} title={fourth.title} image={fourth.image} cardClassName="h-[300px]" />
           <div className="grid grid-cols-2 gap-7">
-            <NewsCard href={getNewsDetailHref(fifth.slug)} title={fifth.title} image={fifth.image} cardClassName="h-[300px]" />
-            <NewsCard href={getNewsDetailHref(sixth.slug)} title={sixth.title} image={sixth.image} cardClassName="h-[300px]" />
+            <NewsCard href={`/news/${fifth.slug}`} title={fifth.title} image={fifth.image} cardClassName="h-[300px]" />
+            <NewsCard href={`/news/${sixth.slug}`} title={sixth.title} image={sixth.image} cardClassName="h-[300px]" />
           </div>
         </motion.div>
       </motion.div>
@@ -62,7 +68,7 @@ export default function NewsFeaturedGrid({ cards }: NewsFeaturedGridProps) {
         {cards.map((card) => (
           <NewsCard
             key={card.slug}
-            href={getNewsDetailHref(card.slug)}
+            href={`/news/${card.slug}`}
             title={card.title}
             image={card.image}
             cardClassName="h-[300px]"

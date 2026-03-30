@@ -1,6 +1,14 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import type { NewsDetailData } from "../newsData";
+type NewsDetailData = {
+  slug: string;
+  title: string;
+  date: string;
+  heroImage: string;
+  introParagraphs: string[];
+  bodyParagraphs: string[];
+  galleryImages: string[];
+};
 import NewsDetailBody from "./NewsDetailBody";
 import NewsDetailGallery from "./NewsDetailGallery";
 import NewsDetailTop from "./NewsDetailTop";

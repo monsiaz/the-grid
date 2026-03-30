@@ -1,11 +1,17 @@
 "use client";
 
 import NewsCard from "./NewsCard";
-import { getNewsDetailHref, type NewsCardItem } from "./newsData";
 import { motion, staggerContainer, viewport } from "../motion";
 
+type NewsCardData = {
+  slug: string;
+  title: string;
+  image: string;
+  category: "sporting" | "commercial";
+};
+
 type NewsCardsRowProps = {
-  cards: NewsCardItem[];
+  cards: NewsCardData[];
 };
 
 export default function NewsCardsRow({ cards }: NewsCardsRowProps) {
@@ -20,7 +26,7 @@ export default function NewsCardsRow({ cards }: NewsCardsRowProps) {
       {cards.map((card) => (
         <NewsCard
           key={card.slug}
-          href={getNewsDetailHref(card.slug)}
+          href={`/news/${card.slug}`}
           title={card.title}
           image={card.image}
           cardClassName="h-[300px]"

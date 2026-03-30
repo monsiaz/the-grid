@@ -15,36 +15,11 @@ import {
 } from "../motion";
 
 type CoreArea = {
-  id: string;
   number: string;
   title: string;
   text: string;
   image: string;
 };
-
-const coreAreas: CoreArea[] = [
-  {
-    id: "sport-management",
-    number: "01",
-    title: "Sport\nManagement",
-    image: "/images/about/core-sport-management.webp",
-    text: "We guide drivers to the highest level of motorsport. Built on over two decades of experience, our deep understanding of the racing ecosystem allows us to identify talent early and shape tailored career strategies. Each driver is unique: one profile, one strategy.",
-  },
-  {
-    id: "image-branding",
-    number: "02",
-    title: "Image &\nBranding",
-    image: "/images/about/core-image-branding.webp",
-    text: "We build influential profiles on and off the track. Through tailored positioning, media strategy and long-term personal branding, we strengthen the visibility, credibility and influence of drivers and rights holders.",
-  },
-  {
-    id: "commercial-development",
-    number: "03",
-    title: "Commercial\nDevelopment",
-    image: "/images/about/core-commercial-development.webp",
-    text: "We create high-impact partnerships across the motorsport ecosystem. By connecting drivers, brands and key stakeholders, we structure collaborations that generate long-term value for all parties involved.",
-  },
-];
 
 type TeamMember = {
   name: string;
@@ -52,21 +27,39 @@ type TeamMember = {
   image: string;
 };
 
-const teamMembers: TeamMember[] = [
-  {
-    name: "Jérémy Satis",
-    role: "Driver Agent",
-    image: "/images/about/team-jeremy.webp",
-  },
-  {
-    name: "Laura Fredel",
-    role: "Marketing Associate",
-    image: "/images/about/team-laura.webp",
-  },
-];
+type AboutCoreTeamProps = {
+  coreIntroText?: string | null;
+  coreAreas: CoreArea[];
+  founderBio: string;
+  teamMembers: TeamMember[];
+};
 
-const founderBio =
-  "With 20 years of experience in motorsport, Guillaume has worked across multiple roles in the paddock. He served as a simulation and race engineer for ART Grand Prix for six years before co-founding AOTech in 2010. After a two-year stint at McLaren in business development, he founded Soter Analytics and The Grid Agency in 2018, later focusing fully on The Grid in 2021.";
+function parseHighlightText(text: string) {
+  const parts = text.split(/\[highlight\]|\[\/highlight\]/);
+  const elements: React.ReactNode[] = [];
+  let isHighlight = false;
+
+  for (let i = 0; i < parts.length; i++) {
+    if (parts[i]) {
+      if (isHighlight) {
+        elements.push(
+          <span key={i} className="text-muted">
+            {parts[i]}
+          </span>
+        );
+      } else {
+        elements.push(
+          <span key={i} className="text-secondary">
+            {parts[i]}
+          </span>
+        );
+      }
+    }
+    isHighlight = !isHighlight;
+  }
+
+  return elements;
+}
 
 function CoreAreaCard({ area }: { area: CoreArea }) {
   return (
@@ -143,7 +136,7 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
   );
 }
 
-export default function AboutCoreTeam() {
+export default function AboutCoreTeam({ coreIntroText, coreAreas, founderBio, teamMembers }: AboutCoreTeamProps) {
   return (
     <section className="bg-primary py-20" id="about-core">
       <div className="mx-auto grid w-full max-w-[1344px] gap-20 px-[clamp(20px,4vw,48px)]">
@@ -156,13 +149,17 @@ export default function AboutCoreTeam() {
             viewport={viewport}
             transition={{ ...smoothTransition, duration: 0.9 }}
           >
-            <span className="text-secondary">Our expertise is structured around </span>
-            three core areas
-            <span className="text-secondary">, designed to </span>
-            support performance
-            <span className="text-secondary"> on track and </span>
-            create value
-            <span className="text-secondary"> beyond it</span>
+            {coreIntroText ? parseHighlightText(coreIntroText) : (
+              <>
+                <span className="text-secondary">Our expertise is structured around </span>
+                three core areas
+                <span className="text-secondary">, designed to </span>
+                support performance
+                <span className="text-secondary"> on track and </span>
+                create value
+                <span className="text-secondary"> beyond it</span>
+              </>
+            )}
           </motion.p>
           <motion.div
             className="grid gap-8 min-[1200px]:grid-cols-3"
@@ -171,8 +168,8 @@ export default function AboutCoreTeam() {
             whileInView="visible"
             viewport={viewport}
           >
-            {coreAreas.map((area) => (
-              <CoreAreaCard area={area} key={area.id} />
+            {coreAreas.map((area, idx) => (
+              <CoreAreaCard area={area} key={area.number || idx} />
             ))}
           </motion.div>
         </div>

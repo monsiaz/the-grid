@@ -1,10 +1,16 @@
 import Hero from "@/components/Hero";
 import { ChevronDown } from "lucide-react";
 
-export default function AboutHero() {
+type AboutHeroProps = {
+  title: string;
+  description?: string | null;
+  backgroundImage?: string | null;
+};
+
+export default function AboutHero({ title, description, backgroundImage }: AboutHeroProps) {
   return (
     <Hero
-      backgroundImage="/images/about/hero.webp"
+      backgroundImage={backgroundImage || "/images/about/hero.webp"}
       minHeightClassName="min-h-[800px]"
       overlayClassName="bg-black/30"
       headerAnchorPrefix="/"
@@ -16,7 +22,7 @@ export default function AboutHero() {
           Who we <span className="text-muted">are</span>
         </>
       }
-      description="We are a 360° motorsport management and marketing agency operating globally. We build elite careers for deserving drivers and develop strategic partnerships across the ecosystem."
+      description={description || undefined}
       descriptionClassName="m-0 text-center text-base leading-[1.4] uppercase"
       cta={{
         href: "#about-core",

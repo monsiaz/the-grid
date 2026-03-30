@@ -2,8 +2,48 @@
 
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { DriverCardData, DriverDetailData } from "../driversData";
-import { detailGallery, detailImages, detailNews } from "../driversData";
+type DriverCardData = {
+  slug: string;
+  name: string;
+  role: string;
+  image: string;
+  flags: string[];
+  instagramUrl: string;
+};
+
+type DriverDetailData = {
+  slug: string;
+  profileTitle: string;
+  profileParagraphs: string[];
+  careerTitle: string;
+  careerParagraphs: string[];
+  transitionTitle: string;
+  transitionParagraph: string;
+  agencyTitle: string;
+  agencyParagraphs: string[];
+  highestFinish: string;
+  careerPoints: string;
+  grandPrixEntered: string;
+  careerPodiums: string;
+};
+
+const detailImages = {
+  profile: "/images/drivers/detail-profile-gasly.webp",
+  career: "/images/drivers/detail-career-image.webp",
+  agency: "/images/drivers/detail-agency-image.webp",
+};
+
+const detailGallery = {
+  left: "/images/drivers/detail-gallery-left.webp",
+  center: "/images/drivers/detail-gallery-main.webp",
+  right: "/images/drivers/detail-gallery-right.webp",
+};
+
+const detailNews = [
+  { title: "PIERRE GASLY'S ABU DHABI SPECIAL HELMET", image: "/images/drivers/detail-news-1.webp" },
+  { title: "SPECIAL HELMET DESIGN FOR PIERRE GASLY IN BRAZIL", image: "/images/drivers/detail-news-2.webp" },
+  { title: "PIERRE GASLY X H. MOSER & CIE: AN EXCLUSIVE TIMEPIECE", image: "/images/drivers/detail-news-3.webp" },
+];
 import DetailProfileCard from "./DetailProfileCard";
 import {
   motion,

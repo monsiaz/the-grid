@@ -12,24 +12,34 @@ import {
   viewport,
 } from "../motion";
 
-const socialImages = [
-  "/images/about/instagram-1.webp",
-  "/images/about/instagram-2.webp",
-  "/images/about/instagram-3.webp",
-  "/images/about/instagram-4.webp",
-  "/images/about/instagram-5.webp",
-];
+type AboutAccelereFollowProps = {
+  description?: string | null;
+  quote?: string | null;
+  quoteAuthor?: string | null;
+  quoteRole?: string | null;
+  quoteTitle?: string | null;
+  instagramHandle?: string | null;
+  instagramUrl?: string | null;
+  instagramImages: string[];
+};
 
-const gridOrder = [
-  ...socialImages,
-  socialImages[3],
-  socialImages[2],
-  socialImages[4],
-  socialImages[0],
-  socialImages[1],
-];
+export default function AboutAccelereFollow({
+  description,
+  quote,
+  quoteAuthor,
+  quoteRole,
+  quoteTitle,
+  instagramHandle,
+  instagramUrl,
+  instagramImages,
+}: AboutAccelereFollowProps) {
+  const gridOrder = [
+    ...instagramImages,
+    ...(instagramImages.length >= 5
+      ? [instagramImages[3], instagramImages[2], instagramImages[4], instagramImages[0], instagramImages[1]]
+      : []),
+  ];
 
-export default function AboutAccelereFollow() {
   return (
     <section className="bg-primary pb-20">
       <div className="mx-auto grid w-full max-w-[1344px] gap-20 px-[clamp(20px,4vw,48px)] pt-10">
@@ -42,14 +52,8 @@ export default function AboutAccelereFollow() {
             viewport={viewport}
             transition={smoothTransition}
           >
-            <p className="m-0 text-[clamp(16px,1.8vw,20px)] leading-[1.4] font-light uppercase">
-              ACCÉLÈRE is an initiative by Côme Ensemble, the endowment fund of Côme Maison Financière. Its mission is
-              simple: to empower and structure the next generation of French motorsport talent, regardless of
-              background.
-              <br />
-              <br />
-              Sponsored by Formula 1 driver Pierre Gasly, and developed in partnership with The Grid Agency, ACCÉLÈRE
-              brings together those who understand the system and are committed to making it fairer.
+            <p className="m-0 text-[clamp(16px,1.8vw,20px)] leading-[1.4] font-light uppercase whitespace-pre-line">
+              {description}
             </p>
             <Link
               href="#contact"
@@ -70,7 +74,7 @@ export default function AboutAccelereFollow() {
             >
               <Image
                 src="/images/about/accelere-portrait.webp"
-                alt="Pierre Gasly"
+                alt={quoteAuthor || "Pierre Gasly"}
                 width={432}
                 height={500}
                 className="h-auto w-full object-cover"
@@ -84,17 +88,16 @@ export default function AboutAccelereFollow() {
               viewport={viewport}
               transition={{ ...smoothTransition, delay: 0.2 }}
             >
-              <span className="text-accent absolute -left-2 top-1 text-[120px] leading-none opacity-30">"</span>
+              <span className="text-accent absolute -left-2 top-1 text-[120px] leading-none opacity-30">&ldquo;</span>
               <p className="m-0 text-[clamp(16px,1.8vw,20px)] leading-[1.4] font-light italic">
-                Behind every driver, there is a team, supporters, people who believed in them. This program is my way
-                of giving back what I received, and of proving that talent and hard work can open every door.
+                {quote}
               </p>
               <p className="mt-5 mb-0 text-base leading-[1.2]">
-                <span className="font-semibold">Pierre Gasly</span>
+                <span className="font-semibold">{quoteAuthor}</span>
                 <br />
-                BWT Alpine F1 Team Driver
+                {quoteRole}
                 <br />
-                Program Sponsor
+                {quoteTitle}
               </p>
             </motion.div>
           </div>
@@ -120,9 +123,9 @@ export default function AboutAccelereFollow() {
               viewport={viewport}
               transition={smoothTransition}
             >
-              <p className="m-0 text-xl leading-[1.2] font-bold uppercase">@THEGRID.AGENCY</p>
+              <p className="m-0 text-xl leading-[1.2] font-bold uppercase">{instagramHandle}</p>
               <Link
-                href="https://instagram.com"
+                href={instagramUrl || "https://instagram.com"}
                 target="_blank"
                 rel="noreferrer"
                 className="text-accent border-accent inline-flex items-center justify-center rounded-full border-2 bg-black/20 px-9 py-4 text-base leading-[1.2] no-underline uppercase transition-all duration-300 hover:bg-accent hover:text-black hover:scale-105"

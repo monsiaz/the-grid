@@ -3,8 +3,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import DriverFlags from "./DriverFlags";
-import type { DriverCardData } from "./driversData";
 import { motion, fadeUp, smoothTransition } from "../motion";
+
+type DriverCardData = {
+  slug: string;
+  name: string;
+  role: string;
+  image: string;
+  flags: string[];
+  instagramUrl: string;
+};
 
 type DriverCardProps = {
   driver: DriverCardData;

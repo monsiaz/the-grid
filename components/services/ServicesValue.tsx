@@ -11,57 +11,20 @@ import {
 } from "../motion";
 
 type CaseStudy = {
-  title: string;
+  title?: string | null;
   image: string;
-  alt: string;
-  description?: string;
-  dimmed?: boolean;
+  description?: string | null;
+  dimmed?: boolean | null;
 };
 
-const valueCards = [
-  {
-    title: "Partnerships &\nStructuring",
-    image: "/images/services/value-partnerships.webp",
-    alt: "Partnerships and structuring",
-  },
-  {
-    title: "Network &\nIntroductions",
-    image: "/images/services/value-network.webp",
-    alt: "Network and introductions",
-  },
-  {
-    title: "Activation &\nContent",
-    image: "/images/services/value-activation.webp",
-    alt: "Activation and content",
-  },
-  {
-    title: "Private\nExperiences",
-    image: "/images/services/value-private.webp",
-    alt: "Private experiences",
-  },
-];
-
-const caseStudies: CaseStudy[] = [
-  {
-    title: "",
-    image: "/images/services/case-left.webp",
-    alt: "Case study preview",
-    dimmed: true,
-  },
-  {
-    title: "Scuderia Alpha Tauri x Fantom",
-    image: "/images/services/case-center.webp",
-    alt: "Scuderia Alpha Tauri x Fantom",
-    description:
-      "During the 2022 season, The Grid structured the partnership between fintech company Fantom and Scuderia AlphaTauri, positioning Fantom as one of the team's main sponsors. Throughout the year, the brand gained high-profile visibility through Pierre Gasly and Yuki Tsunoda, with logo placement on their helmets and on the AT03's nose and halo.",
-  },
-  {
-    title: "Nyck de Vries x Omnes",
-    image: "/images/services/case-right.webp",
-    alt: "Nyck de Vries x Omnes",
-    dimmed: true,
-  },
-];
+type ServicesValueProps = {
+  heading?: string | null;
+  headingAccent?: string | null;
+  description?: string | null;
+  introText?: string | null;
+  cards: { title: string; image: string; alt: string }[];
+  caseStudies: CaseStudy[];
+};
 
 function CaseStudyCard({ card }: { card: CaseStudy }) {
   return (
@@ -76,7 +39,7 @@ function CaseStudyCard({ card }: { card: CaseStudy }) {
           whileHover={{ scale: 1.03 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <Image src={card.image} alt={card.alt} fill sizes="(max-width: 1200px) 100vw, 786px" className="object-cover" />
+          <Image src={card.image} alt={card.title || ""} fill sizes="(max-width: 1200px) 100vw, 786px" className="object-cover" />
         </motion.div>
       </div>
       <h3 className="m-0 text-xl leading-[1.2] font-bold uppercase">{card.title || " "}</h3>
@@ -92,21 +55,21 @@ function CaseStudyCard({ card }: { card: CaseStudy }) {
   );
 }
 
-export default function ServicesValue() {
+export default function ServicesValue({ heading, headingAccent, description, introText, cards, caseStudies }: ServicesValueProps) {
   return (
     <section className="bg-primary py-20" id="services-value">
       <div className="mx-auto grid w-full max-w-[1728px] gap-20">
         <ServicesCardGrid
           heading={
             <>
-              WHERE PERFORMANCE
+              {heading || "WHERE PERFORMANCE"}
               <br />
-              CREATES <span className="text-muted">VALUE</span>
+              CREATES <span className="text-muted">{headingAccent || "VALUE"}</span>
             </>
           }
-          description="From karting to the pinnacle of motorsport, the path is filled with challenges. It demands resilience, teamwork and trust. We stand with deserving drivers every step of the way."
-          introText="We advise brands and investors on motorsport strategy, market positioning and long-term value creation."
-          cards={valueCards}
+          description={description || ""}
+          introText={introText || ""}
+          cards={cards}
           gridClassName="px-[clamp(20px,4vw,48px)] min-[1200px]:grid-cols-[297.6px_repeat(4,minmax(0,1fr))]"
           imageHeightClassName="h-[280px]"
           bodyPaddingClassName="p-6"
@@ -120,8 +83,8 @@ export default function ServicesValue() {
           viewport={viewport}
         >
           <div className="flex w-max gap-7 px-[clamp(20px,4vw,48px)] min-[1200px]:pl-0 min-[1200px]:pr-0 min-[1200px]:ml-[-343px]">
-            {caseStudies.map((card) => (
-              <CaseStudyCard card={card} key={`${card.title}-${card.image}`} />
+            {caseStudies.map((card, idx) => (
+              <CaseStudyCard card={card} key={`${card.title}-${card.image}-${idx}`} />
             ))}
           </div>
         </motion.div>

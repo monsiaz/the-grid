@@ -9,7 +9,12 @@ import {
   viewport,
 } from "./motion";
 
-export default function Drivers() {
+type DriversProps = {
+  heading: string;
+  headingAccent: string;
+};
+
+export default function Drivers({ heading, headingAccent }: DriversProps) {
   return (
     <section className="relative flex min-h-[800px] w-full items-center justify-center bg-drivers" id="drivers">
       <div className="absolute inset-0 z-10 bg-black/40" />
@@ -22,9 +27,9 @@ export default function Drivers() {
           viewport={viewport}
           transition={{ ...smoothTransition, duration: 0.9 }}
         >
-          For deserving
+          {heading}
           <br />
-          drivers
+          {headingAccent}
         </motion.h2>
         <motion.div
           variants={fadeUp}

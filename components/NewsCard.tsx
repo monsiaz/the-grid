@@ -3,7 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "./motion";
-import type { NewsItem } from "./newsItems";
+type NewsItem = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  image: string;
+};
 
 export default function NewsCard({ item, href }: { item: NewsItem; href: string }) {
   return (

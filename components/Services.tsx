@@ -10,7 +10,11 @@ import {
   viewport,
 } from "./motion";
 
-export default function Services() {
+type ServicesProps = {
+  labels: string[];
+};
+
+export default function Services({ labels }: ServicesProps) {
   return (
     <section className="relative flex min-h-[575px] w-full items-center bg-services" id="services">
       <div className="absolute inset-0 z-10 bg-[linear-gradient(90deg,rgba(0,0,0,0.9),rgba(0,0,0,0)_75%)]" />
@@ -22,15 +26,11 @@ export default function Services() {
           whileInView="visible"
           viewport={viewport}
         >
-          <motion.p className="m-0" variants={slideInLeft} transition={smoothTransition}>
-            Sport management
-          </motion.p>
-          <motion.p className="m-0" variants={slideInLeft} transition={smoothTransition}>
-            Image &amp; media
-          </motion.p>
-          <motion.p className="m-0" variants={slideInLeft} transition={smoothTransition}>
-            Commercial development
-          </motion.p>
+          {labels.map((label) => (
+            <motion.p key={label} className="m-0" variants={slideInLeft} transition={smoothTransition}>
+              {label}
+            </motion.p>
+          ))}
         </motion.div>
         <motion.div
           variants={fadeUp}

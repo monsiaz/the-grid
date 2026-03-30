@@ -9,7 +9,12 @@ import {
   viewport,
 } from "./motion";
 
-export default function About() {
+type AboutProps = {
+  text: string;
+  buttonLabel: string;
+};
+
+export default function About({ text, buttonLabel }: AboutProps) {
   return (
     <section className="relative flex min-h-[413px] w-full items-center bg-about" id="about">
       <div className="absolute inset-0 z-10 bg-black/40" />
@@ -22,8 +27,7 @@ export default function About() {
           viewport={viewport}
           transition={smoothTransition}
         >
-          We are a 360° motorsport agency combining driver management and strategic marketing to build careers and
-          develop high-impact partnerships across the ecosystem.
+          {text}
         </motion.p>
         <motion.div
           variants={fadeUp}
@@ -36,7 +40,7 @@ export default function About() {
             href="#"
             className="text-secondary border-secondary inline-flex cursor-pointer items-center justify-center rounded-full border-2 bg-black/20 px-9 py-4 text-base leading-[1.2] no-underline uppercase hover:text-black hover:bg-white hover:scale-105 transition-all duration-300"
           >
-            Explore
+            {buttonLabel}
           </Link>
         </motion.div>
       </div>

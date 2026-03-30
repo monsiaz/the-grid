@@ -3,8 +3,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback, useRef } from "react";
 import NewsCard from "./NewsCard";
-import { getNewsDetailHref } from "./news/newsData";
-import { newsItems } from "./newsItems";
 import {
   motion,
   fadeUp,
@@ -13,9 +11,20 @@ import {
   viewport,
 } from "./motion";
 
+type NewsItem = {
+  newsSlug: string;
+  title: string;
+  excerpt: string;
+  image: string;
+};
+
+type NewsProps = {
+  items: NewsItem[];
+};
+
 const GAP_PX = 28;
 
-export default function News() {
+export default function News({ items }: NewsProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollByStep = useCallback((direction: -1 | 1) => {
@@ -62,14 +71,22 @@ export default function News() {
         whileInView="visible"
         viewport={viewport}
       >
-        {newsItems.map((item, idx) => (
+        {items.map((item, idx) => (
           <motion.div
-            key={`${item.slug}-${idx}`}
+            key={`${item.newsSlug}-${idx}`}
             variants={fadeUp}
             transition={smoothTransition}
             className="shrink-0"
           >
-            <NewsCard item={item} href={getNewsDetailHref(item.slug)} />
+            <NewsCard
+              item={{
+                slug: item.newsSlug,
+                title: item.title,
+                excerpt: item.excerpt,
+                image: item.image,
+              }}
+              href={`/news/${item.newsSlug}`}
+            />
           </motion.div>
         ))}
       </motion.div>

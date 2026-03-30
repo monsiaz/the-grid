@@ -9,7 +9,11 @@ import {
   viewport,
 } from "../motion";
 
-export default function ServicesPartner() {
+type ServicesPartnerProps = {
+  description?: string | null;
+};
+
+export default function ServicesPartner({ description }: ServicesPartnerProps) {
   return (
     <section className="relative min-h-[800px] w-full overflow-hidden">
       <Image src="/images/services.webp" alt="The Grid x Hintsa partnership" fill sizes="100vw" className="object-cover" />
@@ -48,9 +52,7 @@ export default function ServicesPartner() {
             viewport={viewport}
             transition={{ ...smoothTransition, delay: 0.2 }}
           >
-            The Grid Agency partners with Hintsa Performance, a global leader in human performance coaching. Built on
-            a shared belief that performance is won off-track, this collaboration strengthens our commitment to
-            preparing drivers for the highest level of the sport.
+            {description || "The Grid Agency partners with Hintsa Performance, a global leader in human performance coaching. Built on a shared belief that performance is won off-track, this collaboration strengthens our commitment to preparing drivers for the highest level of the sport."}
           </motion.p>
         </div>
       </div>

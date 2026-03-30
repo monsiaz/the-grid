@@ -1,8 +1,27 @@
 "use client";
 
 import Image from "next/image";
-import type { DriverDetailData } from "../driversData";
-import { detailImages } from "../driversData";
+type DriverDetailData = {
+  slug: string;
+  profileTitle: string;
+  profileParagraphs: string[];
+  careerTitle: string;
+  careerParagraphs: string[];
+  transitionTitle: string;
+  transitionParagraph: string;
+  agencyTitle: string;
+  agencyParagraphs: string[];
+  highestFinish: string;
+  careerPoints: string;
+  grandPrixEntered: string;
+  careerPodiums: string;
+};
+
+const detailImages = {
+  profile: "/images/drivers/detail-profile-gasly.webp",
+  career: "/images/drivers/detail-career-image.webp",
+  agency: "/images/drivers/detail-agency-image.webp",
+};
 import {
   motion,
   fadeUp,

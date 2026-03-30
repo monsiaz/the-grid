@@ -1,5 +1,6 @@
 import * as FlagIcons from "country-flag-icons/react/3x2";
-import type { DriverCountryCode } from "./driversData";
+
+type DriverCountryCode = "FR" | "IN" | "GB" | "US" | "PL";
 
 const FLAG_BY_CODE: Record<DriverCountryCode, (typeof FlagIcons)["FR"]> = {
   FR: FlagIcons.FR,

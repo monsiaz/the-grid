@@ -1,15 +1,23 @@
 "use client";
 
 import DriverCard from "./DriverCard";
-import { getDriverBySlug } from "./driversData";
 import { motion, staggerContainer, viewport } from "../motion";
 
+type DriverData = {
+  slug: string;
+  name: string;
+  role: string;
+  image: string;
+  flags: string[];
+  instagramUrl: string;
+};
+
 type DriversCardsRowProps = {
-  slugs: string[];
+  drivers: DriverData[];
   compact?: boolean;
 };
 
-export default function DriversCardsRow({ slugs, compact = false }: DriversCardsRowProps) {
+export default function DriversCardsRow({ drivers, compact = false }: DriversCardsRowProps) {
   return (
     <motion.div
       className="grid grid-cols-4 gap-7 max-[1200px]:grid-cols-2 max-[700px]:grid-cols-1"
@@ -18,15 +26,9 @@ export default function DriversCardsRow({ slugs, compact = false }: DriversCards
       whileInView="visible"
       viewport={viewport}
     >
-      {slugs.map((slug) => {
-        const driver = getDriverBySlug(slug);
-
-        if (!driver) {
-          return null;
-        }
-
-        return <DriverCard key={slug} driver={driver} compact={compact} />;
-      })}
+      {drivers.map((driver) => (
+        <DriverCard key={driver.slug} driver={driver} compact={compact} />
+      ))}
     </motion.div>
   );
 }

@@ -2,7 +2,34 @@
 
 import { motion, fadeUp, smoothTransition, viewport } from "./motion";
 
-export default function Experience() {
+type ExperienceProps = {
+  text: string;
+};
+
+function parseHighlightText(text: string) {
+  const parts = text.split(/\[highlight\]|\[\/highlight\]/);
+  const elements: React.ReactNode[] = [];
+  let isHighlight = false;
+
+  for (let i = 0; i < parts.length; i++) {
+    if (parts[i]) {
+      if (isHighlight) {
+        elements.push(
+          <span key={i} className="text-muted">
+            {parts[i]}
+          </span>
+        );
+      } else {
+        elements.push(parts[i]);
+      }
+    }
+    isHighlight = !isHighlight;
+  }
+
+  return elements;
+}
+
+export default function Experience({ text }: ExperienceProps) {
   return (
     <section className="bg-primary relative isolate flex min-h-[277px] w-full items-center">
       <div className="relative z-20 mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)] text-center">
@@ -14,9 +41,7 @@ export default function Experience() {
           viewport={viewport}
           transition={{ ...smoothTransition, duration: 0.9 }}
         >
-          We leverage over <span className="text-muted">20 years of experience</span>, operating globally{" "}
-          <span className="text-muted">on and beyond the track</span> - connecting talent, teams, brands and investors{" "}
-          <span className="text-muted">AT every level</span> of the sport.
+          {parseHighlightText(text)}
         </motion.p>
       </div>
     </section>

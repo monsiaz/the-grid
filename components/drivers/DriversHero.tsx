@@ -1,16 +1,22 @@
 import Hero from "@/components/Hero";
 import { ChevronDown } from "lucide-react";
 
-export default function DriversHero() {
+type DriversHeroProps = {
+  title?: string | null;
+  description?: string | null;
+  backgroundImage?: string | null;
+};
+
+export default function DriversHero({ title, description, backgroundImage }: DriversHeroProps) {
   return (
     <Hero
-      backgroundImage="/images/drivers/hero-collage.webp"
+      backgroundImage={backgroundImage || "/images/drivers/hero-collage.webp"}
       title={
         <>
           FOR <span className="text-muted">DESERVING</span> DRIVERS
         </>
       }
-      description="Learn about them"
+      description={description || "Learn about them"}
       minHeightClassName="min-h-[800px]"
       contentClassName="my-32 max-w-[658px] text-center"
       descriptionClassName="mt-2 text-base leading-[1.4] uppercase"
