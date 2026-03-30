@@ -42,7 +42,6 @@ next-env.d.ts
 
 # payload
 payload-types.ts
-/app/(payload)/admin/importMap.js
 *.db
 
 public/

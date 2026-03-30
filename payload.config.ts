@@ -40,15 +40,12 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    ...(process.env.BLOB_READ_WRITE_TOKEN
-      ? [
-          vercelBlobStorage({
-            collections: {
-              media: true,
-            },
-            token: process.env.BLOB_READ_WRITE_TOKEN,
-          }),
-        ]
-      : []),
+    vercelBlobStorage({
+      collections: {
+        media: true,
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN || "",
+      enabled: !!process.env.BLOB_READ_WRITE_TOKEN,
+    }),
   ],
 });
