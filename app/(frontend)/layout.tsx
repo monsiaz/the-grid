@@ -17,6 +17,9 @@ const leagueSpartan = League_Spartan({
 export const metadata: Metadata = {
   title: "THE GRID",
   description: "THE GRID motorsport agency",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function FrontendLayout({

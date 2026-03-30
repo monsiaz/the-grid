@@ -1,0 +1,11 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="32" height="32" rx="4" fill="#0a0a0a"/>
+  <!-- Left bracket -->
+  <path d="M11 4V7.5H7V24.5H11V28H4V4H11Z" fill="white"/>
+  <!-- Filled shape representing the grid mark -->
+  <path d="M13 7.5H24C24 7.5 28 11 28 16C28 21 24 24.5 24 24.5H13V7.5Z" fill="white" fill-opacity="0.9"/>
+  <!-- THE in tiny text approximated as horizontal lines -->
+  <rect x="14.5" y="13" width="5" height="1.2" rx="0.3" fill="#0a0a0a"/>
+  <rect x="14.5" y="15.4" width="5" height="1.2" rx="0.3" fill="#0a0a0a"/>
+  <rect x="14.5" y="17.8" width="5" height="1.2" rx="0.3" fill="#0a0a0a"/>
+</svg>
