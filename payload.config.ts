@@ -20,7 +20,7 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     importMap: {
-      baseDir: __dirname,
+      baseDir: import.meta.dirname,
     },
   },
   collections: [Users, Media, Drivers, News, TeamMembers],
