@@ -28,7 +28,7 @@ export default function NewsDetailTop({ detail }: NewsDetailTopProps) {
   return (
     <div className="grid items-start gap-10 min-[1100px]:grid-cols-[433px_minmax(0,1fr)]">
       <motion.div
-        className="relative h-[512px] w-full overflow-hidden"
+        className="relative aspect-[4/5] w-full overflow-hidden min-[700px]:h-[512px] min-[700px]:aspect-auto"
         variants={slideInLeft}
         initial="hidden"
         animate="visible"

@@ -15,7 +15,7 @@ export default async function Home() {
   const siteSettings = await payload.findGlobal({ slug: "site-settings" });
 
   return (
-    <main className="bg-primary text-secondary w-full ">
+    <main id="main" className="bg-primary text-secondary w-full ">
       <Hero
         backgroundImage={homepage.heroBackgroundImage}
         title={homepage.heroTitle}

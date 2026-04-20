@@ -14,7 +14,7 @@ export default async function AboutPage() {
   const teamMembers = await payload.find({ collection: "team-members", sort: "order" });
 
   return (
-    <main className="bg-primary text-secondary w-full ">
+    <main id="main" className="bg-primary text-secondary w-full ">
       <AboutHero
         title={aboutPage.heroTitle}
         description={aboutPage.heroDescription}

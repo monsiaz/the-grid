@@ -45,3 +45,6 @@ payload-types.ts
 *.db
 
 public/
+
+# lighthouse audit output (local only)
+/.lighthouse/

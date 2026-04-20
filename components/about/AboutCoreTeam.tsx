@@ -83,10 +83,10 @@ function CoreAreaCard({ area }: { area: CoreArea }) {
         </motion.div>
       </div>
       <div className="grid gap-5">
-        <h3 className="m-0 flex items-start gap-3 text-[clamp(28px,2.1vw,36px)] leading-none font-bold uppercase">
+        <h2 className="m-0 flex items-start gap-3 text-[clamp(28px,2.1vw,36px)] leading-none font-bold uppercase">
           <span className="text-accent">{area.number}</span>
           <span className="whitespace-pre-line">{area.title}</span>
-        </h3>
+        </h2>
         <motion.div
           className="bg-secondary h-[2px] w-full origin-left"
           initial={{ scaleX: 0 }}
@@ -118,7 +118,7 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
       </div>
       <div className="bg-primary grid gap-3 p-6">
         <div className="flex items-center justify-between gap-3 uppercase">
-          <h4 className="m-0 text-xl leading-[1.2] font-bold">{member.name}</h4>
+          <h3 className="m-0 text-xl leading-[1.2] font-bold">{member.name}</h3>
           <span aria-hidden className="text-2xl leading-none">
             in
           </span>

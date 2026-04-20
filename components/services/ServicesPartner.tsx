@@ -15,10 +15,19 @@ type ServicesPartnerProps = {
 
 export default function ServicesPartner({ description }: ServicesPartnerProps) {
   return (
-    <section className="relative min-h-[800px] w-full overflow-hidden">
-      <Image src="/images/services.webp" alt="The Grid x Hintsa partnership" fill sizes="100vw" className="object-cover" />
+    <section className="relative min-h-[clamp(520px,80vh,800px)] w-full overflow-hidden">
+      <Image
+        src="/images/services.webp"
+        alt=""
+        fill
+        loading="lazy"
+        sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
+        quality={65}
+        className="object-cover"
+        aria-hidden
+      />
       <div className="absolute inset-0 bg-black/30" />
-      <div className="relative z-10 mx-auto flex min-h-[800px] w-full max-w-[1344px] items-center justify-center px-[clamp(20px,4vw,48px)] py-32">
+      <div className="relative z-10 mx-auto flex min-h-[inherit] w-full max-w-[1344px] items-center justify-center px-[clamp(20px,4vw,48px)] py-20 min-[900px]:py-32">
         <div className="grid w-full max-w-[1002px] gap-7 text-center uppercase">
           <motion.div
             className="mx-auto flex items-center justify-center gap-8 max-[900px]:flex-col"

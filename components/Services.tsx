@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import {
   motion,
@@ -16,7 +17,20 @@ type ServicesProps = {
 
 export default function Services({ labels }: ServicesProps) {
   return (
-    <section className="relative flex min-h-[575px] w-full items-center bg-services" id="services">
+    <section
+      className="relative flex min-h-[clamp(480px,70vh,575px)] w-full items-center"
+      id="services"
+    >
+      <Image
+        src="/images/services.webp"
+        alt=""
+        fill
+        loading="lazy"
+        sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
+        quality={65}
+        className="absolute inset-0 object-cover"
+        aria-hidden
+      />
       <div className="absolute inset-0 z-10 bg-[linear-gradient(90deg,rgba(0,0,0,0.9),rgba(0,0,0,0)_75%)]" />
       <div className="relative z-20 mx-auto my-32 flex w-full max-w-[1344px] flex-col items-start gap-14 px-[clamp(20px,4vw,48px)] max-[900px]:my-[88px] max-[900px]:gap-8">
         <motion.div
@@ -41,9 +55,9 @@ export default function Services({ labels }: ServicesProps) {
         >
           <Link
             href="/services"
-            className="text-accent border-accent inline-flex cursor-pointer items-center justify-center rounded-full border-2 bg-black/20 px-9 py-4 text-base leading-[1.2] no-underline uppercase hover:text-black hover:bg-accent hover:scale-105 transition-all duration-300"
+            className="text-accent border-accent inline-flex min-h-[48px] cursor-pointer items-center justify-center rounded-full border-2 bg-black/20 px-9 py-3 text-base leading-[1.2] no-underline uppercase hover:text-black hover:bg-accent hover:scale-105 transition-all duration-300"
           >
-            Learn more
+            Learn more<span className="sr-only"> about our services</span>
           </Link>
         </motion.div>
       </div>

@@ -52,7 +52,7 @@ export default function AboutAccelereFollow({
             viewport={viewport}
             transition={smoothTransition}
           >
-            <p className="m-0 text-[clamp(16px,1.8vw,20px)] leading-[1.4] font-light uppercase whitespace-pre-line">
+            <p className="m-0 text-[clamp(16px,1.8vw,20px)] leading-[1.55] font-light whitespace-pre-line">
               {description}
             </p>
             <Link

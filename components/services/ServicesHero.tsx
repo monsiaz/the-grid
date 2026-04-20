@@ -11,11 +11,11 @@ export default function ServicesHero({ title, description, backgroundImage }: Se
   return (
     <Hero
       backgroundImage={backgroundImage || "/images/hero.webp"}
-      minHeightClassName="min-h-[800px]"
+      minHeightClassName="min-h-[clamp(560px,90vh,800px)]"
       overlayClassName="bg-black/30"
       headerAnchorPrefix="/"
       activeHeaderItem="services"
-      contentClassName="mx-auto flex min-h-[640px] max-w-[432px] flex-col items-center justify-center gap-8 text-center"
+      contentClassName="mx-auto flex w-full max-w-[480px] flex-col items-center justify-center gap-8 py-16 text-center min-[900px]:min-h-[640px] min-[900px]:py-0"
       titleClassName="font-[var(--font-league-spartan)] text-[64px] leading-none font-bold uppercase drop-shadow-[4px_4px_8px_rgba(0,0,0,0.1)] max-[1200px]:text-[clamp(44px,6vw,64px)]"
       title={
         <>
@@ -23,7 +23,7 @@ export default function ServicesHero({ title, description, backgroundImage }: Se
         </>
       }
       description={description || undefined}
-      descriptionClassName="m-0 text-center text-base leading-[1.4] uppercase"
+      descriptionClassName="m-0 text-center text-base leading-[1.55] font-light"
       cta={{
         href: "#services-talent",
         ariaLabel: "Scroll to services",

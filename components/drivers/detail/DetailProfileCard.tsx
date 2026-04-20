@@ -29,22 +29,23 @@ export default function DetailProfileCard({ driver, image }: DetailProfileCardPr
             <h2 className="m-0 text-xl leading-[1.2] font-bold uppercase">{driver.name}</h2>
             <p className="m-0 mt-0.5 text-[12px] leading-[1.2] uppercase">{driver.role}</p>
           </div>
-          <div className="mt-1 flex items-center gap-1" aria-label="Nationalities">
+          <ul className="mt-1 flex list-none items-center gap-1 p-0" aria-label="Nationalities">
             <DriverFlags
               codes={driver.flags}
               keyPrefix={`${driver.slug}-detail-flag`}
               className="h-4 w-[26px] shrink-0 overflow-hidden rounded-sm"
+              wrapper="li"
             />
-          </div>
+          </ul>
         </div>
         <Link
           href={driver.instagramUrl}
           target="_blank"
-          rel="noreferrer"
-          aria-label={`${driver.name} Instagram`}
-          className="mt-4 inline-flex h-8 w-8 items-center justify-center text-lg uppercase no-underline transition-transform duration-300 hover:scale-110"
+          rel="noreferrer me"
+          aria-label={`Follow ${driver.name} on Instagram (opens in new tab)`}
+          className="mt-4 inline-flex h-11 min-w-[44px] items-center justify-center rounded-full text-lg uppercase no-underline transition-transform duration-300 hover:scale-110"
         >
-          IG
+          <span aria-hidden>IG</span>
         </Link>
       </div>
     </article>

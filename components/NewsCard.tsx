@@ -19,20 +19,22 @@ export default function NewsCard({ item, href }: { item: NewsItem; href: string 
     >
       <Link
         href={href}
+        aria-label={`Read: ${item.title}`}
         className="text-secondary focus-visible:ring-accent block rounded-[32px] no-underline outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
       >
         <article className="bg-primary border-secondary overflow-hidden rounded-[32px] border">
-          <div className="overflow-hidden">
+          <div className="relative aspect-[300/301] w-full overflow-hidden">
             <motion.div
+              className="absolute inset-0"
               whileHover={{ scale: 1.06 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
             >
               <Image
                 src={item.image}
-                alt={item.title}
-                width={300}
-                height={301}
-                className="h-[301px] w-[300px] object-cover max-[900px]:h-auto max-[900px]:w-full max-[900px]:aspect-[300/301]"
+                alt=""
+                fill
+                sizes="(max-width: 900px) 78vw, 300px"
+                className="object-cover"
               />
             </motion.div>
           </div>

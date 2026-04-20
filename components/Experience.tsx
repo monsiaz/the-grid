@@ -31,7 +31,7 @@ function parseHighlightText(text: string) {
 
 export default function Experience({ text }: ExperienceProps) {
   return (
-    <section className="bg-primary relative isolate flex min-h-[277px] w-full items-center">
+    <section className="bg-primary relative isolate flex min-h-[clamp(220px,40vh,277px)] w-full items-center">
       <div className="relative z-20 mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)] text-center">
         <motion.p
           className="mx-auto my-20 max-w-[888px] text-[28px] leading-[1.4] uppercase max-[1200px]:text-[clamp(20px,2.2vw,28px)] max-[900px]:my-14"

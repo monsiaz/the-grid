@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence } from "framer-motion";
@@ -24,6 +24,18 @@ const headerItems: Array<{ id: HeaderItemId; label: string; href: string }> = [
 export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const { body } = document;
+    if (isMobileMenuOpen) {
+      const previousOverflow = body.style.overflow;
+      body.style.overflow = "hidden";
+      return () => {
+        body.style.overflow = previousOverflow;
+      };
+    }
+  }, [isMobileMenuOpen]);
+
   return (
     <motion.header
       className="relative z-50 mx-auto flex h-[76px] w-full max-w-[1344px] items-center justify-between px-[clamp(20px,4vw,48px)] py-5 max-[900px]:h-auto max-[900px]:py-[18px]"
@@ -39,6 +51,7 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
               alt="The Grid"
               width={122}
               height={44}
+              priority
               className="h-[44px] w-[122px]"
             />
           </motion.div>
@@ -48,7 +61,7 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
           aria-controls="site-navigation"
           aria-expanded={isMobileMenuOpen}
           aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-          className="relative z-[60] hidden h-10 w-10 items-center justify-center rounded border border-white/20 text-secondary transition-colors hover:border-accent hover:text-accent max-[900px]:inline-flex"
+          className="relative z-[60] hidden h-11 w-11 items-center justify-center rounded border border-white/20 text-secondary transition-colors hover:border-accent hover:text-accent max-[900px]:inline-flex"
           onClick={() => setIsMobileMenuOpen((current) => !current)}
         >
           <span className="relative block h-[14px] w-[18px]">
@@ -66,6 +79,7 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
       </div>
       <nav
         className="flex items-center gap-7 text-base leading-[1.2] uppercase max-[900px]:hidden"
+        aria-label="Primary"
       >
         {headerItems.map((item, idx) => (
           <motion.div
@@ -77,6 +91,7 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
           >
             <Link
               href={item.href.startsWith("#") ? `${anchorPrefix}${item.href}` : item.href}
+              aria-current={activeItem === item.id ? "page" : undefined}
               onClick={() => setIsMobileMenuOpen(false)}
               className={`${activeItem === item.id ? "text-accent" : "text-secondary"} no-underline uppercase transition-colors duration-300 hover:text-accent`}
             >
@@ -88,7 +103,7 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
       <AnimatePresence>
         {isMobileMenuOpen ? (
           <motion.div
-            className="fixed inset-0 z-30 hidden items-center justify-center backdrop-blur-md max-[900px]:flex"
+            className="fixed inset-0 z-30 hidden flex-col items-stretch justify-center bg-primary/95 px-6 pb-[env(safe-area-inset-bottom,0px)] pt-[calc(env(safe-area-inset-top,0px)+96px)] backdrop-blur-md max-[900px]:flex"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -97,10 +112,11 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
           >
             <motion.nav
               id="site-navigation"
-              className="flex w-[min(320px,calc(100%-40px))] flex-col items-center gap-4 rounded border border-white/20 bg-transparent px-6 py-6 text-base leading-[1.2] uppercase"
-              initial={{ opacity: 0, y: -10, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8, scale: 0.98 }}
+              aria-label="Mobile"
+              className="flex w-full flex-1 flex-col items-center justify-center gap-6 text-[28px] leading-[1.1] uppercase"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
               onClick={(event) => event.stopPropagation()}
             >
@@ -114,8 +130,9 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
                 >
                   <Link
                     href={item.href.startsWith("#") ? `${anchorPrefix}${item.href}` : item.href}
+                    aria-current={activeItem === item.id ? "page" : undefined}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`${activeItem === item.id ? "text-accent" : "text-secondary"} no-underline uppercase transition-colors duration-300 hover:text-accent`}
+                    className={`${activeItem === item.id ? "text-accent" : "text-secondary"} block px-4 py-3 no-underline uppercase transition-colors duration-300 hover:text-accent`}
                   >
                     {item.label}
                   </Link>

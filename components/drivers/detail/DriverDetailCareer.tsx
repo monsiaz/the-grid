@@ -40,7 +40,7 @@ type DriverDetailCareerProps = {
 function StatItem({ value, label }: { value: string; label: string }) {
   return (
     <motion.div variants={fadeUp} transition={smoothTransition}>
-      <p className="text-accent m-0 text-[100px] leading-none font-bold uppercase">{value}</p>
+      <p className="text-accent m-0 text-[clamp(56px,14vw,100px)] leading-none font-bold uppercase">{value}</p>
       <p className="m-0 mt-1 text-xl leading-[1.2] font-bold uppercase">{label}</p>
     </motion.div>
   );
@@ -67,7 +67,7 @@ export default function DriverDetailCareer({ detail }: DriverDetailCareerProps) 
       </motion.div>
 
       <motion.div
-        className="relative min-h-[730px] overflow-hidden max-[1200px]:min-h-[520px]"
+        className="relative min-h-[clamp(420px,70vh,730px)] overflow-hidden"
         variants={scaleIn}
         initial="hidden"
         whileInView="visible"

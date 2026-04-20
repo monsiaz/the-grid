@@ -36,7 +36,7 @@ export default function News({ items }: NewsProps) {
   }, []);
 
   return (
-    <section className="bg-primary relative isolate min-h-[665px] w-full py-20" id="news">
+    <section className="bg-primary relative isolate min-h-[clamp(520px,70vh,665px)] w-full py-16 min-[900px]:py-20" id="news">
       <motion.div
         className="mx-auto mb-8 flex w-full max-w-[1344px] items-center justify-center gap-16 px-[clamp(20px,4vw,48px)] max-[900px]:justify-start max-[900px]:gap-[22px]"
         variants={fadeUp}
@@ -47,25 +47,25 @@ export default function News({ items }: NewsProps) {
       >
         <button
           type="button"
-          aria-label="Previous"
+          aria-label="Previous news"
           onClick={() => scrollByStep(-1)}
-          className="text-accent border-accent inline-flex h-[34px] w-[57px] cursor-pointer items-center justify-center rounded-full border-2 bg-transparent hover:text-black hover:bg-accent hover:scale-110 transition-all duration-300"
+          className="text-accent border-accent inline-flex h-[44px] w-[57px] cursor-pointer items-center justify-center rounded-full border-2 bg-transparent hover:text-black hover:bg-accent hover:scale-110 transition-all duration-300"
         >
           <ChevronLeft className="size-5 shrink-0" aria-hidden />
         </button>
         <h2 className="m-0 text-[28px] leading-[1.2] font-bold uppercase">Latest news</h2>
         <button
           type="button"
-          aria-label="Next"
+          aria-label="Next news"
           onClick={() => scrollByStep(1)}
-          className="text-accent border-accent inline-flex h-[34px] w-[57px] cursor-pointer items-center justify-center rounded-full border-2 bg-transparent hover:text-black hover:bg-accent hover:scale-110 transition-all duration-300"
+          className="text-accent border-accent inline-flex h-[44px] w-[57px] cursor-pointer items-center justify-center rounded-full border-2 bg-transparent hover:text-black hover:bg-accent hover:scale-110 transition-all duration-300"
         >
           <ChevronRight className="size-5 shrink-0" aria-hidden />
         </button>
       </motion.div>
       <motion.div
         ref={scrollRef}
-        className="flex items-start gap-7 overflow-x-auto scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden [padding-inline:max(clamp(20px,4vw,48px),calc(50vw-min(150px,39vw)))]"
+        className="flex snap-x snap-mandatory items-start gap-7 overflow-x-auto scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden [padding-inline:max(clamp(20px,4vw,48px),calc(50vw-min(150px,39vw)))]"
         variants={staggerContainer}
         initial="hidden"
         whileInView="visible"
@@ -76,7 +76,7 @@ export default function News({ items }: NewsProps) {
             key={`${item.newsSlug}-${idx}`}
             variants={fadeUp}
             transition={smoothTransition}
-            className="shrink-0"
+            className="shrink-0 snap-center"
           >
             <NewsCard
               item={{

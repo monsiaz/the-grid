@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import {
   motion,
@@ -16,7 +17,20 @@ type DriversProps = {
 
 export default function Drivers({ heading, headingAccent }: DriversProps) {
   return (
-    <section className="relative flex min-h-[800px] w-full items-center justify-center bg-drivers" id="drivers">
+    <section
+      className="relative flex min-h-[clamp(560px,85vh,800px)] w-full items-center justify-center"
+      id="drivers"
+    >
+      <Image
+        src="/images/drivers.webp"
+        alt=""
+        fill
+        loading="lazy"
+        sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
+        quality={65}
+        className="absolute inset-0 object-cover"
+        aria-hidden
+      />
       <div className="absolute inset-0 z-10 bg-black/40" />
       <div className="relative z-20 mx-auto my-32 grid w-full max-w-[1344px] justify-items-center gap-14 px-[clamp(20px,4vw,48px)] text-center max-[900px]:my-[88px] max-[900px]:gap-[38px]">
         <motion.h2
@@ -40,7 +54,7 @@ export default function Drivers({ heading, headingAccent }: DriversProps) {
         >
           <Link
             href="/drivers"
-            className="text-accent border-accent inline-flex cursor-pointer items-center justify-center rounded-full border-2 bg-black/20 px-9 py-4 text-base leading-[1.2] no-underline uppercase hover:text-black hover:bg-accent hover:scale-105 transition-all duration-300"
+            className="text-accent border-accent inline-flex min-h-[48px] cursor-pointer items-center justify-center rounded-full border-2 bg-black/20 px-9 py-3 text-base leading-[1.2] no-underline uppercase hover:text-black hover:bg-accent hover:scale-105 transition-all duration-300"
           >
             Meet our drivers
           </Link>

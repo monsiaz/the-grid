@@ -39,7 +39,7 @@ export default function DriverDetailAgency({ detail }: DriverDetailAgencyProps) 
   return (
     <section className="grid grid-cols-[888px_1fr] gap-10 max-[1200px]:grid-cols-1">
       <motion.div
-        className="relative min-h-[546px] overflow-hidden max-[1200px]:min-h-[420px]"
+        className="relative min-h-[clamp(360px,55vh,546px)] overflow-hidden"
         variants={slideInLeft}
         initial="hidden"
         whileInView="visible"

@@ -82,7 +82,7 @@ export default async function DriversPage() {
     .map(([, docs]) => docs);
 
   return (
-    <main className="bg-primary text-secondary w-full ">
+    <main id="main" className="bg-primary text-secondary w-full ">
       <DriversHero
         title={driversPage.heroTitle}
         description={driversPage.heroDescription}

@@ -6,7 +6,7 @@ import { motion, scaleIn, smoothTransition, viewport } from "../motion";
 export default function AboutAccelereBanner() {
   return (
     <motion.section
-      className="relative min-h-[800px] w-full overflow-hidden"
+      className="relative min-h-[clamp(420px,70vh,800px)] w-full overflow-hidden"
       variants={scaleIn}
       initial="hidden"
       whileInView="visible"

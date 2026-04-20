@@ -32,7 +32,7 @@ export default function NewsHeading() {
       >
         <motion.button
           type="button"
-          className="h-[40px] rounded-full border-2 border-accent px-7 text-[12px] leading-[1.2] font-medium tracking-[0.01em] text-accent uppercase transition-all duration-300 hover:bg-accent hover:text-black"
+          className="h-[44px] rounded-full border-2 border-accent bg-accent px-7 text-[13px] leading-[1.2] font-semibold tracking-[0.02em] text-white uppercase transition-all duration-300 hover:bg-white hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           variants={fadeUp}
           transition={smoothTransition}
           whileHover={{ scale: 1.05 }}
@@ -42,7 +42,7 @@ export default function NewsHeading() {
         </motion.button>
         <motion.button
           type="button"
-          className="h-[40px] rounded-full border-2 border-accent px-7 text-[12px] leading-[1.2] font-medium tracking-[0.01em] text-accent uppercase transition-all duration-300 hover:bg-accent hover:text-black"
+          className="h-[44px] rounded-full border-2 border-secondary bg-transparent px-7 text-[13px] leading-[1.2] font-semibold tracking-[0.02em] text-secondary uppercase transition-all duration-300 hover:bg-secondary hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           variants={fadeUp}
           transition={smoothTransition}
           whileHover={{ scale: 1.05 }}

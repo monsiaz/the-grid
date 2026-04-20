@@ -9,7 +9,7 @@ export default async function ContactPage() {
   const siteSettings = await payload.findGlobal({ slug: "site-settings" });
 
   return (
-    <main className="bg-primary text-secondary w-full ">
+    <main id="main" className="bg-primary text-secondary w-full ">
       <ContactHero
         backgroundImage={contactPage.heroBackgroundImage}
         title={

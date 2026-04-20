@@ -17,7 +17,7 @@ type DriverDetailPageProps = {
 
 export default function DriverDetailPage({ driver, detail }: DriverDetailPageProps) {
   return (
-    <main className="bg-primary text-secondary w-full ">
+    <main id="main" className="bg-primary text-secondary w-full ">
       <Header activeItem="drivers" />
       <section className="mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)] pt-10 pb-20">
         <motion.div

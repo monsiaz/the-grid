@@ -22,8 +22,8 @@ export default function ServicesTalent({ heading, headingAccent, description, in
       description={description || ""}
       introText={introText || ""}
       cards={cards}
-      gridClassName="min-[1200px]:grid-cols-[repeat(6,minmax(0,1fr))]"
-      imageHeightClassName="h-[280px]"
+      gridClassName="min-[600px]:grid-cols-2 min-[900px]:grid-cols-3 min-[1200px]:grid-cols-[repeat(6,minmax(0,1fr))]"
+      imageHeightClassName="h-[240px] min-[900px]:h-[280px]"
       bodyPaddingClassName="p-6"
     />
   );

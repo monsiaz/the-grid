@@ -17,8 +17,8 @@ export default function DriversHero({ title, description, backgroundImage }: Dri
         </>
       }
       description={description || "Learn about them"}
-      minHeightClassName="min-h-[800px]"
-      contentClassName="my-32 max-w-[658px] text-center"
+      minHeightClassName="min-h-[clamp(560px,90vh,800px)]"
+      contentClassName="my-24 max-w-[658px] text-center min-[900px]:my-32"
       descriptionClassName="mt-2 text-base leading-[1.4] uppercase"
       overlayClassName="bg-black/70"
       activeHeaderItem="drivers"

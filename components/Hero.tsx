@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Header from "./Header";
 import Link from "next/link";
 import {
@@ -29,6 +30,7 @@ type HeroProps = {
     className?: string;
     ariaLabel?: string;
   };
+  priorityBackground?: boolean;
 };
 
 export default function Hero({
@@ -36,7 +38,7 @@ export default function Hero({
   title,
   description,
   children,
-  minHeightClassName = "min-h-[460px]",
+  minHeightClassName = "min-h-[clamp(420px,80vh,560px)]",
   contentClassName = "my-32 max-w-[680px] text-left",
   titleClassName = "font-[var(--font-league-spartan)] text-[64px] leading-none font-bold uppercase drop-shadow-[4px_4px_8px_rgba(0,0,0,0.1)] max-[1200px]:text-[clamp(44px,6vw,64px)]",
   descriptionClassName = "mt-2 text-base leading-[1.4] uppercase",
@@ -45,12 +47,21 @@ export default function Hero({
   activeHeaderItem,
   footerSlot,
   cta,
+  priorityBackground = true,
 }: HeroProps) {
   return (
-    <section
-      className={`relative w-full bg-cover bg-center ${minHeightClassName}`}
-      style={{ backgroundImage: `url("${backgroundImage}")` }}
-    >
+    <section className={`relative w-full ${minHeightClassName}`}>
+      <Image
+        src={backgroundImage}
+        alt=""
+        fill
+        priority={priorityBackground}
+        fetchPriority={priorityBackground ? "high" : "auto"}
+        sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
+        quality={70}
+        className="absolute inset-0 -z-0 object-cover"
+        aria-hidden
+      />
       <div className={`absolute inset-0 z-10 ${overlayClassName}`} />
       <Header activeItem={activeHeaderItem} anchorPrefix={headerAnchorPrefix} />
       <div className="relative z-20 mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)]">
@@ -85,7 +96,7 @@ export default function Hero({
               <Link
                 href={cta.href}
                 aria-label={cta.ariaLabel}
-                className={`mt-8 inline-flex items-center justify-center rounded-full border-2 border-accent px-4 py-3 text-[22px] leading-[1.2] text-accent no-underline transition-all duration-300 hover:bg-accent hover:text-black hover:scale-105 ${cta.className ?? ""}`}
+                className={`mt-8 inline-flex min-h-[44px] items-center justify-center rounded-full border-2 border-accent px-5 py-3 text-[22px] leading-[1.2] text-accent no-underline transition-all duration-300 hover:bg-accent hover:text-black hover:scale-105 ${cta.className ?? ""}`}
               >
                 {cta.label}
               </Link>

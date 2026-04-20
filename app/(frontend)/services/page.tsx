@@ -13,7 +13,7 @@ export default async function ServicesPage() {
   const siteSettings = await payload.findGlobal({ slug: "site-settings" });
 
   return (
-    <main className="bg-primary text-secondary w-full ">
+    <main id="main" className="bg-primary text-secondary w-full ">
       <ServicesHero
         title={servicesPage.heroTitle}
         description={servicesPage.heroDescription}

@@ -33,32 +33,33 @@ export default function DriverCard({ driver, compact = false }: DriverCardProps)
       <div className="flex flex-1 flex-col justify-between p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h3 className="m-0 text-xl leading-[1.2] font-bold uppercase">{driver.name}</h3>
+            <h2 className="m-0 text-xl leading-[1.2] font-bold uppercase">{driver.name}</h2>
             <p className="m-0 mt-0.5 text-[12px] leading-[1.2] uppercase">{driver.role}</p>
           </div>
-          <div className="mt-1 flex items-center gap-1" aria-label="Nationalities">
+          <ul className="mt-1 flex list-none items-center gap-1 p-0" aria-label="Nationalities">
             <DriverFlags
               codes={driver.flags}
               keyPrefix={`${driver.slug}-flag`}
               className="h-4 w-[26px] shrink-0 overflow-hidden rounded-sm"
+              wrapper="li"
             />
-          </div>
+          </ul>
         </div>
         <div className="mt-4 flex items-center justify-between">
           <Link
             href={`/drivers/${driver.slug}`}
             className="text-accent border-accent inline-flex items-center justify-center rounded-full border-2 bg-black/20 px-5 py-3 text-base leading-[1.2] uppercase no-underline transition-all duration-300 hover:bg-accent hover:text-black hover:scale-105"
           >
-            Learn more
+            Learn more<span className="sr-only"> about {driver.name}</span>
           </Link>
           <Link
             href={driver.instagramUrl}
             target="_blank"
-            rel="noreferrer"
-            aria-label={`${driver.name} Instagram`}
-            className="inline-flex h-8 w-8 items-center justify-center text-lg uppercase no-underline transition-transform duration-300 hover:scale-110"
+            rel="noreferrer me"
+            aria-label={`Follow ${driver.name} on Instagram (opens in new tab)`}
+            className="inline-flex h-11 w-11 items-center justify-center text-lg uppercase no-underline transition-transform duration-300 hover:scale-110"
           >
-            <Image src="/images/instagram.svg" alt="Instagram" width={24} height={24} />
+            <Image src="/images/instagram.svg" alt="" width={24} height={24} aria-hidden />
           </Link>
         </div>
       </div>
