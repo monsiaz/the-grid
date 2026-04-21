@@ -80,7 +80,7 @@ function parseHighlightText(text: string) {
 function CoreAreaCard({ area }: { area: CoreArea }) {
   return (
     <motion.article
-      className="grid gap-y-5
+      className="grid gap-y-8
         min-[1200px]:[grid-row:span_4]
         min-[1200px]:[grid-template-rows:subgrid]
         min-[1200px]:gap-y-0"
@@ -105,7 +105,7 @@ function CoreAreaCard({ area }: { area: CoreArea }) {
       </div>
 
       {/* row 2: title — self-end so all align to the bottom of their row */}
-      <h2 className="m-0 flex items-start gap-3 text-[clamp(28px,2.1vw,36px)] leading-[1.15] font-bold uppercase min-[1200px]:self-end min-[1200px]:pb-5">
+      <h2 className="m-0 flex items-start gap-3 text-[clamp(28px,2.1vw,36px)] leading-[1.15] font-bold uppercase min-[1200px]:self-end min-[1200px]:pt-6 min-[1200px]:pb-5">
         <span className="text-accent shrink-0">{area.number}</span>
         <span className="whitespace-pre-line">{area.title}</span>
       </h2>
