@@ -7,7 +7,7 @@ export const News: CollectionConfig = {
   slug: "news",
   admin: {
     useAsTitle: "title",
-    defaultColumns: ["title", "category", "date"],
+    defaultColumns: ["title", "tag", "date"],
     livePreview: {
       url: ({ data, locale }) => {
         const base = getSiteUrl();
@@ -58,16 +58,30 @@ export const News: CollectionConfig = {
       description: "Vignette affichée dans la grille /news/.",
     }),
     {
+      name: "tag",
+      type: "relationship",
+      relationTo: "news-tags",
+      hasMany: false,
+      required: false,
+      admin: {
+        position: "sidebar",
+        description:
+          "Choose the tag/filter for this news article. It drives the /news filter bar (?filter=<tag-slug>) and the badge shown on each card. Create or rename tags in the News → News tags collection.",
+      },
+    },
+    {
       name: "category",
       type: "select",
-      required: true,
+      required: false,
       options: [
         { label: "Sporting", value: "sporting" },
         { label: "Commercial", value: "commercial" },
       ],
       admin: {
+        position: "sidebar",
+        hidden: true,
         description:
-          "Choose the filter that will highlight this news item on the /news page. 'Sporting' appears when visitors click the SPORTING NEWS filter; 'Commercial' when they click COMMERCIAL NEWS. You can change the filter at any time and republish.",
+          "Legacy filter kept only as a fallback for articles not yet migrated to the new Tags system. Leave empty — use the Tag field above instead.",
       },
     },
     {

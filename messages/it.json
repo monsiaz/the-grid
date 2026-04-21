@@ -241,11 +241,22 @@
       "firstName": "Nome",
       "lastName": "Cognome",
       "email": "Email",
-      "message": "Messaggio",
-      "send": "Invia",
+      "message": "Scrivi un messaggio",
+      "send": "Invia richiesta",
       "sending": "Invio...",
       "success": "Grazie, il tuo messaggio è stato inviato.",
       "error": "Impossibile inviare il messaggio."
+    },
+    "newsletter": {
+      "firstName": "Nome",
+      "lastName": "Cognome",
+      "email": "Email",
+      "company": "Azienda",
+      "jobTitle": "Ruolo",
+      "subscribe": "Iscriviti alla newsletter",
+      "sending": "Invio...",
+      "success": "Richiesta di accesso ricevuta",
+      "error": "Impossibile registrare la tua richiesta."
     }
   },
   "privacy": {

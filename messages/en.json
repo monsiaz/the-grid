@@ -235,11 +235,22 @@
       "firstName": "First Name",
       "lastName": "Last Name",
       "email": "Email",
-      "message": "Message",
-      "send": "Send",
+      "message": "Write a message",
+      "send": "Send a request",
       "sending": "Sending...",
       "success": "Thanks, your message has been sent.",
       "error": "Unable to send message."
+    },
+    "newsletter": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "company": "Company",
+      "jobTitle": "Job Title",
+      "subscribe": "Subscribe to newsletter",
+      "sending": "Sending...",
+      "success": "Access request received",
+      "error": "Unable to register your request."
     }
   },
   "privacy": {

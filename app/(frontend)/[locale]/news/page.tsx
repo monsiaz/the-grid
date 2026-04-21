@@ -29,12 +29,21 @@ export async function generateMetadata({
   });
 }
 
+type TagDoc = {
+  id: string | number;
+  name?: string;
+  slug?: string;
+  order?: number;
+  accent?: boolean;
+};
+
 export type NewsCardData = {
   slug: string;
   title: string;
   image: string;
   excerpt?: string | null;
-  category: "sporting" | "commercial";
+  tag?: { label: string; accent?: boolean } | null;
+  tagSlug?: string | null;
 };
 
 export default async function NewsPage({
@@ -47,22 +56,54 @@ export default async function NewsPage({
   const [{ locale }, { filter }] = await Promise.all([params, searchParams]);
   setRequestLocale(locale);
 
-  const activeFilter: "sporting" | "commercial" | null =
-    filter === "sporting" || filter === "commercial" ? filter : null;
-
   const payload = await getPayloadClient();
   const siteSettings = await payload.findGlobal({ slug: "site-settings", locale });
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  const tagsResult: any = await payload
+    .find({
+      collection: "news-tags",
+      limit: 50,
+      sort: "order",
+      locale,
+    })
+    .catch(() => ({ docs: [] }));
+  /* eslint-enable @typescript-eslint/no-explicit-any */
+
+  const tagDocs: TagDoc[] = (tagsResult.docs || []) as TagDoc[];
+
+  /** Build a slug→tag lookup for fast resolution. */
+  const tagBySlug = new Map<string, TagDoc>();
+  for (const td of tagDocs) {
+    if (td.slug) tagBySlug.set(td.slug, td);
+  }
+
+  /** If the requested filter doesn't match any tag, ignore it. */
+  const activeFilter: string | null =
+    filter && tagBySlug.has(filter) ? filter : null;
+
   const news = await payload.find({
     collection: "news",
     sort: "-createdAt",
     limit: 100,
     locale,
+    depth: 1,
   });
 
   const newsCards: NewsCardData[] = news.docs.map((n) => {
-    const manualExcerpt = (n as { excerpt?: string | null }).excerpt ?? null;
+    const raw = n as unknown as {
+      slug: string;
+      title: string;
+      listImage: string;
+      excerpt?: string | null;
+      introParagraphs?: string | null;
+      category?: string | null;
+      tag?: TagDoc | string | number | null;
+    };
+
+    const manualExcerpt = raw.excerpt ?? null;
     let excerpt = manualExcerpt ? manualExcerpt.trim() : "";
-    const intro = (n as { introParagraphs?: string | null }).introParagraphs;
+    const intro = raw.introParagraphs;
     if (!excerpt && typeof intro === "string" && intro.length > 0) {
       const firstLine = intro
         .split("\n")
@@ -70,17 +111,29 @@ export default async function NewsPage({
         .find(Boolean) || "";
       excerpt = firstLine.length > 180 ? `${firstLine.slice(0, 177).trimEnd()}…` : firstLine;
     }
+
+    // Resolve tag: relationship (object after depth=1) > legacy category fallback.
+    let resolved: TagDoc | null = null;
+    if (raw.tag && typeof raw.tag === "object" && "slug" in raw.tag) {
+      resolved = raw.tag as TagDoc;
+    } else if (raw.category && tagBySlug.has(raw.category)) {
+      resolved = tagBySlug.get(raw.category) || null;
+    }
+
     return {
-      slug: n.slug,
-      title: n.title,
-      image: n.listImage,
+      slug: raw.slug,
+      title: raw.title,
+      image: raw.listImage,
       excerpt: excerpt || null,
-      category: n.category as "sporting" | "commercial",
+      tagSlug: resolved?.slug || null,
+      tag: resolved
+        ? { label: resolved.name || resolved.slug || "", accent: !!resolved.accent }
+        : null,
     };
   });
 
   const filteredCards = activeFilter
-    ? newsCards.filter((c) => c.category === activeFilter)
+    ? newsCards.filter((c) => c.tagSlug === activeFilter)
     : newsCards;
 
   let featuredCards: NewsCardData[];
@@ -104,12 +157,16 @@ export default async function NewsPage({
 
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/news" });
 
+  const headingTags = tagDocs
+    .filter((td) => td.slug && td.name)
+    .map((td) => ({ slug: td.slug as string, label: td.name as string }));
+
   return (
     <main id="main" className="bg-primary text-secondary w-full ">
       <Header activeItem="news" />
       <section className="mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)] pt-20 pb-24">
         <div className="grid gap-16">
-          <NewsHeading activeFilter={activeFilter} />
+          <NewsHeading activeFilter={activeFilter} tags={headingTags} />
           <div className="grid gap-7">
             <NewsFeaturedGrid cards={featuredCards} />
             {rowCards

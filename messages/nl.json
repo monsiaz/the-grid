@@ -241,11 +241,22 @@
       "firstName": "Voornaam",
       "lastName": "Achternaam",
       "email": "E-mail",
-      "message": "Bericht",
-      "send": "Versturen",
+      "message": "Schrijf een bericht",
+      "send": "Verzoek versturen",
       "sending": "Bezig met verzenden...",
       "success": "Dank je wel, je bericht is verzonden.",
       "error": "Kan bericht niet verzenden."
+    },
+    "newsletter": {
+      "firstName": "Voornaam",
+      "lastName": "Achternaam",
+      "email": "E-mail",
+      "company": "Bedrijf",
+      "jobTitle": "Functie",
+      "subscribe": "Abonneer op de nieuwsbrief",
+      "sending": "Bezig met verzenden...",
+      "success": "Toegangsverzoek ontvangen",
+      "error": "Kan je verzoek niet registreren."
     }
   },
   "privacy": {

@@ -5,12 +5,17 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { motion, fadeUp, smoothTransition } from "../motion";
 
+type NewsTagBadge = {
+  label: string;
+  accent?: boolean;
+};
+
 type NewsCardProps = {
   href: string;
   title: string;
   image: string;
   excerpt?: string | null;
-  category?: "sporting" | "commercial" | null;
+  tag?: NewsTagBadge | null;
   cardClassName?: string;
   imageWrapClassName?: string;
   titleClassName?: string;
@@ -21,7 +26,7 @@ export default function NewsCard({
   title,
   image,
   excerpt,
-  category,
+  tag,
   cardClassName,
   imageWrapClassName = "h-[200px]",
   titleClassName,
@@ -49,13 +54,15 @@ export default function NewsCard({
           />
         </div>
         <div className="flex flex-1 flex-col gap-3 bg-primary p-6">
-          {category ? (
-            <span className={`inline-flex w-fit items-center rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ${
-              category === "commercial"
-                ? "bg-accent/15 text-accent"
-                : "bg-secondary/10 text-secondary/70"
-            }`}>
-              {category === "commercial" ? "Commercial" : "Sporting"}
+          {tag ? (
+            <span
+              className={`inline-flex w-fit items-center rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ${
+                tag.accent
+                  ? "bg-accent/15 text-accent"
+                  : "bg-secondary/10 text-secondary/70"
+              }`}
+            >
+              {tag.label}
             </span>
           ) : null}
           <h2

@@ -9,6 +9,7 @@ type Status = "idle" | "loading" | "ready" | "error";
 
 const PROBES: Record<string, string[]> = {
   news: ["title", "introParagraphs", "bodyParagraphs", "excerpt"],
+  "news-tags": ["name"],
   drivers: [
     "name",
     "role",

@@ -11,8 +11,14 @@ import {
   viewport,
 } from "../motion";
 
+export type NewsFilterTag = {
+  slug: string;
+  label: string;
+};
+
 type NewsHeadingProps = {
-  activeFilter: "sporting" | "commercial" | null;
+  activeFilter: string | null;
+  tags: NewsFilterTag[];
 };
 
 const activeClass =
@@ -21,7 +27,7 @@ const activeClass =
 const inactiveClass =
   "inline-flex h-[40px] items-center rounded-full border-2 border-secondary bg-transparent px-4 text-[12px] leading-[1.2] font-semibold tracking-[0.04em] text-secondary uppercase transition-all duration-300 hover:bg-secondary hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white whitespace-nowrap";
 
-export default function NewsHeading({ activeFilter }: NewsHeadingProps) {
+export default function NewsHeading({ activeFilter, tags }: NewsHeadingProps) {
   const t = useTranslations("news");
   return (
     <div className="flex w-full flex-col items-start gap-4 min-[900px]:flex-row min-[900px]:items-center min-[900px]:justify-between">
@@ -56,32 +62,22 @@ export default function NewsHeading({ activeFilter }: NewsHeadingProps) {
             {t("filters.all")}
           </Link>
         </motion.div>
-        <motion.div
-          variants={fadeUp}
-          transition={smoothTransition}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.97 }}
-        >
-          <Link
-            href="/news?filter=sporting"
-            className={activeFilter === "sporting" ? activeClass : inactiveClass}
+        {tags.map((tag) => (
+          <motion.div
+            key={tag.slug}
+            variants={fadeUp}
+            transition={smoothTransition}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.97 }}
           >
-            {t("filters.sporting")}
-          </Link>
-        </motion.div>
-        <motion.div
-          variants={fadeUp}
-          transition={smoothTransition}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.97 }}
-        >
-          <Link
-            href="/news?filter=commercial"
-            className={activeFilter === "commercial" ? activeClass : inactiveClass}
-          >
-            {t("filters.commercial")}
-          </Link>
-        </motion.div>
+            <Link
+              href={`/news?filter=${encodeURIComponent(tag.slug)}`}
+              className={activeFilter === tag.slug ? activeClass : inactiveClass}
+            >
+              {tag.label}
+            </Link>
+          </motion.div>
+        ))}
       </motion.div>
     </div>
   );

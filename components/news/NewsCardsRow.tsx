@@ -8,7 +8,7 @@ type NewsCardData = {
   title: string;
   image: string;
   excerpt?: string | null;
-  category: "sporting" | "commercial";
+  tag?: { label: string; accent?: boolean } | null;
 };
 
 type NewsCardsRowProps = {
@@ -30,6 +30,7 @@ export default function NewsCardsRow({ cards }: NewsCardsRowProps) {
           title={card.title}
           image={card.image}
           excerpt={card.excerpt}
+          tag={card.tag}
           cardClassName="min-h-[300px]"
         />
       ))}

@@ -9,6 +9,7 @@ import { Users } from "./collections/Users";
 import { Media } from "./collections/Media";
 import { Drivers } from "./collections/Drivers";
 import { News } from "./collections/News";
+import { NewsTags } from "./collections/NewsTags";
 import { TeamMembers } from "./collections/TeamMembers";
 
 import { Homepage } from "./globals/Homepage";
@@ -56,7 +57,7 @@ export default buildConfig({
       ],
     },
   },
-  collections: [Users, Media, Drivers, News, TeamMembers],
+  collections: [Users, Media, Drivers, News, NewsTags, TeamMembers],
   globals: [Homepage, AboutPage, ServicesPage, ContactPage, DriversPage, SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "default-secret-change-me",

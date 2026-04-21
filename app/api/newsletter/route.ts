@@ -4,6 +4,10 @@ import { sendMail } from "@/lib/mail";
 type NewsletterPayload = {
   email?: string;
   name?: string;
+  firstName?: string;
+  lastName?: string;
+  company?: string;
+  jobTitle?: string;
   source?: string;
 };
 
@@ -24,7 +28,11 @@ export async function POST(request: Request) {
   }
 
   const email = (body.email || "").trim();
-  const name = (body.name || "").trim();
+  const legacyName = (body.name || "").trim();
+  const firstName = (body.firstName || "").trim();
+  const lastName = (body.lastName || "").trim();
+  const company = (body.company || "").trim();
+  const jobTitle = (body.jobTitle || "").trim();
   const source = (body.source || "footer").trim().slice(0, 80);
 
   if (!email) {
@@ -34,12 +42,17 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Please provide a valid email." }, { status: 400 });
   }
 
-  const subject = "New access request";
+  const fullName = [firstName, lastName].filter(Boolean).join(" ") || legacyName;
+  const subject = fullName
+    ? `New access request — ${fullName}`
+    : "New access request";
   const text = [
     `A new access request has been submitted from the ${source}.`,
     "",
     `Email: ${email}`,
-    name ? `Name: ${name}` : null,
+    fullName ? `Name: ${fullName}` : null,
+    company ? `Company: ${company}` : null,
+    jobTitle ? `Job title: ${jobTitle}` : null,
     `Received at: ${new Date().toISOString()}`,
   ]
     .filter(Boolean)

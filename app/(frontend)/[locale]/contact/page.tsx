@@ -54,6 +54,12 @@ export default async function ContactPage({
         emailLabel={t("form.email")}
         messageLabel={t("form.message")}
         sendLabel={t("form.send")}
+        newsletterFirstNameLabel={t("newsletter.firstName")}
+        newsletterLastNameLabel={t("newsletter.lastName")}
+        newsletterEmailLabel={t("newsletter.email")}
+        newsletterCompanyLabel={t("newsletter.company")}
+        newsletterJobTitleLabel={t("newsletter.jobTitle")}
+        newsletterSubscribeLabel={t("newsletter.subscribe")}
         footerProps={{
           copyright: siteSettings.footerCopyright,
           instagramUrl: siteSettings.instagramUrl,

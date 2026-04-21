@@ -241,11 +241,22 @@
       "firstName": "名",
       "lastName": "姓",
       "email": "邮箱",
-      "message": "消息",
-      "send": "发送",
+      "message": "写下留言",
+      "send": "发送请求",
       "sending": "发送中...",
       "success": "感谢！你的消息已发送。",
       "error": "无法发送消息。"
+    },
+    "newsletter": {
+      "firstName": "名",
+      "lastName": "姓",
+      "email": "邮箱",
+      "company": "公司",
+      "jobTitle": "职位",
+      "subscribe": "订阅新闻通讯",
+      "sending": "发送中...",
+      "success": "访问申请已收到",
+      "error": "无法登记你的申请。"
     }
   },
   "privacy": {
