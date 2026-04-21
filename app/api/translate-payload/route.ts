@@ -204,7 +204,7 @@ async function translateDoc(
   return updates.length;
 }
 
-export async function POST(request: Request) {
+async function translateHandler(request: Request) {
   const expectedSecret = process.env.TRANSLATE_SECRET || process.env.PAYLOAD_SECRET;
   const provided =
     request.headers.get("x-translate-secret") ||
@@ -314,4 +314,22 @@ export async function POST(request: Request) {
   }
 
   return NextResponse.json({ success: true, log });
+}
+
+export async function POST(request: Request) {
+  try {
+    return await translateHandler(request);
+  } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const e = err as any;
+    return NextResponse.json(
+      {
+        error: "translate_failed",
+        message: e?.message || String(err),
+        name: e?.name,
+        stack: (e?.stack || "").split("\n").slice(0, 8),
+      },
+      { status: 500 },
+    );
+  }
 }
