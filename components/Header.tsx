@@ -47,16 +47,19 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
     >
       {/* Logo — shrink-0 so it never gets squeezed by the nav */}
       <Link href="/" aria-label={t("homeLink")} className="shrink-0">
-        <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
-          <Image
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.2 }}
+          style={{ width: 122, height: 44 }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src="/images/logo.svg"
             alt={t("logoAlt")}
             width={122}
             height={44}
-            priority
             fetchPriority="high"
-            unoptimized
-            className="h-[44px] w-auto"
+            style={{ width: 122, height: 44, display: "block" }}
           />
         </motion.div>
       </Link>
@@ -67,7 +70,7 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
         aria-controls="site-navigation"
         aria-expanded={isMobileMenuOpen}
         aria-label={isMobileMenuOpen ? t("closeMenu") : t("openMenu")}
-        className="relative z-[60] hidden h-11 w-11 items-center justify-center rounded border border-white/20 text-secondary transition-colors hover:border-accent hover:text-accent max-[900px]:inline-flex"
+        className="relative z-[60] hidden h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/25 text-secondary backdrop-blur-sm transition-colors hover:border-accent hover:text-accent max-[900px]:inline-flex"
         onClick={() => setIsMobileMenuOpen((current) => !current)}
       >
         <span className="relative block h-[14px] w-[18px]">
@@ -84,7 +87,7 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
       </button>
 
       <nav
-        className="flex shrink-0 items-center gap-[clamp(14px,2vw,28px)] text-[clamp(11px,0.9vw,13px)] leading-[1.2] uppercase max-[900px]:hidden"
+        className="flex shrink-0 items-center gap-[clamp(14px,2vw,28px)] max-[900px]:hidden"
         aria-label={t("primary")}
       >
         {headerItems.map((item, idx) => (
@@ -99,7 +102,7 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
               href={item.href.startsWith("#") ? `${anchorPrefix}${item.href}` : item.href}
               aria-current={activeItem === item.id ? "page" : undefined}
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`${activeItem === item.id ? "text-accent" : "text-secondary"} whitespace-nowrap no-underline uppercase tracking-[0.04em] transition-colors duration-300 hover:text-accent`}
+              className={`ui-label whitespace-nowrap no-underline transition-colors duration-300 hover:text-accent ${activeItem === item.id ? "text-accent" : "text-secondary/86"}`}
             >
               {t(`nav.${item.id}`)}
             </Link>
@@ -119,7 +122,7 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
             <motion.nav
               id="site-navigation"
               aria-label={t("mobile")}
-              className="flex w-full flex-1 flex-col items-center justify-center gap-6 text-[28px] leading-[1.1] uppercase"
+              className="flex w-full flex-1 flex-col items-center justify-center gap-6"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
@@ -138,7 +141,7 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
                     href={item.href.startsWith("#") ? `${anchorPrefix}${item.href}` : item.href}
                     aria-current={activeItem === item.id ? "page" : undefined}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`${activeItem === item.id ? "text-accent" : "text-secondary"} block px-4 py-3 no-underline uppercase transition-colors duration-300 hover:text-accent`}
+                    className={`display-card block px-4 py-3 no-underline transition-colors duration-300 hover:text-accent ${activeItem === item.id ? "text-accent" : "text-secondary"}`}
                   >
                     {t(`nav.${item.id}`)}
                   </Link>
