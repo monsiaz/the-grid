@@ -4,22 +4,24 @@ import { getPayloadClient } from "@/lib/payload";
 export const maxDuration = 60;
 
 /**
- * Belt-and-suspenders schema migration.
+ * Belt-and-suspenders schema migration using Payload's own pg pool.
  * Payload's `push: true` normally creates new tables/columns on cold start,
- * but on Vercel serverless we've seen it race during build → runtime.
- * We ALTER TABLE ... IF NOT EXISTS so this endpoint can also self-heal.
+ * but on Vercel serverless we've seen it race during build → runtime. We
+ * reuse the adapter's pool to ALTER TABLE ... IF NOT EXISTS so this
+ * endpoint can also self-heal.
  */
-async function ensureSchema(): Promise<{ ran: string[]; errors: string[] }> {
+async function ensureSchema(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  payload: any,
+): Promise<{ ran: string[]; errors: string[] }> {
   const ran: string[] = [];
   const errors: string[] = [];
-  const dburl = process.env.DATABASE_URL || "";
-  if (!dburl.startsWith("postgres")) return { ran, errors };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const pg: any = await import(/* webpackIgnore: true */ "pg" as string);
-  const PoolCtor = pg.Pool || pg.default?.Pool;
-  const pool = new PoolCtor({ connectionString: dburl, max: 2 });
+  const pool = payload?.db?.pool;
+  if (!pool || typeof pool.query !== "function") {
+    errors.push("payload.db.pool unavailable — skipping schema self-heal");
+    return { ran, errors };
+  }
   const statements = [
-    // Collection tables (no-ops if Payload already created them).
     `CREATE TABLE IF NOT EXISTS "news_tags" (
        "id" serial PRIMARY KEY,
        "slug" varchar NOT NULL UNIQUE,
@@ -34,20 +36,15 @@ async function ensureSchema(): Promise<{ ran: string[]; errors: string[] }> {
        "_parent_id" integer NOT NULL REFERENCES "news_tags"("id") ON DELETE CASCADE,
        "name" varchar
      );`,
-    // FK column on news; Payload's naming is <field>_id for relationships.
     `ALTER TABLE "news" ADD COLUMN IF NOT EXISTS "tag_id" integer;`,
   ];
-  try {
-    for (const s of statements) {
-      try {
-        await pool.query(s);
-        ran.push(s.split("\n")[0].slice(0, 80));
-      } catch (e) {
-        errors.push(`${s.slice(0, 60)}: ${(e as Error).message}`);
-      }
+  for (const s of statements) {
+    try {
+      await pool.query(s);
+      ran.push(s.split("\n")[0].slice(0, 80));
+    } catch (e) {
+      errors.push(`${s.slice(0, 60)}: ${(e as Error).message}`);
     }
-  } finally {
-    await pool.end().catch(() => {});
   }
   return { ran, errors };
 }
@@ -101,10 +98,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  /** 0. Ensure schema (news_tags table + news.tag_id column) exists. */
-  const schema = await ensureSchema();
-
   const payload = await getPayloadClient();
+
+  /** 0. Ensure schema (news_tags table + news.tag_id column) exists. */
+  const schema = await ensureSchema(payload);
   const report: {
     schema: { ran: string[]; errors: string[] };
     tags: Array<{ slug: string; id: string | number; action: string }>;
