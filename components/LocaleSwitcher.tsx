@@ -51,6 +51,14 @@ export default function LocaleSwitcher() {
     const nextLocale = event.target.value as Locale;
     if (nextLocale === locale) return;
 
+    // Persist the user's explicit choice BEFORE navigating. Otherwise the
+    // next-intl middleware would read the stale `NEXT_LOCALE` cookie and
+    // redirect e.g. `/` back to `/it/` when switching from IT → EN.
+    if (typeof document !== "undefined") {
+      const oneYear = 60 * 60 * 24 * 365;
+      document.cookie = `NEXT_LOCALE=${nextLocale}; Path=/; Max-Age=${oneYear}; SameSite=Lax`;
+    }
+
     const explicit = alternates?.switcher?.[nextLocale]?.url;
     startTransition(() => {
       if (explicit) {
