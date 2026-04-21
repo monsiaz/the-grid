@@ -38,8 +38,19 @@ export default async function ServicesPage({
   setRequestLocale(locale);
 
   const payload = await getPayloadClient();
-  const servicesPage = await payload.findGlobal({ slug: "services-page", locale });
-  const siteSettings = await payload.findGlobal({ slug: "site-settings", locale });
+
+  // Resilient fetch: on first deploy after schema changes the DB may not
+  // yet contain the new columns (Payload push runs on first admin hit).
+  // Falling back to {} keeps the page renderable — it'll pick up the
+  // real data on the next revalidation after the schema settles.
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  const servicesPage: any = await payload
+    .findGlobal({ slug: "services-page", locale })
+    .catch(() => ({}));
+  const siteSettings: any = await payload
+    .findGlobal({ slug: "site-settings", locale })
+    .catch(() => ({}));
+  /* eslint-enable @typescript-eslint/no-explicit-any */
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/services" });
 
   return (
