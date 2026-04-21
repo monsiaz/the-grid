@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 import {
   motion,
@@ -44,52 +43,46 @@ export default function Footer({
       transition={smoothTransition}
     >
       <div className="mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)]">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          {/* Social icons — Instagram + LinkedIn */}
-          <div className="flex items-center gap-1">
+        <div className="surface-card-soft flex flex-wrap items-center justify-between gap-4 px-5 py-4 min-[900px]:px-7">
+          {/* Social icons — Instagram + LinkedIn (inlined SVG, no static file dependency) */}
+          <div className="flex items-center gap-2">
             <Link
               href={instagramUrl}
               target="_blank"
               rel="noreferrer"
               aria-label={t("instagramLabel")}
-              className="inline-flex h-11 w-11 items-center justify-center text-secondary no-underline transition-transform duration-300 hover:scale-110"
+              className="pill-button pill-button-outline h-11 min-h-11 w-11 px-0 text-secondary"
             >
-              <Image
-                src="/images/instagram.svg"
-                alt=""
-                width={24}
-                height={24}
-                aria-hidden
-                unoptimized
-                loading="lazy"
-              />
+              {/* Instagram icon */}
+              <svg aria-hidden viewBox="0 0 24 24" width={20} height={20} fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+              </svg>
             </Link>
             <Link
               href={linkedinUrl}
               target="_blank"
               rel="noreferrer"
               aria-label={t("linkedinLabel")}
-              className="inline-flex h-11 w-11 items-center justify-center text-secondary no-underline transition-transform duration-300 hover:scale-110"
+              className="pill-button pill-button-outline h-11 min-h-11 w-11 px-0 text-secondary"
             >
-              <Image
-                src="/images/linkedin.svg"
-                alt=""
-                width={24}
-                height={24}
-                aria-hidden
-                unoptimized
-                loading="lazy"
-              />
+              {/* LinkedIn icon */}
+              <svg aria-hidden viewBox="0 0 24 24" width={20} height={20} fill="currentColor">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                <rect x="2" y="9" width="4" height="12"/>
+                <circle cx="4" cy="4" r="2"/>
+              </svg>
             </Link>
           </div>
 
           {/* Copyright + privacy policy */}
-          <div className="flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-[0.1em] text-secondary/60">
-            <span>{copyrightText}</span>
-            <span className="bg-secondary/30 block h-4 w-px" />
+          <div className="flex flex-wrap items-center gap-3 text-secondary/64">
+            <span className="ui-label text-secondary/58">{copyrightText}</span>
+            <span className="block h-4 w-px bg-white/16" />
             <Link
               href={privacyPolicyUrl}
-              className="text-secondary/60 no-underline transition-colors duration-300 hover:text-accent"
+              className="ui-label text-secondary/58 no-underline transition-colors duration-300 hover:text-accent"
             >
               {t("privacyPolicy")}
             </Link>
