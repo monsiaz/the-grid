@@ -1,5 +1,6 @@
 import type { GlobalConfig } from "payload";
 import { imageField } from "@/fields/imageField";
+import { createSectionOrderField } from "@/fields/sectionOrderField";
 import { getSiteUrl } from "@/lib/siteUrl";
 import { revalidateServices } from "@/lib/revalidate";
 
@@ -12,10 +13,13 @@ import { revalidateServices } from "@/lib/revalidate";
  */
 export const ServicesPage: GlobalConfig = {
   slug: "services-page",
+  label: "⚙️ Services",
   access: {
     read: () => true,
   },
   admin: {
+    group: "🗂️ Pages",
+    description: "Contenu de la page Services : offres talents, commercial, partenaires, études de cas. L'ordre des sections est réglable.",
     livePreview: {
       url: ({ locale }) => {
         const base = getSiteUrl();
@@ -30,6 +34,14 @@ export const ServicesPage: GlobalConfig = {
     },
   },
   fields: [
+    createSectionOrderField("Page sections order", [
+      { label: "Hero", value: "hero" },
+      { label: "Commercial value grid", value: "value" },
+      { label: "Hintsa partnership", value: "partner" },
+      { label: "Talent grid", value: "talent" },
+      { label: "Case studies slider", value: "caseStudies" },
+    ]),
+
     // ─── 1. HERO ────────────────────────────────────────────────
     {
       name: "heroTitle",
@@ -76,11 +88,25 @@ export const ServicesPage: GlobalConfig = {
       label: "2. Commercial — Description",
     },
     {
+      name: "valueIntroTitle",
+      type: "text",
+      localized: true,
+      label: "2. Commercial — Intro card title (Strategy & Positioning)",
+      defaultValue: "STRATEGY\n& POSITIONING",
+    },
+    {
       name: "valueIntroText",
       type: "textarea",
       localized: true,
-      label: "2. Commercial — Intro card text (Strategy & Positioning)",
+      label: "2. Commercial — Intro card text (back of Strategy & Positioning flip card)",
     },
+    imageField({
+      name: "valueIntroImage",
+      label: "2. Commercial — Intro card image (Strategy & Positioning — front of flip card)",
+      defaultValue: "/assets/v2/services/value-strategy.webp",
+      description:
+        "Photo utilisée sur la première card de la grille Commercial. Laisser vide pour afficher l'intro en card texte.",
+    }),
     {
       name: "valueCards",
       type: "array",

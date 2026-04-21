@@ -2,11 +2,18 @@ import type { CollectionConfig } from "payload";
 import { imageField } from "@/fields/imageField";
 import { getSiteUrl } from "@/lib/siteUrl";
 import { revalidateNewsDetail } from "@/lib/revalidate";
+import { newsContentBlocks } from "@/blocks/newsBlocks";
 
 export const News: CollectionConfig = {
   slug: "news",
+  labels: {
+    singular: "Article",
+    plural: "Actualités",
+  },
   admin: {
+    group: "📰 Contenu",
     useAsTitle: "title",
+    description: "Gérez les articles publiés sur /news. Chaque article peut avoir des blocs de contenu riches (texte, images, stats, galeries).",
     defaultColumns: ["title", "tag", "date"],
     livePreview: {
       url: ({ data, locale }) => {
@@ -111,7 +118,18 @@ export const News: CollectionConfig = {
       type: "textarea",
       localized: true,
       admin: {
-        description: "Intro paragraphs (one per line)",
+        description:
+          "Paragraphes d'accroche affichés à droite de l'image hero (un par ligne). Facultatifs — si vous remplissez directement 'Content blocks' ci-dessous, ce champ peut rester vide.",
+      },
+    },
+    {
+      name: "content",
+      type: "blocks",
+      label: "Content blocks",
+      blocks: newsContentBlocks,
+      admin: {
+        description:
+          "Contenu modulaire de l'article. Empilez librement des blocs (paragraphes, titres, images, citations, chiffres clés, galeries, CTA…) dans l'ordre que vous voulez — chaque bloc est déplaçable par glisser-déposer. Remplace les anciens champs 'Body paragraphs' et 'Gallery images' quand il contient au moins un bloc ; sinon l'article retombe automatiquement sur ces champs historiques.",
       },
     },
     {
@@ -119,13 +137,18 @@ export const News: CollectionConfig = {
       type: "textarea",
       localized: true,
       admin: {
-        description: "Body paragraphs (one per line)",
+        description:
+          "⚠️ Legacy — conservé comme filet de sécurité pour les anciens articles. Préférez 'Content blocks' ci-dessus. Utilisé uniquement si aucun bloc n'est défini. Un paragraphe par ligne.",
       },
     },
     {
       name: "galleryImages",
       type: "array",
-      label: "Gallery Images",
+      label: "Gallery Images (legacy)",
+      admin: {
+        description:
+          "⚠️ Legacy — préférez un bloc 'Galerie d'images' dans 'Content blocks'. Utilisé uniquement si 'Content blocks' est vide.",
+      },
       fields: [
         imageField({
           name: "image",

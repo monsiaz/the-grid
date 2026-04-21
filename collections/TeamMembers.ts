@@ -4,8 +4,14 @@ import { revalidateAbout } from "@/lib/revalidate";
 
 export const TeamMembers: CollectionConfig = {
   slug: "team-members",
+  labels: {
+    singular: "Membre de l'équipe",
+    plural: "Équipe",
+  },
   admin: {
+    group: "📰 Contenu",
     useAsTitle: "name",
+    description: "Membres de l'équipe The Grid affichés sur la page À propos. L'ordre d'affichage est contrôlé par le champ « Ordre ».",
     defaultColumns: ["name", "role", "order"],
   },
   access: {
@@ -14,15 +20,19 @@ export const TeamMembers: CollectionConfig = {
   fields: [
     {
       name: "name",
+      label: "Nom complet",
       type: "text",
       required: true,
       localized: true,
+      admin: { description: "Prénom et nom du membre de l'équipe (ex : Guillaume Le Goff)." },
     },
     {
       name: "role",
+      label: "Titre / Rôle",
       type: "text",
       required: true,
       localized: true,
+      admin: { description: "Fonction affichée sous le nom sur la carte (ex : Founder, Driver Agent)." },
     },
     imageField({
       name: "image",
@@ -47,10 +57,12 @@ export const TeamMembers: CollectionConfig = {
     },
     {
       name: "order",
+      label: "Ordre d'affichage",
       type: "number",
       required: true,
       admin: {
         position: "sidebar",
+        description: "Ordre sur la page À propos (1 = premier). Guillaume Le Goff est toujours 1.",
       },
     },
   ],

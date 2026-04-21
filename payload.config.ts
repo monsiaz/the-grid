@@ -49,6 +49,11 @@ export default buildConfig({
     importMap: {
       baseDir: import.meta.dirname,
     },
+    meta: {
+      titleSuffix: "— The Grid BO",
+      icons: [{ rel: "icon", type: "image/svg+xml", url: "/favicon.svg" }],
+    },
+    theme: "dark",
     livePreview: {
       breakpoints: [
         { label: "Mobile", name: "mobile", width: 390, height: 844 },

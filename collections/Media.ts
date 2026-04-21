@@ -123,7 +123,7 @@ export const Media: CollectionConfig = {
   admin: {
     useAsTitle: "alt",
     defaultColumns: ["filename", "alt", "category", "driverSlug", "updatedAt"],
-    group: "Library",
+    group: "🖼️ Médias",
     description:
       "Bibliothèque média centralisée. Toutes les images sont automatiquement converties en webP puis servies via le CDN Vercel Blob.",
     listSearchableFields: ["alt", "category", "driverSlug", "tags.tag", "filename"],

@@ -1,14 +1,18 @@
 import type { GlobalConfig } from "payload";
 import { imageField } from "@/fields/imageField";
+import { createSectionOrderField } from "@/fields/sectionOrderField";
 import { getSiteUrl } from "@/lib/siteUrl";
 import { revalidateContact } from "@/lib/revalidate";
 
 export const ContactPage: GlobalConfig = {
   slug: "contact-page",
+  label: "✉️ Contact",
   access: {
     read: () => true,
   },
   admin: {
+    group: "🗂️ Pages",
+    description: "Contenu de la page Contact : hero, formulaire de contact et newsletter.",
     livePreview: {
       url: ({ locale }) => {
         const base = getSiteUrl();
@@ -23,6 +27,9 @@ export const ContactPage: GlobalConfig = {
     },
   },
   fields: [
+    createSectionOrderField("Page sections order", [
+      { label: "Hero / forms", value: "hero" },
+    ]),
     {
       name: "heroTitle",
       type: "text",

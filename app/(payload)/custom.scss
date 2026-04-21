@@ -1,1 +1,186 @@
-/* Add any custom Payload admin styles here */
+/* ═══════════════════════════════════════════════════════════════════
+   THE GRID — Payload CMS Admin Panel · Custom DA
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Brand tokens (dark theme) ─────────────────────────────────── */
+:root,
+[data-theme="dark"] {
+  /* Accent rouge The Grid */
+  --theme-success-500: #e63a2e;
+  --theme-success-100: rgba(230, 58, 46, 0.12);
+
+  /* Elevation plus sombres — atmosphère premium */
+  --theme-elevation-0:   #0a0a0a;
+  --theme-elevation-50:  #111111;
+  --theme-elevation-100: #1a1a1a;
+  --theme-elevation-150: #222222;
+  --theme-elevation-200: #2a2a2a;
+  --theme-elevation-300: #333333;
+  --theme-elevation-400: #555555;
+  --theme-elevation-500: #888888;
+  --theme-elevation-600: #aaaaaa;
+  --theme-elevation-800: #cccccc;
+  --theme-elevation-900: #f0f0f0;
+  --theme-bg:            #0a0a0a;
+  --theme-text:          #f0f0f0;
+}
+
+/* ── 2. Logo The Grid dans la sidebar ─────────────────────────────── */
+.nav__header {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--theme-elevation-150);
+}
+
+/* Remplace le texte "Payload" par le wordmark The Grid */
+.nav__brand {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Petit logo SVG inline via CSS content — remplacé par branding text */
+.nav__brand::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 10px;
+  background: #e63a2e;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ── 3. Sidebar navigation ─────────────────────────────────────────── */
+.nav {
+  background: var(--theme-elevation-0) !important;
+  border-right: 1px solid var(--theme-elevation-150) !important;
+}
+
+/* Groups (🗂️ Pages, 📰 Contenu, etc.) */
+.nav__group-label {
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--theme-elevation-500) !important;
+  padding: 20px 20px 6px !important;
+}
+
+/* Nav items */
+.nav__link {
+  border-radius: 6px !important;
+  margin: 1px 8px !important;
+  padding: 7px 12px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  transition: background 0.15s, color 0.15s !important;
+  color: var(--theme-elevation-600) !important;
+
+  &:hover {
+    background: var(--theme-elevation-100) !important;
+    color: var(--theme-text) !important;
+  }
+
+  &.active,
+  &[aria-current="page"] {
+    background: rgba(230, 58, 46, 0.1) !important;
+    color: #e63a2e !important;
+    font-weight: 600 !important;
+  }
+}
+
+/* ── 4. Header de l'admin ──────────────────────────────────────────── */
+.render-title {
+  font-weight: 700 !important;
+  letter-spacing: -0.01em;
+}
+
+/* ── 5. Boutons principaux → rouge The Grid ─────────────────────────── */
+.btn--style-primary {
+  background-color: #e63a2e !important;
+  border-color: #e63a2e !important;
+
+  &:hover {
+    background-color: #c93127 !important;
+    border-color: #c93127 !important;
+  }
+}
+
+.btn--style-secondary {
+  border-color: var(--theme-elevation-300) !important;
+  color: var(--theme-elevation-800) !important;
+}
+
+/* ── 6. Save button ─────────────────────────────────────────────────── */
+.form-submit .btn {
+  min-width: 120px;
+}
+
+/* ── 7. Champs — focus ring rouge ────────────────────────────────────── */
+input:focus,
+textarea:focus,
+select:focus,
+.rich-text-editor:focus-within,
+.lexical-editor__editor-shell:focus-within {
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(230, 58, 46, 0.4) !important;
+}
+
+/* ── 8. Checkbox + radio → accent rouge ──────────────────────────────── */
+input[type="checkbox"]:checked {
+  accent-color: #e63a2e;
+}
+
+/* ── 9. Collection list — table hover ──────────────────────────────── */
+.table .row:hover td {
+  background: var(--theme-elevation-100) !important;
+}
+
+/* ── 10. Tags / pills dans les listes ──────────────────────────────── */
+.pill {
+  border-radius: 4px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+}
+
+/* ── 11. Live Preview badge ──────────────────────────────────────────── */
+.doc-controls__controls {
+  gap: 8px;
+}
+
+/* ── 12. Description champs — plus lisible ─────────────────────────── */
+.field-description {
+  font-size: 11.5px !important;
+  color: var(--theme-elevation-500) !important;
+  line-height: 1.5 !important;
+  margin-top: 4px !important;
+}
+
+/* ── 13. Sidebar des documents — fond légèrement distinct ──────────── */
+.document-sidebar {
+  background: var(--theme-elevation-50) !important;
+  border-left: 1px solid var(--theme-elevation-150) !important;
+}
+
+/* ── 14. Global/Page titles dans le header ─────────────────────────── */
+.doc-header__title {
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* ── 15. Toast notifications ───────────────────────────────────────── */
+.toast--success {
+  border-left: 3px solid #e63a2e !important;
+}
+
+/* ── 16. Breadcrumb ─────────────────────────────────────────────────── */
+.step-nav__step {
+  font-size: 12px !important;
+  color: var(--theme-elevation-500) !important;
+}
+
+.step-nav__step--last {
+  color: var(--theme-text) !important;
+  font-weight: 600 !important;
+}

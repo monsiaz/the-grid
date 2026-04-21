@@ -1,5 +1,6 @@
 import type { GlobalConfig } from "payload";
 import { imageField } from "@/fields/imageField";
+import { createSectionOrderField } from "@/fields/sectionOrderField";
 import { getSiteUrl } from "@/lib/siteUrl";
 import { revalidateHomepage } from "@/lib/revalidate";
 
@@ -8,7 +9,10 @@ export const Homepage: GlobalConfig = {
   access: {
     read: () => true,
   },
+  label: "🏠 Page d'accueil",
   admin: {
+    group: "🗂️ Pages",
+    description: "Contenu de la page principale du site : hero, services, pilotes, actualités. Les modifications sont appliquées en temps réel.",
     livePreview: {
       url: ({ locale }) => {
         const base = getSiteUrl();
@@ -23,6 +27,14 @@ export const Homepage: GlobalConfig = {
     },
   },
   fields: [
+    createSectionOrderField("Page sections order", [
+      { label: "Hero", value: "hero" },
+      { label: "About", value: "about" },
+      { label: "Experience", value: "experience" },
+      { label: "Services", value: "services" },
+      { label: "News", value: "news" },
+      { label: "Drivers", value: "drivers" },
+    ]),
     {
       name: "heroTitle",
       type: "text",

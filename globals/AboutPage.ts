@@ -1,14 +1,18 @@
 import type { GlobalConfig } from "payload";
 import { imageField } from "@/fields/imageField";
+import { createSectionOrderField } from "@/fields/sectionOrderField";
 import { getSiteUrl } from "@/lib/siteUrl";
 import { revalidateAbout } from "@/lib/revalidate";
 
 export const AboutPage: GlobalConfig = {
   slug: "about-page",
+  label: "👥 À propos",
   access: {
     read: () => true,
   },
   admin: {
+    group: "🗂️ Pages",
+    description: "Contenu de la page À propos : équipe, cœur de métier, section ACCÉLÈRE, galerie Instagram.",
     livePreview: {
       url: ({ locale }) => {
         const base = getSiteUrl();
@@ -23,6 +27,12 @@ export const AboutPage: GlobalConfig = {
     },
   },
   fields: [
+    createSectionOrderField("Page sections order", [
+      { label: "Hero", value: "hero" },
+      { label: "Core team", value: "coreTeam" },
+      { label: "ACCÉLÈRE banner", value: "accelereBanner" },
+      { label: "ACCÉLÈRE follow section", value: "accelereFollow" },
+    ]),
     {
       name: "heroTitle",
       type: "text",
@@ -156,7 +166,7 @@ export const AboutPage: GlobalConfig = {
     {
       name: "instagramUrl",
       type: "text",
-      defaultValue: "https://instagram.com",
+      defaultValue: "https://www.instagram.com/thegrid.agency",
     },
     {
       name: "instagramImages",
