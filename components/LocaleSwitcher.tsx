@@ -92,7 +92,7 @@ export default function LocaleSwitcher() {
         disabled={isPending}
         onClick={() => setOpen((v) => !v)}
         className={[
-          "inline-flex h-9 items-center gap-2 rounded-full border px-3 text-xs font-semibold uppercase tracking-widest",
+          "inline-flex h-8 items-center gap-1.5 rounded-full border px-3 text-[11px] font-semibold",
           "border-white/15 bg-white/5 text-secondary/70 backdrop-blur-sm",
           "transition-all duration-200",
           "hover:border-accent/60 hover:text-secondary",
@@ -101,12 +101,12 @@ export default function LocaleSwitcher() {
           "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent",
         ].join(" ")}
       >
-        <span aria-hidden style={{ fontFamily: "inherit" }}>
+        <span aria-hidden style={{ fontFamily: "inherit", letterSpacing: "0.08em" }}>
           {localeCodes[locale]}
         </span>
         <ChevronDown
           aria-hidden
-          className={`h-3 w-3 shrink-0 text-secondary/50 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          className={`h-3 w-3 shrink-0 text-secondary/40 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
         />
       </button>
 

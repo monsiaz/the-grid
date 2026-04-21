@@ -46,8 +46,8 @@ export default function Footer({
         <div className="surface-card-soft px-5 py-5 min-[900px]:px-7">
 
           {/* ── Mobile layout ── */}
-          <div className="flex flex-col gap-5 min-[900px]:hidden">
-            {/* Row 1: social icons + locale switcher */}
+          <div className="flex flex-col gap-4 min-[900px]:hidden">
+            {/* Row 1: social icons (left) + locale switcher (right) */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Link
@@ -55,9 +55,9 @@ export default function Footer({
                   target="_blank"
                   rel="noreferrer"
                   aria-label={t("instagramLabel")}
-                  className="pill-button pill-button-outline h-11 min-h-11 w-11 px-0"
+                  className="pill-button pill-button-outline h-9 min-h-9 w-9 px-0"
                 >
-                  <svg aria-hidden viewBox="0 0 24 24" style={{width:20,height:20,display:"block",flexShrink:0}} fill="none" stroke="white" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+                  <svg aria-hidden viewBox="0 0 24 24" style={{width:16,height:16,display:"block",flexShrink:0}} fill="none" stroke="white" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
                     <circle cx="12" cy="12" r="4"/>
                     <circle cx="17.5" cy="6.5" r="0.5" fill="white" stroke="none"/>
@@ -68,9 +68,9 @@ export default function Footer({
                   target="_blank"
                   rel="noreferrer"
                   aria-label={t("linkedinLabel")}
-                  className="pill-button pill-button-outline h-11 min-h-11 w-11 px-0"
+                  className="pill-button pill-button-outline h-9 min-h-9 w-9 px-0"
                 >
-                  <svg aria-hidden viewBox="0 0 24 24" style={{width:20,height:20,display:"block",flexShrink:0}} fill="white">
+                  <svg aria-hidden viewBox="0 0 24 24" style={{width:16,height:16,display:"block",flexShrink:0}} fill="white">
                     <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
                     <rect x="2" y="9" width="4" height="12"/>
                     <circle cx="4" cy="4" r="2"/>
@@ -83,12 +83,12 @@ export default function Footer({
             {/* Divider */}
             <div className="h-px w-full bg-white/8" />
 
-            {/* Row 2: copyright + privacy policy */}
-            <div className="flex items-center justify-between gap-3">
-              <span className="ui-label text-secondary/58">{copyrightText}</span>
+            {/* Row 2: copyright (left) · privacy (right) */}
+            <div className="flex items-center justify-between gap-2">
+              <span className="ui-label text-[10px] text-secondary/45 leading-tight">{copyrightText}</span>
               <Link
                 href={privacyPolicyUrl}
-                className="ui-label text-secondary/58 no-underline transition-colors duration-300 hover:text-accent"
+                className="ui-label text-[10px] text-secondary/45 no-underline transition-colors duration-300 hover:text-accent whitespace-nowrap"
               >
                 {t("privacyPolicy")}
               </Link>
