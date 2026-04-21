@@ -100,7 +100,7 @@ function CoreAreaCard({ area }: { area: CoreArea }) {
             width={628}
             height={628}
             sizes="(max-width: 700px) 100vw, (max-width: 1200px) 50vw, 400px"
-            className="aspect-square w-full object-cover object-top"
+            className="aspect-square w-full object-cover object-[center_15%]"
           />
         </motion.div>
       </div>
