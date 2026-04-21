@@ -2,18 +2,10 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
-import { ChangeEvent, useEffect, useState, useTransition } from "react";
-import { locales, localeLabels, localeFlags, type Locale } from "@/i18n/config";
+import { useTransition, useState, useRef, useEffect, useCallback } from "react";
+import { locales, localeLabels, type Locale } from "@/i18n/config";
 import { LOCALE_ALTERNATES_ELEMENT_ID } from "@/components/LocaleAlternatesData";
-
-function flagEmoji(iso2: string): string {
-  const base = 0x1f1e6;
-  return iso2
-    .toUpperCase()
-    .split("")
-    .map((c) => String.fromCodePoint(base + (c.charCodeAt(0) - 65)))
-    .join("");
-}
+import { ChevronDown } from "lucide-react";
 
 type SwitcherEntry = { url: string; translated: boolean };
 type AlternatesPayload = {
@@ -35,73 +27,136 @@ function readAlternatesFromDom(): AlternatesPayload | null {
   }
 }
 
+/** ISO country code → short display tag shown in the trigger button */
+const localeCodes: Record<Locale, string> = {
+  en: "EN",
+  fr: "FR",
+  es: "ES",
+  de: "DE",
+  it: "IT",
+  nl: "NL",
+  zh: "中文",
+};
+
 export default function LocaleSwitcher() {
   const t = useTranslations("footer.language");
   const locale = useLocale() as Locale;
   const router = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
-  const [alternates, setAlternates] = useState<AlternatesPayload | null>(null);
+  const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
+  // Close on outside click / Escape
+  const close = useCallback(() => setOpen(false), []);
   useEffect(() => {
-    setAlternates(readAlternatesFromDom());
-  }, [pathname]);
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") close(); };
+    const onClick = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) close();
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onClick);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onClick);
+    };
+  }, [open, close]);
 
-  const onChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const nextLocale = event.target.value as Locale;
-    if (nextLocale === locale) return;
-
-    // Use the pre-computed sister-page URL embedded in the page (accurate for
-    // dynamic routes like /news/[slug] or /drivers/[name]). Fall back to
-    // next-intl router only if the data element is missing.
-    // localeDetection:false means the URL is the sole locale signal — no need
-    // to also write a NEXT_LOCALE cookie, but we keep it as a harmless hint.
+  const pick = (next: Locale) => {
+    close();
+    if (next === locale) return;
     if (typeof document !== "undefined") {
       const oneYear = 60 * 60 * 24 * 365;
-      document.cookie = `NEXT_LOCALE=${nextLocale}; Path=/; Max-Age=${oneYear}; SameSite=Lax`;
+      document.cookie = `NEXT_LOCALE=${next}; Path=/; Max-Age=${oneYear}; SameSite=Lax`;
     }
-
-    const explicit = alternates?.switcher?.[nextLocale]?.url;
+    const alternates = readAlternatesFromDom();
+    const explicit = alternates?.switcher?.[next]?.url;
     startTransition(() => {
       if (explicit) {
-        // Hard-navigate so the full page reloads with the correct locale HTML.
         window.location.assign(explicit);
       } else {
-        // Fallback: next-intl generates the prefixed (or un-prefixed for EN)
-        // URL automatically thanks to localePrefix:"as-needed".
-        router.replace(pathname, { locale: nextLocale });
+        router.replace(pathname, { locale: next });
       }
     });
   };
 
   return (
-    <label className="relative inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-secondary/80">
-      <span className="sr-only">{t("srOnly")}</span>
-      <select
+    <div ref={containerRef} className="relative inline-block">
+      {/* Trigger */}
+      <button
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded={open}
         aria-label={t("srOnly")}
-        value={locale}
-        onChange={onChange}
         disabled={isPending}
-        className="h-11 cursor-pointer appearance-none rounded-full border border-secondary/40 bg-transparent py-1 pl-3 pr-8 text-[12px] leading-none uppercase tracking-[0.1em] text-secondary hover:border-accent focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/40 disabled:cursor-not-allowed disabled:opacity-60"
+        onClick={() => setOpen((v) => !v)}
+        className={[
+          "inline-flex h-9 items-center gap-2 rounded-full border px-3 text-xs font-semibold uppercase tracking-widest",
+          "border-white/15 bg-white/5 text-secondary/70 backdrop-blur-sm",
+          "transition-all duration-200",
+          "hover:border-accent/60 hover:text-secondary",
+          open ? "border-accent/60 text-secondary" : "",
+          "disabled:cursor-not-allowed disabled:opacity-40",
+          "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent",
+        ].join(" ")}
       >
-        {locales.map((l) => {
-          const entry = alternates?.switcher?.[l];
-          const untranslated = entry ? !entry.translated : false;
-          return (
-            <option key={l} value={l} className="bg-primary text-secondary">
-              {flagEmoji(localeFlags[l])}  {localeLabels[l]}
-              {untranslated ? "  •" : ""}
-            </option>
-          );
-        })}
-      </select>
-      <svg
-        aria-hidden
-        viewBox="0 0 12 8"
-        className="pointer-events-none absolute right-2 h-2 w-3 text-secondary/70"
-      >
-        <path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      </svg>
-    </label>
+        <span
+          className="inline-block w-4 text-center font-bold tracking-normal"
+          aria-hidden
+          style={{ fontFamily: "inherit" }}
+        >
+          {localeCodes[locale].slice(0, 2)}
+        </span>
+        <span>{localeCodes[locale]}</span>
+        <ChevronDown
+          aria-hidden
+          className={`h-3 w-3 shrink-0 text-secondary/50 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {/* Dropdown */}
+      {open && (
+        <ul
+          role="listbox"
+          aria-label={t("srOnly")}
+          className={[
+            "absolute bottom-full right-0 z-[200] mb-2",
+            "min-w-[160px] rounded-2xl border border-white/10 py-1.5",
+            "bg-[#111] shadow-[0_8px_32px_rgba(0,0,0,0.6)] backdrop-blur-md",
+            "animate-in fade-in slide-in-from-bottom-2 duration-150",
+          ].join(" ")}
+        >
+          {locales.map((l) => {
+            const active = l === locale;
+            return (
+              <li key={l} role="option" aria-selected={active}>
+                <button
+                  type="button"
+                  onClick={() => pick(l)}
+                  className={[
+                    "flex w-full items-center gap-3 px-4 py-2 text-left",
+                    "text-xs font-medium uppercase tracking-widest transition-colors duration-150",
+                    active
+                      ? "text-accent"
+                      : "text-secondary/60 hover:bg-white/5 hover:text-secondary",
+                  ].join(" ")}
+                >
+                  {/* Code court + séparateur + nom complet */}
+                  <span className="w-6 shrink-0 font-bold">{localeCodes[l]}</span>
+                  <span className="h-3 w-px shrink-0 bg-white/15" aria-hidden />
+                  <span className="font-normal normal-case tracking-normal text-[11px] opacity-80">
+                    {localeLabels[l]}
+                  </span>
+                  {active && (
+                    <span className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
+                  )}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
   );
 }
