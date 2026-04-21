@@ -13,7 +13,7 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
   const t = await getTranslations("drivers.card");
   return (
     <article
-      className={`bg-primary border-secondary group flex flex-col overflow-hidden rounded-[32px] border transition-transform duration-300 ease-out hover:-translate-y-2 ${
+      className={`surface-card-soft group flex flex-col overflow-hidden transition-transform duration-300 ease-out hover:-translate-y-2 ${
         compact ? "min-h-[460px]" : "min-h-[488px]"
       } max-[900px]:min-h-0`}
     >
@@ -29,8 +29,8 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
       <div className="flex flex-1 flex-col justify-between p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h2 className="m-0 text-xl leading-[1.2] font-bold uppercase">{driver.name}</h2>
-            <p className="m-0 mt-0.5 text-[12px] leading-[1.2] uppercase">{driver.role}</p>
+            <h2 className="display-card m-0 text-[clamp(24px,2vw,30px)] text-white">{driver.name}</h2>
+            <p className="ui-label m-0 mt-1 text-secondary/70">{driver.role}</p>
           </div>
           <ul className="mt-1 flex list-none items-center gap-1 p-0" aria-label={t("nationalities")}>
             <DriverFlags
@@ -44,7 +44,7 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
         <div className="mt-4 flex items-center justify-between">
           <Link
             href={`/drivers/${driver.slug}`}
-            className="text-accent border-accent inline-flex items-center justify-center rounded-full border-2 bg-black/20 px-5 py-3 text-base leading-[1.2] uppercase no-underline transition-all duration-300 hover:bg-accent hover:text-black hover:scale-105"
+            className="pill-button pill-button-accent-outline"
           >
             {t("learnMore")}<span className="sr-only">{t("learnMoreSr", { name: driver.name })}</span>
           </Link>
@@ -53,9 +53,13 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
             target="_blank"
             rel="noreferrer me"
             aria-label={t("instagramLabel", { name: driver.name })}
-            className="inline-flex h-11 w-11 items-center justify-center text-lg uppercase no-underline transition-transform duration-300 hover:scale-110"
+            className="pill-button pill-button-outline h-11 min-h-11 w-11 px-0 text-lg no-underline"
           >
-            <Image src="/images/instagram.svg" alt="" width={24} height={24} aria-hidden unoptimized loading="lazy" />
+            <svg aria-hidden viewBox="0 0 24 24" style={{width:20,height:20,display:"block",flexShrink:0}} fill="none" stroke="white" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.5" fill="white" stroke="none"/>
+            </svg>
           </Link>
         </div>
       </div>
