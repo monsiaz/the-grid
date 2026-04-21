@@ -2,7 +2,7 @@
 
 import DriverCard from "./DriverCard";
 import type { DriverCardData } from "./driversData";
-import { motion, staggerContainer, viewport } from "../motion";
+import { motion, staggerContainer } from "../motion";
 
 type DriversCardsRowProps = {
   drivers: DriverCardData[];
@@ -15,8 +15,7 @@ export default function DriversCardsRow({ drivers, compact = false }: DriversCar
       className="grid grid-cols-4 gap-7 max-[1200px]:grid-cols-2 max-[700px]:grid-cols-1"
       variants={staggerContainer}
       initial="hidden"
-      whileInView="visible"
-      viewport={viewport}
+      animate="visible"
     >
       {drivers.map((driver) => (
         <DriverCard key={driver.slug} driver={driver} compact={compact} />
