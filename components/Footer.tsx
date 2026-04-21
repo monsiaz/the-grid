@@ -83,12 +83,15 @@ export default function Footer({
             {/* Divider */}
             <div className="h-px w-full bg-white/8" />
 
-            {/* Row 2: copyright (left) · privacy (right) */}
-            <div className="flex items-center justify-between gap-2">
-              <span className="ui-label text-[10px] text-secondary/45 leading-tight">{copyrightText}</span>
+            {/* Row 2: copyright · separator · privacy — single line */}
+            <div className="flex items-center gap-2 overflow-hidden">
+              <span className="text-[10px] font-medium tracking-wide text-secondary/45 uppercase whitespace-nowrap shrink-0">
+                © 2026 The Grid
+              </span>
+              <span className="h-3 w-px bg-white/12 shrink-0" aria-hidden />
               <Link
                 href={privacyPolicyUrl}
-                className="ui-label text-[10px] text-secondary/45 no-underline transition-colors duration-300 hover:text-accent whitespace-nowrap"
+                className="text-[10px] font-medium tracking-wide text-secondary/45 uppercase no-underline transition-colors duration-300 hover:text-accent whitespace-nowrap shrink-0"
               >
                 {t("privacyPolicy")}
               </Link>
