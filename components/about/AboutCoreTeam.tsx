@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { Linkedin } from "lucide-react";
+import { Linkedin, ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import {
   motion,
@@ -33,9 +32,10 @@ type TeamMember = {
 type AboutCoreTeamProps = {
   coreIntroText?: string | null;
   coreAreas: CoreArea[];
-  founderBio: string;
+  founderBio?: string | null;
   founderName?: string;
   founderRole?: string;
+  founderImage?: string | null;
   founderLinkedinUrl?: string;
   teamMembers: TeamMember[];
 };
@@ -125,132 +125,76 @@ function CoreAreaCard({ area }: { area: CoreArea }) {
   );
 }
 
-/** Card that flips 180° on click to reveal the bio + LinkedIn CTA */
+/** Simple card — no flip. Arrow links directly to LinkedIn. */
 function TeamMemberCard({ member }: { member: TeamMember }) {
   const t = useTranslations("about.team");
-  const [flipped, setFlipped] = useState(false);
   const hasLinkedIn = Boolean(member.linkedinUrl);
-  const hasBio = Boolean(member.bio);
 
-  return (
-    /* perspective container */
-    <div
-      className="group relative h-full min-h-[420px] cursor-pointer"
-      style={{ perspective: "1000px" }}
-      onClick={() => (hasBio || hasLinkedIn) && setFlipped((v) => !v)}
-      role={hasBio || hasLinkedIn ? "button" : undefined}
-      aria-pressed={flipped}
-      tabIndex={hasBio || hasLinkedIn ? 0 : undefined}
-      onKeyDown={(e) => {
-        if ((e.key === "Enter" || e.key === " ") && (hasBio || hasLinkedIn)) {
-          e.preventDefault();
-          setFlipped((v) => !v);
-        }
-      }}
-    >
-      {/* flip wrapper */}
-      <div
-        className="relative h-full w-full transition-transform duration-500"
-        style={{
-          transformStyle: "preserve-3d",
-          transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
-        }}
-      >
-        {/* FRONT */}
-        <article
-          className="border-secondary absolute inset-0 flex flex-col overflow-hidden rounded-[32px] border bg-primary"
-          style={{ backfaceVisibility: "hidden" }}
-        >
-          <div className="overflow-hidden">
-            <Image
-              src={member.image}
-              alt={member.name}
-              width={628}
-              height={628}
-              sizes="(max-width: 700px) 100vw, (max-width: 980px) 50vw, (max-width: 1200px) 33vw, 300px"
-              className="aspect-square w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
-            />
-          </div>
-          <div className="flex flex-1 flex-col justify-between gap-3 p-6">
-            <div className="flex items-center justify-between gap-3 uppercase">
-              <div>
-                <h3 className="m-0 text-xl leading-[1.2] font-bold">{member.name}</h3>
-                <p className="m-0 mt-1 text-[13px] leading-[1.4] uppercase text-secondary/70">
-                  {member.role}
-                </p>
-              </div>
-              {hasLinkedIn && (
-                <span
-                  className="text-accent border-accent inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2"
-                  aria-hidden
-                >
-                  <Linkedin className="h-4 w-4" />
-                </span>
-              )}
-            </div>
-            {/* arrow — click to flip */}
-            {(hasBio || hasLinkedIn) && (
-              <div className="flex justify-start">
-                <span className="text-accent border-accent inline-flex h-10 w-10 items-center justify-center rounded-full border-2 text-lg transition-transform duration-300 group-hover:translate-x-1">
-                  →
-                </span>
-              </div>
-            )}
-          </div>
-        </article>
-
-        {/* BACK */}
-        <article
-          className="border-secondary absolute inset-0 flex flex-col justify-between gap-6 overflow-hidden rounded-[32px] border bg-accent/10 p-6"
-          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
-        >
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <h3 className="m-0 text-xl leading-[1.2] font-bold uppercase">{member.name}</h3>
-              <p className="m-0 mt-1 text-[13px] uppercase text-secondary/70">{member.role}</p>
-            </div>
-            {/* close / back button */}
-            <button
-              type="button"
-              className="text-accent border-accent inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 text-base leading-none transition-all duration-200 hover:bg-accent hover:text-black"
-              aria-label="Close"
-              onClick={(e) => { e.stopPropagation(); setFlipped(false); }}
-            >
-              ×
-            </button>
-          </div>
-
-          {hasBio && (
-            <p className="m-0 flex-1 overflow-y-auto text-sm leading-[1.55] font-light text-secondary/90">
-              {member.bio}
-            </p>
-          )}
-
-          {hasLinkedIn && (
-            <Link
-              href={member.linkedinUrl as string}
-              target="_blank"
-              rel="noreferrer me"
-              aria-label={t("linkedinLabel", { name: member.name })}
-              onClick={(e) => e.stopPropagation()}
-              className="text-accent border-accent inline-flex w-fit items-center gap-2 rounded-full border-2 px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.1em] no-underline transition-all duration-300 hover:bg-accent hover:text-black"
-            >
-              <Linkedin className="h-4 w-4 shrink-0" aria-hidden />
-              LinkedIn
-            </Link>
-          )}
-        </article>
+  const cardContent = (
+    <article className="group border-secondary flex h-full flex-col overflow-hidden rounded-[32px] border bg-primary transition-transform duration-300 hover:-translate-y-1">
+      <div className="overflow-hidden">
+        <Image
+          src={member.image}
+          alt={member.name}
+          width={628}
+          height={628}
+          sizes="(max-width: 700px) 100vw, (max-width: 980px) 50vw, (max-width: 1200px) 33vw, 300px"
+          className="aspect-square w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+        />
       </div>
-    </div>
+      <div className="flex flex-1 flex-col justify-between gap-3 p-6">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <h3 className="m-0 text-xl leading-[1.2] font-bold uppercase">{member.name}</h3>
+            <p className="m-0 mt-1 text-[13px] leading-[1.4] uppercase text-secondary/60">
+              {member.role}
+            </p>
+          </div>
+          {hasLinkedIn && (
+            <span
+              className="text-accent border-accent inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2"
+              aria-hidden
+            >
+              <Linkedin className="h-4 w-4" />
+            </span>
+          )}
+        </div>
+        {hasLinkedIn && (
+          <div className="flex justify-start">
+            <span
+              className="text-accent border-accent inline-flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all duration-300 group-hover:bg-accent group-hover:text-black"
+              aria-label={t("linkedinLabel", { name: member.name })}
+            >
+              <ArrowRight className="h-4 w-4" />
+            </span>
+          </div>
+        )}
+      </div>
+    </article>
   );
+
+  if (hasLinkedIn) {
+    return (
+      <Link
+        href={member.linkedinUrl as string}
+        target="_blank"
+        rel="noreferrer me"
+        className="block h-full no-underline"
+      >
+        {cardContent}
+      </Link>
+    );
+  }
+  return cardContent;
 }
 
 export default function AboutCoreTeam({
   coreIntroText,
   coreAreas,
-  founderBio,
+  founderBio: _founderBio,
   founderName = "Guillaume Le Goff",
   founderRole = "Founder & Partner",
+  founderImage,
   founderLinkedinUrl = "https://www.linkedin.com/in/glegoff/",
   teamMembers,
 }: AboutCoreTeamProps) {
@@ -320,11 +264,11 @@ export default function AboutCoreTeam({
             whileInView="visible"
             viewport={viewport}
           >
-            {/* Guillaume founder card — flips to show bio */}
+            {/* Guillaume founder card — direct LinkedIn link, no flip */}
             <FounderCard
               name={founderName}
               role={founderRole}
-              bio={founderBio}
+              image={founderImage || "/assets/v2/about/guillaume-le-goff.webp"}
               linkedinUrl={founderLinkedinUrl}
               t={t}
             />
@@ -338,100 +282,62 @@ export default function AboutCoreTeam({
   );
 }
 
+/** Founder card — same layout as TeamMemberCard, no flip. */
 function FounderCard({
   name,
   role,
-  bio,
+  image,
   linkedinUrl,
   t,
 }: {
   name: string;
   role: string;
-  bio: string;
+  image?: string | null;
   linkedinUrl: string;
   t: ReturnType<typeof useTranslations<"about.team">>;
 }) {
-  const [flipped, setFlipped] = useState(false);
+  const cardContent = (
+    <article className="group border-secondary flex h-full flex-col overflow-hidden rounded-[32px] border bg-primary transition-transform duration-300 hover:-translate-y-1">
+      {image && (
+        <div className="overflow-hidden">
+          <Image
+            src={image}
+            alt={name}
+            width={628}
+            height={628}
+            sizes="(max-width: 700px) 100vw, (max-width: 980px) 50vw, (max-width: 1200px) 33vw, 300px"
+            className="aspect-square w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+          />
+        </div>
+      )}
+      <div className="flex flex-1 flex-col justify-between gap-3 p-6">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <h3 className="m-0 text-xl leading-[1.2] font-bold uppercase">{name}</h3>
+            <p className="m-0 mt-1 text-[13px] leading-[1.4] uppercase text-secondary/60">{role}</p>
+          </div>
+          <span
+            className="text-accent border-accent inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2"
+            aria-hidden
+          >
+            <Linkedin className="h-4 w-4" />
+          </span>
+        </div>
+        <div className="flex justify-start">
+          <span
+            className="text-accent border-accent inline-flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all duration-300 group-hover:bg-accent group-hover:text-black"
+            aria-label={t("linkedinLabel", { name })}
+          >
+            <ArrowRight className="h-4 w-4" />
+          </span>
+        </div>
+      </div>
+    </article>
+  );
 
   return (
-    <div
-      className="group relative min-h-[420px] cursor-pointer"
-      style={{ perspective: "1000px" }}
-      onClick={() => setFlipped((v) => !v)}
-      role="button"
-      aria-pressed={flipped}
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          setFlipped((v) => !v);
-        }
-      }}
-    >
-      <div
-        className="relative h-full w-full transition-transform duration-500"
-        style={{
-          transformStyle: "preserve-3d",
-          transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
-        }}
-      >
-        {/* FRONT */}
-        <article
-          className="border-secondary absolute inset-0 flex flex-col justify-between gap-4 rounded-[32px] border bg-primary p-6"
-          style={{ backfaceVisibility: "hidden" }}
-        >
-          <div className="flex items-start justify-between gap-3 uppercase">
-            <div>
-              <h3 className="m-0 text-xl leading-[1.2] font-bold">{name}</h3>
-              <p className="m-0 mt-1 text-[13px] leading-[1.4] text-secondary/70">{role}</p>
-            </div>
-            <span className="text-accent border-accent inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2" aria-hidden>
-              <Linkedin className="h-4 w-4" />
-            </span>
-          </div>
-          <p className="m-0 line-clamp-6 text-sm leading-[1.4] font-light">{bio}</p>
-          <div className="flex justify-start">
-            <span className="text-accent border-accent inline-flex h-10 w-10 items-center justify-center rounded-full border-2 text-lg transition-transform duration-300 group-hover:translate-x-1">
-              →
-            </span>
-          </div>
-        </article>
-
-        {/* BACK */}
-        <article
-          className="border-secondary absolute inset-0 flex flex-col justify-between gap-6 overflow-hidden rounded-[32px] border bg-accent/10 p-6"
-          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
-        >
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <h3 className="m-0 text-xl leading-[1.2] font-bold uppercase">{name}</h3>
-              <p className="m-0 mt-1 text-[13px] uppercase text-secondary/70">{role}</p>
-            </div>
-            <button
-              type="button"
-              className="text-accent border-accent inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 text-base leading-none transition-all duration-200 hover:bg-accent hover:text-black"
-              aria-label="Close"
-              onClick={(e) => { e.stopPropagation(); setFlipped(false); }}
-            >
-              ×
-            </button>
-          </div>
-          <p className="m-0 flex-1 overflow-y-auto text-sm leading-[1.55] font-light text-secondary/90">
-            {bio}
-          </p>
-          <Link
-            href={linkedinUrl}
-            target="_blank"
-            rel="noreferrer me"
-            aria-label={t("linkedinLabel", { name })}
-            onClick={(e) => e.stopPropagation()}
-            className="text-accent border-accent inline-flex w-fit items-center gap-2 rounded-full border-2 px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.1em] no-underline transition-all duration-300 hover:bg-accent hover:text-black"
-          >
-            <Linkedin className="h-4 w-4 shrink-0" aria-hidden />
-            LinkedIn
-          </Link>
-        </article>
-      </div>
-    </div>
+    <Link href={linkedinUrl} target="_blank" rel="noreferrer me" className="block h-full no-underline">
+      {cardContent}
+    </Link>
   );
 }

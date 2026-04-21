@@ -55,7 +55,8 @@ export default async function AboutPage({
         coreAreas={aboutPage.coreAreas || []}
         founderBio={aboutPage.founderBio}
         founderName={aboutPage.founderName || "Guillaume Le Goff"}
-        founderRole={aboutPage.founderRole || "Founder"}
+        founderRole={aboutPage.founderRole || "Founder & Partner"}
+        founderImage={aboutPage.founderImage || "/assets/v2/about/guillaume-le-goff.webp"}
         founderLinkedinUrl={
           aboutPage.founderLinkedinUrl || "https://www.linkedin.com/in/glegoff/"
         }
