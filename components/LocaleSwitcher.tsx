@@ -27,7 +27,7 @@ function readAlternatesFromDom(): AlternatesPayload | null {
   }
 }
 
-/** ISO country code → short display tag shown in the trigger button */
+/** Short display label shown in the trigger button */
 const localeCodes: Record<Locale, string> = {
   en: "EN",
   fr: "FR",
@@ -101,14 +101,9 @@ export default function LocaleSwitcher() {
           "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent",
         ].join(" ")}
       >
-        <span
-          className="inline-block w-4 text-center font-bold tracking-normal"
-          aria-hidden
-          style={{ fontFamily: "inherit" }}
-        >
-          {localeCodes[locale].slice(0, 2)}
+        <span aria-hidden style={{ fontFamily: "inherit" }}>
+          {localeCodes[locale]}
         </span>
-        <span>{localeCodes[locale]}</span>
         <ChevronDown
           aria-hidden
           className={`h-3 w-3 shrink-0 text-secondary/50 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
@@ -142,10 +137,7 @@ export default function LocaleSwitcher() {
                       : "text-secondary/60 hover:bg-white/5 hover:text-secondary",
                   ].join(" ")}
                 >
-                  {/* Code court + séparateur + nom complet */}
-                  <span className="w-6 shrink-0 font-bold">{localeCodes[l]}</span>
-                  <span className="h-3 w-px shrink-0 bg-white/15" aria-hidden />
-                  <span className="font-normal normal-case tracking-normal text-[11px] opacity-80">
+                  <span className="font-normal normal-case tracking-normal">
                     {localeLabels[l]}
                   </span>
                   {active && (
