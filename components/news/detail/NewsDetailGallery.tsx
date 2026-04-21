@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import {
   motion,
   fadeUp,
@@ -15,6 +16,7 @@ type NewsDetailGalleryProps = {
 };
 
 export default function NewsDetailGallery({ images, title }: NewsDetailGalleryProps) {
+  const t = useTranslations("news.detail");
   return (
     <motion.div
       className="grid grid-cols-2 gap-5 min-[900px]:grid-cols-5"
@@ -37,7 +39,7 @@ export default function NewsDetailGallery({ images, title }: NewsDetailGalleryPr
           >
             <Image
               src={image}
-              alt={`${title} gallery image ${index + 1}`}
+              alt={t("galleryImageAlt", { title, index: index + 1 })}
               fill
               className="object-cover"
               sizes="(max-width: 899px) 50vw, 20vw"

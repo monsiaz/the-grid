@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 type DriverDetailData = {
   slug: string;
   profileTitle: string;
@@ -36,6 +37,7 @@ type DriverDetailAgencyProps = {
 };
 
 export default function DriverDetailAgency({ detail }: DriverDetailAgencyProps) {
+  const t = useTranslations("drivers.detail.agency");
   return (
     <section className="grid grid-cols-[888px_1fr] gap-10 max-[1200px]:grid-cols-1">
       <motion.div
@@ -51,7 +53,7 @@ export default function DriverDetailAgency({ detail }: DriverDetailAgencyProps) 
           whileHover={{ scale: 1.03 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <Image src={detailImages.agency} alt="Driver and agency" fill className="object-cover" sizes="(max-width: 1200px) 100vw, 888px" />
+          <Image src={detailImages.agency} alt={t("imageAlt")} fill className="object-cover" sizes="(max-width: 1200px) 100vw, 888px" />
         </motion.div>
       </motion.div>
       <motion.div

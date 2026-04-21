@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { useTranslations } from "next-intl";
 import {
   motion,
   fadeUp,
@@ -40,7 +41,7 @@ function ContactField({ id, label, type = "text", autoComplete, required = true 
         required={required}
         autoComplete={autoComplete}
         placeholder=" "
-        className="peer w-full border-b border-secondary/80 bg-transparent pb-3 pt-1 text-base leading-[1.2] text-secondary placeholder-transparent transition-colors duration-300 focus:border-secondary focus:outline-none"
+        className="peer block h-11 w-full border-b border-secondary/80 bg-transparent pb-3 pt-1 text-base leading-[1.2] text-secondary placeholder-transparent transition-colors duration-300 focus:border-secondary focus:outline-none"
       />
       <label
         htmlFor={id}
@@ -59,6 +60,7 @@ export default function ContactForm({
   messageLabel,
   sendLabel,
 }: ContactFormProps) {
+  const t = useTranslations("contact.form");
   const [state, setState] = useState<SubmitState>("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -83,13 +85,13 @@ export default function ContactForm({
       });
       if (!response.ok) {
         const body = await response.json().catch(() => ({}));
-        throw new Error(body?.error || "Unable to send message.");
+        throw new Error(body?.error || t("error"));
       }
       setState("success");
       form.reset();
     } catch (error) {
       setState("error");
-      setErrorMessage(error instanceof Error ? error.message : "Unable to send message.");
+      setErrorMessage(error instanceof Error ? error.message : t("error"));
     }
   };
 
@@ -128,7 +130,7 @@ export default function ContactForm({
         </motion.div>
         {state === "success" ? (
           <p className="m-0 text-sm font-medium uppercase" role="status">
-            Thanks, your message has been sent.
+            {t("success")}
           </p>
         ) : null}
         {state === "error" ? (
@@ -146,7 +148,7 @@ export default function ContactForm({
         whileHover={state !== "sending" ? { scale: 1.05 } : undefined}
         whileTap={state !== "sending" ? { scale: 0.97 } : undefined}
       >
-        {state === "sending" ? "Sending..." : sendLabel}
+        {state === "sending" ? t("sending") : sendLabel}
       </motion.button>
     </motion.form>
   );

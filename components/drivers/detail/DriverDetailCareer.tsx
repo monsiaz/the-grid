@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 type DriverDetailData = {
   slug: string;
   profileTitle: string;
@@ -37,6 +38,8 @@ type DriverDetailCareerProps = {
   detail: DriverDetailData;
 };
 
+const FEATURED_SLUGS = new Set(["pierre-gasly", "isack-hadjar"]);
+
 function StatItem({ value, label }: { value: string; label: string }) {
   return (
     <motion.div variants={fadeUp} transition={smoothTransition}>
@@ -47,6 +50,9 @@ function StatItem({ value, label }: { value: string; label: string }) {
 }
 
 export default function DriverDetailCareer({ detail }: DriverDetailCareerProps) {
+  const t = useTranslations("drivers.detail.career");
+  const showStats = FEATURED_SLUGS.has(detail.slug);
+
   return (
     <section className="grid grid-cols-3 gap-10 max-[1200px]:grid-cols-1">
       <motion.div
@@ -74,7 +80,7 @@ export default function DriverDetailCareer({ detail }: DriverDetailCareerProps) 
         viewport={viewport}
         transition={{ ...smoothTransition, duration: 0.9 }}
       >
-        <Image src={detailImages.career} alt="Career highlight" fill className="object-cover" sizes="(max-width: 1200px) 100vw, 33vw" />
+        <Image src={detailImages.career} alt={t("imageAlt")} fill className="object-cover" sizes="(max-width: 1200px) 100vw, 33vw" />
       </motion.div>
 
       <motion.div
@@ -86,18 +92,20 @@ export default function DriverDetailCareer({ detail }: DriverDetailCareerProps) 
       >
         <h2 className="m-0 text-2xl leading-[1.2] font-bold uppercase">{detail.transitionTitle}</h2>
         <p className="m-0 mt-4 text-base leading-[1.4] font-light">{detail.transitionParagraph}</p>
-        <motion.div
-          className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewport}
-        >
-          <StatItem value={detail.highestFinish} label="Highest race finish" />
-          <StatItem value={detail.careerPoints} label="Career points" />
-          <StatItem value={detail.grandPrixEntered} label="Grand prix entered" />
-          <StatItem value={detail.careerPodiums} label="Career podiums" />
-        </motion.div>
+        {showStats ? (
+          <motion.div
+            className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+          >
+            <StatItem value={detail.highestFinish} label={t("stats.highestFinish")} />
+            <StatItem value={detail.careerPoints} label={t("stats.careerPoints")} />
+            <StatItem value={detail.grandPrixEntered} label={t("stats.grandPrixEntered")} />
+            <StatItem value={detail.careerPodiums} label={t("stats.careerPodiums")} />
+          </motion.div>
+        ) : null}
       </motion.div>
     </section>
   );

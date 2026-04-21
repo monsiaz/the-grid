@@ -1,5 +1,6 @@
 import { buildConfig } from "payload";
 import { sqliteAdapter } from "@payloadcms/db-sqlite";
+import { postgresAdapter } from "@payloadcms/db-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import sharp from "sharp";
@@ -17,11 +18,37 @@ import { ContactPage } from "./globals/ContactPage";
 import { DriversPage } from "./globals/DriversPage";
 import { SiteSettings } from "./globals/SiteSettings";
 
+const postgresUrl = process.env.DATABASE_URL || "";
+const sqliteUrl = process.env.DATABASE_URI || "";
+const usePostgres = postgresUrl.startsWith("postgres");
+
+const db = usePostgres
+  ? postgresAdapter({
+      push: true,
+      pool: {
+        connectionString: postgresUrl,
+      },
+    })
+  : sqliteAdapter({
+      push: true,
+      client: {
+        url: sqliteUrl || "file:./dev.db",
+        authToken: process.env.TURSO_AUTH_TOKEN,
+      },
+    });
+
 export default buildConfig({
   admin: {
     user: Users.slug,
     importMap: {
       baseDir: import.meta.dirname,
+    },
+    livePreview: {
+      breakpoints: [
+        { label: "Mobile", name: "mobile", width: 390, height: 844 },
+        { label: "Tablet", name: "tablet", width: 1024, height: 768 },
+        { label: "Desktop", name: "desktop", width: 1440, height: 900 },
+      ],
     },
   },
   collections: [Users, Media, Drivers, News, TeamMembers],
@@ -31,21 +58,28 @@ export default buildConfig({
   typescript: {
     outputFile: "payload-types.ts",
   },
-  db: sqliteAdapter({
-    push: true,
-    client: {
-      url: process.env.DATABASE_URI || "",
-      authToken: process.env.TURSO_AUTH_TOKEN,
-    },
-  }),
+  localization: {
+    locales: [
+      { label: "English", code: "en" },
+      { label: "Français", code: "fr" },
+      { label: "Español", code: "es" },
+      { label: "Deutsch", code: "de" },
+      { label: "Italiano", code: "it" },
+      { label: "Nederlands", code: "nl" },
+      { label: "中文", code: "zh" },
+    ],
+    defaultLocale: "en",
+    fallback: true,
+  },
+  db,
   sharp,
   plugins: [
     vercelBlobStorage({
+      enabled: true,
       collections: {
         media: true,
       },
-      token: process.env.BLOB_READ_WRITE_TOKEN || "",
-      enabled: !!process.env.BLOB_READ_WRITE_TOKEN,
+      token: process.env.BLOB_READ_WRITE_TOKEN,
     }),
   ],
 });

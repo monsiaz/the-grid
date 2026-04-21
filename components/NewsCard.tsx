@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { motion } from "./motion";
 type NewsItem = {
   slug: string;
@@ -11,6 +12,7 @@ type NewsItem = {
 };
 
 export default function NewsCard({ item, href }: { item: NewsItem; href: string }) {
+  const t = useTranslations("news.card");
   return (
     <motion.div
       data-news-card
@@ -19,7 +21,7 @@ export default function NewsCard({ item, href }: { item: NewsItem; href: string 
     >
       <Link
         href={href}
-        aria-label={`Read: ${item.title}`}
+        aria-label={t("readAria", { title: item.title })}
         className="text-secondary focus-visible:ring-accent block rounded-[32px] no-underline outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
       >
         <article className="bg-primary border-secondary overflow-hidden rounded-[32px] border">

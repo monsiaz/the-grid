@@ -1,5 +1,8 @@
+"use client";
+
 import Hero from "@/components/Hero";
 import { ChevronDown } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 type ServicesHeroProps = {
   title?: string | null;
@@ -7,26 +10,38 @@ type ServicesHeroProps = {
   backgroundImage?: string | null;
 };
 
+function renderServicesTitle(raw: string): React.ReactNode {
+  const value = raw.trim();
+  const idx = value.toLowerCase().lastIndexOf(" ");
+  if (idx > 0) {
+    return (
+      <>
+        {value.slice(0, idx)}
+        <span className="text-muted"> {value.slice(idx + 1)}</span>
+      </>
+    );
+  }
+  return value;
+}
+
 export default function ServicesHero({ title, description, backgroundImage }: ServicesHeroProps) {
+  const t = useTranslations("services.hero");
+  const effectiveTitle = title || t("titleFallback");
   return (
     <Hero
-      backgroundImage={backgroundImage || "/images/hero.webp"}
-      minHeightClassName="min-h-[clamp(560px,90vh,800px)]"
-      overlayClassName="bg-black/30"
+      backgroundImage={backgroundImage || "/assets/v2/services/hero.webp"}
+      minHeightClassName="min-h-[clamp(560px,90svh,800px)]"
+      overlayClassName="bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0.2)_45%,rgba(0,0,0,0.6)_100%)]"
       headerAnchorPrefix="/"
       activeHeaderItem="services"
-      contentClassName="mx-auto flex w-full max-w-[480px] flex-col items-center justify-center gap-8 py-16 text-center min-[900px]:min-h-[640px] min-[900px]:py-0"
-      titleClassName="font-[var(--font-league-spartan)] text-[64px] leading-none font-bold uppercase drop-shadow-[4px_4px_8px_rgba(0,0,0,0.1)] max-[1200px]:text-[clamp(44px,6vw,64px)]"
-      title={
-        <>
-          {title || "One-stop"} <span className="text-muted">shop</span>
-        </>
-      }
+      contentClassName="mx-auto flex w-full max-w-[640px] flex-col items-center justify-center gap-8 py-16 text-center min-[900px]:min-h-[640px] min-[900px]:py-0"
+      titleClassName="font-[var(--font-league-spartan)] text-[64px] leading-none font-bold uppercase [text-shadow:0_4px_24px_rgba(0,0,0,0.55),0_2px_8px_rgba(0,0,0,0.4)] max-[1200px]:text-[clamp(32px,5vw,60px)] max-[600px]:whitespace-normal whitespace-nowrap"
+      title={renderServicesTitle(effectiveTitle)}
       description={description || undefined}
-      descriptionClassName="m-0 text-center text-base leading-[1.55] font-light"
+      descriptionClassName="m-0 text-center text-base leading-[1.55] font-light [text-shadow:0_2px_12px_rgba(0,0,0,0.55)]"
       cta={{
-        href: "#services-talent",
-        ariaLabel: "Scroll to services",
+        href: "#services-value",
+        ariaLabel: t("cta"),
         label: <ChevronDown className="h-5 w-5 shrink-0" aria-hidden />,
         className: "mt-0 px-3 py-2",
       }}

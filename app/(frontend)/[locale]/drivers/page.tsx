@@ -1,3 +1,9 @@
+import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { Locale } from "@/i18n/config";
+import { buildI18nMetadata } from "@/lib/i18nMetadata";
+import { buildRouteAlternates } from "@/lib/routeAlternates";
+import LocaleAlternatesData from "@/components/LocaleAlternatesData";
 import Footer from "@/components/Footer";
 import DriversGrid from "@/components/drivers/DriversGrid";
 import type { DriverCardData, DriverCountryCode } from "@/components/drivers/driversData";
@@ -5,6 +11,22 @@ import DriversHero from "@/components/drivers/DriversHero";
 import { getPayloadClient } from "@/lib/payload";
 
 export const revalidate = 60;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/drivers" });
+  return buildI18nMetadata({
+    locale,
+    pathSegment: "/drivers",
+    namespace: "drivers",
+    alternatesOverride: alternates.hreflang,
+    canonicalOverride: alternates.canonical,
+  });
+}
 
 type DriverRowData = DriverCardData & {
   gridRow: number;
@@ -57,17 +79,24 @@ function normalizeDriver(doc: unknown): DriverRowData | null {
   };
 }
 
-export default async function DriversPage() {
+export default async function DriversPage({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   const payload = await getPayloadClient();
-  const driversPage = await payload.findGlobal({ slug: "drivers-page" });
-  const siteSettings = await payload.findGlobal({ slug: "site-settings" });
+  const driversPage = await payload.findGlobal({ slug: "drivers-page", locale });
+  const siteSettings = await payload.findGlobal({ slug: "site-settings", locale });
   const drivers = await payload.find({
     collection: "drivers",
     sort: "order",
     limit: 100,
+    locale,
   });
 
-  // Group drivers into grid rows
   const rowMap = new Map<number, DriverCardData[]>();
   for (const driver of drivers.docs) {
     const normalizedDriver = normalizeDriver(driver);
@@ -81,6 +110,8 @@ export default async function DriversPage() {
     .sort(([a], [b]) => a - b)
     .map(([, docs]) => docs);
 
+  const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/drivers" });
+
   return (
     <main id="main" className="bg-primary text-secondary w-full ">
       <DriversHero
@@ -89,6 +120,7 @@ export default async function DriversPage() {
         backgroundImage={driversPage.heroBackgroundImage}
       />
       <DriversGrid gridRows={gridRows} />
+      <LocaleAlternatesData alternates={alternates} />
       <Footer
         copyright={siteSettings.footerCopyright}
         instagramUrl={siteSettings.instagramUrl}

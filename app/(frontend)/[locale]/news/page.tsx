@@ -1,0 +1,106 @@
+import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { Locale } from "@/i18n/config";
+import { buildI18nMetadata } from "@/lib/i18nMetadata";
+import { buildRouteAlternates } from "@/lib/routeAlternates";
+import LocaleAlternatesData from "@/components/LocaleAlternatesData";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import NewsCardsRow from "@/components/news/NewsCardsRow";
+import NewsFeaturedGrid from "@/components/news/NewsFeaturedGrid";
+import NewsHeading from "@/components/news/NewsHeading";
+import { getPayloadClient } from "@/lib/payload";
+
+export const revalidate = 60;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/news" });
+  return buildI18nMetadata({
+    locale,
+    pathSegment: "/news",
+    namespace: "news",
+    alternatesOverride: alternates.hreflang,
+    canonicalOverride: alternates.canonical,
+  });
+}
+
+export type NewsCardData = {
+  slug: string;
+  title: string;
+  image: string;
+  excerpt?: string | null;
+  category: "sporting" | "commercial";
+};
+
+export default async function NewsPage({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  const payload = await getPayloadClient();
+  const siteSettings = await payload.findGlobal({ slug: "site-settings", locale });
+  const news = await payload.find({
+    collection: "news",
+    sort: "-createdAt",
+    limit: 100,
+    locale,
+  });
+
+  const newsCards: NewsCardData[] = news.docs.map((n) => {
+    const manualExcerpt = (n as { excerpt?: string | null }).excerpt ?? null;
+    let excerpt = manualExcerpt ? manualExcerpt.trim() : "";
+    const intro = (n as { introParagraphs?: string | null }).introParagraphs;
+    if (!excerpt && typeof intro === "string" && intro.length > 0) {
+      const firstLine = intro
+        .split("\n")
+        .map((s: string) => s.trim())
+        .find(Boolean) || "";
+      excerpt = firstLine.length > 180 ? `${firstLine.slice(0, 177).trimEnd()}…` : firstLine;
+    }
+    return {
+      slug: n.slug,
+      title: n.title,
+      image: n.listImage,
+      excerpt: excerpt || null,
+      category: n.category as "sporting" | "commercial",
+    };
+  });
+
+  const featuredCards = newsCards.slice(0, 6);
+  const rowCards = [newsCards.slice(6, 10), newsCards.slice(10, 14), newsCards.slice(14, 18), newsCards.slice(18, 22)];
+
+  const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/news" });
+
+  return (
+    <main id="main" className="bg-primary text-secondary w-full ">
+      <Header activeItem="news" />
+      <section className="mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)] pt-20 pb-24">
+        <div className="grid gap-16">
+          <NewsHeading />
+          <div className="grid gap-7">
+            <NewsFeaturedGrid cards={featuredCards} />
+            {rowCards.map((row, index) => (
+              <NewsCardsRow key={index} cards={row} />
+            ))}
+          </div>
+        </div>
+      </section>
+      <LocaleAlternatesData alternates={alternates} />
+      <Footer
+        copyright={siteSettings.footerCopyright}
+        instagramUrl={siteSettings.instagramUrl}
+        linkedinUrl={siteSettings.linkedinUrl}
+        email={siteSettings.email}
+        privacyPolicyUrl={siteSettings.privacyPolicyUrl}
+      />
+    </main>
+  );
+}

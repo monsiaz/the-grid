@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Header from "./Header";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import {
   motion,
   heroTitle,
@@ -38,11 +38,11 @@ export default function Hero({
   title,
   description,
   children,
-  minHeightClassName = "min-h-[clamp(420px,80vh,560px)]",
+  minHeightClassName = "min-h-[clamp(420px,80svh,560px)]",
   contentClassName = "my-32 max-w-[680px] text-left",
-  titleClassName = "font-[var(--font-league-spartan)] text-[64px] leading-none font-bold uppercase drop-shadow-[4px_4px_8px_rgba(0,0,0,0.1)] max-[1200px]:text-[clamp(44px,6vw,64px)]",
-  descriptionClassName = "mt-2 text-base leading-[1.4] uppercase",
-  overlayClassName = "bg-black/40",
+  titleClassName = "font-[var(--font-league-spartan)] text-[64px] leading-none font-bold uppercase [text-shadow:0_4px_24px_rgba(0,0,0,0.55),0_2px_8px_rgba(0,0,0,0.4)] max-[1200px]:text-[clamp(44px,6vw,64px)]",
+  descriptionClassName = "mt-2 text-base leading-[1.4] uppercase [text-shadow:0_2px_12px_rgba(0,0,0,0.55)]",
+  overlayClassName = "bg-[linear-gradient(180deg,rgba(0,0,0,0.05)_0%,rgba(0,0,0,0.2)_55%,rgba(0,0,0,0.55)_100%)]",
   headerAnchorPrefix,
   activeHeaderItem,
   footerSlot,

@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { AnimatePresence } from "framer-motion";
 import { motion, fadeDown, smoothTransition } from "./motion";
 
@@ -13,15 +14,16 @@ type HeaderProps = {
   anchorPrefix?: string;
 };
 
-const headerItems: Array<{ id: HeaderItemId; label: string; href: string }> = [
-  { id: "about", label: "About", href: "/about" },
-  { id: "services", label: "Services", href: "/services" },
-  { id: "drivers", label: "Drivers", href: "/drivers" },
-  { id: "news", label: "News", href: "/news" },
-  { id: "contact", label: "Contact", href: "/contact" },
+const headerItems: Array<{ id: HeaderItemId; href: string }> = [
+  { id: "about", href: "/about" },
+  { id: "services", href: "/services" },
+  { id: "drivers", href: "/drivers" },
+  { id: "news", href: "/news" },
+  { id: "contact", href: "/contact" },
 ];
 
 export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
+  const t = useTranslations("header");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -44,15 +46,17 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
       transition={{ ...smoothTransition, duration: 0.6 }}
     >
       <div className="flex w-full items-center justify-between gap-4">
-        <Link href="/" aria-label="Go to homepage">
+        <Link href="/" aria-label={t("homeLink")}>
           <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
             <Image
               src="/images/logo.svg"
-              alt="The Grid"
+              alt={t("logoAlt")}
               width={122}
               height={44}
               priority
-              className="h-[44px] w-[122px]"
+              fetchPriority="high"
+              unoptimized
+              className="h-[44px] w-auto"
             />
           </motion.div>
         </Link>
@@ -60,7 +64,7 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
           type="button"
           aria-controls="site-navigation"
           aria-expanded={isMobileMenuOpen}
-          aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+          aria-label={isMobileMenuOpen ? t("closeMenu") : t("openMenu")}
           className="relative z-[60] hidden h-11 w-11 items-center justify-center rounded border border-white/20 text-secondary transition-colors hover:border-accent hover:text-accent max-[900px]:inline-flex"
           onClick={() => setIsMobileMenuOpen((current) => !current)}
         >
@@ -79,7 +83,7 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
       </div>
       <nav
         className="flex items-center gap-7 text-base leading-[1.2] uppercase max-[900px]:hidden"
-        aria-label="Primary"
+        aria-label={t("primary")}
       >
         {headerItems.map((item, idx) => (
           <motion.div
@@ -95,7 +99,7 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
               onClick={() => setIsMobileMenuOpen(false)}
               className={`${activeItem === item.id ? "text-accent" : "text-secondary"} no-underline uppercase transition-colors duration-300 hover:text-accent`}
             >
-              {item.label}
+              {t(`nav.${item.id}`)}
             </Link>
           </motion.div>
         ))}
@@ -112,7 +116,7 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
           >
             <motion.nav
               id="site-navigation"
-              aria-label="Mobile"
+              aria-label={t("mobile")}
               className="flex w-full flex-1 flex-col items-center justify-center gap-6 text-[28px] leading-[1.1] uppercase"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -134,7 +138,7 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`${activeItem === item.id ? "text-accent" : "text-secondary"} block px-4 py-3 no-underline uppercase transition-colors duration-300 hover:text-accent`}
                   >
-                    {item.label}
+                    {t(`nav.${item.id}`)}
                   </Link>
                 </motion.div>
               ))}

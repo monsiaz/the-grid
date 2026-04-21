@@ -1,31 +1,51 @@
 import type { GlobalConfig } from "payload";
+import { imageField } from "@/fields/imageField";
+import { getSiteUrl } from "@/lib/siteUrl";
 
 export const AboutPage: GlobalConfig = {
   slug: "about-page",
   access: {
     read: () => true,
   },
+  admin: {
+    livePreview: {
+      url: ({ locale }) => {
+        const base = getSiteUrl();
+        const l = locale?.code && locale.code !== "en" ? `/${locale.code}` : "";
+        return `${base}${l}/about/`;
+      },
+    },
+    preview: ({ locale }: { locale?: { code?: string } } = {}) => {
+      const base = getSiteUrl();
+      const l = locale?.code && locale.code !== "en" ? `/${locale.code}` : "";
+      return `${base}${l}/about/`;
+    },
+  },
   fields: [
     {
       name: "heroTitle",
       type: "text",
       required: true,
+      localized: true,
       defaultValue: "Who we are",
     },
     {
       name: "heroDescription",
       type: "text",
+      localized: true,
       defaultValue:
         "A 360° motorsport agency built on 20 years of experience on and beyond the track",
     },
-    {
+    imageField({
       name: "heroBackgroundImage",
-      type: "text",
+      label: "Hero background image",
       defaultValue: "/images/about/hero.webp",
-    },
+      description: "Visible plein écran au top de la page À propos.",
+    }),
     {
       name: "coreIntroText",
       type: "textarea",
+      localized: true,
       admin: {
         description:
           "Use [highlight]text[/highlight] for muted text. The intro text above the core areas cards.",
@@ -47,32 +67,54 @@ export const AboutPage: GlobalConfig = {
           name: "title",
           type: "text",
           required: true,
+          localized: true,
         },
         {
           name: "text",
           type: "textarea",
           required: true,
+          localized: true,
         },
-        {
+        imageField({
           name: "image",
-          type: "text",
+          label: "Core area image",
           required: true,
-        },
+          description: "Illustration de la carte métier (Sport, Image, Commercial).",
+        }),
       ],
     },
     {
       name: "founderBio",
       type: "textarea",
       required: true,
+      localized: true,
+    },
+    {
+      name: "founderName",
+      type: "text",
+      defaultValue: "Guillaume Le Goff",
+    },
+    {
+      name: "founderRole",
+      type: "text",
+      localized: true,
+      defaultValue: "Founder",
+    },
+    {
+      name: "founderLinkedinUrl",
+      type: "text",
+      defaultValue: "https://www.linkedin.com/in/glegoff/",
     },
     {
       name: "accelereDescription",
       type: "textarea",
       required: true,
+      localized: true,
     },
     {
       name: "accelereQuote",
       type: "textarea",
+      localized: true,
     },
     {
       name: "accelereQuoteAuthor",
@@ -82,11 +124,13 @@ export const AboutPage: GlobalConfig = {
     {
       name: "accelereQuoteRole",
       type: "text",
+      localized: true,
       defaultValue: "BWT Alpine F1 Team Driver",
     },
     {
       name: "accelereQuoteTitle",
       type: "text",
+      localized: true,
       defaultValue: "Program Sponsor",
     },
     {
@@ -103,11 +147,12 @@ export const AboutPage: GlobalConfig = {
       name: "instagramImages",
       type: "array",
       fields: [
-        {
+        imageField({
           name: "image",
-          type: "text",
+          label: "Instagram tile",
           required: true,
-        },
+          description: "Vignette du carrousel Instagram.",
+        }),
       ],
     },
   ],

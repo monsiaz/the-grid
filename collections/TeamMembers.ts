@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { imageField } from "@/fields/imageField";
 
 export const TeamMembers: CollectionConfig = {
   slug: "team-members",
@@ -14,16 +15,34 @@ export const TeamMembers: CollectionConfig = {
       name: "name",
       type: "text",
       required: true,
+      localized: true,
     },
     {
       name: "role",
       type: "text",
       required: true,
+      localized: true,
+    },
+    imageField({
+      name: "image",
+      label: "Portrait",
+      required: true,
+      description: "Photo de profil affichée sur la page À propos.",
+    }),
+    {
+      name: "linkedinUrl",
+      type: "text",
+      admin: {
+        description: "Full LinkedIn profile URL (displayed as the in icon + flip card CTA).",
+      },
     },
     {
-      name: "image",
-      type: "text",
-      required: true,
+      name: "bio",
+      type: "textarea",
+      localized: true,
+      admin: {
+        description: "Short bio shown on the back of the card when flipped.",
+      },
     },
     {
       name: "order",

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import {
   motion,
   fadeUp,
@@ -14,10 +15,11 @@ type ServicesPartnerProps = {
 };
 
 export default function ServicesPartner({ description }: ServicesPartnerProps) {
+  const t = useTranslations("services.partner");
   return (
     <section className="relative min-h-[clamp(520px,80vh,800px)] w-full overflow-hidden">
       <Image
-        src="/images/services.webp"
+        src="/assets/v2/services/hintsa.webp"
         alt=""
         fill
         loading="lazy"
@@ -26,9 +28,9 @@ export default function ServicesPartner({ description }: ServicesPartnerProps) {
         className="object-cover"
         aria-hidden
       />
-      <div className="absolute inset-0 bg-black/30" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0.2)_45%,rgba(0,0,0,0.55)_100%)]" />
       <div className="relative z-10 mx-auto flex min-h-[inherit] w-full max-w-[1344px] items-center justify-center px-[clamp(20px,4vw,48px)] py-20 min-[900px]:py-32">
-        <div className="grid w-full max-w-[1002px] gap-7 text-center uppercase">
+        <div className="grid w-full max-w-[1002px] gap-7 text-center uppercase [text-shadow:0_2px_16px_rgba(0,0,0,0.55)]">
           <motion.div
             className="mx-auto flex items-center justify-center gap-8 max-[900px]:flex-col"
             variants={scaleIn}
@@ -42,15 +44,19 @@ export default function ServicesPartner({ description }: ServicesPartnerProps) {
               alt="The Grid"
               width={248}
               height={56}
-              className="h-auto w-[248px]"
+              unoptimized
+              loading="lazy"
+              className="h-auto w-[248px] max-w-full"
             />
             <span className="bg-secondary h-14 w-px max-[900px]:h-px max-[900px]:w-14" />
             <Image
               src="/images/services/hintsa-white-logo.svg"
-              alt="Hintsa"
+              alt={t("hintsaAlt")}
               width={248}
               height={44}
-              className="h-auto w-[248px]"
+              unoptimized
+              loading="lazy"
+              className="h-auto w-[248px] max-w-full"
             />
           </motion.div>
           <motion.p
@@ -61,7 +67,7 @@ export default function ServicesPartner({ description }: ServicesPartnerProps) {
             viewport={viewport}
             transition={{ ...smoothTransition, delay: 0.2 }}
           >
-            {description || "The Grid Agency partners with Hintsa Performance, a global leader in human performance coaching. Built on a shared belief that performance is won off-track, this collaboration strengthens our commitment to preparing drivers for the highest level of the sport."}
+            {description || t("descriptionFallback")}
           </motion.p>
         </div>
       </div>

@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, RotateCcw } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
 import {
   motion,
   fadeUp,
@@ -15,6 +17,7 @@ type ServiceCard = {
   title: string;
   image: string;
   alt: string;
+  description?: string | null;
 };
 
 type ServicesCardGridProps = {
@@ -41,32 +44,75 @@ function ServiceIntroCard({ text }: { text: string }) {
   );
 }
 
-function ServiceImageCard({ card, imageHeightClassName, bodyPaddingClassName }: { card: ServiceCard; imageHeightClassName: string; bodyPaddingClassName: string }) {
+function ServiceFlipCard({
+  card,
+  imageHeightClassName,
+  bodyPaddingClassName,
+}: {
+  card: ServiceCard;
+  imageHeightClassName: string;
+  bodyPaddingClassName: string;
+}) {
+  const t = useTranslations("services.grid");
+  const [flipped, setFlipped] = useState(false);
+  const hasDescription = Boolean(card.description && card.description.trim());
+
   return (
-    <motion.article
-      className="border-secondary overflow-hidden rounded-[32px] border"
+    <motion.div
+      className="h-full [perspective:1200px]"
       variants={fadeUp}
       transition={smoothTransition}
-      whileHover={{ y: -6, transition: { duration: 0.3, ease: "easeOut" } }}
     >
-      <div className={`relative w-full overflow-hidden ${imageHeightClassName}`}>
-        <motion.div
-          className="relative h-full w-full"
-          whileHover={{ scale: 1.06 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
+      <button
+        type="button"
+        onClick={() => setFlipped((v) => !v)}
+        aria-pressed={flipped}
+        aria-label={
+          flipped
+            ? t("hideDetails", { name: card.alt })
+            : t("showDetails", { name: card.alt })
+        }
+        className="group relative block h-full w-full cursor-pointer rounded-[32px] text-left [transform-style:preserve-3d] transition-transform duration-700 ease-[cubic-bezier(0.4,0.2,0.2,1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-4"
+        style={{ transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
+      >
+        <span
+          className="absolute inset-0 border-secondary overflow-hidden rounded-[32px] border bg-primary [backface-visibility:hidden] transition-transform duration-300 group-hover:-translate-y-1.5"
         >
-          <Image src={card.image} alt={card.alt} fill sizes="(max-width: 1024px) 100vw, 20vw" className="object-cover" />
-        </motion.div>
-      </div>
-      <div className={`bg-primary ${bodyPaddingClassName}`}>
-        <div className="flex items-center justify-between gap-4">
-          <h3 className="m-0 text-base leading-[1.2] font-bold uppercase whitespace-pre-line">{card.title}</h3>
-          <span className="text-accent border-accent inline-flex rounded-full border-2 px-3 py-1 text-base leading-[1.2] transition-all duration-300 hover:bg-accent hover:text-black" aria-hidden>
-            <ArrowRight className="h-4 w-4 shrink-0" />
+          <span className={`relative block w-full overflow-hidden ${imageHeightClassName}`}>
+            <Image
+              src={card.image}
+              alt={card.alt}
+              fill
+              sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, (max-width: 1200px) 33vw, 240px"
+              className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
+            />
           </span>
-        </div>
-      </div>
-    </motion.article>
+          <span className={`block bg-primary ${bodyPaddingClassName}`}>
+            <span className="flex items-center justify-between gap-4">
+              <span className="m-0 text-base leading-[1.2] font-bold uppercase whitespace-pre-line">{card.title}</span>
+              <span className="text-accent border-accent inline-flex rounded-full border-2 px-3 py-1 text-base leading-[1.2] transition-all duration-300 group-hover:bg-accent group-hover:text-black" aria-hidden>
+                <ArrowRight className="h-4 w-4 shrink-0" />
+              </span>
+            </span>
+          </span>
+        </span>
+
+        <span
+          className="absolute inset-0 flex flex-col justify-between border-secondary rounded-[32px] border bg-primary p-6 [backface-visibility:hidden] [transform:rotateY(180deg)]"
+        >
+          <span className="flex items-start justify-between gap-3">
+            <span className="m-0 text-base leading-[1.2] font-bold uppercase whitespace-pre-line text-accent">{card.title}</span>
+            <span className="text-accent border-accent inline-flex rounded-full border-2 px-2 py-2 text-base leading-[1.2]" aria-hidden>
+              <RotateCcw className="h-4 w-4 shrink-0" />
+            </span>
+          </span>
+          <span className="m-0 block text-[14px] leading-[1.5] font-light text-secondary/90">
+            {hasDescription ? card.description : t("descriptionFallback")}
+          </span>
+          <span className="mt-4 block text-[11px] uppercase tracking-[0.12em] text-muted">{t("flipBack")}</span>
+        </span>
+      </button>
+    </motion.div>
   );
 }
 
@@ -107,7 +153,7 @@ export default function ServicesCardGrid({
         </div>
 
         <motion.div
-          className={`grid gap-7 ${gridClassName}`}
+          className={`grid items-stretch gap-7 ${gridClassName}`}
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
@@ -115,7 +161,7 @@ export default function ServicesCardGrid({
         >
           <ServiceIntroCard text={introText} />
           {cards.map((card) => (
-            <ServiceImageCard
+            <ServiceFlipCard
               key={card.title}
               card={card}
               imageHeightClassName={imageHeightClassName}

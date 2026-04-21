@@ -1,0 +1,235 @@
+{
+  "meta": {
+    "default": {
+      "title": "THE GRID — Agencia de Motorsport",
+      "template": "%s | THE GRID"
+    },
+    "description": "The Grid es una agencia de motorsport 360° que combina gestión de pilotos y marketing estratégico para construir carreras y desarrollar alianzas de alto impacto en todo el ecosistema.",
+    "keywords": "agencia de motorsport, gestión de pilotos, Formula 1, Formula 2, Formula 3, karting, marketing deportivo, Pierre Gasly, Isack Hadjar, The Grid",
+    "ogImageAlt": "The Grid — Abriendo las puertas al motorsport de élite",
+    "home": {
+      "title": "THE GRID — Agencia de Motorsport",
+      "description": "The Grid es una agencia de motorsport 360° que combina gestión de pilotos y marketing estratégico para construir carreras y desarrollar alianzas de alto impacto en todo el ecosistema."
+    },
+    "about": {
+      "title": "Sobre",
+      "description": "Conoce The Grid: una agencia de motorsport que aprovecha más de 20 años de experiencia en gestión deportiva, imagen y medios, y desarrollo comercial."
+    },
+    "services": {
+      "title": "Servicios",
+      "description": "Descubre cómo The Grid Agency apoya a pilotos y partners en gestión deportiva, imagen y medios, y desarrollo comercial."
+    },
+    "drivers": {
+      "title": "Pilotos",
+      "description": "Descubre los pilotos representados por The Grid Agency en Formula 1, Formula 2, Formula 3 y categorías junior."
+    },
+    "news": {
+      "title": "Noticias",
+      "description": "Las últimas noticias deportivas y comerciales de The Grid Agency, de nuestros pilotos y de nuestros partners."
+    },
+    "contact": {
+      "title": "Contacto",
+      "description": "Contacta con The Grid Agency para gestión de pilotos, partnerships y oportunidades comerciales."
+    }
+  },
+  "skip": {
+    "toContent": "Saltar al contenido"
+  },
+  "header": {
+    "logoAlt": "The Grid",
+    "homeLink": "Ir a la página de inicio",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "primary": "Principal",
+    "mobile": "Móvil",
+    "nav": {
+      "about": "Sobre",
+      "services": "Servicios",
+      "drivers": "Pilotos",
+      "news": "Noticias",
+      "contact": "Contacto"
+    }
+  },
+  "footer": {
+    "instagramLabel": "Instagram (se abre en una pestaña nueva)",
+    "linkedinLabel": "LinkedIn (se abre en una pestaña nueva)",
+    "privacyPolicy": "Política de privacidad",
+    "copyrightFallback": "(C) 2026 THE GRID AGENCY, TODOS LOS DERECHOS RESERVADOS",
+    "newsletter": {
+      "label": "Solicitar acceso a The Grid",
+      "placeholder": "you@example.com",
+      "sending": "Enviando...",
+      "submit": "Suscribirme",
+      "success": "Solicitud de acceso recibida",
+      "error": "Ha ocurrido un error."
+    },
+    "language": {
+      "label": "Idioma",
+      "srOnly": "Seleccionar idioma"
+    }
+  },
+  "home": {
+    "explore": "Explorar",
+    "services": {
+      "cta": "Nuestra experiencia",
+      "ctaSr": " — descubre más sobre nuestros servicios"
+    },
+    "drivers": {
+      "cta": "Conoce a nuestros pilotos",
+      "headingFallback": "Para los merecedores",
+      "headingAccentFallback": "pilotos"
+    },
+    "news": {
+      "heading": "Últimas noticias",
+      "previous": "Noticias anteriores",
+      "next": "Próximas noticias"
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "Quiénes",
+      "titleAccent": "somos",
+      "cta": "Desplázate para conocer quiénes somos"
+    },
+    "team": {
+      "introFallback": {
+        "lead": "Nuestra experiencia se estructura en ",
+        "highlight1": "tres áreas clave",
+        "middle": ", pensadas para ",
+        "highlight2": "impulsar el rendimiento",
+        "middle2": " en pista y ",
+        "highlight3": "crear valor",
+        "tail": " más allá de eso"
+      },
+      "meet": "Conoce",
+      "meetThe": "al",
+      "meetTeam": "equipo",
+      "learnMore": "Descubre más sobre {name}",
+      "hideDetails": "Ocultar detalles sobre {name}",
+      "linkedinLabel": "{name} en LinkedIn (se abre en una pestaña nueva)",
+      "flipBack": "Volver",
+      "bioFallback": "Los detalles del perfil llegarán pronto."
+    },
+    "accelere": {
+      "bannerAlt": "Iniciativa de motorsport ACCÉLÈRE",
+      "contactCome": "Contacta con COMe",
+      "contactComeAria": "Contacta con COMe Maison Financière por correo electrónico"
+    },
+    "follow": {
+      "getInTouch": "Contacta con nosotros",
+      "heading": "Síguenos",
+      "headingAccent": "nosotros",
+      "instagramCta": "Instagram",
+      "portraitFallback": "Pierre Gasly",
+      "gridAlt": "Instagram de The Grid"
+    }
+  },
+  "services": {
+    "hero": {
+      "titleFallback": "Tu tienda de todo en uno",
+      "cta": "Desplázate hasta servicios"
+    },
+    "value": {
+      "headingFallback": "DÓNDE EL RENDIMIENTO",
+      "headingFiller": "CREAMOS",
+      "headingAccentFallback": "VALOR"
+    },
+    "talent": {
+      "headingFallback": "EL TALENTO TOMA EL VOLANTE",
+      "headingAccentFallback": "NOSOTROS ABRIMOS EL CAMINO"
+    },
+    "partner": {
+      "descriptionFallback": "The Grid Agency se asocia con Hintsa Performance, líder global en coaching del rendimiento humano. Basada en la convicción compartida de que el rendimiento se gana fuera de la pista, esta colaboración refuerza nuestro compromiso de preparar a los pilotos para el máximo nivel del deporte.",
+      "hintsaAlt": "Hintsa"
+    },
+    "grid": {
+      "flipBack": "Haz clic para volver",
+      "showDetails": "Mostrar detalles sobre {name}",
+      "hideDetails": "Ocultar detalles sobre {name}",
+      "descriptionFallback": "Próximamente habrá más detalles."
+    },
+    "caseStudies": {
+      "previous": "Estudio de caso anterior",
+      "next": "Siguiente estudio de caso",
+      "tabs": "Estudios de caso",
+      "tabLabel": "Ir al estudio de caso {index}"
+    }
+  },
+  "drivers": {
+    "hero": {
+      "titleFor": "PARA",
+      "titleDeserving": "MERECEDORES",
+      "titleDrivers": "LOS PILOTOS",
+      "descriptionFallback": "Conócelos",
+      "cta": "Desplázate a la parrilla de pilotos"
+    },
+    "card": {
+      "learnMore": "Saber más",
+      "learnMoreSr": " sobre {name}",
+      "instagramLabel": "Sigue a {name} en Instagram (se abre en una pestaña nueva)",
+      "nationalities": "Nacionalidades"
+    },
+    "detail": {
+      "back": "Volver a pilotos",
+      "latestNews": "Últimas noticias",
+      "gallery": {
+        "left": "Galería de pilotos a la izquierda",
+        "center": "Galería de pilotos en el centro",
+        "right": "Galería de pilotos a la derecha"
+      },
+      "career": {
+        "highestFinish": "Highest race finish",
+        "points": "Career points",
+        "grandPrixEntered": "Grand prix entered",
+        "podiums": "Career podiums",
+        "image": "Career highlight",
+        "imageAlt": "Momento destacado de la carrera",
+        "stats": {
+          "highestFinish": "Mejor resultado en carrera",
+          "careerPoints": "Puntos de la carrera",
+          "grandPrixEntered": "Grand Prix disputados",
+          "careerPodiums": "Podios de la carrera"
+        }
+      },
+      "agency": {
+        "image": "Driver and agency",
+        "imageAlt": "Piloto y agencia"
+      }
+    }
+  },
+  "news": {
+    "heading": {
+      "muted": "Últimas",
+      "accent": "Noticias"
+    },
+    "filters": {
+      "sporting": "Noticias deportivas",
+      "commercial": "Noticias comerciales"
+    },
+    "card": {
+      "readAria": "Leer: {title}",
+      "learnMore": "Saber más",
+      "learnMoreSr": " sobre esta noticia"
+    },
+    "detail": {
+      "back": "Volver a las noticias",
+      "galleryImageAlt": "imagen de galería de {title} {index}"
+    }
+  },
+  "contact": {
+    "hero": {
+      "title": "Conéctate",
+      "titleAccent": "con nosotros"
+    },
+    "form": {
+      "firstName": "Nombre",
+      "lastName": "Apellidos",
+      "email": "Correo electrónico",
+      "message": "Mensaje",
+      "send": "Enviar",
+      "sending": "Enviando...",
+      "success": "Gracias. Se ha enviado tu mensaje.",
+      "error": "No se pudo enviar el mensaje."
+    }
+  }
+}

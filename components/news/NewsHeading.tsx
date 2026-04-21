@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import {
   motion,
   fadeUp,
@@ -10,6 +11,7 @@ import {
 } from "../motion";
 
 export default function NewsHeading() {
+  const t = useTranslations("news");
   return (
     <div className="flex w-full flex-col items-start gap-6 min-[1100px]:flex-row min-[1100px]:items-center min-[1100px]:justify-between">
       <motion.h1
@@ -20,8 +22,8 @@ export default function NewsHeading() {
         viewport={viewport}
         transition={smoothTransition}
       >
-        <span className="text-muted">Latest </span>
-        <span className="text-secondary">News</span>
+        <span className="text-muted">{t("heading.muted")}</span>
+        <span className="text-secondary">{t("heading.accent")}</span>
       </motion.h1>
       <motion.div
         className="flex flex-wrap items-center gap-3"
@@ -38,7 +40,7 @@ export default function NewsHeading() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
         >
-          Sporting News
+          {t("filters.sporting")}
         </motion.button>
         <motion.button
           type="button"
@@ -48,7 +50,7 @@ export default function NewsHeading() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
         >
-          Commercial News
+          {t("filters.commercial")}
         </motion.button>
       </motion.div>
     </div>

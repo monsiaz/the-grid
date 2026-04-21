@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import ServicesCardGrid from "./ServicesCardGrid";
 
 type ServicesTalentProps = {
@@ -5,18 +8,19 @@ type ServicesTalentProps = {
   headingAccent?: string | null;
   description?: string | null;
   introText?: string | null;
-  cards: { title: string; image: string; alt: string }[];
+  cards: { title: string; image: string; alt: string; description?: string | null }[];
 };
 
 export default function ServicesTalent({ heading, headingAccent, description, introText, cards }: ServicesTalentProps) {
+  const t = useTranslations("services.talent");
   return (
     <ServicesCardGrid
       id="services-talent"
       heading={
         <>
-          {heading || "TALENT TAKES THE WHEEL"}
+          {heading || t("headingFallback")}
           <br />
-          <span className="text-muted">{headingAccent || "WE PAVE THE WAY"}</span>
+          <span className="text-muted">{headingAccent || t("headingAccentFallback")}</span>
         </>
       }
       description={description || ""}

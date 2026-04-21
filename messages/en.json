@@ -1,0 +1,229 @@
+{
+  "meta": {
+    "default": {
+      "title": "THE GRID — Motorsport Agency",
+      "template": "%s | THE GRID"
+    },
+    "description": "The Grid is a 360° motorsport agency combining driver management and strategic marketing to build careers and develop high-impact partnerships across the ecosystem.",
+    "keywords": "motorsport agency, driver management, Formula 1, Formula 2, Formula 3, karting, sport marketing, Pierre Gasly, Isack Hadjar, The Grid",
+    "ogImageAlt": "The Grid — Opening the gates to elite motorsport",
+    "home": {
+      "title": "THE GRID — Motorsport Agency",
+      "description": "The Grid is a 360° motorsport agency combining driver management and strategic marketing to build careers and develop high-impact partnerships across the ecosystem."
+    },
+    "about": {
+      "title": "About",
+      "description": "Meet The Grid: a motorsport agency leveraging 20+ years of experience in sport management, image & media and commercial development."
+    },
+    "services": {
+      "title": "Services",
+      "description": "Discover how The Grid Agency supports drivers and partners across sport management, image & media and commercial development."
+    },
+    "drivers": {
+      "title": "Drivers",
+      "description": "Discover the drivers represented by The Grid Agency across Formula 1, Formula 2, Formula 3 and junior categories."
+    },
+    "news": {
+      "title": "News",
+      "description": "The latest sporting and commercial news from The Grid Agency, our drivers and our partners."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Get in touch with The Grid Agency for driver management, partnerships and commercial opportunities."
+    }
+  },
+  "skip": {
+    "toContent": "Skip to content"
+  },
+  "header": {
+    "logoAlt": "The Grid",
+    "homeLink": "Go to homepage",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "primary": "Primary",
+    "mobile": "Mobile",
+    "nav": {
+      "about": "About",
+      "services": "Services",
+      "drivers": "Drivers",
+      "news": "News",
+      "contact": "Contact"
+    }
+  },
+  "footer": {
+    "instagramLabel": "Instagram (opens in new tab)",
+    "linkedinLabel": "LinkedIn (opens in new tab)",
+    "privacyPolicy": "Privacy policy",
+    "copyrightFallback": "(C) 2026 THE GRID AGENCY, ALL RIGHTS RESERVED",
+    "newsletter": {
+      "label": "Request access to The Grid",
+      "placeholder": "you@example.com",
+      "sending": "Sending...",
+      "submit": "Subscribe",
+      "success": "Access request received",
+      "error": "Something went wrong."
+    },
+    "language": {
+      "label": "Language",
+      "srOnly": "Select language"
+    }
+  },
+  "home": {
+    "explore": "Explore",
+    "services": {
+      "cta": "Our expertise",
+      "ctaSr": " — learn more about our services"
+    },
+    "drivers": {
+      "cta": "Meet our drivers",
+      "headingFallback": "For deserving",
+      "headingAccentFallback": "drivers"
+    },
+    "news": {
+      "heading": "Latest news",
+      "previous": "Previous news",
+      "next": "Next news"
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "Who we",
+      "titleAccent": "are",
+      "cta": "Scroll to who we are"
+    },
+    "team": {
+      "introFallback": {
+        "lead": "Our expertise is structured around ",
+        "highlight1": "three core areas",
+        "middle": ", designed to ",
+        "highlight2": "support performance",
+        "middle2": " on track and ",
+        "highlight3": "create value",
+        "tail": " beyond it"
+      },
+      "meet": "Meet",
+      "meetThe": "the",
+      "meetTeam": "team",
+      "learnMore": "Learn more about {name}",
+      "hideDetails": "Hide details about {name}",
+      "linkedinLabel": "{name} on LinkedIn (opens in new tab)",
+      "flipBack": "Flip back",
+      "bioFallback": "Profile details coming soon."
+    },
+    "accelere": {
+      "bannerAlt": "ACCÉLÈRE motorsport initiative",
+      "contactCome": "Contact COMe",
+      "contactComeAria": "Contact COMe Maison Financière by email"
+    },
+    "follow": {
+      "getInTouch": "Get in touch",
+      "heading": "Follow",
+      "headingAccent": "us",
+      "instagramCta": "Instagram",
+      "portraitFallback": "Pierre Gasly",
+      "gridAlt": "The Grid Instagram"
+    }
+  },
+  "services": {
+    "hero": {
+      "titleFallback": "One-stop shop",
+      "cta": "Scroll to services"
+    },
+    "value": {
+      "headingFallback": "WHERE PERFORMANCE",
+      "headingFiller": "CREATES",
+      "headingAccentFallback": "VALUE"
+    },
+    "talent": {
+      "headingFallback": "TALENT TAKES THE WHEEL",
+      "headingAccentFallback": "WE PAVE THE WAY"
+    },
+    "partner": {
+      "descriptionFallback": "The Grid Agency partners with Hintsa Performance, a global leader in human performance coaching. Built on a shared belief that performance is won off-track, this collaboration strengthens our commitment to preparing drivers for the highest level of the sport.",
+      "hintsaAlt": "Hintsa"
+    },
+    "grid": {
+      "flipBack": "Click to flip back",
+      "showDetails": "Show details about {name}",
+      "hideDetails": "Hide details about {name}",
+      "descriptionFallback": "More details coming soon."
+    },
+    "caseStudies": {
+      "previous": "Previous case study",
+      "next": "Next case study",
+      "tabs": "Case studies",
+      "tabLabel": "Go to case study {index}"
+    }
+  },
+  "drivers": {
+    "hero": {
+      "titleFor": "FOR",
+      "titleDeserving": "DESERVING",
+      "titleDrivers": "DRIVERS",
+      "descriptionFallback": "Learn about them",
+      "cta": "Scroll to drivers grid"
+    },
+    "card": {
+      "learnMore": "Learn more",
+      "learnMoreSr": " about {name}",
+      "instagramLabel": "Follow {name} on Instagram (opens in new tab)",
+      "nationalities": "Nationalities"
+    },
+    "detail": {
+      "back": "Back to drivers",
+      "latestNews": "Latest news",
+      "gallery": {
+        "left": "Driver gallery left",
+        "center": "Driver gallery center",
+        "right": "Driver gallery right"
+      },
+      "career": {
+        "imageAlt": "Career highlight",
+        "stats": {
+          "highestFinish": "Highest race finish",
+          "careerPoints": "Career points",
+          "grandPrixEntered": "Grand prix entered",
+          "careerPodiums": "Career podiums"
+        }
+      },
+      "agency": {
+        "imageAlt": "Driver and agency"
+      }
+    }
+  },
+  "news": {
+    "heading": {
+      "muted": "Latest ",
+      "accent": "News"
+    },
+    "filters": {
+      "sporting": "Sporting News",
+      "commercial": "Commercial News"
+    },
+    "card": {
+      "readAria": "Read: {title}",
+      "learnMore": "Learn more",
+      "learnMoreSr": " about this news"
+    },
+    "detail": {
+      "back": "Back to news",
+      "galleryImageAlt": "{title} gallery image {index}"
+    }
+  },
+  "contact": {
+    "hero": {
+      "title": "Get",
+      "titleAccent": "in touch"
+    },
+    "form": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "message": "Message",
+      "send": "Send",
+      "sending": "Sending...",
+      "success": "Thanks, your message has been sent.",
+      "error": "Unable to send message."
+    }
+  }
+}

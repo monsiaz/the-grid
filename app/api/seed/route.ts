@@ -25,20 +25,20 @@ export async function POST() {
 
   // Seed drivers
   const driversCards = [
-    { slug: "pierre-gasly", name: "PIERRE GASLY", role: "BWT ALPINE FORMULA 1 DRIVER", image: "/images/drivers/driver-01-gasly.webp", flags: ["FR" as const], instagramUrl: "https://www.instagram.com/pierregasly/", order: 1, gridRow: 1 },
-    { slug: "isack-hadjar", name: "ISACK HADJAR", role: "ORACLE RED BULL RACING FORMULA 1 DRIVER", image: "/images/drivers/driver-02-hadjar.webp", flags: ["FR" as const], instagramUrl: "https://www.instagram.com/isackhadjar/", order: 2, gridRow: 1 },
-    { slug: "kush-maini", name: "KUSH MAINI", role: "ART GRAND PRIX FORMULA 2 DRIVER BWT ALPINE F1 TEAM & MAHINDRA FE TEAM RESERVE DRIVER", image: "/images/drivers/driver-03-maini.webp", flags: ["IN" as const], instagramUrl: "https://www.instagram.com/kushmaini/", order: 3, gridRow: 1 },
-    { slug: "fred-makowiecki", name: "FRED MAKOWIECKI", role: "ALPINE ENDURANCE TEAM WEC DRIVER", image: "/images/drivers/driver-04-makowiecki.webp", flags: ["FR" as const], instagramUrl: "https://www.instagram.com/fredmakowiecki/", order: 4, gridRow: 1 },
-    { slug: "alessandro-giusti", name: "ALESSANDRO GIUSTI", role: "MP MOTORSPORT FORMULA 3 DRIVER WILLIAMS RACING DRIVER ACADEMY TALENT", image: "/images/drivers/driver-05-giusti.webp", flags: ["FR" as const], instagramUrl: "https://www.instagram.com/alessandrogiusti_/", order: 5, gridRow: 2 },
-    { slug: "enzo-deligny", name: "ENZO DELIGNY", role: "VAN AMERSFOORT RACING FORMULA 3 DRIVER", image: "/images/drivers/driver-06-deligny.webp", flags: ["FR" as const], instagramUrl: "https://www.instagram.com/enzo.deligny/", order: 6, gridRow: 2 },
-    { slug: "andrea-dupe", name: "ANDREA DUPE", role: "VAN AMERSFOORT RACING FREC DRIVER", image: "/images/drivers/driver-07-dupe.webp", flags: ["FR" as const], instagramUrl: "https://www.instagram.com/andrea.dupe/", order: 7, gridRow: 2 },
-    { slug: "nathan-tye", name: "NATHAN TYE", role: "DRIVEX FORMULA 4 DRIVER", image: "/images/drivers/driver-08-tye.webp", flags: ["GB" as const], instagramUrl: "https://www.instagram.com/nathantye_", order: 8, gridRow: 2 },
-    { slug: "vivek-kanthan", name: "VIVEK KANTHAN", role: "CAMPOS RACING FORMULA 4 DRIVER", image: "/images/drivers/driver-09-kanthan.webp", flags: ["US" as const], instagramUrl: "https://www.instagram.com/vivekkanthan/", order: 9, gridRow: 3 },
-    { slug: "jack-iliffe", name: "JACK ILIFFE", role: "FFSA FORMULA 4 DRIVER", image: "/images/drivers/driver-10-iliffe.webp", flags: ["US" as const], instagramUrl: "https://www.instagram.com/jackiliffe/", order: 10, gridRow: 3 },
-    { slug: "louis-cochet", name: "LOUIS COCHET", role: "MP MOTORSPORT FORMULA 4 DRIVER", image: "/images/drivers/driver-11-cochet.webp", flags: ["FR" as const], instagramUrl: "https://www.instagram.com/louis.cochet/", order: 11, gridRow: 3 },
-    { slug: "luka-scelles", name: "LUKA SCELLES", role: "VICTORY LANE OK DRIVER", image: "/images/drivers/driver-12-scelles.webp", flags: ["FR" as const], instagramUrl: "https://www.instagram.com/lukascelles/", order: 12, gridRow: 3 },
-    { slug: "alex-truchot", name: "ALEX TRUCHOT", role: "PREMA RACING OK-J DRIVER", image: "/images/drivers/driver-13-truchot.webp", flags: ["FR" as const, "US" as const], instagramUrl: "https://www.instagram.com/alextruchot/", order: 13, gridRow: 4 },
-    { slug: "stan-ratajski", name: "STAN RATAJSKI", role: "KART REPUBLIC OK-J DRIVER", image: "/images/drivers/driver-14-ratajski.webp", flags: ["FR" as const, "PL" as const], instagramUrl: "https://www.instagram.com/stanratajski/", order: 14, gridRow: 4 },
+    { slug: "pierre-gasly", name: "PIERRE GASLY", role: "BWT ALPINE FORMULA 1 DRIVER", image: "/assets/v2/drivers/icones/driver-01-gasly.webp", flags: ["FR" as const], instagramUrl: "https://www.instagram.com/pierregasly/", order: 1, gridRow: 1 },
+    { slug: "isack-hadjar", name: "ISACK HADJAR", role: "ORACLE RED BULL RACING FORMULA 1 DRIVER", image: "/assets/v2/drivers/icones/driver-02-hadjar.webp", flags: ["FR" as const], instagramUrl: "https://www.instagram.com/isackhadjar/", order: 2, gridRow: 1 },
+    { slug: "kush-maini", name: "KUSH MAINI", role: "ART GRAND PRIX FORMULA 2 DRIVER BWT ALPINE F1 TEAM & MAHINDRA FE TEAM RESERVE DRIVER", image: "/assets/v2/drivers/icones/driver-03-maini.webp", flags: ["IN" as const], instagramUrl: "https://www.instagram.com/kushmaini/", order: 3, gridRow: 1 },
+    { slug: "fred-makowiecki", name: "FRED MAKOWIECKI", role: "ALPINE ENDURANCE TEAM WEC DRIVER", image: "/assets/v2/drivers/icones/driver-04-makowiecki.webp", flags: ["FR" as const], instagramUrl: "https://www.instagram.com/fredmakowiecki/", order: 4, gridRow: 1 },
+    { slug: "alessandro-giusti", name: "ALESSANDRO GIUSTI", role: "MP MOTORSPORT FORMULA 3 DRIVER WILLIAMS RACING DRIVER ACADEMY TALENT", image: "/assets/v2/drivers/icones/driver-05-giusti.webp", flags: ["FR" as const], instagramUrl: "https://www.instagram.com/alessandrogiusti_/", order: 5, gridRow: 2 },
+    { slug: "enzo-deligny", name: "ENZO DELIGNY", role: "VAN AMERSFOORT RACING FORMULA 3 DRIVER", image: "/assets/v2/drivers/icones/driver-06-deligny.webp", flags: ["FR" as const], instagramUrl: "https://www.instagram.com/enzo.deligny/", order: 6, gridRow: 2 },
+    { slug: "andrea-dupe", name: "ANDREA DUPE", role: "VAN AMERSFOORT RACING FREC DRIVER", image: "/assets/v2/drivers/icones/driver-07-dupe.webp", flags: ["FR" as const], instagramUrl: "https://www.instagram.com/andrea.dupe/", order: 7, gridRow: 2 },
+    { slug: "nathan-tye", name: "NATHAN TYE", role: "DRIVEX FORMULA 4 DRIVER", image: "/assets/v2/drivers/icones/driver-08-tye.webp", flags: ["GB" as const], instagramUrl: "https://www.instagram.com/nathantye_", order: 8, gridRow: 2 },
+    { slug: "vivek-kanthan", name: "VIVEK KANTHAN", role: "CAMPOS RACING FORMULA 4 DRIVER", image: "/assets/v2/drivers/icones/driver-09-kanthan.webp", flags: ["US" as const], instagramUrl: "https://www.instagram.com/vivekkanthan/", order: 9, gridRow: 3 },
+    { slug: "jack-iliffe", name: "JACK ILIFFE", role: "FFSA FORMULA 4 DRIVER", image: "/assets/v2/drivers/icones/driver-10-iliffe.webp", flags: ["US" as const], instagramUrl: "https://www.instagram.com/jackiliffe/", order: 10, gridRow: 3 },
+    { slug: "louis-cochet", name: "LOUIS COCHET", role: "MP MOTORSPORT FORMULA 4 DRIVER", image: "/assets/v2/drivers/icones/driver-11-cochet.webp", flags: ["FR" as const], instagramUrl: "https://www.instagram.com/louis.cochet/", order: 11, gridRow: 3 },
+    { slug: "luka-scelles", name: "LUKA SCELLES", role: "VICTORY LANE OK DRIVER", image: "/assets/v2/drivers/icones/driver-12-scelles.webp", flags: ["FR" as const], instagramUrl: "https://www.instagram.com/lukascelles/", order: 12, gridRow: 3 },
+    { slug: "alex-truchot", name: "ALEX TRUCHOT", role: "PREMA RACING OK-J DRIVER", image: "/assets/v2/drivers/icones/driver-13-truchot.webp", flags: ["FR" as const, "US" as const], instagramUrl: "https://www.instagram.com/alextruchot/", order: 13, gridRow: 4 },
+    { slug: "stan-ratajski", name: "STAN RATAJSKI", role: "KART REPUBLIC OK-J DRIVER", image: "/assets/v2/drivers/icones/driver-14-ratajski.webp", flags: ["FR" as const, "PL" as const], instagramUrl: "https://www.instagram.com/stanratajski/", order: 14, gridRow: 4 },
   ];
 
   const gaslyDetail = {
@@ -137,17 +137,45 @@ export async function POST() {
     }
   }
 
-  // Seed team members
-  const existingTeam = await payload.find({ collection: "team-members", limit: 1 });
-  if (existingTeam.totalDocs === 0) {
-    await payload.create({
+  // Seed / upsert team members (ensures LinkedIn URLs are kept in sync with client feedback).
+  const TEAM_LINKEDIN: Record<string, string> = {
+    "Jérémy Satis": "https://www.linkedin.com/in/j%C3%A9r%C3%A9my-satis-7a386294/",
+    "Laura Fredel": "https://www.linkedin.com/in/laura-fredel-35b27a1b8/",
+  };
+  const TEAM_DEFAULTS = [
+    {
+      name: "Jérémy Satis",
+      role: "Driver Agent",
+      image: "/assets/v2/about/team-jeremy.webp",
+      linkedinUrl: TEAM_LINKEDIN["Jérémy Satis"],
+      order: 1,
+    },
+    {
+      name: "Laura Fredel",
+      role: "Marketing Associate",
+      image: "/assets/v2/about/team-laura.webp",
+      linkedinUrl: TEAM_LINKEDIN["Laura Fredel"],
+      order: 2,
+    },
+  ];
+  for (const member of TEAM_DEFAULTS) {
+    const existing = await payload.find({
       collection: "team-members",
-      data: { name: "Jérémy Satis", role: "Driver Agent", image: "/images/about/team-jeremy.webp", order: 1 },
+      where: { name: { equals: member.name } },
+      limit: 1,
     });
-    await payload.create({
-      collection: "team-members",
-      data: { name: "Laura Fredel", role: "Marketing Associate", image: "/images/about/team-laura.webp", order: 2 },
-    });
+    if (existing.totalDocs === 0) {
+      await payload.create({ collection: "team-members", data: member });
+    } else {
+      const current = existing.docs[0] as unknown as { id: number | string; linkedinUrl?: string | null };
+      if (!current.linkedinUrl && member.linkedinUrl) {
+        await payload.update({
+          collection: "team-members",
+          id: current.id,
+          data: { linkedinUrl: member.linkedinUrl },
+        });
+      }
+    }
   }
 
   // Seed Homepage global
@@ -155,7 +183,7 @@ export async function POST() {
     slug: "homepage",
     data: {
       heroTitle: "Opening the gates to elite motorsport",
-      heroBackgroundImage: "/images/hero.webp",
+      heroBackgroundImage: "/assets/v2/home/hero.webp",
       aboutText: "We are a 360° motorsport agency combining driver management and strategic marketing to build careers and develop high-impact partnerships across the ecosystem.",
       aboutButtonLabel: "Explore",
       experienceText: "We leverage over [highlight]20 years of experience[/highlight], operating globally [highlight]on and beyond the track[/highlight] - connecting talent, teams, brands and investors [highlight]AT every level[/highlight] of the sport.",
@@ -183,14 +211,17 @@ export async function POST() {
     data: {
       heroTitle: "Who we are",
       heroDescription: "We are a 360° motorsport management and marketing agency operating globally. We build elite careers for deserving drivers and develop strategic partnerships across the ecosystem.",
-      heroBackgroundImage: "/images/about/hero.webp",
+      heroBackgroundImage: "/assets/v2/about/hero.webp",
       coreIntroText: "[highlight]Our expertise is structured around [/highlight]three core areas[highlight], designed to [/highlight]support performance[highlight] on track and [/highlight]create value[highlight] beyond it[/highlight]",
       coreAreas: [
-        { number: "01", title: "Sport\nManagement", text: "We guide drivers to the highest level of motorsport. Built on over two decades of experience, our deep understanding of the racing ecosystem allows us to identify talent early and shape tailored career strategies. Each driver is unique: one profile, one strategy.", image: "/images/about/core-sport-management.webp" },
-        { number: "02", title: "Image &\nBranding", text: "We build influential profiles on and off the track. Through tailored positioning, media strategy and long-term personal branding, we strengthen the visibility, credibility and influence of drivers and rights holders.", image: "/images/about/core-image-branding.webp" },
-        { number: "03", title: "Commercial\nDevelopment", text: "We create high-impact partnerships across the motorsport ecosystem. By connecting drivers, brands and key stakeholders, we structure collaborations that generate long-term value for all parties involved.", image: "/images/about/core-commercial-development.webp" },
+        { number: "01", title: "Sport\nManagement", text: "We guide drivers to the highest level of motorsport. Built on over two decades of experience, our deep understanding of the racing ecosystem allows us to identify talent early and shape tailored career strategies. Each driver is unique: one profile, one strategy.", image: "/assets/v2/about/core-sport-management.webp" },
+        { number: "02", title: "Image &\nBranding", text: "We build influential profiles on and off the track. Through tailored positioning, media strategy and long-term personal branding, we strengthen the visibility, credibility and influence of drivers and rights holders.", image: "/assets/v2/about/core-image-branding.webp" },
+        { number: "03", title: "Commercial\nDevelopment", text: "We create high-impact partnerships across the motorsport ecosystem. By connecting drivers, brands and key stakeholders, we structure collaborations that generate long-term value for all parties involved.", image: "/assets/v2/about/core-commercial-development.webp" },
       ],
       founderBio: "With 20 years of experience in motorsport, Guillaume has worked across multiple roles in the paddock. He served as a simulation and race engineer for ART Grand Prix for six years before co-founding AOTech in 2010. After a two-year stint at McLaren in business development, he founded Soter Analytics and The Grid Agency in 2018, later focusing fully on The Grid in 2021.",
+      founderName: "Guillaume Le Goff",
+      founderRole: "Founder",
+      founderLinkedinUrl: "https://www.linkedin.com/in/glegoff/",
       accelereDescription: "ACCÉLÈRE is an initiative by Côme Ensemble, the endowment fund of Côme Maison Financière. Its mission is simple: to empower and structure the next generation of French motorsport talent, regardless of background.\n\nSponsored by Formula 1 driver Pierre Gasly, and developed in partnership with The Grid Agency, ACCÉLÈRE brings together those who understand the system and are committed to making it fairer.",
       accelereQuote: "Behind every driver, there is a team, supporters, people who believed in them. This program is my way of giving back what I received, and of proving that talent and hard work can open every door.",
       accelereQuoteAuthor: "Pierre Gasly",
@@ -199,11 +230,11 @@ export async function POST() {
       instagramHandle: "@THEGRID.AGENCY",
       instagramUrl: "https://instagram.com",
       instagramImages: [
-        { image: "/images/about/instagram-1.webp" },
-        { image: "/images/about/instagram-2.webp" },
-        { image: "/images/about/instagram-3.webp" },
-        { image: "/images/about/instagram-4.webp" },
-        { image: "/images/about/instagram-5.webp" },
+        { image: "/assets/v2/about/instagram-1.webp" },
+        { image: "/assets/v2/about/instagram-2.webp" },
+        { image: "/assets/v2/about/instagram-3.webp" },
+        { image: "/assets/v2/about/instagram-4.webp" },
+        { image: "/assets/v2/about/instagram-5.webp" },
       ],
     },
   });
@@ -214,17 +245,17 @@ export async function POST() {
     data: {
       heroTitle: "One-stop shop",
       heroDescription: "On and beyond the track, we operate across the motorsport ecosystem - from elite talent management to high-impact brand strategy and commercial partnerships.",
-      heroBackgroundImage: "/images/hero.webp",
+      heroBackgroundImage: "/assets/v2/services/hero.webp",
       talentHeading: "TALENT TAKES THE WHEEL",
       talentHeadingAccent: "WE PAVE THE WAY",
       talentDescription: "From karting to the pinnacle of motorsport, the path is filled with challenges. It demands resilience, teamwork and trust. We stand with deserving drivers every step of the way.",
       talentIntroText: "We create the optimal environment for drivers to excel. By aligning their goals with team objectives and fostering collaboration, we empower them to perform at their peak level.",
       talentCards: [
-        { title: "Mentorship", image: "/images/services/talent-mentorship.webp" },
-        { title: "Commercial", image: "/images/services/talent-commercial.webp" },
-        { title: "Network", image: "/images/services/talent-network.webp" },
-        { title: "Contracts", image: "/images/services/talent-contracts.webp" },
-        { title: "Branding", image: "/images/services/talent-branding.webp" },
+        { title: "Mentorship", image: "/assets/v2/services/talent-mentorship.webp" },
+        { title: "Commercial", image: "/assets/v2/services/talent-commercial.webp" },
+        { title: "Network", image: "/assets/v2/services/talent-network.webp" },
+        { title: "Contracts", image: "/assets/v2/services/talent-contracts.webp" },
+        { title: "Branding", image: "/assets/v2/services/talent-branding.webp" },
       ],
       partnerDescription: "The Grid Agency partners with Hintsa Performance, a global leader in human performance coaching. Built on a shared belief that performance is won off-track, this collaboration strengthens our commitment to preparing drivers for the highest level of the sport.",
       valueHeading: "WHERE PERFORMANCE",
@@ -232,15 +263,15 @@ export async function POST() {
       valueDescription: "From karting to the pinnacle of motorsport, the path is filled with challenges. It demands resilience, teamwork and trust. We stand with deserving drivers every step of the way.",
       valueIntroText: "We advise brands and investors on motorsport strategy, market positioning and long-term value creation.",
       valueCards: [
-        { title: "Partnerships &\nStructuring", image: "/images/services/value-partnerships.webp" },
-        { title: "Network &\nIntroductions", image: "/images/services/value-network.webp" },
-        { title: "Activation &\nContent", image: "/images/services/value-activation.webp" },
-        { title: "Private\nExperiences", image: "/images/services/value-private.webp" },
+        { title: "Partnerships &\nStructuring", image: "/assets/v2/services/value-partnerships.webp" },
+        { title: "Network &\nIntroductions", image: "/assets/v2/services/value-network.webp" },
+        { title: "Activation &\nContent", image: "/assets/v2/services/value-activation.webp" },
+        { title: "Private\nExperiences", image: "/assets/v2/services/value-private.webp" },
       ],
       caseStudies: [
-        { title: "", image: "/images/services/case-left.webp", dimmed: true },
-        { title: "Scuderia Alpha Tauri x Fantom", image: "/images/services/case-center.webp", description: "During the 2022 season, The Grid structured the partnership between fintech company Fantom and Scuderia AlphaTauri, positioning Fantom as one of the team's main sponsors. Throughout the year, the brand gained high-profile visibility through Pierre Gasly and Yuki Tsunoda, with logo placement on their helmets and on the AT03's nose and halo.", dimmed: false },
-        { title: "Nyck de Vries x Omnes", image: "/images/services/case-right.webp", dimmed: true },
+        { title: "", image: "/assets/v2/services/case-left.webp", dimmed: true },
+        { title: "Scuderia Alpha Tauri x Fantom", image: "/assets/v2/services/case-center.webp", description: "During the 2022 season, The Grid structured the partnership between fintech company Fantom and Scuderia AlphaTauri, positioning Fantom as one of the team's main sponsors. Throughout the year, the brand gained high-profile visibility through Pierre Gasly and Yuki Tsunoda, with logo placement on their helmets and on the AT03's nose and halo.", dimmed: false },
+        { title: "Nyck de Vries x Omnes", image: "/assets/v2/services/case-right.webp", dimmed: true },
       ],
     },
   });
@@ -251,7 +282,7 @@ export async function POST() {
     data: {
       heroTitle: "Get in touch",
       heroDescription: "We would love to hear from you",
-      heroBackgroundImage: "/images/contact/backdrop.webp",
+      heroBackgroundImage: "/assets/v2/contact/backdrop.webp",
     },
   });
 
@@ -261,7 +292,7 @@ export async function POST() {
     data: {
       heroTitle: "FOR DESERVING DRIVERS",
       heroDescription: "Learn about them",
-      heroBackgroundImage: "/images/drivers/hero-collage.webp",
+      heroBackgroundImage: "/assets/v2/drivers/hero-collage.webp",
     },
   });
 

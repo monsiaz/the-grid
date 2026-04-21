@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useCallback, useRef } from "react";
 import NewsCard from "./NewsCard";
 import {
@@ -25,6 +26,7 @@ type NewsProps = {
 const GAP_PX = 28;
 
 export default function News({ items }: NewsProps) {
+  const t = useTranslations("home.news");
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollByStep = useCallback((direction: -1 | 1) => {
@@ -47,16 +49,16 @@ export default function News({ items }: NewsProps) {
       >
         <button
           type="button"
-          aria-label="Previous news"
+          aria-label={t("previous")}
           onClick={() => scrollByStep(-1)}
           className="text-accent border-accent inline-flex h-[44px] w-[57px] cursor-pointer items-center justify-center rounded-full border-2 bg-transparent hover:text-black hover:bg-accent hover:scale-110 transition-all duration-300"
         >
           <ChevronLeft className="size-5 shrink-0" aria-hidden />
         </button>
-        <h2 className="m-0 text-[28px] leading-[1.2] font-bold uppercase">Latest news</h2>
+        <h2 className="m-0 text-[28px] leading-[1.2] font-bold uppercase">{t("heading")}</h2>
         <button
           type="button"
-          aria-label="Next news"
+          aria-label={t("next")}
           onClick={() => scrollByStep(1)}
           className="text-accent border-accent inline-flex h-[44px] w-[57px] cursor-pointer items-center justify-center rounded-full border-2 bg-transparent hover:text-black hover:bg-accent hover:scale-110 transition-all duration-300"
         >
@@ -65,7 +67,7 @@ export default function News({ items }: NewsProps) {
       </motion.div>
       <motion.div
         ref={scrollRef}
-        className="flex snap-x snap-mandatory items-start gap-7 overflow-x-auto scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden [padding-inline:max(clamp(20px,4vw,48px),calc(50vw-min(150px,39vw)))]"
+        className="mx-auto flex w-full max-w-[1344px] snap-x snap-mandatory items-start gap-7 overflow-x-auto scroll-smooth px-[clamp(20px,4vw,48px)] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
         variants={staggerContainer}
         initial="hidden"
         whileInView="visible"
@@ -76,7 +78,7 @@ export default function News({ items }: NewsProps) {
             key={`${item.newsSlug}-${idx}`}
             variants={fadeUp}
             transition={smoothTransition}
-            className="shrink-0 snap-center"
+            className="shrink-0 snap-start"
           >
             <NewsCard
               item={{

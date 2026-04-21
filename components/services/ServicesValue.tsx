@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ServicesCardGrid from "./ServicesCardGrid";
 import {
@@ -23,14 +25,16 @@ type ServicesValueProps = {
   headingAccent?: string | null;
   description?: string | null;
   introText?: string | null;
-  cards: { title: string; image: string; alt: string }[];
+  cards: { title: string; image: string; alt: string; description?: string | null }[];
   caseStudies: CaseStudy[];
 };
 
-function CaseStudyCard({ card }: { card: CaseStudy }) {
+function CaseStudyCard({ card, active }: { card: CaseStudy; active: boolean }) {
+  const baseOpacity = card.dimmed ? "opacity-30" : "";
+  const dynamicOpacity = !active && !card.dimmed ? "opacity-60" : "";
   return (
     <motion.article
-      className={`grid w-[min(86vw,786px)] shrink-0 snap-center gap-4 ${card.dimmed ? "opacity-30" : ""}`}
+      className={`grid w-[min(86vw,786px)] shrink-0 snap-center gap-4 transition-opacity duration-300 ${baseOpacity} ${dynamicOpacity}`}
       variants={fadeUp}
       transition={smoothTransition}
     >
@@ -57,6 +61,7 @@ function CaseStudyCard({ card }: { card: CaseStudy }) {
 }
 
 export default function ServicesValue({ heading, headingAccent, description, introText, cards, caseStudies }: ServicesValueProps) {
+  const t = useTranslations("services");
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -64,10 +69,18 @@ export default function ServicesValue({ heading, headingAccent, description, int
     const root = scrollRef.current;
     if (!root) return;
     const children = root.querySelectorAll<HTMLElement>("[data-case-study-card]");
-    const target = children[index];
+    const clamped = Math.max(0, Math.min(index, children.length - 1));
+    const target = children[clamped];
     if (!target) return;
     root.scrollTo({ left: target.offsetLeft - root.offsetLeft, behavior: "smooth" });
   }, []);
+
+  const scrollByStep = useCallback(
+    (direction: -1 | 1) => {
+      scrollToIndex(activeIndex + direction);
+    },
+    [activeIndex, scrollToIndex],
+  );
 
   useEffect(() => {
     const root = scrollRef.current;
@@ -98,9 +111,9 @@ export default function ServicesValue({ heading, headingAccent, description, int
         <ServicesCardGrid
           heading={
             <>
-              {heading || "WHERE PERFORMANCE"}
+              {heading || t("value.headingFallback")}
               <br />
-              CREATES <span className="text-muted">{headingAccent || "VALUE"}</span>
+              {t("value.headingFiller")} <span className="text-muted">{headingAccent || t("value.headingAccentFallback")}</span>
             </>
           }
           description={description || ""}
@@ -123,31 +136,51 @@ export default function ServicesValue({ heading, headingAccent, description, int
             <div className="flex w-max gap-7 px-[clamp(20px,4vw,48px)] min-[1200px]:pl-0 min-[1200px]:pr-0 min-[1200px]:ml-[-343px]">
               {caseStudies.map((card, idx) => (
                 <div key={`${card.title}-${card.image}-${idx}`} data-case-study-card>
-                  <CaseStudyCard card={card} />
+                  <CaseStudyCard card={card} active={idx === activeIndex} />
                 </div>
               ))}
             </div>
           </motion.div>
           {caseStudies.length > 1 ? (
-            <div className="flex items-center justify-center gap-1 px-[clamp(20px,4vw,48px)]" role="tablist" aria-label="Case studies">
-              {caseStudies.map((_, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  role="tab"
-                  aria-selected={activeIndex === idx}
-                  aria-label={`Go to case study ${idx + 1}`}
-                  onClick={() => scrollToIndex(idx)}
-                  className="group inline-flex h-11 w-11 items-center justify-center p-0"
-                >
-                  <span
-                    aria-hidden
-                    className={`block h-2 rounded-full transition-all duration-300 ${
-                      activeIndex === idx ? "w-8 bg-accent" : "w-2 bg-white/30 group-hover:bg-white/60"
-                    }`}
-                  />
-                </button>
-              ))}
+            <div className="flex items-center justify-center gap-3 px-[clamp(20px,4vw,48px)]">
+              <button
+                type="button"
+                aria-label={t("caseStudies.previous")}
+                onClick={() => scrollByStep(-1)}
+                disabled={activeIndex === 0}
+                className="text-accent border-accent inline-flex h-11 w-14 cursor-pointer items-center justify-center rounded-full border-2 bg-transparent transition-all duration-300 hover:bg-accent hover:text-black hover:scale-105 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-accent disabled:hover:scale-100"
+              >
+                <ChevronLeft className="size-5 shrink-0" aria-hidden />
+              </button>
+              <div className="flex items-center gap-1" role="tablist" aria-label={t("caseStudies.tabs")}>
+                {caseStudies.map((_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    role="tab"
+                    aria-selected={activeIndex === idx}
+                    aria-label={t("caseStudies.tabLabel", { index: idx + 1 })}
+                    onClick={() => scrollToIndex(idx)}
+                    className="group inline-flex h-11 w-11 items-center justify-center p-0"
+                  >
+                    <span
+                      aria-hidden
+                      className={`block h-2 rounded-full transition-all duration-300 ${
+                        activeIndex === idx ? "w-8 bg-accent" : "w-2 bg-white/30 group-hover:bg-white/60"
+                      }`}
+                    />
+                  </button>
+                ))}
+              </div>
+              <button
+                type="button"
+                aria-label={t("caseStudies.next")}
+                onClick={() => scrollByStep(1)}
+                disabled={activeIndex === caseStudies.length - 1}
+                className="text-accent border-accent inline-flex h-11 w-14 cursor-pointer items-center justify-center rounded-full border-2 bg-transparent transition-all duration-300 hover:bg-accent hover:text-black hover:scale-105 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-accent disabled:hover:scale-100"
+              >
+                <ChevronRight className="size-5 shrink-0" aria-hidden />
+              </button>
             </div>
           ) : null}
         </div>

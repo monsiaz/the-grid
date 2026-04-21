@@ -1,0 +1,235 @@
+{
+  "meta": {
+    "default": {
+      "title": "THE GRID — Motorsport Agency",
+      "template": "%s | THE GRID"
+    },
+    "description": "The Grid 是一家 360° motorsport agency，将车手管理与战略性市场营销结合起来，打造职业发展并在整个生态系统中发展高影响力合作伙伴关系。",
+    "keywords": "motorsport agency, 车手管理, Formula 1, Formula 2, Formula 3, 卡丁车, 体育营销, Pierre Gasly, Isack Hadjar, The Grid",
+    "ogImageAlt": "The Grid — 开启精英赛车大门",
+    "home": {
+      "title": "THE GRID — 赛车运动经纪公司",
+      "description": "The Grid 是一家 360° motorsport agency，将车手管理与战略性市场营销结合起来，打造职业发展并在整个生态系统中发展高影响力合作伙伴关系。"
+    },
+    "about": {
+      "title": "关于我们",
+      "description": "认识 The Grid：一家利用 20+ 年体育管理、形象与媒体以及商业开发经验的 motorsport agency。"
+    },
+    "services": {
+      "title": "服务",
+      "description": "了解 The Grid Agency 如何在体育管理、形象与媒体以及商业开发等领域为车手与合作伙伴提供支持。"
+    },
+    "drivers": {
+      "title": "车手",
+      "description": "探索 The Grid Agency 代理的车手，覆盖 Formula 1、Formula 2、Formula 3 以及青年组别。"
+    },
+    "news": {
+      "title": "新闻",
+      "description": "来自 The Grid Agency、我们的车手与合作伙伴的最新体育与商业动态。"
+    },
+    "contact": {
+      "title": "联系",
+      "description": "与 The Grid Agency 联系，获取车手管理、合作伙伴关系及商业机会。"
+    }
+  },
+  "skip": {
+    "toContent": "跳到主要内容"
+  },
+  "header": {
+    "logoAlt": "The Grid",
+    "homeLink": "前往主页",
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单",
+    "primary": "主要",
+    "mobile": "移动端",
+    "nav": {
+      "about": "关于我们",
+      "services": "服务",
+      "drivers": "车手",
+      "news": "新闻",
+      "contact": "联系"
+    }
+  },
+  "footer": {
+    "instagramLabel": "Instagram（在新标签页中打开）",
+    "linkedinLabel": "LinkedIn（在新标签页中打开）",
+    "privacyPolicy": "隐私政策",
+    "copyrightFallback": "（C）2026 THE GRID AGENCY，保留所有权利",
+    "newsletter": {
+      "label": "索取 The Grid 访问权限",
+      "placeholder": "you@example.com",
+      "sending": "发送中…",
+      "submit": "订阅",
+      "success": "已收到访问请求",
+      "error": "出了点问题。"
+    },
+    "language": {
+      "label": "语言",
+      "srOnly": "选择语言"
+    }
+  },
+  "home": {
+    "explore": "探索",
+    "services": {
+      "cta": "我们的专业能力",
+      "ctaSr": " — 了解更多我们的服务"
+    },
+    "drivers": {
+      "cta": "认识我们的车手",
+      "headingFallback": "为有远见者而设",
+      "headingAccentFallback": "车手"
+    },
+    "news": {
+      "heading": "最新资讯",
+      "previous": "上一条资讯",
+      "next": "下一条资讯"
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "我们是谁",
+      "titleAccent": "是",
+      "cta": "向下滚动了解我们"
+    },
+    "team": {
+      "introFallback": {
+        "lead": "我们的专业能力围绕 ",
+        "highlight1": "三个核心方向",
+        "middle": " 展开，旨在 ",
+        "highlight2": "提升赛道表现",
+        "middle2": " 并创造价值",
+        "highlight3": "创造价值",
+        "tail": " 超越其中"
+      },
+      "meet": "认识",
+      "meetThe": "团队",
+      "meetTeam": "团队",
+      "learnMore": "了解更多关于 {name}",
+      "hideDetails": "隐藏关于 {name} 的细节",
+      "linkedinLabel": "{name} 在 LinkedIn 上（在新标签页中打开）",
+      "flipBack": "返回",
+      "bioFallback": "个人资料详情即将上线。"
+    },
+    "accelere": {
+      "bannerAlt": "ACCÉLÈRE 赛车运动倡议",
+      "contactCome": "联系 COMe",
+      "contactComeAria": "通过邮件联系 COMe Maison Financière"
+    },
+    "follow": {
+      "getInTouch": "联系我们",
+      "heading": "关注",
+      "headingAccent": "我们",
+      "instagramCta": "Instagram",
+      "portraitFallback": "Pierre Gasly",
+      "gridAlt": "The Grid 的 Instagram"
+    }
+  },
+  "services": {
+    "hero": {
+      "titleFallback": "一站式服务",
+      "cta": "向下滚动查看服务"
+    },
+    "value": {
+      "headingFallback": "WHERE PERFORMANCE",
+      "headingFiller": "创造",
+      "headingAccentFallback": "价值"
+    },
+    "talent": {
+      "headingFallback": "人才掌舵",
+      "headingAccentFallback": "我们铺就道路"
+    },
+    "partner": {
+      "descriptionFallback": "The Grid Agency携手Hintsa Performance，全球领先的人类绩效教练机构。基于共同信念：真正的表现取胜于赛场之外，这次合作进一步强化了我们为这项运动最高级别培养车手的承诺。",
+      "hintsaAlt": "Hintsa"
+    },
+    "grid": {
+      "flipBack": "点击返回",
+      "showDetails": "查看{name}详情",
+      "hideDetails": "隐藏{name}详情",
+      "descriptionFallback": "更多详情即将上线。"
+    },
+    "caseStudies": {
+      "previous": "上一篇案例",
+      "next": "下一篇案例",
+      "tabs": "案例研究",
+      "tabLabel": "前往案例{index}"
+    }
+  },
+  "drivers": {
+    "hero": {
+      "titleFor": "为",
+      "titleDeserving": "值得的人",
+      "titleDrivers": "车手",
+      "descriptionFallback": "了解他们",
+      "cta": "向下滚动至车手网格"
+    },
+    "card": {
+      "learnMore": "了解更多",
+      "learnMoreSr": "关于{name}的更多信息",
+      "instagramLabel": "关注{name}的Instagram（在新标签页打开）",
+      "nationalities": "国籍"
+    },
+    "detail": {
+      "back": "返回车手",
+      "latestNews": "最新新闻",
+      "gallery": {
+        "left": "车手图库（左）",
+        "center": "车手图库（中）",
+        "right": "车手图库（右）"
+      },
+      "career": {
+        "highestFinish": "Highest race finish",
+        "points": "Career points",
+        "grandPrixEntered": "Grand prix entered",
+        "podiums": "Career podiums",
+        "image": "Career highlight",
+        "imageAlt": "职业亮点",
+        "stats": {
+          "highestFinish": "最高分站成绩",
+          "careerPoints": "生涯积分",
+          "grandPrixEntered": "已参赛大奖赛",
+          "careerPodiums": "生涯领奖台"
+        }
+      },
+      "agency": {
+        "image": "Driver and agency",
+        "imageAlt": "车手与机构"
+      }
+    }
+  },
+  "news": {
+    "heading": {
+      "muted": "最新",
+      "accent": "新闻"
+    },
+    "filters": {
+      "sporting": "体育新闻",
+      "commercial": "商业新闻"
+    },
+    "card": {
+      "readAria": "阅读：{title}",
+      "learnMore": "了解更多",
+      "learnMoreSr": " 了解更多关于这则新闻"
+    },
+    "detail": {
+      "back": "返回新闻",
+      "galleryImageAlt": "{title} 画廊图片 {index}"
+    }
+  },
+  "contact": {
+    "hero": {
+      "title": "获取",
+      "titleAccent": "联系"
+    },
+    "form": {
+      "firstName": "名",
+      "lastName": "姓",
+      "email": "邮箱",
+      "message": "消息",
+      "send": "发送",
+      "sending": "发送中...",
+      "success": "感谢！你的消息已发送。",
+      "error": "无法发送消息。"
+    }
+  }
+}

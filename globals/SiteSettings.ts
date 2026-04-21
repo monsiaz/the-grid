@@ -9,6 +9,7 @@ export const SiteSettings: GlobalConfig = {
     {
       name: "footerCopyright",
       type: "text",
+      localized: true,
       defaultValue: "(C) 2026 THE GRID AGENCY, ALL RIGHTS RESERVED",
     },
     {

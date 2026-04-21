@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 type NewsDetailData = {
   slug: string;
   title: string;
@@ -25,6 +26,7 @@ type NewsDetailTopProps = {
 };
 
 export default function NewsDetailTop({ detail }: NewsDetailTopProps) {
+  const t = useTranslations("news.detail");
   return (
     <div className="grid items-start gap-10 min-[1100px]:grid-cols-[433px_minmax(0,1fr)]">
       <motion.div
@@ -52,7 +54,7 @@ export default function NewsDetailTop({ detail }: NewsDetailTopProps) {
       >
         <Link
           href="/news"
-          aria-label="Back to news"
+          aria-label={t("back")}
           className="text-accent border-accent inline-flex h-[34px] w-[57px] items-center justify-center rounded-full border-2 no-underline transition-all duration-300 hover:bg-accent hover:text-black hover:scale-110"
         >
           <ChevronLeft className="h-5 w-5 shrink-0" aria-hidden />

@@ -7,6 +7,7 @@ type NewsCardData = {
   slug: string;
   title: string;
   image: string;
+  excerpt?: string | null;
   category: "sporting" | "commercial";
 };
 
@@ -29,7 +30,8 @@ export default function NewsCardsRow({ cards }: NewsCardsRowProps) {
           href={`/news/${card.slug}`}
           title={card.title}
           image={card.image}
-          cardClassName="h-[300px]"
+          excerpt={card.excerpt}
+          cardClassName="min-h-[300px]"
         />
       ))}
     </motion.div>

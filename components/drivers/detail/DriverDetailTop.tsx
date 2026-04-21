@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import type { DriverCardData, DriverDetailData } from "../driversData";
 
 const detailImages = {
@@ -37,10 +38,46 @@ type DriverDetailTopProps = {
   detail: DriverDetailData;
 };
 
+const FEATURED_SLUGS = new Set(["pierre-gasly", "isack-hadjar"]);
+
 export default function DriverDetailTop({ driver, detail }: DriverDetailTopProps) {
+  const t = useTranslations("drivers.detail");
+  const isFeatured = FEATURED_SLUGS.has(driver.slug);
+
+  if (!isFeatured) {
+    return (
+      <section className="grid grid-cols-[320px_1fr] gap-10 max-[900px]:grid-cols-1">
+        <motion.div
+          variants={slideInLeft}
+          initial="hidden"
+          animate="visible"
+          transition={smoothTransition}
+          className="max-[900px]:mx-auto"
+        >
+          <DetailProfileCard driver={driver} image={driver.image} compact />
+        </motion.div>
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          transition={{ ...smoothTransition, delay: 0.2 }}
+        >
+          <h2 className="m-0 text-xl leading-[1.2] font-bold uppercase">{detail.profileTitle}</h2>
+          <div className="mt-3 space-y-3 text-[15px] leading-[1.45] font-light">
+            {detail.profileParagraphs.map((paragraph, index) => (
+              <p key={`${detail.slug}-profile-${index}`} className="m-0">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+    );
+  }
+
   return (
-    <section className="grid grid-cols-2 gap-10 max-[1200px]:grid-cols-1">
-      <div className="grid grid-cols-[318px_1fr] gap-10 max-[700px]:grid-cols-1">
+    <section className="grid grid-cols-2 gap-8 max-[1200px]:grid-cols-1">
+      <div className="grid grid-cols-[280px_1fr] gap-8 max-[700px]:grid-cols-1">
         <motion.div
           variants={slideInLeft}
           initial="hidden"
@@ -57,8 +94,8 @@ export default function DriverDetailTop({ driver, detail }: DriverDetailTopProps
           transition={{ ...smoothTransition, delay: 0.2 }}
         >
           <div>
-            <h2 className="m-0 text-2xl leading-[1.2] font-bold uppercase">{detail.profileTitle}</h2>
-            <div className="mt-4 space-y-4 text-base leading-[1.4] font-light">
+            <h2 className="m-0 text-xl leading-[1.2] font-bold uppercase">{detail.profileTitle}</h2>
+            <div className="mt-3 space-y-3 text-[15px] leading-[1.45] font-light">
               {detail.profileParagraphs.map((paragraph, index) => (
                 <p key={`${detail.slug}-profile-${index}`} className="m-0">
                   {paragraph}
@@ -67,7 +104,7 @@ export default function DriverDetailTop({ driver, detail }: DriverDetailTopProps
             </div>
           </div>
           <div className="bg-white/10 max-[700px]:hidden">
-            <div className="bg-soft h-[200px] w-full" />
+            <div className="bg-soft h-[160px] w-full" />
           </div>
         </motion.div>
       </div>
@@ -80,17 +117,17 @@ export default function DriverDetailTop({ driver, detail }: DriverDetailTopProps
         transition={{ ...smoothTransition, delay: 0.15 }}
       >
         <div className="grid gap-2">
-          <div className="grid grid-cols-[120px_1fr_120px] items-center max-[700px]:grid-cols-1">
-            <div className="relative h-[173px] opacity-50 max-[700px]:hidden">
+          <div className="grid grid-cols-[100px_1fr_100px] items-center max-[700px]:grid-cols-1">
+            <div className="relative h-[140px] opacity-50 max-[700px]:hidden">
               <Image
                 src={detailGallery.left}
-                alt="Driver gallery left"
+                alt={t("gallery.left")}
                 fill
                 className="object-cover"
-                sizes="120px"
+                sizes="100px"
               />
             </div>
-            <div className="relative h-[317px] overflow-hidden">
+            <div className="relative h-[260px] overflow-hidden">
               <motion.div
                 className="relative h-full w-full"
                 whileHover={{ scale: 1.04 }}
@@ -98,20 +135,20 @@ export default function DriverDetailTop({ driver, detail }: DriverDetailTopProps
               >
                 <Image
                   src={detailGallery.center}
-                  alt="Driver gallery center"
+                  alt={t("gallery.center")}
                   fill
                   className="object-cover"
                   sizes="(max-width: 700px) 100vw, 420px"
                 />
               </motion.div>
             </div>
-            <div className="relative h-[173px] opacity-50 max-[700px]:hidden">
+            <div className="relative h-[140px] opacity-50 max-[700px]:hidden">
               <Image
                 src={detailGallery.right}
-                alt="Driver gallery right"
+                alt={t("gallery.right")}
                 fill
                 className="object-cover"
-                sizes="120px"
+                sizes="100px"
               />
             </div>
           </div>
@@ -122,7 +159,7 @@ export default function DriverDetailTop({ driver, detail }: DriverDetailTopProps
         </div>
 
         <div>
-          <h3 className="m-0 text-xl leading-[1.2] font-bold uppercase">Latest news</h3>
+          <h3 className="m-0 text-xl leading-[1.2] font-bold uppercase">{t("latestNews")}</h3>
           <motion.div
             className="mt-4 grid grid-cols-3 gap-5 max-[900px]:grid-cols-1"
             variants={staggerContainer}

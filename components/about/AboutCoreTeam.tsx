@@ -2,11 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Linkedin, RotateCcw } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
 import {
   motion,
   fadeUp,
-  scaleIn,
   staggerContainer,
   staggerContainerSlow,
   slideInLeft,
@@ -25,12 +26,17 @@ type TeamMember = {
   name: string;
   role: string;
   image: string;
+  linkedinUrl?: string | null;
+  bio?: string | null;
 };
 
 type AboutCoreTeamProps = {
   coreIntroText?: string | null;
   coreAreas: CoreArea[];
   founderBio: string;
+  founderName?: string;
+  founderRole?: string;
+  founderLinkedinUrl?: string;
   teamMembers: TeamMember[];
 };
 
@@ -78,6 +84,7 @@ function CoreAreaCard({ area }: { area: CoreArea }) {
             alt={area.title.replace("\n", " ")}
             width={628}
             height={628}
+            sizes="(max-width: 700px) 100vw, (max-width: 1200px) 50vw, 400px"
             className="aspect-square w-full object-cover"
           />
         </motion.div>
@@ -101,42 +108,122 @@ function CoreAreaCard({ area }: { area: CoreArea }) {
 }
 
 function TeamMemberCard({ member }: { member: TeamMember }) {
+  const t = useTranslations("about.team");
+  const [flipped, setFlipped] = useState(false);
+  const hasBio = Boolean(member.bio && member.bio.trim());
+  const hasLinkedIn = Boolean(member.linkedinUrl);
+
   return (
-    <motion.article
-      className="border-secondary overflow-hidden rounded-[32px] border"
+    <motion.div
+      className="h-full [perspective:1400px]"
       variants={fadeUp}
       transition={smoothTransition}
-      whileHover={{ y: -6, transition: { duration: 0.3, ease: "easeOut" } }}
     >
-      <div className="overflow-hidden">
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+      <div
+        className="relative h-full w-full [transform-style:preserve-3d] transition-transform duration-700 ease-[cubic-bezier(0.4,0.2,0.2,1)]"
+        style={{ transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
+      >
+        <article
+          className="border-secondary overflow-hidden rounded-[32px] border bg-primary [backface-visibility:hidden]"
+          aria-hidden={flipped}
         >
-          <Image src={member.image} alt={member.name} width={628} height={628} className="aspect-square w-full object-cover" />
-        </motion.div>
-      </div>
-      <div className="bg-primary grid gap-3 p-6">
-        <div className="flex items-center justify-between gap-3 uppercase">
-          <h3 className="m-0 text-xl leading-[1.2] font-bold">{member.name}</h3>
-          <span aria-hidden className="text-2xl leading-none">
-            in
-          </span>
-        </div>
-        <p className="m-0 text-base leading-[1.4] uppercase">{member.role}</p>
-        <Link
-          href="#"
-          className="text-accent border-accent inline-flex w-fit items-center justify-center rounded-full border-2 px-4 py-1 text-[22px] leading-[1.2] no-underline transition-all duration-300 hover:bg-accent hover:text-black hover:scale-110"
-          aria-label={`Learn more about ${member.name}`}
+          <div className="overflow-hidden">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+              <Image
+                src={member.image}
+                alt={member.name}
+                width={628}
+                height={628}
+                sizes="(max-width: 700px) 100vw, (max-width: 980px) 50vw, (max-width: 1200px) 33vw, 300px"
+                className="aspect-square w-full object-cover"
+              />
+            </motion.div>
+          </div>
+          <div className="bg-primary grid gap-3 p-6">
+            <div className="flex items-center justify-between gap-3 uppercase">
+              <h3 className="m-0 text-xl leading-[1.2] font-bold">{member.name}</h3>
+              {hasLinkedIn ? (
+                <Link
+                  href={member.linkedinUrl as string}
+                  target="_blank"
+                  rel="noreferrer me"
+                  aria-label={t("linkedinLabel", { name: member.name })}
+                  className="text-accent border-accent inline-flex h-11 w-11 items-center justify-center rounded-full border-2 no-underline transition-all duration-300 hover:bg-accent hover:text-black hover:scale-110"
+                >
+                  <Linkedin className="h-5 w-5 shrink-0" aria-hidden />
+                </Link>
+              ) : (
+                <span aria-hidden className="text-muted text-2xl leading-none">
+                  in
+                </span>
+              )}
+            </div>
+            <p className="m-0 text-base leading-[1.4] uppercase">{member.role}</p>
+            <button
+              type="button"
+              onClick={() => setFlipped(true)}
+              aria-label={t("learnMore", { name: member.name })}
+              className="text-accent border-accent inline-flex w-fit cursor-pointer items-center justify-center rounded-full border-2 bg-transparent px-4 py-1 text-[22px] leading-[1.2] no-underline transition-all duration-300 hover:bg-accent hover:text-black hover:scale-110"
+            >
+              <ArrowRight className="h-5 w-5 shrink-0" aria-hidden />
+            </button>
+          </div>
+        </article>
+
+        <article
+          className="border-secondary absolute inset-0 flex h-full flex-col justify-between overflow-hidden rounded-[32px] border bg-primary p-6 [backface-visibility:hidden] [transform:rotateY(180deg)]"
+          aria-hidden={!flipped}
         >
-          <ArrowRight className="h-5 w-5 shrink-0" aria-hidden />
-        </Link>
+          <div className="flex items-start justify-between gap-3">
+            <div className="uppercase">
+              <h3 className="m-0 text-xl leading-[1.2] font-bold text-accent">{member.name}</h3>
+              <p className="m-0 mt-1 text-base leading-[1.4] text-secondary/80">{member.role}</p>
+            </div>
+            {hasLinkedIn ? (
+              <Link
+                href={member.linkedinUrl as string}
+                target="_blank"
+                rel="noreferrer me"
+                aria-label={t("linkedinLabel", { name: member.name })}
+                className="text-accent border-accent inline-flex h-11 w-11 items-center justify-center rounded-full border-2 no-underline transition-all duration-300 hover:bg-accent hover:text-black hover:scale-110"
+              >
+                <Linkedin className="h-5 w-5 shrink-0" aria-hidden />
+              </Link>
+            ) : null}
+          </div>
+          <p className="m-0 text-[14px] leading-[1.55] font-light text-secondary/90">
+            {hasBio ? member.bio : t("bioFallback")}
+          </p>
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-[11px] uppercase tracking-[0.12em] text-muted">{t("flipBack")}</span>
+            <button
+              type="button"
+              onClick={() => setFlipped(false)}
+              aria-label={t("hideDetails", { name: member.name })}
+              className="text-accent border-accent inline-flex h-11 w-11 items-center justify-center rounded-full border-2 bg-transparent transition-all duration-300 hover:bg-accent hover:text-black hover:scale-110"
+            >
+              <RotateCcw className="h-5 w-5 shrink-0" aria-hidden />
+            </button>
+          </div>
+        </article>
       </div>
-    </motion.article>
+    </motion.div>
   );
 }
 
-export default function AboutCoreTeam({ coreIntroText, coreAreas, founderBio, teamMembers }: AboutCoreTeamProps) {
+export default function AboutCoreTeam({
+  coreIntroText,
+  coreAreas,
+  founderBio,
+  founderName = "Guillaume Le Goff",
+  founderRole = "Founder",
+  founderLinkedinUrl = "https://www.linkedin.com/in/glegoff/",
+  teamMembers,
+}: AboutCoreTeamProps) {
+  const t = useTranslations("about.team");
   return (
     <section className="bg-primary py-20" id="about-core">
       <div className="mx-auto grid w-full max-w-[1344px] gap-20 px-[clamp(20px,4vw,48px)]">
@@ -151,13 +238,13 @@ export default function AboutCoreTeam({ coreIntroText, coreAreas, founderBio, te
           >
             {coreIntroText ? parseHighlightText(coreIntroText) : (
               <>
-                <span className="text-secondary">Our expertise is structured around </span>
-                three core areas
-                <span className="text-secondary">, designed to </span>
-                support performance
-                <span className="text-secondary"> on track and </span>
-                create value
-                <span className="text-secondary"> beyond it</span>
+                <span className="text-secondary">{t("introFallback.lead")}</span>
+                {t("introFallback.highlight1")}
+                <span className="text-secondary">{t("introFallback.middle")}</span>
+                {t("introFallback.highlight2")}
+                <span className="text-secondary">{t("introFallback.middle2")}</span>
+                {t("introFallback.highlight3")}
+                <span className="text-secondary">{t("introFallback.tail")}</span>
               </>
             )}
           </motion.p>
@@ -183,9 +270,9 @@ export default function AboutCoreTeam({ coreIntroText, coreAreas, founderBio, te
             viewport={viewport}
             transition={smoothTransition}
           >
-            Meet
+            {t("meet")}
             <br />
-            the <span className="text-muted">team</span>
+            {t("meetThe")} <span className="text-muted">{t("meetTeam")}</span>
           </motion.h2>
           <motion.div
             className="grid gap-7 min-[980px]:grid-cols-3"
@@ -195,11 +282,26 @@ export default function AboutCoreTeam({ coreIntroText, coreAreas, founderBio, te
             viewport={viewport}
           >
             <motion.article
-              className="border-secondary rounded-[32px] border p-6"
+              className="border-secondary flex h-full flex-col justify-between gap-4 rounded-[32px] border p-6"
               variants={fadeUp}
               transition={smoothTransition}
               whileHover={{ y: -6, transition: { duration: 0.3, ease: "easeOut" } }}
             >
+              <div className="flex items-start justify-between gap-3 uppercase">
+                <div>
+                  <h3 className="m-0 text-xl leading-[1.2] font-bold">{founderName}</h3>
+                  <p className="m-0 mt-1 text-[13px] leading-[1.4] text-secondary/80">{founderRole}</p>
+                </div>
+                <Link
+                  href={founderLinkedinUrl}
+                  target="_blank"
+                  rel="noreferrer me"
+                  aria-label={t("linkedinLabel", { name: founderName })}
+                  className="text-accent border-accent inline-flex h-11 w-11 items-center justify-center rounded-full border-2 no-underline transition-all duration-300 hover:bg-accent hover:text-black hover:scale-110"
+                >
+                  <Linkedin className="h-5 w-5 shrink-0" aria-hidden />
+                </Link>
+              </div>
               <p className="m-0 text-sm leading-[1.4] font-light">{founderBio}</p>
             </motion.article>
             {teamMembers.map((member) => (

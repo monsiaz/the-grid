@@ -1,0 +1,235 @@
+{
+  "meta": {
+    "default": {
+      "title": "THE GRID — Motorsport Agency",
+      "template": "%s | THE GRID"
+    },
+    "description": "The Grid is een 360° motorsport agency die talentmanagement en strategische marketing combineert om carrières op te bouwen en waardevolle partnerships te ontwikkelen binnen het hele ecosysteem.",
+    "keywords": "motorsport agency, talentmanagement, Formula 1, Formula 2, Formula 3, karting, sportmarketing, Pierre Gasly, Isack Hadjar, The Grid",
+    "ogImageAlt": "The Grid — Het openen van de poorten naar elite motorsport",
+    "home": {
+      "title": "THE GRID — Motorsport Agentschap",
+      "description": "The Grid is een 360° motorsport agency die talentmanagement en strategische marketing combineert om carrières op te bouwen en waardevolle partnerships te ontwikkelen binnen het hele ecosysteem."
+    },
+    "about": {
+      "title": "Over",
+      "description": "Maak kennis met The Grid: een motorsport agency met 20+ jaar ervaring in sportmanagement, beeld & media en commerciële ontwikkeling."
+    },
+    "services": {
+      "title": "Diensten",
+      "description": "Ontdek hoe The Grid Agency drivers en partners ondersteunt op het gebied van sportmanagement, beeld & media en commerciële ontwikkeling."
+    },
+    "drivers": {
+      "title": "Drivers",
+      "description": "Ontdek de drivers die worden vertegenwoordigd door The Grid Agency in Formula 1, Formula 2, Formula 3 en juniorcategorieën."
+    },
+    "news": {
+      "title": "Nieuws",
+      "description": "Het nieuwste sportieve en commerciële nieuws van The Grid Agency, onze drivers en onze partners."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Neem contact op met The Grid Agency voor talentmanagement, partnerships en commerciële kansen."
+    }
+  },
+  "skip": {
+    "toContent": "Ga naar inhoud"
+  },
+  "header": {
+    "logoAlt": "The Grid",
+    "homeLink": "Naar startpagina",
+    "openMenu": "Menu openen",
+    "closeMenu": "Menu sluiten",
+    "primary": "Primair",
+    "mobile": "Mobiel",
+    "nav": {
+      "about": "Over",
+      "services": "Diensten",
+      "drivers": "Drivers",
+      "news": "Nieuws",
+      "contact": "Contact"
+    }
+  },
+  "footer": {
+    "instagramLabel": "Instagram (opent in nieuw tabblad)",
+    "linkedinLabel": "LinkedIn (opent in nieuw tabblad)",
+    "privacyPolicy": "Privacybeleid",
+    "copyrightFallback": "(C) 2026 THE GRID AGENCY, ALL RIGHTS RESERVED",
+    "newsletter": {
+      "label": "Vraag toegang aan tot The Grid",
+      "placeholder": "jij@voorbeeld.nl",
+      "sending": "Bezig met versturen...",
+      "submit": "Inschrijven",
+      "success": "Toegangsaanvraag ontvangen",
+      "error": "Er is iets misgegaan."
+    },
+    "language": {
+      "label": "Taal",
+      "srOnly": "Selecteer taal"
+    }
+  },
+  "home": {
+    "explore": "Ontdek",
+    "services": {
+      "cta": "Onze expertise",
+      "ctaSr": " — leer meer over onze services"
+    },
+    "drivers": {
+      "cta": "Maak kennis met onze coureurs",
+      "headingFallback": "Voor wie het verdient",
+      "headingAccentFallback": "coureurs"
+    },
+    "news": {
+      "heading": "Laatste nieuws",
+      "previous": "Vorige nieuwsberichten",
+      "next": "Volgende nieuwsberichten"
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "Wie we",
+      "titleAccent": "zijn",
+      "cta": "Scroll naar wie we zijn"
+    },
+    "team": {
+      "introFallback": {
+        "lead": "Onze expertise is opgebouwd rond ",
+        "highlight1": "drie kerngebieden",
+        "middle": ", ontwikkeld om ",
+        "highlight2": "performance te ondersteunen",
+        "middle2": " op de baan en ",
+        "highlight3": "waarde te creëren",
+        "tail": " daarbuiten"
+      },
+      "meet": "Maak kennis met",
+      "meetThe": "het",
+      "meetTeam": "team",
+      "learnMore": "Lees meer over {name}",
+      "hideDetails": "Verberg details over {name}",
+      "linkedinLabel": "{name} op LinkedIn (opent in nieuw tabblad)",
+      "flipBack": "Terugklappen",
+      "bioFallback": "Profieldetails volgen binnenkort."
+    },
+    "accelere": {
+      "bannerAlt": "ACCÉLÈRE motorsport-initiatief",
+      "contactCome": "Neem contact op met COMe",
+      "contactComeAria": "Neem contact op met COMe Maison Financière per e-mail"
+    },
+    "follow": {
+      "getInTouch": "Neem contact op",
+      "heading": "Volg",
+      "headingAccent": "ons",
+      "instagramCta": "Instagram",
+      "portraitFallback": "Pierre Gasly",
+      "gridAlt": "The Grid Instagram"
+    }
+  },
+  "services": {
+    "hero": {
+      "titleFallback": "One-stop shop",
+      "cta": "Scroll naar services"
+    },
+    "value": {
+      "headingFallback": "WAAR PERFORMANCE",
+      "headingFiller": "MAAKT",
+      "headingAccentFallback": "WAARDE"
+    },
+    "talent": {
+      "headingFallback": "TALENT NEEMT HET STUUR OVER",
+      "headingAccentFallback": "WIJ BEREIDEN DE WEG"
+    },
+    "partner": {
+      "descriptionFallback": "The Grid Agency werkt samen met Hintsa Performance, een wereldleider in coaching op het gebied van menselijke performance. Gebouwd op een gedeelde overtuiging dat prestaties off-track worden gewonnen, versterkt deze samenwerking onze inzet om coureurs klaar te stomen voor het hoogste niveau van de motorsport.",
+      "hintsaAlt": "Hintsa"
+    },
+    "grid": {
+      "flipBack": "Klik om terug te keren",
+      "showDetails": "Toon details over {name}",
+      "hideDetails": "Verberg details over {name}",
+      "descriptionFallback": "Binnenkort meer details."
+    },
+    "caseStudies": {
+      "previous": "Vorige case study",
+      "next": "Volgende case study",
+      "tabs": "Case studies",
+      "tabLabel": "Ga naar case study {index}"
+    }
+  },
+  "drivers": {
+    "hero": {
+      "titleFor": "VOOR",
+      "titleDeserving": "VERDIENENDE",
+      "titleDrivers": "COUREURS",
+      "descriptionFallback": "Lees meer over hen",
+      "cta": "Scroll naar coureursrooster"
+    },
+    "card": {
+      "learnMore": "Lees meer",
+      "learnMoreSr": " over {name}",
+      "instagramLabel": "Volg {name} op Instagram (opent in nieuw tabblad)",
+      "nationalities": "Nationaliteiten"
+    },
+    "detail": {
+      "back": "Terug naar coureurs",
+      "latestNews": "Laatste nieuws",
+      "gallery": {
+        "left": "Coureursgalerij links",
+        "center": "Coureursgalerij midden",
+        "right": "Coureursgalerij rechts"
+      },
+      "career": {
+        "highestFinish": "Highest race finish",
+        "points": "Career points",
+        "grandPrixEntered": "Grand prix entered",
+        "podiums": "Career podiums",
+        "image": "Career highlight",
+        "imageAlt": "Carrièrehoogtepunt",
+        "stats": {
+          "highestFinish": "Hoogste klassering in de race",
+          "careerPoints": "Carrièrepunten",
+          "grandPrixEntered": "Ingeschreven in grands prix",
+          "careerPodiums": "Carrièrepodiums"
+        }
+      },
+      "agency": {
+        "image": "Driver and agency",
+        "imageAlt": "Coureur en agency"
+      }
+    }
+  },
+  "news": {
+    "heading": {
+      "muted": "Laatste ",
+      "accent": "Nieuws"
+    },
+    "filters": {
+      "sporting": "Sportnieuws",
+      "commercial": "Commercieel nieuws"
+    },
+    "card": {
+      "readAria": "Lees: {title}",
+      "learnMore": "Lees meer",
+      "learnMoreSr": " over dit nieuws"
+    },
+    "detail": {
+      "back": "Terug naar nieuws",
+      "galleryImageAlt": "{title} galerijafbeelding {index}"
+    }
+  },
+  "contact": {
+    "hero": {
+      "title": "Kom",
+      "titleAccent": "in contact"
+    },
+    "form": {
+      "firstName": "Voornaam",
+      "lastName": "Achternaam",
+      "email": "E-mail",
+      "message": "Bericht",
+      "send": "Versturen",
+      "sending": "Bezig met verzenden...",
+      "success": "Dank je wel, je bericht is verzonden.",
+      "error": "Kan bericht niet verzenden."
+    }
+  }
+}

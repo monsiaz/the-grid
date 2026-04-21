@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   motion,
   fadeUp,
@@ -33,6 +34,7 @@ export default function AboutAccelereFollow({
   instagramUrl,
   instagramImages,
 }: AboutAccelereFollowProps) {
+  const t = useTranslations("about.follow");
   const gridOrder = [
     ...instagramImages,
     ...(instagramImages.length >= 5
@@ -59,7 +61,7 @@ export default function AboutAccelereFollow({
               href="#contact"
               className="text-accent border-accent mx-auto inline-flex w-fit items-center justify-center rounded-full border-2 bg-black/20 px-9 py-4 text-base leading-[1.2] no-underline uppercase transition-all duration-300 hover:bg-accent hover:text-black hover:scale-105"
             >
-              Get in touch
+              {t("getInTouch")}
             </Link>
           </motion.div>
 
@@ -74,9 +76,10 @@ export default function AboutAccelereFollow({
             >
               <Image
                 src="/images/about/accelere-portrait.webp"
-                alt={quoteAuthor || "Pierre Gasly"}
+                alt={quoteAuthor || t("portraitFallback")}
                 width={432}
                 height={500}
+                sizes="(max-width: 900px) 100vw, 432px"
                 className="h-auto w-full object-cover"
               />
             </motion.div>
@@ -112,7 +115,7 @@ export default function AboutAccelereFollow({
             viewport={viewport}
             transition={smoothTransition}
           >
-            <span className="text-muted">Follow </span>us
+            <span className="text-muted">{t("heading")} </span>{t("headingAccent")}
           </motion.h2>
           <div className="grid gap-2">
             <motion.div
@@ -130,7 +133,7 @@ export default function AboutAccelereFollow({
                 rel="noreferrer"
                 className="text-accent border-accent inline-flex items-center justify-center rounded-full border-2 bg-black/20 px-9 py-4 text-base leading-[1.2] no-underline uppercase transition-all duration-300 hover:bg-accent hover:text-black hover:scale-105"
               >
-                Instagram
+                {t("instagramCta")}
               </Link>
             </motion.div>
             <motion.div
@@ -153,9 +156,11 @@ export default function AboutAccelereFollow({
                   >
                     <Image
                       src={src}
-                      alt="The Grid Instagram"
+                      alt={t("gridAlt")}
                       width={269}
                       height={360}
+                      loading="lazy"
+                      sizes="(max-width: 900px) 50vw, 20vw"
                       className="aspect-[269/360] h-auto w-full object-cover"
                     />
                   </motion.div>

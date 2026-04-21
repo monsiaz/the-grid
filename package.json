@@ -14,17 +14,22 @@
     "seed": "curl -s -X POST http://localhost:3000/api/seed"
   },
   "dependencies": {
+    "@payloadcms/db-postgres": "3.80.0",
     "@payloadcms/db-sqlite": "^3.80.0",
     "@payloadcms/next": "^3.80.0",
     "@payloadcms/richtext-lexical": "^3.80.0",
     "@payloadcms/storage-vercel-blob": "^3.80.0",
+    "@payloadcms/ui": "^3.80.0",
     "country-flag-icons": "^1.6.15",
     "framer-motion": "^12.38.0",
     "lucide-react": "^0.577.0",
     "next": "16.2.0",
+    "next-intl": "^4.9.1",
+    "openai": "^6.34.0",
     "payload": "^3.80.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "resend": "^6.12.2",
     "sharp": "^0.34.5"
   },
   "devDependencies": {
@@ -34,6 +39,8 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.0",
+    "pg": "^8.20.0",
+    "puppeteer": "^24.42.0",
     "sass": "^1.98.0",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",

@@ -1,0 +1,8 @@
+.git
+node_modules
+.next
+.lighthouse
+.env.local
+*.db
+dev.db
+terminals

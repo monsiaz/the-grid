@@ -1,10 +1,33 @@
 import type { CollectionConfig } from "payload";
+import { imageField } from "@/fields/imageField";
+import { getSiteUrl } from "@/lib/siteUrl";
 
 export const News: CollectionConfig = {
   slug: "news",
   admin: {
     useAsTitle: "title",
     defaultColumns: ["title", "category", "date"],
+    livePreview: {
+      url: ({ data, locale }) => {
+        const base = getSiteUrl();
+        const l = locale?.code && locale.code !== "en" ? `/${locale.code}` : "";
+        const slug = (data as { slug?: string } | undefined)?.slug || "";
+        return slug ? `${base}${l}/news/${slug}/` : `${base}${l}/news/`;
+      },
+    },
+    preview: (doc, options) => {
+      const base = getSiteUrl();
+      const raw = (options as { locale?: unknown } | undefined)?.locale;
+      const code = typeof raw === "string" ? raw : "";
+      const l = code && code !== "en" ? `/${code}` : "";
+      const slug = (doc as { slug?: string } | undefined)?.slug || "";
+      return slug ? `${base}${l}/news/${slug}/` : `${base}${l}/news/`;
+    },
+    components: {
+      edit: {
+        beforeDocumentControls: ["@/components/admin/TranslationStatus"],
+      },
+    },
   },
   access: {
     read: () => true,
@@ -14,6 +37,7 @@ export const News: CollectionConfig = {
       name: "title",
       type: "text",
       required: true,
+      localized: true,
     },
     {
       name: "slug",
@@ -22,16 +46,16 @@ export const News: CollectionConfig = {
       unique: true,
       admin: {
         position: "sidebar",
+        description:
+          "Identifiant stable (ne pas traduire). Utilisé comme pivot hreflang : la même news partage ce slug sur /news/..., /fr/news/..., /es/news/..., etc. Les hreflang et le sélecteur de langue s'appuient dessus pour relier les traductions.",
       },
     },
-    {
+    imageField({
       name: "listImage",
-      type: "text",
+      label: "List image",
       required: true,
-      admin: {
-        description: "Image shown in the news list grid",
-      },
-    },
+      description: "Vignette affichée dans la grille /news/.",
+    }),
     {
       name: "category",
       type: "select",
@@ -40,24 +64,37 @@ export const News: CollectionConfig = {
         { label: "Sporting", value: "sporting" },
         { label: "Commercial", value: "commercial" },
       ],
+      admin: {
+        description:
+          "Choose the filter that will highlight this news item on the /news page. 'Sporting' appears when visitors click the SPORTING NEWS filter; 'Commercial' when they click COMMERCIAL NEWS. You can change the filter at any time and republish.",
+      },
     },
     {
       name: "date",
       type: "text",
+      localized: true,
       admin: {
         description: "Display date (e.g. FEB 17, 2026)",
       },
     },
     {
-      name: "heroImage",
-      type: "text",
+      name: "excerpt",
+      type: "textarea",
+      localized: true,
       admin: {
-        description: "Hero image for the detail page",
+        description:
+          "Short teaser (1–2 sentences, ~160 characters) shown under the title on the /news list cards. Leave empty to hide the teaser on that card.",
       },
     },
+    imageField({
+      name: "heroImage",
+      label: "Hero image",
+      description: "Visuel principal en haut de l'article.",
+    }),
     {
       name: "introParagraphs",
       type: "textarea",
+      localized: true,
       admin: {
         description: "Intro paragraphs (one per line)",
       },
@@ -65,6 +102,7 @@ export const News: CollectionConfig = {
     {
       name: "bodyParagraphs",
       type: "textarea",
+      localized: true,
       admin: {
         description: "Body paragraphs (one per line)",
       },
@@ -74,11 +112,12 @@ export const News: CollectionConfig = {
       type: "array",
       label: "Gallery Images",
       fields: [
-        {
+        imageField({
           name: "image",
-          type: "text",
+          label: "Gallery image",
           required: true,
-        },
+          description: "Photo affichée dans la galerie de l'article.",
+        }),
       ],
     },
   ],

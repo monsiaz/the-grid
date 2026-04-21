@@ -48,3 +48,7 @@ public/
 
 # lighthouse audit output (local only)
 /.lighthouse/
+
+# local working files
+*.pdf
+/terminals/

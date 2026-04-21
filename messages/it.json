@@ -1,0 +1,235 @@
+{
+  "meta": {
+    "default": {
+      "title": "THE GRID — Motorsport Agency",
+      "template": "%s | THE GRID"
+    },
+    "description": "The Grid è un’agenzia 360° di motorsport che unisce gestione piloti e marketing strategico per costruire carriere e sviluppare partnership ad alto impatto in tutto l’ecosistema.",
+    "keywords": "motorsport agency, gestione piloti, Formula 1, Formula 2, Formula 3, karting, sport marketing, Pierre Gasly, Isack Hadjar, The Grid",
+    "ogImageAlt": "The Grid — Aprire le porte all’élite del motorsport",
+    "home": {
+      "title": "THE GRID — Agenzia Motorsport",
+      "description": "The Grid è un’agenzia 360° di motorsport che unisce gestione piloti e marketing strategico per costruire carriere e sviluppare partnership ad alto impatto in tutto l’ecosistema."
+    },
+    "about": {
+      "title": "Chi siamo",
+      "description": "Scopri The Grid: un’agenzia motorsport che mette a frutto oltre 20 anni di esperienza nella gestione sportiva, immagine & media e sviluppo commerciale."
+    },
+    "services": {
+      "title": "Servizi",
+      "description": "Scopri come The Grid Agency supporta piloti e partner tra gestione sportiva, immagine & media e sviluppo commerciale."
+    },
+    "drivers": {
+      "title": "Piloti",
+      "description": "Scopri i piloti rappresentati da The Grid Agency in Formula 1, Formula 2, Formula 3 e nelle categorie junior."
+    },
+    "news": {
+      "title": "News",
+      "description": "Le ultime notizie sportive e commerciali da The Grid Agency, dai nostri piloti e dai nostri partner."
+    },
+    "contact": {
+      "title": "Contatti",
+      "description": "Contatta The Grid Agency per la gestione piloti, le partnership e le opportunità commerciali."
+    }
+  },
+  "skip": {
+    "toContent": "Vai al contenuto"
+  },
+  "header": {
+    "logoAlt": "The Grid",
+    "homeLink": "Vai alla home",
+    "openMenu": "Apri menu",
+    "closeMenu": "Chiudi menu",
+    "primary": "Principale",
+    "mobile": "Mobile",
+    "nav": {
+      "about": "Chi siamo",
+      "services": "Servizi",
+      "drivers": "Piloti",
+      "news": "News",
+      "contact": "Contatti"
+    }
+  },
+  "footer": {
+    "instagramLabel": "Instagram (si apre in una nuova scheda)",
+    "linkedinLabel": "LinkedIn (si apre in una nuova scheda)",
+    "privacyPolicy": "Informativa sulla privacy",
+    "copyrightFallback": "(C) 2026 THE GRID AGENCY, TUTTI I DIRITTI RISERVATI",
+    "newsletter": {
+      "label": "Richiedi accesso a The Grid",
+      "placeholder": "tu@esempio.com",
+      "sending": "Invio in corso…",
+      "submit": "Iscriviti",
+      "success": "Richiesta di accesso ricevuta",
+      "error": "Qualcosa è andato storto."
+    },
+    "language": {
+      "label": "Lingua",
+      "srOnly": "Seleziona lingua"
+    }
+  },
+  "home": {
+    "explore": "Esplora",
+    "services": {
+      "cta": "La nostra competenza",
+      "ctaSr": " — scopri di più sui nostri servizi"
+    },
+    "drivers": {
+      "cta": "Conosci i nostri piloti",
+      "headingFallback": "Per i meritevoli",
+      "headingAccentFallback": "piloti"
+    },
+    "news": {
+      "heading": "Ultime notizie",
+      "previous": "Notizie precedenti",
+      "next": "Notizie successive"
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "Chi siamo",
+      "titleAccent": "noi",
+      "cta": "Scorri per scoprire chi siamo"
+    },
+    "team": {
+      "introFallback": {
+        "lead": "La nostra competenza è strutturata in ",
+        "highlight1": "tre aree fondamentali",
+        "middle": ", pensate per ",
+        "highlight2": "sostenere le performance",
+        "middle2": " in pista e ",
+        "highlight3": "creare valore",
+        "tail": " oltre ad esse"
+      },
+      "meet": "Scopri",
+      "meetThe": "il",
+      "meetTeam": "team",
+      "learnMore": "Scopri di più su {name}",
+      "hideDetails": "Nascondi i dettagli su {name}",
+      "linkedinLabel": "{name} su LinkedIn (si apre in una nuova scheda)",
+      "flipBack": "Torna indietro",
+      "bioFallback": "Dettagli del profilo in arrivo."
+    },
+    "accelere": {
+      "bannerAlt": "Iniziativa motorsport ACCÉLÈRE",
+      "contactCome": "Contatta COMe",
+      "contactComeAria": "Contatta COMe Maison Financière via email"
+    },
+    "follow": {
+      "getInTouch": "Contattaci",
+      "heading": "Seguici",
+      "headingAccent": "noi",
+      "instagramCta": "Instagram",
+      "portraitFallback": "Pierre Gasly",
+      "gridAlt": "Instagram di The Grid"
+    }
+  },
+  "services": {
+    "hero": {
+      "titleFallback": "Un unico punto di riferimento",
+      "cta": "Scorri per i servizi"
+    },
+    "value": {
+      "headingFallback": "DOVE LA PERFORMANCE",
+      "headingFiller": "CREIAMO",
+      "headingAccentFallback": "VALORE"
+    },
+    "talent": {
+      "headingFallback": "IL TALENTO È ALLA GUIDA",
+      "headingAccentFallback": "APRiamo LA STRADA"
+    },
+    "partner": {
+      "descriptionFallback": "The Grid Agency collabora con Hintsa Performance, leader globale nel coaching delle performance umane. Basata sulla convinzione condivisa che le prestazioni si vincono fuori pista, questa collaborazione rafforza il nostro impegno nel preparare i piloti al massimo livello dello sport.",
+      "hintsaAlt": "Hintsa"
+    },
+    "grid": {
+      "flipBack": "Fai clic per tornare indietro",
+      "showDetails": "Mostra i dettagli su {name}",
+      "hideDetails": "Nascondi i dettagli su {name}",
+      "descriptionFallback": "Ulteriori dettagli in arrivo."
+    },
+    "caseStudies": {
+      "previous": "Case study precedente",
+      "next": "Case study successivo",
+      "tabs": "Case studies",
+      "tabLabel": "Vai al case study {index}"
+    }
+  },
+  "drivers": {
+    "hero": {
+      "titleFor": "PER",
+      "titleDeserving": "MERITANO",
+      "titleDrivers": "I PILOTI",
+      "descriptionFallback": "Scopri di più",
+      "cta": "Scorri alla griglia dei piloti"
+    },
+    "card": {
+      "learnMore": "Scopri di più",
+      "learnMoreSr": " su {name}",
+      "instagramLabel": "Segui {name} su Instagram (si apre in una nuova scheda)",
+      "nationalities": "Nazionalità"
+    },
+    "detail": {
+      "back": "Torna ai piloti",
+      "latestNews": "Notizie recenti",
+      "gallery": {
+        "left": "Galleria piloti a sinistra",
+        "center": "Galleria piloti al centro",
+        "right": "Galleria piloti a destra"
+      },
+      "career": {
+        "highestFinish": "Highest race finish",
+        "points": "Career points",
+        "grandPrixEntered": "Grand prix entered",
+        "podiums": "Career podiums",
+        "image": "Career highlight",
+        "imageAlt": "Momento clou della carriera",
+        "stats": {
+          "highestFinish": "Miglior risultato in gara",
+          "careerPoints": "Punti di carriera",
+          "grandPrixEntered": "GP disputati",
+          "careerPodiums": "Podium di carriera"
+        }
+      },
+      "agency": {
+        "image": "Driver and agency",
+        "imageAlt": "Pilota e agenzia"
+      }
+    }
+  },
+  "news": {
+    "heading": {
+      "muted": "Ultime ",
+      "accent": "News"
+    },
+    "filters": {
+      "sporting": "News sportive",
+      "commercial": "News commerciali"
+    },
+    "card": {
+      "readAria": "Leggi: {title}",
+      "learnMore": "Scopri di più",
+      "learnMoreSr": " su questa notizia"
+    },
+    "detail": {
+      "back": "Torna alle news",
+      "galleryImageAlt": "Immagine della gallery {index} di {title}"
+    }
+  },
+  "contact": {
+    "hero": {
+      "title": "Mettiamoci",
+      "titleAccent": "in contatto"
+    },
+    "form": {
+      "firstName": "Nome",
+      "lastName": "Cognome",
+      "email": "Email",
+      "message": "Messaggio",
+      "send": "Invia",
+      "sending": "Invio...",
+      "success": "Grazie, il tuo messaggio è stato inviato.",
+      "error": "Impossibile inviare il messaggio."
+    }
+  }
+}

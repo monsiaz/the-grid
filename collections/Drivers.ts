@@ -1,10 +1,33 @@
 import type { CollectionConfig } from "payload";
+import { imageField } from "@/fields/imageField";
+import { getSiteUrl } from "@/lib/siteUrl";
 
 export const Drivers: CollectionConfig = {
   slug: "drivers",
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name", "role", "order"],
+    livePreview: {
+      url: ({ data, locale }) => {
+        const base = getSiteUrl();
+        const l = locale?.code && locale.code !== "en" ? `/${locale.code}` : "";
+        const slug = (data as { slug?: string } | undefined)?.slug || "";
+        return slug ? `${base}${l}/drivers/${slug}/` : `${base}${l}/drivers/`;
+      },
+    },
+    preview: (doc, options) => {
+      const base = getSiteUrl();
+      const raw = (options as { locale?: unknown } | undefined)?.locale;
+      const code = typeof raw === "string" ? raw : "";
+      const l = code && code !== "en" ? `/${code}` : "";
+      const slug = (doc as { slug?: string } | undefined)?.slug || "";
+      return slug ? `${base}${l}/drivers/${slug}/` : `${base}${l}/drivers/`;
+    },
+    components: {
+      edit: {
+        beforeDocumentControls: ["@/components/admin/TranslationStatus"],
+      },
+    },
   },
   access: {
     read: () => true,
@@ -14,6 +37,7 @@ export const Drivers: CollectionConfig = {
       name: "name",
       type: "text",
       required: true,
+      localized: true,
     },
     {
       name: "slug",
@@ -22,21 +46,22 @@ export const Drivers: CollectionConfig = {
       unique: true,
       admin: {
         position: "sidebar",
+        description:
+          "Identifiant stable (ne pas traduire). Utilisé comme pivot hreflang : le même pilote partage ce slug sur /drivers/..., /fr/drivers/..., /es/drivers/..., etc.",
       },
     },
     {
       name: "role",
       type: "text",
       required: true,
+      localized: true,
     },
-    {
+    imageField({
       name: "image",
-      type: "text",
+      label: "Grid card image",
       required: true,
-      admin: {
-        description: "Path to the driver image (e.g. /images/drivers/driver-01-gasly.webp)",
-      },
-    },
+      description: "Vignette pilote (grille /drivers/ et teaser homepage).",
+    }),
     {
       name: "flags",
       type: "select",
@@ -80,10 +105,12 @@ export const Drivers: CollectionConfig = {
         {
           name: "profileTitle",
           type: "text",
+          localized: true,
         },
         {
           name: "profileParagraphs",
           type: "textarea",
+          localized: true,
           admin: {
             description: "One paragraph per line (separated by newlines)",
           },
@@ -91,10 +118,12 @@ export const Drivers: CollectionConfig = {
         {
           name: "careerTitle",
           type: "text",
+          localized: true,
         },
         {
           name: "careerParagraphs",
           type: "textarea",
+          localized: true,
           admin: {
             description: "One paragraph per line (separated by newlines)",
           },
@@ -102,18 +131,22 @@ export const Drivers: CollectionConfig = {
         {
           name: "transitionTitle",
           type: "text",
+          localized: true,
         },
         {
           name: "transitionParagraph",
           type: "textarea",
+          localized: true,
         },
         {
           name: "agencyTitle",
           type: "text",
+          localized: true,
         },
         {
           name: "agencyParagraphs",
           type: "textarea",
+          localized: true,
           admin: {
             description: "One paragraph per line (separated by newlines)",
           },
@@ -134,39 +167,36 @@ export const Drivers: CollectionConfig = {
           name: "careerPodiums",
           type: "text",
         },
-        {
+        imageField({
           name: "profileImage",
-          type: "text",
-          admin: {
-            description: "Path to profile image",
-          },
-        },
-        {
+          label: "Profile image",
+          description: "Photo du bloc profil (page détail pilote).",
+        }),
+        imageField({
           name: "careerImage",
-          type: "text",
-          admin: {
-            description: "Path to career image",
-          },
-        },
-        {
+          label: "Career image",
+          description: "Photo du bloc carrière (page détail pilote).",
+        }),
+        imageField({
           name: "agencyImage",
-          type: "text",
-          admin: {
-            description: "Path to agency image",
-          },
-        },
-        {
+          label: "Agency image",
+          description: "Photo du bloc agence (page détail pilote).",
+        }),
+        imageField({
           name: "galleryLeft",
-          type: "text",
-        },
-        {
+          label: "Gallery — left",
+          description: "Mini galerie d'en-tête, visuel gauche.",
+        }),
+        imageField({
           name: "galleryCenter",
-          type: "text",
-        },
-        {
+          label: "Gallery — center",
+          description: "Mini galerie d'en-tête, visuel central.",
+        }),
+        imageField({
           name: "galleryRight",
-          type: "text",
-        },
+          label: "Gallery — right",
+          description: "Mini galerie d'en-tête, visuel droit.",
+        }),
       ],
     },
     {
@@ -178,12 +208,14 @@ export const Drivers: CollectionConfig = {
           name: "title",
           type: "text",
           required: true,
+          localized: true,
         },
-        {
+        imageField({
           name: "image",
-          type: "text",
+          label: "Related news image",
           required: true,
-        },
+          description: "Vignette carrée de l'article lié.",
+        }),
       ],
     },
   ],

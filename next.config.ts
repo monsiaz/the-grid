@@ -1,10 +1,24 @@
 import type { NextConfig } from "next";
 import { withPayload } from "@payloadcms/next/withPayload";
+import createNextIntlPlugin from "next-intl/plugin";
 
 const cdnBase = "https://cdn.orbs.cloud/the-grid";
 const cdnHost = "cdn.orbs.cloud";
 
+const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
+
 const nextConfig: NextConfig = {
+  trailingSlash: true,
+  poweredByHeader: false,
+  compress: true,
+  reactStrictMode: true,
+  experimental: {
+    optimizePackageImports: [
+      "lucide-react",
+      "country-flag-icons",
+      "framer-motion",
+    ],
+  },
   async rewrites() {
     return {
       beforeFiles: [
@@ -27,12 +41,25 @@ const nextConfig: NextConfig = {
         hostname: cdnHost,
         pathname: "/the-grid/**",
       },
+      {
+        protocol: "https",
+        hostname: "*.public.blob.vercel-storage.com",
+      },
     ],
   },
   async headers() {
     return [
       {
         source: "/images/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        source: "/assets/:path*",
         headers: [
           {
             key: "Cache-Control",
@@ -61,4 +88,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withPayload(nextConfig);
+export default withNextIntl(withPayload(nextConfig));

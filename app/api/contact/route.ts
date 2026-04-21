@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { sendMail } from "@/lib/mail";
 
 type ContactPayload = {
   firstName?: string;
@@ -8,6 +9,12 @@ type ContactPayload = {
 };
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const CONTACT_RECIPIENTS = (process.env.CONTACT_RECIPIENTS ||
+  "jeremy@thegrid.agency,laura@thegrid.agency")
+  .split(",")
+  .map((address) => address.trim())
+  .filter(Boolean);
 
 export async function POST(request: Request) {
   let body: ContactPayload;
@@ -32,15 +39,27 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Message is too long." }, { status: 400 });
   }
 
-  // TODO: hook up to a real email provider (Resend, Postmark, SendGrid, ...) or Payload email.
-  // For now we log and return 200 so the UX is validated end-to-end.
-  console.info("[contact] new submission", {
-    firstName,
-    lastName,
-    email,
-    messageLength: message.length,
-    at: new Date().toISOString(),
+  const subject = `New contact request — ${firstName} ${lastName}`;
+  const text = [
+    `From: ${firstName} ${lastName} <${email}>`,
+    `Submitted at: ${new Date().toISOString()}`,
+    "",
+    message,
+  ].join("\n");
+
+  const result = await sendMail({
+    to: CONTACT_RECIPIENTS,
+    subject,
+    text,
+    replyTo: email,
   });
+
+  if (!result.ok) {
+    return NextResponse.json(
+      { error: "We could not send your message. Please try again later." },
+      { status: 502 },
+    );
+  }
 
   return NextResponse.json({ ok: true });
 }

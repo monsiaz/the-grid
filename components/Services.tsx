@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import {
   motion,
   slideInLeft,
@@ -16,6 +17,7 @@ type ServicesProps = {
 };
 
 export default function Services({ labels }: ServicesProps) {
+  const t = useTranslations("home.services");
   return (
     <section
       className="relative flex min-h-[clamp(480px,70vh,575px)] w-full items-center"
@@ -57,7 +59,7 @@ export default function Services({ labels }: ServicesProps) {
             href="/services"
             className="text-accent border-accent inline-flex min-h-[48px] cursor-pointer items-center justify-center rounded-full border-2 bg-black/20 px-9 py-3 text-base leading-[1.2] no-underline uppercase hover:text-black hover:bg-accent hover:scale-105 transition-all duration-300"
           >
-            Learn more<span className="sr-only"> about our services</span>
+            {t("cta")}<span className="sr-only">{t("ctaSr")}</span>
           </Link>
         </motion.div>
       </div>
