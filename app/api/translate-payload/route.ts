@@ -221,6 +221,10 @@ async function translateHandler(request: Request) {
   const force = searchParams.get("force") === "1" || searchParams.get("force") === "true";
   const onlyLocale = searchParams.get("locale") || "";
   const scope = searchParams.get("scope") || "all";
+  const onlyCollection = searchParams.get("collection") || "";
+  const onlyGlobal = searchParams.get("global") || "";
+  const limitDocs = Number.parseInt(searchParams.get("limit") || "0", 10) || 0;
+  const offsetDocs = Number.parseInt(searchParams.get("offset") || "0", 10) || 0;
 
   const openai = new OpenAI({ apiKey });
   const payload = await getPayloadClient();
@@ -239,6 +243,7 @@ async function translateHandler(request: Request) {
 
   if (scope === "all" || scope === "globals") {
   for (const g of globals) {
+    if (onlyGlobal && g.slug !== onlyGlobal) continue;
     const paths = collectLocalizedPaths(g.fields);
     if (paths.length === 0) continue;
     log.push(`global ${g.slug} (${paths.length} paths)`);
@@ -275,15 +280,18 @@ async function translateHandler(request: Request) {
   if (scope === "all" || scope === "collections") {
   for (const c of collections) {
     if (["users", "media"].includes(c.slug)) continue;
+    if (onlyCollection && c.slug !== onlyCollection) continue;
     const paths = collectLocalizedPaths(c.fields);
     if (paths.length === 0) continue;
     log.push(`collection ${c.slug} (${paths.length} paths)`);
     const all = await payload.find({
       collection: c.slug as never,
-      limit: 1000,
+      limit: limitDocs || 1000,
+      page: offsetDocs > 0 ? Math.floor(offsetDocs / (limitDocs || 1000)) + 1 : 1,
       locale: SOURCE_LOCALE,
       fallbackLocale: false,
       depth: 0,
+      sort: "id",
     });
     for (const sourceDoc of all.docs as AnyRecord[]) {
       for (const [locale, label] of locales) {
