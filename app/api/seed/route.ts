@@ -1,11 +1,19 @@
 import { getPayloadClient } from "@/lib/payload";
 import { NextResponse } from "next/server";
 
-export async function POST() {
-  // Only allow in development
-  if (process.env.NODE_ENV === "production") {
-    return NextResponse.json({ error: "Not allowed in production" }, { status: 403 });
+export const maxDuration = 300;
+
+export async function POST(request: Request) {
+  const expectedSecret = process.env.TRANSLATE_SECRET || process.env.PAYLOAD_SECRET;
+  const provided =
+    request.headers.get("x-translate-secret") ||
+    new URL(request.url).searchParams.get("secret") ||
+    "";
+  if (process.env.NODE_ENV === "production" && (!expectedSecret || provided !== expectedSecret)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+  const url = new URL(request.url);
+  const upsert = url.searchParams.get("upsert") === "1" || url.searchParams.get("upsert") === "true";
 
   const payload = await getPayloadClient();
   const adminEmail = process.env.PAYLOAD_ADMIN_EMAIL || "admin@thegrid.agency";
@@ -69,17 +77,30 @@ export async function POST() {
   ];
 
   const existingDrivers = await payload.find({ collection: "drivers", limit: 1 });
-  if (existingDrivers.totalDocs === 0) {
+  if (existingDrivers.totalDocs === 0 || upsert) {
     for (const driver of driversCards) {
       const isGasly = driver.slug === "pierre-gasly";
-      await payload.create({
+      const data = {
+        ...driver,
+        detail: isGasly ? gaslyDetail : {},
+        detailNews: isGasly ? gaslyDetailNews : [],
+      };
+      const existing = await payload.find({
         collection: "drivers",
-        data: {
-          ...driver,
-          detail: isGasly ? gaslyDetail : {},
-          detailNews: isGasly ? gaslyDetailNews : [],
-        },
+        where: { slug: { equals: driver.slug } },
+        limit: 1,
+        locale: "en",
       });
+      if (existing.totalDocs === 0) {
+        await payload.create({ collection: "drivers", data, locale: "en" });
+      } else if (upsert) {
+        await payload.update({
+          collection: "drivers",
+          id: existing.docs[0].id,
+          data,
+          locale: "en",
+        });
+      }
     }
   }
 
@@ -124,16 +145,29 @@ export async function POST() {
   };
 
   const existingNews = await payload.find({ collection: "news", limit: 1 });
-  if (existingNews.totalDocs === 0) {
+  if (existingNews.totalDocs === 0 || upsert) {
     for (const article of newsCards) {
       const isStan = article.slug === "stan-ratajski-joins-the-grid-agency";
-      await payload.create({
+      const data = {
+        ...article,
+        ...(isStan ? stanDetail : {}),
+      };
+      const existing = await payload.find({
         collection: "news",
-        data: {
-          ...article,
-          ...(isStan ? stanDetail : {}),
-        },
+        where: { slug: { equals: article.slug } },
+        limit: 1,
+        locale: "en",
       });
+      if (existing.totalDocs === 0) {
+        await payload.create({ collection: "news", data, locale: "en" });
+      } else if (upsert) {
+        await payload.update({
+          collection: "news",
+          id: existing.docs[0].id,
+          data,
+          locale: "en",
+        });
+      }
     }
   }
 
