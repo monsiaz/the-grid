@@ -199,8 +199,13 @@ export default function AboutCoreTeam({
   teamMembers,
 }: AboutCoreTeamProps) {
   const t = useTranslations("about.team");
+  // Guillaume is always rendered by the dedicated FounderCard above;
+  // exclude him from the regular grid to avoid a duplicate card.
   const visibleMembers = teamMembers.filter(
-    (m) => typeof m.name === "string" && m.name.trim().length > 0,
+    (m) =>
+      typeof m.name === "string" &&
+      m.name.trim().length > 0 &&
+      m.name.trim().toLowerCase() !== founderName.trim().toLowerCase(),
   );
 
   return (
@@ -244,9 +249,9 @@ export default function AboutCoreTeam({
           </motion.div>
         </div>
 
-        <div className="grid items-start gap-8 min-[1200px]:grid-cols-[240px_1fr]">
+        <div className="grid items-start gap-8 min-[1200px]:grid-cols-[auto_1fr]">
           <motion.h2
-            className="m-0 font-[var(--font-league-spartan)] text-[64px] leading-none font-bold uppercase max-[1200px]:text-[clamp(44px,6vw,64px)]"
+            className="m-0 font-[var(--font-league-spartan)] text-[clamp(44px,4.5vw,64px)] leading-[1.05] font-bold uppercase min-[1200px]:max-w-[320px]"
             variants={slideInLeft}
             initial="hidden"
             whileInView="visible"
@@ -255,7 +260,9 @@ export default function AboutCoreTeam({
           >
             {t("meet")}
             <br />
-            {t("meetThe")} <span className="text-muted">{t("meetTeam")}</span>
+            {/* meetThe already contains a trailing space where needed (e.g. "the ").
+                No space added in JSX so FR "l'" connects cleanly to "ÉQUIPE". */}
+            {t("meetThe")}<span className="text-muted">{t("meetTeam")}</span>
           </motion.h2>
           <motion.div
             className="grid gap-7 min-[980px]:grid-cols-3"

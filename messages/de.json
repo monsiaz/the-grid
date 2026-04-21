@@ -115,8 +115,8 @@
         "highlight3": "Wert zu schaffen",
         "tail": " darüber hinaus"
       },
-      "meet": "Lernen Sie",
-      "meetThe": "das",
+      "meet": "Unser",
+      "meetThe": "",
       "meetTeam": "Team",
       "learnMore": "Erfahren Sie mehr über {name}",
       "hideDetails": "Details zu {name} ausblenden",
@@ -132,7 +132,7 @@
     "follow": {
       "getInTouch": "Kontakt aufnehmen",
       "getInTouchAria": "Côme Ensemble per E-Mail zum ACCÉLÈRE-Programm kontaktieren",
-      "heading": "Folgen",
+      "heading": "Folgt",
       "headingAccent": "uns",
       "instagramCta": "Instagram",
       "portraitFallback": "Pierre Gasly",

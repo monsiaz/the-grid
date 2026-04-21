@@ -115,9 +115,9 @@
         "highlight3": "waarde te creëren",
         "tail": " daarbuiten"
       },
-      "meet": "Maak kennis met",
-      "meetThe": "het",
-      "meetTeam": "team",
+      "meet": "Ons",
+      "meetThe": "",
+      "meetTeam": "Team",
       "learnMore": "Lees meer over {name}",
       "hideDetails": "Verberg details over {name}",
       "linkedinLabel": "{name} op LinkedIn (opent in nieuw tabblad)",

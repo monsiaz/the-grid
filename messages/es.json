@@ -116,7 +116,7 @@
         "tail": " más allá de eso"
       },
       "meet": "Conoce",
-      "meetThe": "al",
+      "meetThe": "al ",
       "meetTeam": "equipo",
       "learnMore": "Descubre más sobre {name}",
       "hideDetails": "Ocultar detalles sobre {name}",
@@ -132,8 +132,8 @@
     "follow": {
       "getInTouch": "Contacta con nosotros",
       "getInTouchAria": "Contactar con Côme Ensemble por email sobre el programa ACCÉLÈRE",
-      "heading": "Síguenos",
-      "headingAccent": "nosotros",
+      "heading": "Sigue",
+      "headingAccent": "nos",
       "instagramCta": "Instagram",
       "portraitFallback": "Pierre Gasly",
       "gridAlt": "Instagram de The Grid"

@@ -115,9 +115,9 @@
         "highlight3": "creare valore",
         "tail": " oltre ad esse"
       },
-      "meet": "Scopri",
-      "meetThe": "il",
-      "meetTeam": "team",
+      "meet": "Il nostro",
+      "meetThe": "",
+      "meetTeam": "Team",
       "learnMore": "Scopri di più su {name}",
       "hideDetails": "Nascondi i dettagli su {name}",
       "linkedinLabel": "{name} su LinkedIn (si apre in una nuova scheda)",
@@ -132,8 +132,8 @@
     "follow": {
       "getInTouch": "Contattaci",
       "getInTouchAria": "Contattare Côme Ensemble via email a proposito del programma ACCÉLÈRE",
-      "heading": "Seguici",
-      "headingAccent": "noi",
+      "heading": "Segui",
+      "headingAccent": "ci",
       "instagramCta": "Instagram",
       "portraitFallback": "Pierre Gasly",
       "gridAlt": "Instagram di The Grid"
