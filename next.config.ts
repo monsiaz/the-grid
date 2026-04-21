@@ -18,6 +18,9 @@ const nextConfig: NextConfig = {
       "country-flag-icons",
       "framer-motion",
     ],
+    // Limit parallel build workers to 2 to avoid saturating Neon DB connections
+    // during static page generation (7 locales × N pages = many concurrent queries)
+    cpus: 2,
   },
   async rewrites() {
     return {

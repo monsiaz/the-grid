@@ -27,6 +27,11 @@ const db = usePostgres
       push: true,
       pool: {
         connectionString: postgresUrl,
+        // Limit concurrent connections — Neon free tier has a low cap.
+        // During Next.js builds multiple pages are generated in parallel;
+        // without a cap this saturates the serverless DB and causes OOM errors.
+        max: 5,
+        idleTimeoutMillis: 10_000,
       },
     })
   : sqliteAdapter({

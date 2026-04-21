@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import { getPayloadClient } from "@/lib/payload";
 
 export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
@@ -38,7 +39,17 @@ export default async function PrivacyPolicyPage({
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/privacy-policy" });
 
   const payload = await getPayloadClient();
-  const siteSettings = await payload.findGlobal({ slug: "site-settings", locale });
+  let siteSettings: { instagramUrl?: string; linkedinUrl?: string; footerCopyright?: string } = {};
+  try {
+    siteSettings = await payload.findGlobal({ slug: "site-settings", locale });
+  } catch {
+    // Fallback to defaults if DB is unavailable during build/cold start
+    siteSettings = {
+      instagramUrl: "https://www.instagram.com/thegrid.agency",
+      linkedinUrl: "https://www.linkedin.com/company/the-grid-agency/",
+      footerCopyright: "© The Grid Agency",
+    };
+  }
 
   return (
     <>
