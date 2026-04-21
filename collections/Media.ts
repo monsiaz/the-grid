@@ -53,33 +53,55 @@ const autoDescribeHook: CollectionAfterChangeHook = async ({ doc, operation, req
   if (doc?.description && String(doc.description).trim().length > 0) return doc;
   const key = process.env.OPENAI_API_KEY;
   if (!key) return doc;
+
+  // IMPORTANT: offload Vision description to `after()` so the upload
+  // response returns fast. Vercel keeps the function alive long enough
+  // for `after` callbacks to run; the ImagePicker shows the image
+  // immediately and the description lands on the next list refresh.
+  const runDescribe = async () => {
+    try {
+      const url: string | undefined = doc?.url || doc?.sizes?.thumbnail?.url;
+      if (!url) return;
+      const fullUrl = url.startsWith("http")
+        ? url
+        : `${process.env.NEXT_PUBLIC_SITE_URL || process.env.PAYLOAD_PUBLIC_SERVER_URL || "http://localhost:3000"}${url}`;
+      const r = await fetch(fullUrl);
+      if (!r.ok) return;
+      const buf = Buffer.from(await r.arrayBuffer());
+      const result = await describeBufferWithVision(buf, doc.filename || "asset");
+      if (!result) return;
+      await req.payload.update({
+        collection: "media",
+        id: doc.id,
+        data: {
+          description: result.description,
+          subject: result.subject || doc.subject,
+          tags: result.tags.length
+            ? result.tags.map((t: string) => ({ tag: t }))
+            : doc.tags,
+        },
+        overrideAccess: true,
+      });
+    } catch {
+      // swallow — non-critical
+    }
+  };
+
+  // Try to use Next.js `after()` when available so Vercel keeps the
+  // function alive for the background work. Dynamic import so this
+  // collection file stays compatible with Payload's client bundle.
   try {
-    const url: string | undefined = doc?.url || doc?.sizes?.thumbnail?.url;
-    if (!url) return doc;
-    const fullUrl = url.startsWith("http")
-      ? url
-      : `${process.env.NEXT_PUBLIC_SITE_URL || process.env.PAYLOAD_PUBLIC_SERVER_URL || "http://localhost:3000"}${url}`;
-    const r = await fetch(fullUrl);
-    if (!r.ok) return doc;
-    const buf = Buffer.from(await r.arrayBuffer());
-    const result = await describeBufferWithVision(buf, doc.filename || "asset");
-    if (!result) return doc;
-    await req.payload.update({
-      collection: "media",
-      id: doc.id,
-      data: {
-        description: result.description,
-        subject: result.subject || doc.subject,
-        tags: result.tags.length
-          ? result.tags.map((t: string) => ({ tag: t }))
-          : doc.tags,
-      },
-      overrideAccess: true,
-    });
-    return { ...doc, description: result.description, subject: result.subject };
+    const mod = await import("next/server").catch(() => null);
+    if (mod && typeof mod.after === "function") {
+      mod.after(runDescribe);
+    } else {
+      void runDescribe();
+    }
   } catch {
-    return doc;
+    void runDescribe();
   }
+
+  return doc;
 };
 
 export const MEDIA_CATEGORIES = [

@@ -103,6 +103,23 @@
     color: var(--theme-elevation-500);
     text-transform: uppercase;
     letter-spacing: 0.04em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.5rem;
+  }
+
+  &__preview-hint {
+    font-size: 0.68rem;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--theme-elevation-400);
+  }
+
+  &__preview.is-dragover {
+    border-color: var(--theme-success-500, #0e7c3a);
+    background-color: var(--theme-success-50, rgba(14, 124, 58, 0.08));
   }
 
   &__input-group {
@@ -130,6 +147,21 @@
   &__desc {
     font-size: 0.75rem;
     color: var(--theme-elevation-500);
+  }
+
+  &__hint {
+    font-size: 0.7rem;
+    line-height: 1.4;
+    color: var(--theme-elevation-450, var(--theme-elevation-500));
+    padding: 0.35rem 0.5rem;
+    border-left: 2px solid var(--theme-success-500, #0e7c3a);
+    background: var(--theme-elevation-50);
+    border-radius: 0 3px 3px 0;
+  }
+
+  &__progress {
+    font-size: 0.72rem;
+    color: var(--theme-success-600, #0a6330);
   }
 
   &__error {
@@ -214,6 +246,29 @@
     padding: 3rem 1rem;
     color: var(--theme-elevation-500);
     font-size: 0.875rem;
+  }
+
+  &__modal-count {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--theme-elevation-500);
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+
+  &__modal-footer {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--theme-elevation-150);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background: var(--theme-elevation-50);
+  }
+
+  &__modal-page {
+    font-size: 0.8rem;
+    color: var(--theme-elevation-700);
   }
 
   &__tile {

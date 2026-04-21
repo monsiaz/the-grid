@@ -26,7 +26,9 @@ type MediaDoc = {
   category?: string | null;
   driverSlug?: string | null;
   tags?: { tag?: string }[] | null;
-  sizes?: Record<string, { url?: string | null }>;
+  sizes?: Record<string, { url?: string | null; width?: number; height?: number }>;
+  width?: number;
+  height?: number;
 };
 
 function resolveLabel(value: string | Record<string, string> | undefined, fallback = ""): string {
@@ -57,6 +59,15 @@ function pickThumbUrl(doc: MediaDoc): string {
   );
 }
 
+/**
+ * Tiny in-module cache so re-opening the modal within a short window (or
+ * switching between ImagePicker instances on the same page) doesn't re-hit
+ * the network. Keyed by `${search}|${filter}`.
+ */
+const CACHE_TTL_MS = 30_000;
+const cache = new Map<string, { at: number; docs: MediaDoc[]; total: number }>();
+const PAGE_SIZE = 60;
+
 export default function ImagePicker(props: ImagePickerProps) {
   const { path, field, label: labelProp, required: requiredProp } = props;
   const { value, setValue } = useField<string>({ path });
@@ -69,48 +80,92 @@ export default function ImagePicker(props: ImagePickerProps) {
 
   const [open, setOpen] = useState(false);
   const [docs, setDocs] = useState<MediaDoc[]>([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<string>("");
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [uploadProgress, setUploadProgress] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const loadDocs = useCallback(async () => {
-    setLoading(true);
-    try {
-      const params = new URLSearchParams();
-      params.set("limit", "300");
-      params.set("depth", "0");
-      params.set("sort", "-updatedAt");
-      if (search.trim()) params.set("where[or][0][alt][like]", search.trim());
-      if (search.trim()) params.set("where[or][1][filename][like]", search.trim());
-      if (filter) params.set("where[category][equals]", filter);
-      const res = await fetch(`/api/media?${params.toString()}`, {
-        credentials: "include",
-        cache: "no-store",
-      });
-      const data = await res.json();
-      setDocs((data?.docs as MediaDoc[]) || []);
-    } catch (e) {
-      console.error("MediaPicker load failed", e);
-      setDocs([]);
-    } finally {
-      setLoading(false);
-    }
+  // Debounce search → 300ms after user stops typing
+  useEffect(() => {
+    const t = setTimeout(() => setSearch(searchInput.trim()), 300);
+    return () => clearTimeout(t);
+  }, [searchInput]);
+
+  const cacheKey = `${search}|${filter}|${page}`;
+
+  const loadDocs = useCallback(
+    async (opts: { fresh?: boolean } = {}) => {
+      const cached = cache.get(cacheKey);
+      if (!opts.fresh && cached && Date.now() - cached.at < CACHE_TTL_MS) {
+        setDocs(cached.docs);
+        setTotal(cached.total);
+        return;
+      }
+      setLoading(true);
+      try {
+        const params = new URLSearchParams();
+        params.set("limit", String(PAGE_SIZE));
+        params.set("page", String(page));
+        params.set("depth", "0");
+        params.set("sort", "-updatedAt");
+        if (search) {
+          params.set("where[or][0][alt][like]", search);
+          params.set("where[or][1][filename][like]", search);
+          params.set("where[or][2][subject][like]", search);
+          params.set("where[or][3][tags.tag][like]", search);
+        }
+        if (filter) params.set("where[category][equals]", filter);
+        const res = await fetch(`/api/media?${params.toString()}`, {
+          credentials: "include",
+        });
+        const data = await res.json();
+        const list = (data?.docs as MediaDoc[]) || [];
+        const totalDocs: number = data?.totalDocs ?? list.length;
+        setDocs(list);
+        setTotal(totalDocs);
+        cache.set(cacheKey, { at: Date.now(), docs: list, total: totalDocs });
+      } catch (e) {
+        console.error("MediaPicker load failed", e);
+        setDocs([]);
+        setTotal(0);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [cacheKey, filter, page, search],
+  );
+
+  // Reset to page 1 whenever filters change
+  useEffect(() => {
+    setPage(1);
   }, [search, filter]);
 
   useEffect(() => {
     if (!open) return;
-    const t = setTimeout(loadDocs, 100);
-    return () => clearTimeout(t);
+    loadDocs();
   }, [open, loadDocs]);
 
   const handleUpload = useCallback(
     async (file: File) => {
       setUploading(true);
       setUploadError(null);
+      setUploadProgress(`${Math.round(file.size / 1024)} KB → conversion WebP…`);
       try {
+        // 8MB hard limit: Vercel serverless caps body to ~4.5MB; Payload
+        // receives multipart so real headroom is a bit lower. Friendly error
+        // before we fire the request.
+        if (file.size > 8 * 1024 * 1024) {
+          throw new Error(
+            `Fichier trop volumineux (${Math.round(file.size / 1024 / 1024)} MB). Max ~8 MB. Compresse le fichier ou réduit sa taille avant upload.`,
+          );
+        }
+
         const form = new FormData();
         const payload = {
           alt: file.name.replace(/\.[^.]+$/, ""),
@@ -129,22 +184,35 @@ export default function ImagePicker(props: ImagePickerProps) {
         }
         const data = await res.json();
         const newDoc: MediaDoc | undefined = data?.doc || data;
+        // Invalidate all cached pages — a new asset just appeared.
+        cache.clear();
         if (newDoc?.url) {
           setValue(newDoc.url);
           setOpen(false);
         } else {
-          await loadDocs();
+          await loadDocs({ fresh: true });
         }
       } catch (err) {
         setUploadError(err instanceof Error ? err.message : String(err));
       } finally {
         setUploading(false);
+        setUploadProgress(null);
       }
     },
     [filter, loadDocs, setValue],
   );
 
+  const onFileSelect = useCallback(
+    (file: File | undefined) => {
+      if (!file) return;
+      handleUpload(file);
+    },
+    [handleUpload],
+  );
+
   const previewUrl = useMemo(() => (raw ? normalizeUrl(raw) : ""), [raw]);
+
+  const pageCount = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
   return (
     <div className="grid-image-picker">
@@ -165,8 +233,9 @@ export default function ImagePicker(props: ImagePickerProps) {
             type="button"
             className="grid-image-picker__btn"
             onClick={() => fileInputRef.current?.click()}
+            disabled={uploading}
           >
-            Uploader
+            {uploading ? "Upload…" : "Uploader"}
           </button>
           {raw ? (
             <button
@@ -180,11 +249,10 @@ export default function ImagePicker(props: ImagePickerProps) {
           <input
             ref={fileInputRef}
             type="file"
-            accept="image/*"
+            accept="image/jpeg,image/png,image/webp,image/avif,image/gif"
             style={{ display: "none" }}
             onChange={(e) => {
-              const f = e.target.files?.[0];
-              if (f) handleUpload(f);
+              onFileSelect(e.target.files?.[0]);
               e.target.value = "";
             }}
           />
@@ -192,19 +260,36 @@ export default function ImagePicker(props: ImagePickerProps) {
       </div>
 
       <div className="grid-image-picker__body">
-        <div className="grid-image-picker__preview">
+        <div
+          className="grid-image-picker__preview"
+          onDragOver={(e) => {
+            e.preventDefault();
+            e.currentTarget.classList.add("is-dragover");
+          }}
+          onDragLeave={(e) => e.currentTarget.classList.remove("is-dragover")}
+          onDrop={(e) => {
+            e.preventDefault();
+            e.currentTarget.classList.remove("is-dragover");
+            onFileSelect(e.dataTransfer.files?.[0]);
+          }}
+        >
           {previewUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={previewUrl}
               alt=""
               className="grid-image-picker__preview-img"
+              loading="lazy"
+              decoding="async"
               onError={(e) => {
                 (e.currentTarget as HTMLImageElement).style.opacity = "0.15";
               }}
             />
           ) : (
-            <div className="grid-image-picker__preview-empty">Aucune image</div>
+            <div className="grid-image-picker__preview-empty">
+              Aucune image
+              <span className="grid-image-picker__preview-hint">Glisse ici pour uploader</span>
+            </div>
           )}
         </div>
         <div className="grid-image-picker__input-group">
@@ -218,6 +303,14 @@ export default function ImagePicker(props: ImagePickerProps) {
           />
           {description ? (
             <div className="grid-image-picker__desc">{description}</div>
+          ) : null}
+          <div className="grid-image-picker__hint">
+            Formats acceptés&nbsp;: JPG · PNG · WebP · AVIF · GIF. Conversion automatique
+            en WebP (qualité 82) + génération de 3 tailles (400 · 900 · 1920). Poids max
+            upload&nbsp;~8 MB — au-delà, compresse avant.
+          </div>
+          {uploadProgress ? (
+            <div className="grid-image-picker__progress">{uploadProgress}</div>
           ) : null}
           {uploadError ? (
             <div className="grid-image-picker__error">{uploadError}</div>
@@ -236,13 +329,20 @@ export default function ImagePicker(props: ImagePickerProps) {
         >
           <div className="grid-image-picker__modal-inner">
             <header className="grid-image-picker__modal-header">
-              <h3>Bibliothèque média</h3>
+              <h3>
+                Bibliothèque média{" "}
+                {total ? (
+                  <span className="grid-image-picker__modal-count">
+                    · {docs.length} / {total}
+                  </span>
+                ) : null}
+              </h3>
               <div className="grid-image-picker__modal-filters">
                 <input
                   type="search"
-                  placeholder="Rechercher (alt, filename)…"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Rechercher (alt, filename, sujet, tag)…"
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
                   className="grid-image-picker__search"
                 />
                 <select
@@ -260,7 +360,7 @@ export default function ImagePicker(props: ImagePickerProps) {
                 <button
                   type="button"
                   className="grid-image-picker__btn"
-                  onClick={loadDocs}
+                  onClick={() => loadDocs({ fresh: true })}
                 >
                   Rafraîchir
                 </button>
@@ -274,7 +374,7 @@ export default function ImagePicker(props: ImagePickerProps) {
               </div>
             </header>
             <div className="grid-image-picker__modal-grid">
-              {loading ? (
+              {loading && docs.length === 0 ? (
                 <div className="grid-image-picker__modal-empty">Chargement…</div>
               ) : docs.length === 0 ? (
                 <div className="grid-image-picker__modal-empty">
@@ -286,6 +386,11 @@ export default function ImagePicker(props: ImagePickerProps) {
                   const url = pickBestUrl(doc);
                   const thumb = pickThumbUrl(doc);
                   if (!url) return null;
+                  // Use thumbnail dims if available for correct aspect-ratio.
+                  const thumbDims =
+                    doc.sizes?.thumbnail && doc.sizes.thumbnail.width && doc.sizes.thumbnail.height
+                      ? { w: doc.sizes.thumbnail.width, h: doc.sizes.thumbnail.height }
+                      : { w: 400, h: 300 };
                   return (
                     <button
                       key={String(doc.id)}
@@ -298,7 +403,18 @@ export default function ImagePicker(props: ImagePickerProps) {
                       title={doc.alt || doc.filename || url}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={thumb || url} alt={doc.alt || ""} />
+                      <img
+                        src={thumb || url}
+                        alt={doc.alt || ""}
+                        width={thumbDims.w}
+                        height={thumbDims.h}
+                        loading="lazy"
+                        decoding="async"
+                        // Low priority: the browser defers these until the
+                        // user scrolls them into view. Non-standard on Safari
+                        // but harmless.
+                        {...({ fetchpriority: "low" } as Record<string, string>)}
+                      />
                       <div className="grid-image-picker__tile-meta">
                         <span className="grid-image-picker__tile-alt">
                           {doc.alt || doc.filename}
@@ -314,6 +430,29 @@ export default function ImagePicker(props: ImagePickerProps) {
                 })
               )}
             </div>
+            {total > PAGE_SIZE ? (
+              <footer className="grid-image-picker__modal-footer">
+                <button
+                  type="button"
+                  className="grid-image-picker__btn"
+                  disabled={page <= 1 || loading}
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                >
+                  ← Précédent
+                </button>
+                <span className="grid-image-picker__modal-page">
+                  Page {page} / {pageCount}
+                </span>
+                <button
+                  type="button"
+                  className="grid-image-picker__btn"
+                  disabled={page >= pageCount || loading}
+                  onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
+                >
+                  Suivant →
+                </button>
+              </footer>
+            ) : null}
           </div>
         </div>
       ) : null}
