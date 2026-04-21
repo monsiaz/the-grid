@@ -44,7 +44,7 @@ export default function Services({ labels, backgroundImage }: ServicesProps) {
           loading="lazy"
           sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
           quality={65}
-          className="object-cover object-[55%_center]"
+          className="object-cover object-[40%_center]"
           aria-hidden
         />
       </motion.div>
