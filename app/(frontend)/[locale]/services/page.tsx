@@ -49,7 +49,7 @@ export default async function ServicesPage({
         description={servicesPage.heroDescription}
         backgroundImage={servicesPage.heroBackgroundImage}
       />
-      {/* Commercial section — WHERE PERFORMANCE CREATES VALUE + case studies */}
+      {/* 1. Commercial — WHERE PERFORMANCE CREATES VALUE + case studies */}
       <ServicesValue
         heading={servicesPage.valueHeading}
         headingAccent={servicesPage.valueHeadingAccent}
@@ -63,7 +63,12 @@ export default async function ServicesPage({
         })) || []}
         caseStudies={servicesPage.caseStudies || []}
       />
-      {/* Talent section — TALENT TAKES THE WHEEL / WE PAVE THE WAY */}
+      {/* 2. Hintsa partnership — BETWEEN commercial and talent per client brief */}
+      <ServicesPartner
+        description={servicesPage.partnerDescription}
+        backgroundImage={servicesPage.partnerBackgroundImage}
+      />
+      {/* 3. Talent — TALENT TAKES THE WHEEL / WE PAVE THE WAY */}
       <ServicesTalent
         heading={servicesPage.talentHeading}
         headingAccent={servicesPage.talentHeadingAccent}
@@ -75,11 +80,6 @@ export default async function ServicesPage({
           alt: c.title,
           description: c.description || null,
         })) || []}
-      />
-      {/* Hintsa partnership section — below talent per client brief */}
-      <ServicesPartner
-        description={servicesPage.partnerDescription}
-        backgroundImage={servicesPage.partnerBackgroundImage}
       />
       <LocaleAlternatesData alternates={alternates} />
       <Footer

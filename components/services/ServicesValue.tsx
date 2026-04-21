@@ -121,7 +121,7 @@ export default function ServicesValue({ heading, headingAccent, description, int
             <>
               {heading || t("value.headingFallback")}
               <br />
-              {t("value.headingFiller")} <span className="text-muted">{headingAccent || t("value.headingAccentFallback")}</span>
+              <span className="text-muted">{headingAccent || t("value.headingAccentFallback")}</span>
             </>
           }
           description={description || ""}
