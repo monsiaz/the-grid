@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, X } from "lucide-react";
 import {
   motion,
   fadeUp,
@@ -42,10 +43,9 @@ function ServiceIntroCard({ text }: { text: string }) {
 }
 
 /**
- * Card without flip:
- * - Image fills the card (cover, object-top for portraits)
- * - Title + arrow overlaid at bottom with dark gradient
- * - On hover, a description panel slides up from the bottom
+ * Flip card:
+ * - FRONT: image + title + arrow button (click to flip)
+ * - BACK: title (accent) + full description + X close button
  */
 function ServiceCard({
   card,
@@ -55,53 +55,82 @@ function ServiceCard({
   imageHeightClassName: string;
   bodyPaddingClassName: string;
 }) {
+  const [flipped, setFlipped] = useState(false);
   const hasDescription = Boolean(card.description?.trim());
 
   return (
-    <motion.article
-      className="group relative overflow-hidden rounded-[32px]"
+    <motion.div
+      className={`relative ${imageHeightClassName} [perspective:1000px]`}
       variants={fadeUp}
       transition={smoothTransition}
     >
-      {/* Image */}
-      <div className={`relative w-full ${imageHeightClassName}`}>
-        <Image
-          src={card.image}
-          alt={card.alt}
-          fill
-          sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, (max-width: 1200px) 33vw, 240px"
-          className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.06]"
-        />
+      <div
+        className={`relative h-full w-full transition-transform duration-500 [transform-style:preserve-3d] ${
+          flipped ? "[transform:rotateY(180deg)]" : ""
+        }`}
+      >
+        {/* ── FRONT ── */}
+        <article className="absolute inset-0 overflow-hidden rounded-[32px] [backface-visibility:hidden]">
+          {/* Image — slightly zoomed to clip any white borders */}
+          <div className="absolute inset-0 scale-[1.05] overflow-hidden rounded-[32px]">
+            <Image
+              src={card.image}
+              alt={card.alt}
+              fill
+              sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, (max-width: 1200px) 33vw, 240px"
+              className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+            />
+          </div>
 
-        {/* Permanent dark gradient at bottom */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+          {/* Permanent dark gradient at bottom */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
 
-        {/* Title + arrow — always visible at bottom */}
-        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5 transition-all duration-400 ease-out group-hover:opacity-0">
-          <span className="text-sm leading-[1.2] font-bold uppercase tracking-[0.06em] text-white whitespace-pre-line">
-            {card.title}
-          </span>
-          <span
-            className="text-accent border-accent inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-black/30 transition-all duration-300 group-hover:bg-accent group-hover:text-black"
-            aria-hidden
-          >
-            <ArrowRight className="h-4 w-4" />
-          </span>
-        </div>
-
-        {/* Hover overlay with description */}
-        {hasDescription && (
-          <div className="absolute inset-0 flex flex-col justify-end gap-3 bg-black/80 p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            <span className="text-sm leading-[1.2] font-bold uppercase tracking-[0.06em] text-accent whitespace-pre-line">
+          {/* Title + arrow — always visible */}
+          <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">
+            <span className="text-sm leading-[1.2] font-bold uppercase tracking-[0.06em] text-white whitespace-pre-line">
               {card.title}
             </span>
-            <p className="m-0 text-[13px] leading-[1.55] text-white/90 font-light line-clamp-[8]">
+            {hasDescription ? (
+              <button
+                type="button"
+                onClick={() => setFlipped(true)}
+                aria-label={`Learn more about ${card.title}`}
+                className="text-accent border-accent inline-flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full border-2 bg-black/40 transition-all duration-300 hover:bg-accent hover:text-black"
+              >
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            ) : (
+              <span
+                className="text-accent border-accent inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-black/40"
+                aria-hidden
+              >
+                <ArrowRight className="h-4 w-4" />
+              </span>
+            )}
+          </div>
+        </article>
+
+        {/* ── BACK ── */}
+        <div className="absolute inset-0 flex flex-col justify-between overflow-hidden rounded-[32px] border border-accent/20 bg-[#0e0e0e] p-5 [backface-visibility:hidden] [transform:rotateY(180deg)]">
+          <div className="flex flex-col gap-3 overflow-y-auto">
+            <p className="m-0 text-sm font-bold uppercase tracking-[0.08em] text-accent whitespace-pre-line leading-[1.2]">
+              {card.title}
+            </p>
+            <p className="m-0 text-[13px] leading-[1.6] text-secondary/85 font-light">
               {card.description}
             </p>
           </div>
-        )}
+          <button
+            type="button"
+            onClick={() => setFlipped(false)}
+            aria-label="Close"
+            className="mt-4 self-end inline-flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full border-2 border-secondary/20 text-secondary/50 transition-all duration-300 hover:border-accent hover:text-accent"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
       </div>
-    </motion.article>
+    </motion.div>
   );
 }
 
