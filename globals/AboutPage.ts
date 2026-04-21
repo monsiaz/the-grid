@@ -106,12 +106,6 @@ export const AboutPage: GlobalConfig = {
       defaultValue: "https://www.linkedin.com/in/glegoff/",
     },
     imageField({
-      name: "founderImage",
-      label: "Founder portrait photo",
-      defaultValue: "/assets/v2/about/guillaume-le-goff.webp",
-      description: "Photo de Guillaume Le Goff affichée sur la carte Founder.",
-    }),
-    imageField({
       name: "accelereBannerImage",
       label: "ACCÉLÈRE banner background image",
       required: true,
