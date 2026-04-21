@@ -72,24 +72,46 @@ export default function ServicesValue({ heading, headingAccent, description, int
   const t = useTranslations("services");
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isUserInteracting, setIsUserInteracting] = useState(false);
+  const autoplayPausedRef = useRef(false);
 
-  const scrollToIndex = useCallback((index: number) => {
+  /**
+   * Center the target card in the viewport (not left-align as before).
+   * Horizontally: root.scrollLeft = target center - viewport center
+   */
+  const scrollToIndex = useCallback((index: number, smooth = true) => {
     const root = scrollRef.current;
     if (!root) return;
     const children = root.querySelectorAll<HTMLElement>("[data-case-study-card]");
     const clamped = Math.max(0, Math.min(index, children.length - 1));
     const target = children[clamped];
     if (!target) return;
-    root.scrollTo({ left: target.offsetLeft - root.offsetLeft, behavior: "smooth" });
+    const targetCenter = target.offsetLeft + target.clientWidth / 2;
+    const rootCenter = root.clientWidth / 2;
+    root.scrollTo({
+      left: targetCenter - rootCenter,
+      behavior: smooth ? "smooth" : "auto",
+    });
   }, []);
 
   const scrollByStep = useCallback(
     (direction: -1 | 1) => {
-      scrollToIndex(activeIndex + direction);
+      autoplayPausedRef.current = true;
+      setIsUserInteracting(true);
+      // Cycle around: -1 at index 0 goes to the last card, +1 at last goes to 0
+      const total = caseStudies.length;
+      const next = ((activeIndex + direction) % total + total) % total;
+      scrollToIndex(next);
+      // Resume autoplay after 8s of inactivity
+      setTimeout(() => {
+        autoplayPausedRef.current = false;
+        setIsUserInteracting(false);
+      }, 8000);
     },
-    [activeIndex, scrollToIndex],
+    [activeIndex, scrollToIndex, caseStudies.length],
   );
 
+  // Track active card based on scroll position
   useEffect(() => {
     const root = scrollRef.current;
     if (!root) return;
@@ -113,6 +135,33 @@ export default function ServicesValue({ heading, headingAccent, description, int
     return () => root.removeEventListener("scroll", handler);
   }, [caseStudies.length]);
 
+  // Center the first card on mount (fixes off-center initial render)
+  useEffect(() => {
+    const t = window.setTimeout(() => scrollToIndex(0, false), 60);
+    return () => window.clearTimeout(t);
+  }, [scrollToIndex, caseStudies.length]);
+
+  // Auto-rotate every 5s — pauses when user interacts or hovers
+  useEffect(() => {
+    if (caseStudies.length <= 1) return;
+    const id = window.setInterval(() => {
+      if (autoplayPausedRef.current) return;
+      setActiveIndex((prev) => {
+        const next = (prev + 1) % caseStudies.length;
+        scrollToIndex(next);
+        return next;
+      });
+    }, 5000);
+    return () => window.clearInterval(id);
+  }, [caseStudies.length, scrollToIndex]);
+
+  // Re-center when viewport resizes
+  useEffect(() => {
+    const onResize = () => scrollToIndex(activeIndex, false);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [activeIndex, scrollToIndex]);
+
   return (
     <section className="bg-primary py-20" id="services-value">
       <div className="mx-auto grid w-full max-w-[1728px] gap-20">
@@ -132,18 +181,21 @@ export default function ServicesValue({ heading, headingAccent, description, int
           bodyPaddingClassName="p-6"
         />
 
-        {/* Case study carousel with side arrows */}
-        <div className="relative">
-          {/* Left arrow */}
+        {/* Case study carousel — auto-rotates, centered, arrows + dots */}
+        <div
+          className="relative"
+          onMouseEnter={() => { autoplayPausedRef.current = true; }}
+          onMouseLeave={() => { if (!isUserInteracting) autoplayPausedRef.current = false; }}
+        >
+          {/* Left arrow — bigger, more visible, perfectly centered on card height */}
           {caseStudies.length > 1 && (
             <button
               type="button"
               aria-label={t("caseStudies.previous")}
               onClick={() => scrollByStep(-1)}
-              disabled={activeIndex === 0}
-              className="absolute left-2 top-[calc(50%-80px)] z-10 -translate-y-1/2 text-accent border-accent inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border-2 bg-primary/80 backdrop-blur-sm transition-all duration-300 hover:bg-accent hover:text-black hover:scale-105 disabled:cursor-not-allowed disabled:opacity-20"
+              className="absolute left-4 top-[40%] z-20 -translate-y-1/2 text-white border-white/30 inline-flex h-14 w-14 cursor-pointer items-center justify-center rounded-full border-2 bg-black/60 backdrop-blur-md transition-all duration-300 hover:bg-accent hover:border-accent hover:text-white hover:scale-110 max-[600px]:left-2 max-[600px]:h-11 max-[600px]:w-11"
             >
-              <ChevronLeft className="size-5 shrink-0" aria-hidden />
+              <ChevronLeft className="size-6 shrink-0" aria-hidden />
             </button>
           )}
 
@@ -155,16 +207,30 @@ export default function ServicesValue({ heading, headingAccent, description, int
             whileInView="visible"
             viewport={viewport}
           >
-            <div className="flex w-max gap-6 px-[clamp(48px,8vw,120px)]">
+            {/*
+              Padding = 50% of viewport minus half a card width, so the first
+              and last card can fully center. "w-max" lets the flex row extend
+              past the viewport for horizontal scroll.
+            */}
+            <div className="flex w-max gap-6 px-[max(20px,calc(50vw-380px))]">
               {caseStudies.map((card, idx) => (
-                <div
+                <button
                   key={`${card.title}-${card.image}-${idx}`}
+                  type="button"
                   data-case-study-card
-                  onClick={() => scrollToIndex(idx)}
-                  className="cursor-pointer"
+                  onClick={() => {
+                    autoplayPausedRef.current = true;
+                    setIsUserInteracting(true);
+                    scrollToIndex(idx);
+                    setTimeout(() => {
+                      autoplayPausedRef.current = false;
+                      setIsUserInteracting(false);
+                    }, 8000);
+                  }}
+                  className="cursor-pointer text-left border-0 bg-transparent p-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent rounded-2xl"
                 >
                   <CaseStudyCard card={card} active={idx === activeIndex} />
-                </div>
+                </button>
               ))}
             </div>
           </motion.div>
@@ -175,10 +241,9 @@ export default function ServicesValue({ heading, headingAccent, description, int
               type="button"
               aria-label={t("caseStudies.next")}
               onClick={() => scrollByStep(1)}
-              disabled={activeIndex === caseStudies.length - 1}
-              className="absolute right-2 top-[calc(50%-80px)] z-10 -translate-y-1/2 text-accent border-accent inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border-2 bg-primary/80 backdrop-blur-sm transition-all duration-300 hover:bg-accent hover:text-black hover:scale-105 disabled:cursor-not-allowed disabled:opacity-20"
+              className="absolute right-4 top-[40%] z-20 -translate-y-1/2 text-white border-white/30 inline-flex h-14 w-14 cursor-pointer items-center justify-center rounded-full border-2 bg-black/60 backdrop-blur-md transition-all duration-300 hover:bg-accent hover:border-accent hover:text-white hover:scale-110 max-[600px]:right-2 max-[600px]:h-11 max-[600px]:w-11"
             >
-              <ChevronRight className="size-5 shrink-0" aria-hidden />
+              <ChevronRight className="size-6 shrink-0" aria-hidden />
             </button>
           )}
 
