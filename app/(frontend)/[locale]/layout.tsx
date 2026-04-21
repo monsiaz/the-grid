@@ -37,8 +37,10 @@ const leagueSpartan = League_Spartan({
 const SITE_URL = getSiteUrl();
 const SITE_NAME = "The Grid Agency";
 
+export const dynamicParams = true;
+
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+  return [{ locale: routing.defaultLocale }];
 }
 
 export async function generateMetadata({
