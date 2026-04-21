@@ -1,10 +1,13 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
 import Header from "./Header";
 import { Link } from "@/i18n/navigation";
 import {
   motion,
+  useScroll,
+  useTransform,
   heroTitle,
   heroDescription,
   fadeUp,
@@ -49,19 +52,45 @@ export default function Hero({
   cta,
   priorityBackground = true,
 }: HeroProps) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const parallaxY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+
   return (
-    <section className={`relative w-full ${minHeightClassName}`}>
-      <Image
-        src={backgroundImage}
-        alt=""
-        fill
-        priority={priorityBackground}
-        fetchPriority={priorityBackground ? "high" : "auto"}
-        sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
-        quality={70}
-        className="absolute inset-0 -z-0 object-cover"
-        aria-hidden
-      />
+    <section ref={sectionRef} className={`relative w-full overflow-hidden ${minHeightClassName}`}>
+      {priorityBackground ? (
+        <Image
+          src={backgroundImage}
+          alt=""
+          fill
+          priority
+          fetchPriority="high"
+          sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
+          quality={70}
+          className="absolute inset-0 -z-0 object-cover"
+          aria-hidden
+        />
+      ) : (
+        <motion.div
+          style={{ y: parallaxY }}
+          className="absolute inset-0 -z-0 scale-110"
+        >
+          <Image
+            src={backgroundImage}
+            alt=""
+            fill
+            priority={false}
+            fetchPriority="auto"
+            sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
+            quality={70}
+            className="object-cover"
+            aria-hidden
+          />
+        </motion.div>
+      )}
       <div className={`absolute inset-0 z-10 ${overlayClassName}`} />
       <Header activeItem={activeHeaderItem} anchorPrefix={headerAnchorPrefix} />
       <div className="relative z-20 mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)]">

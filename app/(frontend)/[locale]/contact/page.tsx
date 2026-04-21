@@ -58,7 +58,6 @@ export default async function ContactPage({
           copyright: siteSettings.footerCopyright,
           instagramUrl: siteSettings.instagramUrl,
           linkedinUrl: siteSettings.linkedinUrl,
-          email: siteSettings.email,
           privacyPolicyUrl: siteSettings.privacyPolicyUrl,
         }}
       />

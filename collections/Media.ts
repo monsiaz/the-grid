@@ -1,4 +1,86 @@
-import type { CollectionConfig } from "payload";
+import type { CollectionConfig, CollectionAfterChangeHook } from "payload";
+
+async function describeBufferWithVision(buf: Buffer, filename: string): Promise<{
+  description: string;
+  subject: string;
+  tags: string[];
+} | null> {
+  const key = process.env.OPENAI_API_KEY;
+  if (!key) return null;
+  try {
+    const b64 = buf.toString("base64");
+    const r = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        temperature: 0,
+        max_tokens: 220,
+        response_format: { type: "json_object" },
+        messages: [
+          {
+            role: "system",
+            content:
+              "You describe a motorsport image for a digital asset library. Return strict JSON: { description: (<=30 words, English, factual: who if identifiable, action, brand/partner, setting), subject: (short subject label), tags: [string] }. Focus on precision: drivers, teams, circuits, brand partnerships when visible.",
+          },
+          {
+            role: "user",
+            content: [
+              { type: "text", text: `File: ${filename}` },
+              { type: "image_url", image_url: { url: `data:image/jpeg;base64,${b64}`, detail: "low" } },
+            ],
+          },
+        ],
+      }),
+    });
+    if (!r.ok) return null;
+    const j: any = await r.json();
+    const content = j?.choices?.[0]?.message?.content;
+    if (!content) return null;
+    const parsed = JSON.parse(content);
+    return {
+      description: parsed.description || "",
+      subject: parsed.subject || "",
+      tags: Array.isArray(parsed.tags) ? parsed.tags : [],
+    };
+  } catch {
+    return null;
+  }
+}
+
+const autoDescribeHook: CollectionAfterChangeHook = async ({ doc, operation, req }) => {
+  if (operation !== "create") return doc;
+  if (doc?.description && String(doc.description).trim().length > 0) return doc;
+  const key = process.env.OPENAI_API_KEY;
+  if (!key) return doc;
+  try {
+    const url: string | undefined = doc?.url || doc?.sizes?.thumbnail?.url;
+    if (!url) return doc;
+    const fullUrl = url.startsWith("http")
+      ? url
+      : `${process.env.NEXT_PUBLIC_SITE_URL || process.env.PAYLOAD_PUBLIC_SERVER_URL || "http://localhost:3000"}${url}`;
+    const r = await fetch(fullUrl);
+    if (!r.ok) return doc;
+    const buf = Buffer.from(await r.arrayBuffer());
+    const result = await describeBufferWithVision(buf, doc.filename || "asset");
+    if (!result) return doc;
+    await req.payload.update({
+      collection: "media",
+      id: doc.id,
+      data: {
+        description: result.description,
+        subject: result.subject || doc.subject,
+        tags: result.tags.length
+          ? result.tags.map((t: string) => ({ tag: t }))
+          : doc.tags,
+      },
+      overrideAccess: true,
+    });
+    return { ...doc, description: result.description, subject: result.subject };
+  } catch {
+    return doc;
+  }
+};
 
 export const MEDIA_CATEGORIES = [
   { label: "Homepage", value: "homepage" },
@@ -26,6 +108,9 @@ export const Media: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [autoDescribeHook],
   },
   upload: {
     mimeTypes: ["image/*"],
@@ -67,6 +152,21 @@ export const Media: CollectionConfig = {
       required: true,
       admin: {
         description: "Texte alternatif (accessibilité + SEO).",
+      },
+    },
+    {
+      name: "description",
+      type: "textarea",
+      admin: {
+        description:
+          "Description détaillée du visuel (auto-générée via Vision). Sert à reconnaître l'image dans la bibliothèque et à matcher précisément une demande client du PDF.",
+      },
+    },
+    {
+      name: "subject",
+      type: "text",
+      admin: {
+        description: "Sujet principal de la photo (ex: 'Isack Hadjar portrait Red Bull').",
       },
     },
     {

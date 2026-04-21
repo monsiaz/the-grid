@@ -62,7 +62,10 @@ export default async function ServicesPage({
         })) || []}
         caseStudies={servicesPage.caseStudies || []}
       />
-      <ServicesPartner description={servicesPage.partnerDescription} />
+      <ServicesPartner
+        description={servicesPage.partnerDescription}
+        backgroundImage={servicesPage.partnerBackgroundImage}
+      />
       <ServicesTalent
         heading={servicesPage.talentHeading}
         headingAccent={servicesPage.talentHeadingAccent}

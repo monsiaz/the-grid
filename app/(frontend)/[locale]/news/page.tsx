@@ -39,11 +39,16 @@ export type NewsCardData = {
 
 export default async function NewsPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: Locale }>;
+  searchParams: Promise<{ filter?: string }>;
 }) {
-  const { locale } = await params;
+  const [{ locale }, { filter }] = await Promise.all([params, searchParams]);
   setRequestLocale(locale);
+
+  const activeFilter: "sporting" | "commercial" | null =
+    filter === "sporting" || filter === "commercial" ? filter : null;
 
   const payload = await getPayloadClient();
   const siteSettings = await payload.findGlobal({ slug: "site-settings", locale });
@@ -74,8 +79,28 @@ export default async function NewsPage({
     };
   });
 
-  const featuredCards = newsCards.slice(0, 6);
-  const rowCards = [newsCards.slice(6, 10), newsCards.slice(10, 14), newsCards.slice(14, 18), newsCards.slice(18, 22)];
+  const filteredCards = activeFilter
+    ? newsCards.filter((c) => c.category === activeFilter)
+    : newsCards;
+
+  let featuredCards: NewsCardData[];
+  let rowCards: NewsCardData[][];
+
+  if (activeFilter) {
+    featuredCards = [];
+    rowCards = [];
+    for (let i = 0; i < filteredCards.length; i += 4) {
+      rowCards.push(filteredCards.slice(i, i + 4));
+    }
+  } else {
+    featuredCards = filteredCards.slice(0, 6);
+    rowCards = [
+      filteredCards.slice(6, 10),
+      filteredCards.slice(10, 14),
+      filteredCards.slice(14, 18),
+      filteredCards.slice(18, 22),
+    ];
+  }
 
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/news" });
 
@@ -84,12 +109,14 @@ export default async function NewsPage({
       <Header activeItem="news" />
       <section className="mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)] pt-20 pb-24">
         <div className="grid gap-16">
-          <NewsHeading />
+          <NewsHeading activeFilter={activeFilter} />
           <div className="grid gap-7">
             <NewsFeaturedGrid cards={featuredCards} />
-            {rowCards.map((row, index) => (
-              <NewsCardsRow key={index} cards={row} />
-            ))}
+            {rowCards
+              .filter((row) => row.length > 0)
+              .map((row, index) => (
+                <NewsCardsRow key={index} cards={row} />
+              ))}
           </div>
         </div>
       </section>

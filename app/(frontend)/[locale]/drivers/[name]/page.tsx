@@ -75,6 +75,7 @@ export default async function DriverDetailRoutePage({ params }: DriverDetailRout
   const { name, locale } = await params;
   setRequestLocale(locale);
   const payload = await getPayloadClient();
+  const siteSettings = await payload.findGlobal({ slug: "site-settings", locale });
 
   const result = await payload.find({
     collection: "drivers",
@@ -131,7 +132,16 @@ export default async function DriverDetailRoutePage({ params }: DriverDetailRout
   return (
     <>
       <LocaleAlternatesData alternates={alternates} />
-      <DriverDetailPage driver={driver} detail={detail} />
+      <DriverDetailPage
+        driver={driver}
+        detail={detail}
+        siteProps={{
+          instagramUrl: siteSettings.instagramUrl,
+          linkedinUrl: siteSettings.linkedinUrl,
+          copyright: siteSettings.footerCopyright,
+          privacyPolicyUrl: siteSettings.privacyPolicyUrl,
+        }}
+      />
     </>
   );
 }

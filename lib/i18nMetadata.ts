@@ -11,7 +11,7 @@ import { getSiteUrl } from "@/lib/siteUrl";
 type BuildMetadataOptions = {
   locale: Locale;
   pathSegment: string;
-  namespace: "home" | "about" | "services" | "drivers" | "news" | "contact";
+  namespace: "home" | "about" | "services" | "drivers" | "news" | "contact" | "privacy";
   titleOverride?: string;
   descriptionOverride?: string;
   ogImage?: string;

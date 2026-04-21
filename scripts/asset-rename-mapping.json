@@ -1,0 +1,200 @@
+{
+  "_comment": "Asset rename mapping — generated 2026-04-21. DO NOT apply manually; use apply-asset-renames.sh + update-asset-refs.mjs.",
+  "renames": [
+    {
+      "from": "public/assets/v2/about/accelere.webp",
+      "to": "public/assets/v2/about/accelere-banner.webp",
+      "reason": "Name is too generic; matches the CMS field name `accelereBannerImage` and makes purpose explicit.",
+      "referencedIn": [
+        "components/about/AboutAccelereBanner.tsx",
+        "globals/AboutPage.ts",
+        "app/api/seed/route.ts",
+        "scripts/apply-client-assets-to-prod.mjs"
+      ],
+      "currentRefs": ["/assets/v2/about/accelere.webp"],
+      "newRefs": ["/assets/v2/about/accelere-banner.webp"]
+    },
+    {
+      "from": "public/assets/v2/about/accelere-alt.webp",
+      "to": "public/assets/v2/about/accelere-program.webp",
+      "reason": "Suffix '-alt' is not descriptive; this image represents the ACCÉLÈRE program overview.",
+      "referencedIn": [],
+      "currentRefs": [],
+      "newRefs": []
+    },
+    {
+      "from": "public/assets/v2/contact/backdrop.webp",
+      "to": "public/assets/v2/contact/hero.webp",
+      "reason": "'backdrop' is vague; 'hero' matches the naming convention used in every other section.",
+      "referencedIn": ["app/api/seed/route.ts"],
+      "currentRefs": ["/assets/v2/contact/backdrop.webp"],
+      "newRefs": ["/assets/v2/contact/hero.webp"]
+    },
+    {
+      "from": "public/assets/v2/services/hintsa.webp",
+      "to": "public/assets/v2/services/hintsa-partner-bg.webp",
+      "reason": "Plain 'hintsa.webp' is ambiguous next to 'hintsa-white-logo.svg'; '-partner-bg' clarifies this is the background image for the partner section.",
+      "referencedIn": [
+        "components/services/ServicesPartner.tsx",
+        "globals/ServicesPage.ts",
+        "app/api/seed/route.ts",
+        "scripts/apply-client-assets-to-prod.mjs"
+      ],
+      "currentRefs": ["/assets/v2/services/hintsa.webp"],
+      "newRefs": ["/assets/v2/services/hintsa-partner-bg.webp"]
+    },
+    {
+      "from": "public/assets/v2/drivers/icones/driver-01-gasly.webp",
+      "to": "public/assets/v2/drivers/icons/driver-01-gasly.webp",
+      "reason": "Directory 'icones' is French; rename to English 'icons' for consistency.",
+      "referencedIn": ["app/api/seed/route.ts"],
+      "currentRefs": ["/assets/v2/drivers/icones/driver-01-gasly.webp"],
+      "newRefs": ["/assets/v2/drivers/icons/driver-01-gasly.webp"]
+    },
+    {
+      "from": "public/assets/v2/drivers/icones/driver-02-hadjar.webp",
+      "to": "public/assets/v2/drivers/icons/driver-02-hadjar.webp",
+      "reason": "Directory 'icones' is French; rename to English 'icons' for consistency.",
+      "referencedIn": ["app/api/seed/route.ts"],
+      "currentRefs": ["/assets/v2/drivers/icones/driver-02-hadjar.webp"],
+      "newRefs": ["/assets/v2/drivers/icons/driver-02-hadjar.webp"]
+    },
+    {
+      "from": "public/assets/v2/drivers/icones/driver-03-maini.webp",
+      "to": "public/assets/v2/drivers/icons/driver-03-maini.webp",
+      "reason": "Directory 'icones' is French; rename to English 'icons' for consistency.",
+      "referencedIn": ["app/api/seed/route.ts"],
+      "currentRefs": ["/assets/v2/drivers/icones/driver-03-maini.webp"],
+      "newRefs": ["/assets/v2/drivers/icons/driver-03-maini.webp"]
+    },
+    {
+      "from": "public/assets/v2/drivers/icones/driver-04-makowiecki.webp",
+      "to": "public/assets/v2/drivers/icons/driver-04-makowiecki.webp",
+      "reason": "Directory 'icones' is French; rename to English 'icons' for consistency.",
+      "referencedIn": ["app/api/seed/route.ts"],
+      "currentRefs": ["/assets/v2/drivers/icones/driver-04-makowiecki.webp"],
+      "newRefs": ["/assets/v2/drivers/icons/driver-04-makowiecki.webp"]
+    },
+    {
+      "from": "public/assets/v2/drivers/icones/driver-05-giusti.webp",
+      "to": "public/assets/v2/drivers/icons/driver-05-giusti.webp",
+      "reason": "Directory 'icones' is French; rename to English 'icons' for consistency.",
+      "referencedIn": ["app/api/seed/route.ts"],
+      "currentRefs": ["/assets/v2/drivers/icones/driver-05-giusti.webp"],
+      "newRefs": ["/assets/v2/drivers/icons/driver-05-giusti.webp"]
+    },
+    {
+      "from": "public/assets/v2/drivers/icones/driver-06-deligny.webp",
+      "to": "public/assets/v2/drivers/icons/driver-06-deligny.webp",
+      "reason": "Directory 'icones' is French; rename to English 'icons' for consistency.",
+      "referencedIn": ["app/api/seed/route.ts"],
+      "currentRefs": ["/assets/v2/drivers/icones/driver-06-deligny.webp"],
+      "newRefs": ["/assets/v2/drivers/icons/driver-06-deligny.webp"]
+    },
+    {
+      "from": "public/assets/v2/drivers/icones/driver-07-dupe.webp",
+      "to": "public/assets/v2/drivers/icons/driver-07-dupe.webp",
+      "reason": "Directory 'icones' is French; rename to English 'icons' for consistency.",
+      "referencedIn": ["app/api/seed/route.ts"],
+      "currentRefs": ["/assets/v2/drivers/icones/driver-07-dupe.webp"],
+      "newRefs": ["/assets/v2/drivers/icons/driver-07-dupe.webp"]
+    },
+    {
+      "from": "public/assets/v2/drivers/icones/driver-08-tye.webp",
+      "to": "public/assets/v2/drivers/icons/driver-08-tye.webp",
+      "reason": "Directory 'icones' is French; rename to English 'icons' for consistency.",
+      "referencedIn": ["app/api/seed/route.ts"],
+      "currentRefs": ["/assets/v2/drivers/icones/driver-08-tye.webp"],
+      "newRefs": ["/assets/v2/drivers/icons/driver-08-tye.webp"]
+    },
+    {
+      "from": "public/assets/v2/drivers/icones/driver-09-kanthan.webp",
+      "to": "public/assets/v2/drivers/icons/driver-09-kanthan.webp",
+      "reason": "Directory 'icones' is French; rename to English 'icons' for consistency.",
+      "referencedIn": ["app/api/seed/route.ts"],
+      "currentRefs": ["/assets/v2/drivers/icones/driver-09-kanthan.webp"],
+      "newRefs": ["/assets/v2/drivers/icons/driver-09-kanthan.webp"]
+    },
+    {
+      "from": "public/assets/v2/drivers/icones/driver-10-iliffe.webp",
+      "to": "public/assets/v2/drivers/icons/driver-10-iliffe.webp",
+      "reason": "Directory 'icones' is French; rename to English 'icons' for consistency.",
+      "referencedIn": ["app/api/seed/route.ts"],
+      "currentRefs": ["/assets/v2/drivers/icones/driver-10-iliffe.webp"],
+      "newRefs": ["/assets/v2/drivers/icons/driver-10-iliffe.webp"]
+    },
+    {
+      "from": "public/assets/v2/drivers/icones/driver-11-cochet.webp",
+      "to": "public/assets/v2/drivers/icons/driver-11-cochet.webp",
+      "reason": "Directory 'icones' is French; rename to English 'icons' for consistency.",
+      "referencedIn": ["app/api/seed/route.ts"],
+      "currentRefs": ["/assets/v2/drivers/icones/driver-11-cochet.webp"],
+      "newRefs": ["/assets/v2/drivers/icons/driver-11-cochet.webp"]
+    },
+    {
+      "from": "public/assets/v2/drivers/icones/driver-12-scelles.webp",
+      "to": "public/assets/v2/drivers/icons/driver-12-scelles.webp",
+      "reason": "Directory 'icones' is French; rename to English 'icons' for consistency.",
+      "referencedIn": ["app/api/seed/route.ts"],
+      "currentRefs": ["/assets/v2/drivers/icones/driver-12-scelles.webp"],
+      "newRefs": ["/assets/v2/drivers/icons/driver-12-scelles.webp"]
+    },
+    {
+      "from": "public/assets/v2/drivers/icones/driver-13-truchot.webp",
+      "to": "public/assets/v2/drivers/icons/driver-13-truchot.webp",
+      "reason": "Directory 'icones' is French; rename to English 'icons' for consistency.",
+      "referencedIn": ["app/api/seed/route.ts"],
+      "currentRefs": ["/assets/v2/drivers/icones/driver-13-truchot.webp"],
+      "newRefs": ["/assets/v2/drivers/icons/driver-13-truchot.webp"]
+    },
+    {
+      "from": "public/assets/v2/drivers/icones/driver-14-ratajski.webp",
+      "to": "public/assets/v2/drivers/icons/driver-14-ratajski.webp",
+      "reason": "Directory 'icones' is French; rename to English 'icons' for consistency.",
+      "referencedIn": ["app/api/seed/route.ts"],
+      "currentRefs": ["/assets/v2/drivers/icones/driver-14-ratajski.webp"],
+      "newRefs": ["/assets/v2/drivers/icons/driver-14-ratajski.webp"]
+    }
+  ],
+  "extraSubstitutions": [
+    {
+      "old": "=== \"icones\"",
+      "new": "=== \"icons\"",
+      "reason": "app/api/import-media/route.ts checks parts[3] === \"icones\" to categorise driver-grid images; must match the renamed directory.",
+      "referencedIn": ["app/api/import-media/route.ts"]
+    }
+  ],
+  "noRename": [
+    { "path": "public/assets/v2/about/accelere-portrait.webp", "reason": "Name is specific and matches CMS field accelerePortraitImage." },
+    { "path": "public/assets/v2/about/core-commercial-development.webp", "reason": "Descriptive — maps to core area 03." },
+    { "path": "public/assets/v2/about/core-image-branding.webp", "reason": "Descriptive — maps to core area 02." },
+    { "path": "public/assets/v2/about/core-sport-management.webp", "reason": "Descriptive — maps to core area 01." },
+    { "path": "public/assets/v2/about/founder.webp", "reason": "Self-explanatory — founder portrait." },
+    { "path": "public/assets/v2/about/hero.webp", "reason": "Follows hero naming convention." },
+    { "path": "public/assets/v2/about/instagram-1.webp", "reason": "Consistent numbered Instagram tiles." },
+    { "path": "public/assets/v2/about/team-jeremy.webp", "reason": "Person-named team photo — clear." },
+    { "path": "public/assets/v2/about/team-laura.webp", "reason": "Person-named team photo — clear." },
+    { "path": "public/assets/v2/drivers/hero-collage.webp", "reason": "Descriptive compound name." },
+    { "path": "public/assets/v2/home/hero.webp", "reason": "Standard hero naming." },
+    { "path": "public/assets/v2/home/hero-mobile.webp", "reason": "Responsive variant — clear." },
+    { "path": "public/assets/v2/home/about.webp", "reason": "Section background — naming convention is consistent across home/." },
+    { "path": "public/assets/v2/home/drivers.webp", "reason": "Section background — naming convention is consistent across home/." },
+    { "path": "public/assets/v2/home/services.webp", "reason": "Section background — naming convention is consistent across home/." },
+    { "path": "public/assets/v2/home/f3-action.webp", "reason": "Descriptive action shot name." },
+    { "path": "public/assets/v2/services/hero.webp", "reason": "Follows hero naming convention." },
+    { "path": "public/assets/v2/services/case-center.webp", "reason": "Positional case study image — adequate." },
+    { "path": "public/assets/v2/services/case-left.webp", "reason": "Positional case study image — adequate." },
+    { "path": "public/assets/v2/services/case-right.webp", "reason": "Positional case study image — adequate." },
+    { "path": "public/assets/v2/services/talent-branding.webp", "reason": "Describes talent-service category." },
+    { "path": "public/assets/v2/services/talent-commercial.webp", "reason": "Describes talent-service category." },
+    { "path": "public/assets/v2/services/talent-contracts.webp", "reason": "Describes talent-service category." },
+    { "path": "public/assets/v2/services/talent-mentorship.webp", "reason": "Describes talent-service category." },
+    { "path": "public/assets/v2/services/talent-network.webp", "reason": "Describes talent-service category." },
+    { "path": "public/assets/v2/services/value-activation.webp", "reason": "Describes value-prop category." },
+    { "path": "public/assets/v2/services/value-network.webp", "reason": "Describes value-prop category." },
+    { "path": "public/assets/v2/services/value-partnerships.webp", "reason": "Describes value-prop category." },
+    { "path": "public/assets/v2/services/value-private.webp", "reason": "Describes value-prop category." },
+    { "path": "public/images/logo.svg", "reason": "Standard logo name." },
+    { "path": "public/images/services/hintsa-white-logo.svg", "reason": "Specific and descriptive." }
+  ]
+}

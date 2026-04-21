@@ -30,32 +30,40 @@ type ServicesValueProps = {
 };
 
 function CaseStudyCard({ card, active }: { card: CaseStudy; active: boolean }) {
-  const baseOpacity = card.dimmed ? "opacity-30" : "";
-  const dynamicOpacity = !active && !card.dimmed ? "opacity-60" : "";
+  const opacity = card.dimmed
+    ? "opacity-20 scale-[0.96]"
+    : active
+      ? "opacity-100 scale-100"
+      : "opacity-30 scale-[0.96]";
+
   return (
     <motion.article
-      className={`grid w-[min(86vw,786px)] shrink-0 snap-center gap-4 transition-opacity duration-300 ${baseOpacity} ${dynamicOpacity}`}
+      className={`grid w-[min(80vw,720px)] shrink-0 snap-center gap-4 transition-all duration-400 ease-out ${opacity}`}
       variants={fadeUp}
       transition={smoothTransition}
     >
-      <div className="relative aspect-[786/440] w-full overflow-hidden max-[900px]:aspect-[4/3]">
-        <motion.div
-          className="relative h-full w-full"
-          whileHover={{ scale: 1.03 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-        >
-          <Image src={card.image} alt={card.title || ""} fill sizes="(max-width: 900px) 86vw, 786px" className="object-cover" />
-        </motion.div>
+      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl">
+        <Image
+          src={card.image}
+          alt={card.title || ""}
+          fill
+          sizes="(max-width: 900px) 80vw, 720px"
+          className="object-cover object-center"
+        />
       </div>
       <h3 className="m-0 text-xl leading-[1.2] font-bold uppercase">{card.title || "\u00a0"}</h3>
       <motion.div
-        className="bg-accent h-1 w-full origin-left"
+        className="bg-accent h-[3px] w-full origin-left"
         initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
+        whileInView={{ scaleX: active ? 1 : 0 }}
         viewport={viewport}
-        transition={{ ...smoothTransition, duration: 0.8, delay: 0.1 }}
+        transition={{ ...smoothTransition, duration: 0.6 }}
       />
-      {card.description ? <p className="m-0 text-base leading-[1.55] font-light">{card.description}</p> : null}
+      {card.description ? (
+        <p className="m-0 text-[15px] leading-[1.6] font-light text-secondary/80">
+          {card.description}
+        </p>
+      ) : null}
     </motion.article>
   );
 }
@@ -124,7 +132,21 @@ export default function ServicesValue({ heading, headingAccent, description, int
           bodyPaddingClassName="p-6"
         />
 
-        <div className="grid gap-4">
+        {/* Case study carousel with side arrows */}
+        <div className="relative">
+          {/* Left arrow */}
+          {caseStudies.length > 1 && (
+            <button
+              type="button"
+              aria-label={t("caseStudies.previous")}
+              onClick={() => scrollByStep(-1)}
+              disabled={activeIndex === 0}
+              className="absolute left-2 top-[calc(50%-80px)] z-10 -translate-y-1/2 text-accent border-accent inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border-2 bg-primary/80 backdrop-blur-sm transition-all duration-300 hover:bg-accent hover:text-black hover:scale-105 disabled:cursor-not-allowed disabled:opacity-20"
+            >
+              <ChevronLeft className="size-5 shrink-0" aria-hidden />
+            </button>
+          )}
+
           <motion.div
             ref={scrollRef}
             className="w-full snap-x snap-mandatory overflow-x-auto pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
@@ -133,56 +155,56 @@ export default function ServicesValue({ heading, headingAccent, description, int
             whileInView="visible"
             viewport={viewport}
           >
-            <div className="flex w-max gap-7 px-[clamp(20px,4vw,48px)] min-[1200px]:pl-0 min-[1200px]:pr-0 min-[1200px]:ml-[-343px]">
+            <div className="flex w-max gap-6 px-[clamp(48px,8vw,120px)]">
               {caseStudies.map((card, idx) => (
-                <div key={`${card.title}-${card.image}-${idx}`} data-case-study-card>
+                <div
+                  key={`${card.title}-${card.image}-${idx}`}
+                  data-case-study-card
+                  onClick={() => scrollToIndex(idx)}
+                  className="cursor-pointer"
+                >
                   <CaseStudyCard card={card} active={idx === activeIndex} />
                 </div>
               ))}
             </div>
           </motion.div>
-          {caseStudies.length > 1 ? (
-            <div className="flex items-center justify-center gap-3 px-[clamp(20px,4vw,48px)]">
-              <button
-                type="button"
-                aria-label={t("caseStudies.previous")}
-                onClick={() => scrollByStep(-1)}
-                disabled={activeIndex === 0}
-                className="text-accent border-accent inline-flex h-11 w-14 cursor-pointer items-center justify-center rounded-full border-2 bg-transparent transition-all duration-300 hover:bg-accent hover:text-black hover:scale-105 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-accent disabled:hover:scale-100"
-              >
-                <ChevronLeft className="size-5 shrink-0" aria-hidden />
-              </button>
-              <div className="flex items-center gap-1" role="tablist" aria-label={t("caseStudies.tabs")}>
-                {caseStudies.map((_, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    role="tab"
-                    aria-selected={activeIndex === idx}
-                    aria-label={t("caseStudies.tabLabel", { index: idx + 1 })}
-                    onClick={() => scrollToIndex(idx)}
-                    className="group inline-flex h-11 w-11 items-center justify-center p-0"
-                  >
-                    <span
-                      aria-hidden
-                      className={`block h-2 rounded-full transition-all duration-300 ${
-                        activeIndex === idx ? "w-8 bg-accent" : "w-2 bg-white/30 group-hover:bg-white/60"
-                      }`}
-                    />
-                  </button>
-                ))}
-              </div>
-              <button
-                type="button"
-                aria-label={t("caseStudies.next")}
-                onClick={() => scrollByStep(1)}
-                disabled={activeIndex === caseStudies.length - 1}
-                className="text-accent border-accent inline-flex h-11 w-14 cursor-pointer items-center justify-center rounded-full border-2 bg-transparent transition-all duration-300 hover:bg-accent hover:text-black hover:scale-105 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-accent disabled:hover:scale-100"
-              >
-                <ChevronRight className="size-5 shrink-0" aria-hidden />
-              </button>
+
+          {/* Right arrow */}
+          {caseStudies.length > 1 && (
+            <button
+              type="button"
+              aria-label={t("caseStudies.next")}
+              onClick={() => scrollByStep(1)}
+              disabled={activeIndex === caseStudies.length - 1}
+              className="absolute right-2 top-[calc(50%-80px)] z-10 -translate-y-1/2 text-accent border-accent inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border-2 bg-primary/80 backdrop-blur-sm transition-all duration-300 hover:bg-accent hover:text-black hover:scale-105 disabled:cursor-not-allowed disabled:opacity-20"
+            >
+              <ChevronRight className="size-5 shrink-0" aria-hidden />
+            </button>
+          )}
+
+          {/* Dot navigation below */}
+          {caseStudies.length > 1 && (
+            <div className="mt-6 flex items-center justify-center gap-1" role="tablist" aria-label={t("caseStudies.tabs")}>
+              {caseStudies.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeIndex === idx}
+                  aria-label={t("caseStudies.tabLabel", { index: idx + 1 })}
+                  onClick={() => scrollToIndex(idx)}
+                  className="group inline-flex h-8 w-8 items-center justify-center p-0"
+                >
+                  <span
+                    aria-hidden
+                    className={`block h-[6px] rounded-full transition-all duration-300 ${
+                      activeIndex === idx ? "w-8 bg-accent" : "w-[6px] bg-white/25 group-hover:bg-white/50"
+                    }`}
+                  />
+                </button>
+              ))}
             </div>
-          ) : null}
+          )}
         </div>
       </div>
     </section>

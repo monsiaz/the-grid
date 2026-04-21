@@ -91,6 +91,13 @@ export const ServicesPage: GlobalConfig = {
         },
       ],
     },
+    imageField({
+      name: "partnerBackgroundImage",
+      label: "Partner section background image",
+      required: true,
+      defaultValue: "/assets/v2/services/hintsa.webp",
+      description: "Image plein largeur derrière la section Hintsa × The Grid.",
+    }),
     {
       name: "partnerHeading",
       type: "text",

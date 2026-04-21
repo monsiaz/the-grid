@@ -10,6 +10,7 @@ type NewsCardProps = {
   title: string;
   image: string;
   excerpt?: string | null;
+  category?: "sporting" | "commercial" | null;
   cardClassName?: string;
   imageWrapClassName?: string;
   titleClassName?: string;
@@ -20,6 +21,7 @@ export default function NewsCard({
   title,
   image,
   excerpt,
+  category,
   cardClassName,
   imageWrapClassName = "h-[200px]",
   titleClassName,
@@ -47,6 +49,15 @@ export default function NewsCard({
           />
         </div>
         <div className="flex flex-1 flex-col gap-3 bg-primary p-6">
+          {category ? (
+            <span className={`inline-flex w-fit items-center rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ${
+              category === "commercial"
+                ? "bg-accent/15 text-accent"
+                : "bg-secondary/10 text-secondary/70"
+            }`}>
+              {category === "commercial" ? "Commercial" : "Sporting"}
+            </span>
+          ) : null}
           <h2
             className={`m-0 overflow-hidden text-[15px] leading-[1.2] font-medium uppercase ${titleClassName ?? ""}`}
           >

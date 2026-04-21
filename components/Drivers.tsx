@@ -14,19 +14,21 @@ import {
 type DriversProps = {
   heading?: string;
   headingAccent?: string;
+  backgroundImage?: string | null;
 };
 
-export default function Drivers({ heading, headingAccent }: DriversProps) {
+export default function Drivers({ heading, headingAccent, backgroundImage }: DriversProps) {
   const t = useTranslations("home.drivers");
   const headingValue = heading ?? t("headingFallback");
   const headingAccentValue = headingAccent ?? t("headingAccentFallback");
+  const bg = backgroundImage || "/images/drivers.webp";
   return (
     <section
       className="relative flex min-h-[clamp(560px,85vh,800px)] w-full items-center justify-center"
       id="drivers"
     >
       <Image
-        src="/images/drivers.webp"
+        src={bg}
         alt=""
         fill
         loading="lazy"

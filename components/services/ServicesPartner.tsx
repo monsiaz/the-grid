@@ -1,9 +1,12 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import {
   motion,
+  useScroll,
+  useTransform,
   fadeUp,
   scaleIn,
   smoothTransition,
@@ -12,22 +15,33 @@ import {
 
 type ServicesPartnerProps = {
   description?: string | null;
+  backgroundImage?: string | null;
 };
 
-export default function ServicesPartner({ description }: ServicesPartnerProps) {
+export default function ServicesPartner({ description, backgroundImage }: ServicesPartnerProps) {
   const t = useTranslations("services.partner");
+  const bg = backgroundImage || "/assets/v2/services/hintsa.webp";
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const parallaxY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+
   return (
-    <section className="relative min-h-[clamp(520px,80vh,800px)] w-full overflow-hidden">
-      <Image
-        src="/assets/v2/services/hintsa.webp"
-        alt=""
-        fill
-        loading="lazy"
-        sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
-        quality={65}
-        className="object-cover"
-        aria-hidden
-      />
+    <section ref={sectionRef} className="relative min-h-[clamp(520px,80vh,800px)] w-full overflow-hidden">
+      <motion.div style={{ y: parallaxY }} className="absolute inset-0 scale-[1.2]">
+        <Image
+          src={bg}
+          alt=""
+          fill
+          loading="lazy"
+          sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
+          quality={65}
+          className="object-cover"
+          aria-hidden
+        />
+      </motion.div>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0.2)_45%,rgba(0,0,0,0.55)_100%)]" />
       <div className="relative z-10 mx-auto flex min-h-[inherit] w-full max-w-[1344px] items-center justify-center px-[clamp(20px,4vw,48px)] py-20 min-[900px]:py-32">
         <div className="grid w-full max-w-[1002px] gap-7 text-center uppercase [text-shadow:0_2px_16px_rgba(0,0,0,0.55)]">

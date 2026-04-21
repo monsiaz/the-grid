@@ -30,6 +30,10 @@
     "contact": {
       "title": "Contact",
       "description": "Neem contact op met The Grid Agency voor talentmanagement, partnerships en commerciële kansen."
+    },
+    "privacy": {
+      "title": "Privacybeleid",
+      "description": "Ontdek hoe The Grid Agency uw persoonlijke informatie verzamelt, gebruikt en beschermt."
     }
   },
   "skip": {
@@ -52,7 +56,6 @@
   },
   "footer": {
     "instagramLabel": "Instagram (opent in nieuw tabblad)",
-    "linkedinLabel": "LinkedIn (opent in nieuw tabblad)",
     "privacyPolicy": "Privacybeleid",
     "copyrightFallback": "(C) 2026 THE GRID AGENCY, ALL RIGHTS RESERVED",
     "newsletter": {
@@ -66,7 +69,18 @@
     "language": {
       "label": "Taal",
       "srOnly": "Selecteer taal"
-    }
+    },
+    "contact": {
+      "label": "Stuur ons een bericht",
+      "firstName": "Voornaam",
+      "email": "E-mail",
+      "message": "Bericht",
+      "send": "Versturen",
+      "sending": "Verzenden…",
+      "success": "Bericht verzonden!",
+      "error": "Er is iets misgegaan."
+    },
+    "linkedinLabel": "LinkedIn (opent in een nieuw tabblad)"
   },
   "home": {
     "explore": "Ontdek",
@@ -117,6 +131,7 @@
     },
     "follow": {
       "getInTouch": "Neem contact op",
+      "getInTouchAria": "Neem per e-mail contact op met Côme Ensemble over het ACCÉLÈRE-programma",
       "heading": "Volg",
       "headingAccent": "ons",
       "instagramCta": "Instagram",
@@ -203,6 +218,7 @@
       "accent": "Nieuws"
     },
     "filters": {
+      "all": "Al het nieuws",
       "sporting": "Sportnieuws",
       "commercial": "Commercieel nieuws"
     },
@@ -231,5 +247,38 @@
       "success": "Dank je wel, je bericht is verzonden.",
       "error": "Kan bericht niet verzenden."
     }
+  },
+  "privacy": {
+    "pageTitle": "Privacybeleid",
+    "metaDescription": "Leer hoe The Grid Agency uw persoonlijke informatie verzamelt, gebruikt en beschermt.",
+    "title": "Ons Privacybeleid",
+    "s1": {
+      "title": "1. Informatie die wij Verzamelen",
+      "p1": "Wanneer u onze website gebruikt of zich abonneert op onze nieuwsbrief, kunnen wij persoonlijke informatie verzamelen, zoals uw naam, e-mailadres en andere informatie die u vrijwillig verstrekt.",
+      "p2": "Wij kunnen informatie verzamelen over uw apparaat, IP-adres, browsertype en browsegedrag op onze website voor analytische doeleinden."
+    },
+    "s2": {
+      "title": "2. Gebruik van Informatie",
+      "p1": "Wij gebruiken de verzamelde informatie om onze diensten te bieden en te verbeteren, uw ervaring te personaliseren, nieuwsbrieven te verzenden en met u te communiceren over updates.",
+      "p2": "Wij zullen uw persoonlijke informatie niet verkopen, verhandelen of verhuren aan derden zonder uw toestemming, behalve zoals vereist door de wet."
+    },
+    "s3": {
+      "title": "3. Links naar Derden",
+      "p1": "Onze website kan links naar websites van derden bevatten. Wij zijn niet verantwoordelijk voor de privacypraktijken of de inhoud van deze externe sites."
+    },
+    "s4": {
+      "title": "4. Gegevensbeveiliging",
+      "p1": "Wij nemen redelijke maatregelen om uw persoonlijke informatie te beschermen tegen ongeautoriseerde toegang, openbaarmaking, wijziging en vernietiging."
+    },
+    "s5": {
+      "title": "5. Uw Keuzes",
+      "p1": "U heeft het recht om toegang te krijgen tot, correctie van of verwijdering van uw persoonlijke informatie. U kunt zich ook afmelden voor het ontvangen van nieuwsbrieven door de afmeldinstructies in elke e-mail te volgen.",
+      "p2": "Als u vragen of zorgen heeft met betrekking tot privacy, neem dan contact met ons op via info@thegrid.agency"
+    },
+    "s6": {
+      "title": "6. Wijzigingen in Dit Privacybeleid",
+      "p1": "Wij behouden ons het recht voor om dit Privacybeleid op elk moment bij te werken of te wijzigen. Wij zullen u op de hoogte stellen van eventuele wijzigingen door het herziene beleid op deze pagina te plaatsen."
+    },
+    "consent": "Door onze website en diensten te gebruiken, stemt u in met de voorwaarden van dit Privacybeleid."
   }
 }

@@ -71,9 +71,6 @@ export default function LocaleSwitcher() {
 
   return (
     <label className="relative inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-secondary/80">
-      <span aria-hidden className="text-[14px] leading-none">
-        {flagEmoji(localeFlags[locale])}
-      </span>
       <span className="sr-only">{t("srOnly")}</span>
       <select
         aria-label={t("srOnly")}

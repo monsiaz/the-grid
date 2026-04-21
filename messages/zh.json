@@ -30,6 +30,10 @@
     "contact": {
       "title": "联系",
       "description": "与 The Grid Agency 联系，获取车手管理、合作伙伴关系及商业机会。"
+    },
+    "privacy": {
+      "title": "隐私政策",
+      "description": "了解The Grid Agency如何收集、使用和保护您的个人信息。"
     }
   },
   "skip": {
@@ -52,7 +56,6 @@
   },
   "footer": {
     "instagramLabel": "Instagram（在新标签页中打开）",
-    "linkedinLabel": "LinkedIn（在新标签页中打开）",
     "privacyPolicy": "隐私政策",
     "copyrightFallback": "（C）2026 THE GRID AGENCY，保留所有权利",
     "newsletter": {
@@ -66,7 +69,18 @@
     "language": {
       "label": "语言",
       "srOnly": "选择语言"
-    }
+    },
+    "contact": {
+      "label": "给我们发送消息",
+      "firstName": "名字",
+      "email": "电子邮件",
+      "message": "消息",
+      "send": "发送",
+      "sending": "发送中…",
+      "success": "消息已发送！",
+      "error": "出现了错误。"
+    },
+    "linkedinLabel": "LinkedIn（在新标签页打开）"
   },
   "home": {
     "explore": "探索",
@@ -117,6 +131,7 @@
     },
     "follow": {
       "getInTouch": "联系我们",
+      "getInTouchAria": "通过邮件联系 Côme Ensemble 了解 ACCÉLÈRE 项目",
       "heading": "关注",
       "headingAccent": "我们",
       "instagramCta": "Instagram",
@@ -203,6 +218,7 @@
       "accent": "新闻"
     },
     "filters": {
+      "all": "全部新闻",
       "sporting": "体育新闻",
       "commercial": "商业新闻"
     },
@@ -231,5 +247,38 @@
       "success": "感谢！你的消息已发送。",
       "error": "无法发送消息。"
     }
+  },
+  "privacy": {
+    "pageTitle": "隐私政策",
+    "metaDescription": "了解The Grid Agency如何收集、使用和保护您的个人信息。",
+    "title": "我们的隐私政策",
+    "s1": {
+      "title": "1. 我们收集的信息",
+      "p1": "当您使用我们的网站或订阅我们的新闻通讯时，我们可能会收集您的个人信息，例如您的姓名、电子邮件地址以及您自愿提供的任何其他信息。",
+      "p2": "我们可能会收集有关您的设备、IP地址、浏览器类型和您在我们网站上的浏览行为的信息，以用于分析目的。"
+    },
+    "s2": {
+      "title": "2. 信息的使用",
+      "p1": "我们使用收集的信息来提供和改善我们的服务，定制您的体验，发送新闻通讯，并与您沟通更新信息。",
+      "p2": "未经您的同意，我们不会将您的个人信息出售、交易或出租给第三方，法律要求的情况除外。"
+    },
+    "s3": {
+      "title": "3. 第三方链接",
+      "p1": "我们的网站可能包含指向第三方网站的链接。我们对这些外部网站的隐私实践或内容不承担责任。"
+    },
+    "s4": {
+      "title": "4. 数据安全",
+      "p1": "我们采取合理措施保护您的个人信息，防止未经授权的访问、披露、修改和销毁。"
+    },
+    "s5": {
+      "title": "5. 您的选择",
+      "p1": "您有权访问、纠正或删除您的个人信息。您还可以通过遵循每封电子邮件中的退订说明选择不接收新闻通讯。",
+      "p2": "如果您有任何与隐私相关的疑虑或问题，请通过info@thegrid.agency与我们联系。"
+    },
+    "s6": {
+      "title": "6. 本隐私政策的变更",
+      "p1": "我们保留随时更新或修改本隐私政策的权利。我们将通过在此页面上发布修订后的政策来通知您任何变更。"
+    },
+    "consent": "通过使用我们的网站和服务，您同意本隐私政策的条款。"
   }
 }

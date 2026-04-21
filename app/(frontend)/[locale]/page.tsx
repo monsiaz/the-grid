@@ -81,13 +81,18 @@ export default async function Home({
       <About
         text={homepage.aboutText}
         buttonLabel={homepage.aboutButtonLabel || undefined}
+        backgroundImage={homepage.aboutBackgroundImage}
       />
       <Experience text={homepage.experienceText} />
-      <Services labels={homepage.serviceLabels?.map((s: { label: string }) => s.label) || []} />
+      <Services
+        labels={homepage.serviceLabels?.map((s: { label: string }) => s.label) || []}
+        backgroundImage={homepage.servicesBackgroundImage}
+      />
       <News items={homepage.homepageNewsItems || []} />
       <Drivers
         heading={homepage.driversHeading || undefined}
         headingAccent={homepage.driversHeadingAccent || undefined}
+        backgroundImage={homepage.driversBackgroundImage}
       />
       <LocaleAlternatesData alternates={alternates} />
       <Footer

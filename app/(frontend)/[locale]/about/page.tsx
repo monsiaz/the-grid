@@ -63,10 +63,11 @@ export default async function AboutPage({
           name: m.name,
           role: m.role,
           image: m.image,
+          bio: (m as { bio?: string | null }).bio ?? null,
           linkedinUrl: (m as { linkedinUrl?: string | null }).linkedinUrl ?? null,
         }))}
       />
-      <AboutAccelereBanner />
+      <AboutAccelereBanner bannerImage={aboutPage.accelereBannerImage} />
       <AboutAccelereFollow
         description={aboutPage.accelereDescription}
         quote={aboutPage.accelereQuote}
@@ -76,6 +77,7 @@ export default async function AboutPage({
         instagramHandle={aboutPage.instagramHandle}
         instagramUrl={aboutPage.instagramUrl}
         instagramImages={aboutPage.instagramImages?.map((i: { image: string }) => i.image) || []}
+        portraitImage={aboutPage.accelerePortraitImage}
       />
       <LocaleAlternatesData alternates={alternates} />
       <Footer

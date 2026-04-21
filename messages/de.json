@@ -30,6 +30,10 @@
     "contact": {
       "title": "Kontakt",
       "description": "Nehmen Sie Kontakt mit The Grid Agency auf — für Fahrer-Management, Partnerschaften und kommerzielle Möglichkeiten."
+    },
+    "privacy": {
+      "title": "Datenschutzrichtlinie",
+      "description": "Erfahren Sie, wie The Grid Agency Ihre persönlichen Daten erfasst, verwendet und schützt."
     }
   },
   "skip": {
@@ -52,7 +56,6 @@
   },
   "footer": {
     "instagramLabel": "Instagram (öffnet in neuem Tab)",
-    "linkedinLabel": "LinkedIn (öffnet in neuem Tab)",
     "privacyPolicy": "Datenschutzerklärung",
     "copyrightFallback": "(C) 2026 THE GRID AGENCY, ALLE RECHTE VORBEHALTEN",
     "newsletter": {
@@ -66,7 +69,18 @@
     "language": {
       "label": "Sprache",
       "srOnly": "Sprache auswählen"
-    }
+    },
+    "contact": {
+      "label": "Senden Sie uns eine Nachricht",
+      "firstName": "Vorname",
+      "email": "E-Mail",
+      "message": "Nachricht",
+      "send": "Senden",
+      "sending": "Sende…",
+      "success": "Nachricht gesendet!",
+      "error": "Etwas ist schiefgelaufen."
+    },
+    "linkedinLabel": "LinkedIn (öffnet sich in einem neuen Tab)"
   },
   "home": {
     "explore": "Entdecken",
@@ -117,6 +131,7 @@
     },
     "follow": {
       "getInTouch": "Kontakt aufnehmen",
+      "getInTouchAria": "Côme Ensemble per E-Mail zum ACCÉLÈRE-Programm kontaktieren",
       "heading": "Folgen",
       "headingAccent": "uns",
       "instagramCta": "Instagram",
@@ -203,6 +218,7 @@
       "accent": "News"
     },
     "filters": {
+      "all": "Alle News",
       "sporting": "Sport-News",
       "commercial": "Commercial News"
     },
@@ -231,5 +247,38 @@
       "success": "Danke, Ihre Nachricht wurde gesendet.",
       "error": "Nachricht konnte nicht gesendet werden."
     }
+  },
+  "privacy": {
+    "pageTitle": "Datenschutzerklärung",
+    "metaDescription": "Erfahren Sie, wie The Grid Agency Ihre persönlichen Informationen sammelt, verwendet und schützt.",
+    "title": "Unsere Datenschutzerklärung",
+    "s1": {
+      "title": "1. Informationen, die wir sammeln",
+      "p1": "Wenn Sie unsere Website nutzen oder sich für unseren Newsletter anmelden, können wir persönliche Informationen wie Ihren Namen, Ihre E-Mail-Adresse und andere Informationen, die Sie freiwillig bereitstellen, sammeln.",
+      "p2": "Wir können Informationen über Ihr Gerät, Ihre IP-Adresse, Ihren Browsertyp und Ihr Surfverhalten auf unserer Website zu Analysezwecken sammeln."
+    },
+    "s2": {
+      "title": "2. Verwendung der Informationen",
+      "p1": "Wir verwenden die gesammelten Informationen, um unsere Dienstleistungen bereitzustellen und zu verbessern, Ihre Erfahrung anzupassen, Newsletter zu versenden und mit Ihnen über Aktualisierungen zu kommunizieren.",
+      "p2": "Wir werden Ihre persönlichen Informationen nicht ohne Ihre Zustimmung an Dritte verkaufen, handeln oder vermieten, es sei denn, dies ist gesetzlich erforderlich."
+    },
+    "s3": {
+      "title": "3. Links zu Drittanbietern",
+      "p1": "Unsere Website kann Links zu Websites von Drittanbietern enthalten. Wir sind nicht verantwortlich für die Datenschutzpraktiken oder den Inhalt dieser externen Seiten."
+    },
+    "s4": {
+      "title": "4. Datensicherheit",
+      "p1": "Wir ergreifen angemessene Maßnahmen, um Ihre persönlichen Informationen vor unbefugtem Zugriff, Offenlegung, Veränderung und Zerstörung zu schützen."
+    },
+    "s5": {
+      "title": "5. Ihre Wahlmöglichkeiten",
+      "p1": "Sie haben das Recht, auf Ihre persönlichen Informationen zuzugreifen, diese zu korrigieren oder zu löschen. Sie können sich auch von der Erhaltung von Newslettern abmelden, indem Sie die Abmeldeanweisungen in jeder E-Mail befolgen.",
+      "p2": "Wenn Sie Bedenken oder Fragen zum Datenschutz haben, kontaktieren Sie uns bitte unter info@thegrid.agency"
+    },
+    "s6": {
+      "title": "6. Änderungen dieser Datenschutzerklärung",
+      "p1": "Wir behalten uns das Recht vor, diese Datenschutzerklärung jederzeit zu aktualisieren oder zu ändern. Wir werden Sie über Änderungen informieren, indem wir die überarbeitete Richtlinie auf dieser Seite veröffentlichen."
+    },
+    "consent": "Durch die Nutzung unserer Website und Dienstleistungen stimmen Sie den Bedingungen dieser Datenschutzerklärung zu."
   }
 }

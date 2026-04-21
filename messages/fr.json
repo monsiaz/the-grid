@@ -30,6 +30,10 @@
     "contact": {
       "title": "Contact",
       "description": "Contactez The Grid Agency pour la gestion des pilotes, les partenariats et les opportunités commerciales."
+    },
+    "privacy": {
+      "title": "Politique de Confidentialité",
+      "description": "Découvrez comment The Grid Agency collecte, utilise et protège vos informations personnelles."
     }
   },
   "skip": {
@@ -52,7 +56,6 @@
   },
   "footer": {
     "instagramLabel": "Instagram (s’ouvre dans un nouvel onglet)",
-    "linkedinLabel": "LinkedIn (s’ouvre dans un nouvel onglet)",
     "privacyPolicy": "Politique de confidentialité",
     "copyrightFallback": "(C) 2026 THE GRID AGENCY, TOUS DROITS RÉSERVÉS",
     "newsletter": {
@@ -66,7 +69,18 @@
     "language": {
       "label": "Langue",
       "srOnly": "Choisir la langue"
-    }
+    },
+    "contact": {
+      "label": "Envoyez-nous un message",
+      "firstName": "Prénom",
+      "email": "E-mail",
+      "message": "Message",
+      "send": "Envoyer",
+      "sending": "Envoi…",
+      "success": "Message envoyé !",
+      "error": "Une erreur est survenue."
+    },
+    "linkedinLabel": "LinkedIn (s'ouvre dans un nouvel onglet)"
   },
   "home": {
     "explore": "Explorer",
@@ -117,6 +131,7 @@
     },
     "follow": {
       "getInTouch": "Entrer en contact",
+      "getInTouchAria": "Contacter Côme Ensemble par email au sujet du programme ACCÉLÈRE",
       "heading": "Suivre",
       "headingAccent": "nos",
       "instagramCta": "Instagram",
@@ -203,6 +218,7 @@
       "accent": "Actualités"
     },
     "filters": {
+      "all": "Toutes les actualités",
       "sporting": "Actualités sportives",
       "commercial": "Actualités commerciales"
     },
@@ -231,5 +247,38 @@
       "success": "Merci, votre message a bien été envoyé.",
       "error": "Impossible d’envoyer le message."
     }
+  },
+  "privacy": {
+    "pageTitle": "Politique de Confidentialité",
+    "metaDescription": "Découvrez comment The Grid Agency collecte, utilise et protège vos informations personnelles.",
+    "title": "Notre Politique de Confidentialité",
+    "s1": {
+      "title": "1. Informations que Nous Collectons",
+      "p1": "Lorsque vous utilisez notre site web ou vous abonnez à notre newsletter, nous pouvons collecter des informations personnelles telles que votre nom, votre adresse e-mail et toute autre information que vous fournissez volontairement.",
+      "p2": "Nous pouvons collecter des informations concernant votre appareil, votre adresse IP, le type de navigateur et votre comportement de navigation sur notre site web à des fins analytiques."
+    },
+    "s2": {
+      "title": "2. Utilisation des Informations",
+      "p1": "Nous utilisons les informations collectées pour fournir et améliorer nos services, personnaliser votre expérience, envoyer des newsletters et communiquer avec vous au sujet des mises à jour.",
+      "p2": "Nous ne vendrons, n'échangerons ni ne louerons vos informations personnelles à des tiers sans votre consentement, sauf si la loi l'exige."
+    },
+    "s3": {
+      "title": "3. Liens vers des Sites Tiers",
+      "p1": "Notre site web peut contenir des liens vers des sites web tiers. Nous ne sommes pas responsables des pratiques de confidentialité ou du contenu de ces sites externes."
+    },
+    "s4": {
+      "title": "4. Sécurité des Données",
+      "p1": "Nous prenons des mesures raisonnables pour protéger vos informations personnelles contre tout accès, divulgation, altération et destruction non autorisés."
+    },
+    "s5": {
+      "title": "5. Vos Choix",
+      "p1": "Vous avez le droit d'accéder, de corriger ou de supprimer vos informations personnelles. Vous pouvez également choisir de ne plus recevoir de newsletters en suivant les instructions de désinscription dans chaque e-mail.",
+      "p2": "Si vous avez des préoccupations ou des questions liées à la confidentialité, veuillez nous contacter à info@thegrid.agency"
+    },
+    "s6": {
+      "title": "6. Modifications de Cette Politique de Confidentialité",
+      "p1": "Nous nous réservons le droit de mettre à jour ou de modifier cette Politique de Confidentialité à tout moment. Nous vous informerons de tout changement en publiant la politique révisée sur cette page."
+    },
+    "consent": "En utilisant notre site web et nos services, vous consentez aux termes de cette Politique de Confidentialité."
   }
 }

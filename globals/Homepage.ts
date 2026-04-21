@@ -36,6 +36,13 @@ export const Homepage: GlobalConfig = {
       defaultValue: "/images/hero.webp",
       description: "Visible plein écran en haut de la home.",
     }),
+    imageField({
+      name: "aboutBackgroundImage",
+      label: "About section background image",
+      required: true,
+      defaultValue: "/images/about.webp",
+      description: "Image plein largeur derrière le pitch « About ».",
+    }),
     {
       name: "aboutText",
       type: "textarea",
@@ -62,6 +69,13 @@ export const Homepage: GlobalConfig = {
       defaultValue:
         "We leverage over [highlight]20 years of experience[/highlight], operating globally [highlight]on and beyond the track[/highlight] - connecting talent, teams, brands and investors [highlight]AT every level[/highlight] of the sport.",
     },
+    imageField({
+      name: "servicesBackgroundImage",
+      label: "Services section background image",
+      required: true,
+      defaultValue: "/images/services.webp",
+      description: "Image plein largeur derrière la liste des services.",
+    }),
     {
       name: "serviceLabels",
       type: "array",
@@ -80,6 +94,13 @@ export const Homepage: GlobalConfig = {
         { label: "Commercial development" },
       ],
     },
+    imageField({
+      name: "driversBackgroundImage",
+      label: "Drivers section background image",
+      required: true,
+      defaultValue: "/images/drivers.webp",
+      description: "Image plein largeur derrière le CTA « For deserving drivers ».",
+    }),
     {
       name: "driversHeading",
       type: "text",

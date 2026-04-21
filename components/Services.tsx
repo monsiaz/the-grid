@@ -1,10 +1,13 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import {
   motion,
+  useScroll,
+  useTransform,
   slideInLeft,
   fadeUp,
   staggerContainer,
@@ -14,25 +17,37 @@ import {
 
 type ServicesProps = {
   labels: string[];
+  backgroundImage?: string | null;
 };
 
-export default function Services({ labels }: ServicesProps) {
+export default function Services({ labels, backgroundImage }: ServicesProps) {
   const t = useTranslations("home.services");
+  const bg = backgroundImage || "/images/services.webp";
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const parallaxY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
+
   return (
     <section
-      className="relative flex min-h-[clamp(480px,70vh,575px)] w-full items-center"
+      ref={sectionRef}
+      className="relative flex min-h-[clamp(480px,70vh,575px)] w-full items-center overflow-hidden"
       id="services"
     >
-      <Image
-        src="/images/services.webp"
-        alt=""
-        fill
-        loading="lazy"
-        sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
-        quality={65}
-        className="absolute inset-0 object-cover"
-        aria-hidden
-      />
+      <motion.div style={{ y: parallaxY }} className="absolute inset-0 scale-[1.16]">
+        <Image
+          src={bg}
+          alt=""
+          fill
+          loading="lazy"
+          sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
+          quality={65}
+          className="object-cover"
+          aria-hidden
+        />
+      </motion.div>
       <div className="absolute inset-0 z-10 bg-[linear-gradient(90deg,rgba(0,0,0,0.9),rgba(0,0,0,0)_75%)]" />
       <div className="relative z-20 mx-auto my-32 flex w-full max-w-[1344px] flex-col items-start gap-14 px-[clamp(20px,4vw,48px)] max-[900px]:my-[88px] max-[900px]:gap-8">
         <motion.div

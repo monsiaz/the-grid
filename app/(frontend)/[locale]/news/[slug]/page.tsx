@@ -75,6 +75,7 @@ export default async function NewsDetailRoute({ params }: NewsDetailRouteProps) 
   const { slug, locale } = await params;
   setRequestLocale(locale);
   const payload = await getPayloadClient();
+  const siteSettings = await payload.findGlobal({ slug: "site-settings", locale });
 
   const result = await payload.find({
     collection: "news",
@@ -116,7 +117,15 @@ export default async function NewsDetailRoute({ params }: NewsDetailRouteProps) 
   return (
     <>
       <LocaleAlternatesData alternates={alternates} />
-      <NewsDetailPage detail={detail} />
+      <NewsDetailPage
+        detail={detail}
+        siteProps={{
+          instagramUrl: siteSettings.instagramUrl,
+          linkedinUrl: siteSettings.linkedinUrl,
+          copyright: siteSettings.footerCopyright,
+          privacyPolicyUrl: siteSettings.privacyPolicyUrl,
+        }}
+      />
     </>
   );
 }

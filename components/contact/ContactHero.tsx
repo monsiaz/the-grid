@@ -14,7 +14,6 @@ type ContactHeroProps = {
     copyright?: string | null;
     instagramUrl?: string | null;
     linkedinUrl?: string | null;
-    email?: string | null;
     privacyPolicyUrl?: string | null;
   };
 };
@@ -46,7 +45,6 @@ export default function ContactHero({
           copyright={footerProps?.copyright || undefined}
           instagramUrl={footerProps?.instagramUrl || undefined}
           linkedinUrl={footerProps?.linkedinUrl || undefined}
-          email={footerProps?.email || undefined}
           privacyPolicyUrl={footerProps?.privacyPolicyUrl || undefined}
         />
       }

@@ -105,12 +105,26 @@ export const AboutPage: GlobalConfig = {
       type: "text",
       defaultValue: "https://www.linkedin.com/in/glegoff/",
     },
+    imageField({
+      name: "accelereBannerImage",
+      label: "ACCÉLÈRE banner background image",
+      required: true,
+      defaultValue: "/assets/v2/about/accelere.webp",
+      description: "Bannière pleine largeur avec le logo ACCÉLÈRE et les F3.",
+    }),
     {
       name: "accelereDescription",
       type: "textarea",
       required: true,
       localized: true,
     },
+    imageField({
+      name: "accelerePortraitImage",
+      label: "ACCÉLÈRE portrait image",
+      required: true,
+      defaultValue: "/assets/v2/about/accelere-portrait.webp",
+      description: "Portrait affiché à gauche de la citation (ex : Pierre Gasly).",
+    }),
     {
       name: "accelereQuote",
       type: "textarea",

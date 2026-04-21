@@ -11,12 +11,20 @@ import DriverDetailCareer from "./DriverDetailCareer";
 import DriverDetailTop from "./DriverDetailTop";
 import { motion, fadeUp, smoothTransition } from "../../motion";
 
+type FooterSiteProps = {
+  instagramUrl?: string;
+  linkedinUrl?: string;
+  copyright?: string;
+  privacyPolicyUrl?: string;
+};
+
 type DriverDetailPageProps = {
   driver: DriverCardData;
   detail: DriverDetailData;
+  siteProps?: FooterSiteProps;
 };
 
-export default function DriverDetailPage({ driver, detail }: DriverDetailPageProps) {
+export default function DriverDetailPage({ driver, detail, siteProps }: DriverDetailPageProps) {
   const t = useTranslations("drivers.detail");
   return (
     <main id="main" className="bg-primary text-secondary w-full ">
@@ -42,7 +50,12 @@ export default function DriverDetailPage({ driver, detail }: DriverDetailPagePro
           <DriverDetailAgency detail={detail} />
         </div>
       </section>
-      <Footer />
+      <Footer
+        instagramUrl={siteProps?.instagramUrl}
+        linkedinUrl={siteProps?.linkedinUrl}
+        copyright={siteProps?.copyright}
+        privacyPolicyUrl={siteProps?.privacyPolicyUrl}
+      />
     </main>
   );
 }

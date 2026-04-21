@@ -14,18 +14,20 @@ import {
 type AboutProps = {
   text: string;
   buttonLabel?: string;
+  backgroundImage?: string | null;
 };
 
-export default function About({ text, buttonLabel }: AboutProps) {
+export default function About({ text, buttonLabel, backgroundImage }: AboutProps) {
   const t = useTranslations("home");
   const label = buttonLabel || t("explore");
+  const bg = backgroundImage || "/images/about.webp";
   return (
     <section
       className="relative flex min-h-[clamp(360px,55vh,413px)] w-full items-center"
       id="about"
     >
       <Image
-        src="/images/about.webp"
+        src={bg}
         alt=""
         fill
         loading="lazy"

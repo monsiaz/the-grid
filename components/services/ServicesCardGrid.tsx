@@ -1,9 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight, RotateCcw } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { ArrowRight } from "lucide-react";
 import {
   motion,
   fadeUp,
@@ -34,85 +32,76 @@ type ServicesCardGridProps = {
 function ServiceIntroCard({ text }: { text: string }) {
   return (
     <motion.article
-      className="border-secondary h-full rounded-[32px] border p-6"
+      className="border-secondary flex h-full min-h-[280px] items-end rounded-[32px] border p-6"
       variants={fadeUp}
       transition={smoothTransition}
-      whileHover={{ y: -6, transition: { duration: 0.3, ease: "easeOut" } }}
     >
-      <p className="m-0 text-sm leading-[1.4] font-light">{text}</p>
+      <p className="m-0 text-sm leading-[1.55] font-light text-secondary/80">{text}</p>
     </motion.article>
   );
 }
 
-function ServiceFlipCard({
+/**
+ * Card without flip:
+ * - Image fills the card (cover, object-top for portraits)
+ * - Title + arrow overlaid at bottom with dark gradient
+ * - On hover, a description panel slides up from the bottom
+ */
+function ServiceCard({
   card,
   imageHeightClassName,
-  bodyPaddingClassName,
 }: {
   card: ServiceCard;
   imageHeightClassName: string;
   bodyPaddingClassName: string;
 }) {
-  const t = useTranslations("services.grid");
-  const [flipped, setFlipped] = useState(false);
-  const hasDescription = Boolean(card.description && card.description.trim());
+  const hasDescription = Boolean(card.description?.trim());
 
   return (
-    <motion.div
-      className="h-full [perspective:1200px]"
+    <motion.article
+      className="group relative overflow-hidden rounded-[32px]"
       variants={fadeUp}
       transition={smoothTransition}
     >
-      <button
-        type="button"
-        onClick={() => setFlipped((v) => !v)}
-        aria-pressed={flipped}
-        aria-label={
-          flipped
-            ? t("hideDetails", { name: card.alt })
-            : t("showDetails", { name: card.alt })
-        }
-        className="group relative block h-full w-full cursor-pointer rounded-[32px] text-left [transform-style:preserve-3d] transition-transform duration-700 ease-[cubic-bezier(0.4,0.2,0.2,1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-4"
-        style={{ transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
-      >
-        <span
-          className="absolute inset-0 border-secondary overflow-hidden rounded-[32px] border bg-primary [backface-visibility:hidden] transition-transform duration-300 group-hover:-translate-y-1.5"
-        >
-          <span className={`relative block w-full overflow-hidden ${imageHeightClassName}`}>
-            <Image
-              src={card.image}
-              alt={card.alt}
-              fill
-              sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, (max-width: 1200px) 33vw, 240px"
-              className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
-            />
-          </span>
-          <span className={`block bg-primary ${bodyPaddingClassName}`}>
-            <span className="flex items-center justify-between gap-4">
-              <span className="m-0 text-base leading-[1.2] font-bold uppercase whitespace-pre-line">{card.title}</span>
-              <span className="text-accent border-accent inline-flex rounded-full border-2 px-3 py-1 text-base leading-[1.2] transition-all duration-300 group-hover:bg-accent group-hover:text-black" aria-hidden>
-                <ArrowRight className="h-4 w-4 shrink-0" />
-              </span>
-            </span>
-          </span>
-        </span>
+      {/* Image */}
+      <div className={`relative w-full ${imageHeightClassName}`}>
+        <Image
+          src={card.image}
+          alt={card.alt}
+          fill
+          sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, (max-width: 1200px) 33vw, 240px"
+          className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.06]"
+        />
 
-        <span
-          className="absolute inset-0 flex flex-col justify-between border-secondary rounded-[32px] border bg-primary p-6 [backface-visibility:hidden] [transform:rotateY(180deg)]"
-        >
-          <span className="flex items-start justify-between gap-3">
-            <span className="m-0 text-base leading-[1.2] font-bold uppercase whitespace-pre-line text-accent">{card.title}</span>
-            <span className="text-accent border-accent inline-flex rounded-full border-2 px-2 py-2 text-base leading-[1.2]" aria-hidden>
-              <RotateCcw className="h-4 w-4 shrink-0" />
+        {/* Permanent dark gradient at bottom */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+
+        {/* Title + arrow — always visible at bottom */}
+        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5 transition-all duration-400 ease-out group-hover:opacity-0">
+          <span className="text-sm leading-[1.2] font-bold uppercase tracking-[0.06em] text-white whitespace-pre-line">
+            {card.title}
+          </span>
+          <span
+            className="text-accent border-accent inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-black/30 transition-all duration-300 group-hover:bg-accent group-hover:text-black"
+            aria-hidden
+          >
+            <ArrowRight className="h-4 w-4" />
+          </span>
+        </div>
+
+        {/* Hover overlay with description */}
+        {hasDescription && (
+          <div className="absolute inset-0 flex flex-col justify-end gap-3 bg-black/80 p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <span className="text-sm leading-[1.2] font-bold uppercase tracking-[0.06em] text-accent whitespace-pre-line">
+              {card.title}
             </span>
-          </span>
-          <span className="m-0 block text-[14px] leading-[1.5] font-light text-secondary/90">
-            {hasDescription ? card.description : t("descriptionFallback")}
-          </span>
-          <span className="mt-4 block text-[11px] uppercase tracking-[0.12em] text-muted">{t("flipBack")}</span>
-        </span>
-      </button>
-    </motion.div>
+            <p className="m-0 text-[13px] leading-[1.55] text-white/90 font-light line-clamp-[8]">
+              {card.description}
+            </p>
+          </div>
+        )}
+      </div>
+    </motion.article>
   );
 }
 
@@ -128,8 +117,8 @@ export default function ServicesCardGrid({
 }: ServicesCardGridProps) {
   return (
     <section className="bg-primary py-20" id={id}>
-      <div className="mx-auto grid w-full max-w-[1344px] gap-20 px-[clamp(20px,4vw,48px)]">
-        <div className="mx-auto grid w-full max-w-[1344px] gap-8 text-center uppercase">
+      <div className="mx-auto grid w-full max-w-[1344px] gap-16 px-[clamp(20px,4vw,48px)]">
+        <div className="mx-auto grid w-full max-w-[888px] gap-6 text-center uppercase">
           <motion.h2
             className="m-0 font-[var(--font-league-spartan)] text-[64px] leading-none font-bold max-[1200px]:text-[clamp(44px,6vw,64px)]"
             variants={scaleIn}
@@ -141,7 +130,7 @@ export default function ServicesCardGrid({
             {heading}
           </motion.h2>
           <motion.p
-            className="m-0 mx-auto max-w-[888px] text-[clamp(16px,1.8vw,20px)] leading-[1.4] font-light"
+            className="m-0 mx-auto max-w-[888px] text-[clamp(15px,1.5vw,18px)] leading-[1.5] font-light normal-case text-secondary/80"
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
@@ -153,7 +142,7 @@ export default function ServicesCardGrid({
         </div>
 
         <motion.div
-          className={`grid items-stretch gap-7 ${gridClassName}`}
+          className={`grid items-stretch gap-5 ${gridClassName}`}
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
@@ -161,7 +150,7 @@ export default function ServicesCardGrid({
         >
           <ServiceIntroCard text={introText} />
           {cards.map((card) => (
-            <ServiceFlipCard
+            <ServiceCard
               key={card.title}
               card={card}
               imageHeightClassName={imageHeightClassName}

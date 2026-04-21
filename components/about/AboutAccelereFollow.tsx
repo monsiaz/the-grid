@@ -13,6 +13,8 @@ import {
   viewport,
 } from "../motion";
 
+const COME_MAILTO = "mailto:come.ensemble@comemaisonfinanciere.com";
+
 type AboutAccelereFollowProps = {
   description?: string | null;
   quote?: string | null;
@@ -22,6 +24,7 @@ type AboutAccelereFollowProps = {
   instagramHandle?: string | null;
   instagramUrl?: string | null;
   instagramImages: string[];
+  portraitImage?: string | null;
 };
 
 export default function AboutAccelereFollow({
@@ -33,6 +36,7 @@ export default function AboutAccelereFollow({
   instagramHandle,
   instagramUrl,
   instagramImages,
+  portraitImage,
 }: AboutAccelereFollowProps) {
   const t = useTranslations("about.follow");
   const gridOrder = [
@@ -54,11 +58,12 @@ export default function AboutAccelereFollow({
             viewport={viewport}
             transition={smoothTransition}
           >
-            <p className="m-0 text-[clamp(16px,1.8vw,20px)] leading-[1.55] font-light whitespace-pre-line">
+            <p className="m-0 text-[clamp(16px,1.8vw,20px)] leading-[1.55] font-light uppercase whitespace-pre-line">
               {description}
             </p>
             <Link
-              href="#contact"
+              href={COME_MAILTO}
+              aria-label={t("getInTouchAria")}
               className="text-accent border-accent mx-auto inline-flex w-fit items-center justify-center rounded-full border-2 bg-black/20 px-9 py-4 text-base leading-[1.2] no-underline uppercase transition-all duration-300 hover:bg-accent hover:text-black hover:scale-105"
             >
               {t("getInTouch")}
@@ -75,7 +80,7 @@ export default function AboutAccelereFollow({
               className="overflow-hidden"
             >
               <Image
-                src="/images/about/accelere-portrait.webp"
+                src={portraitImage || "/assets/v2/about/accelere-portrait.webp"}
                 alt={quoteAuthor || t("portraitFallback")}
                 width={432}
                 height={500}

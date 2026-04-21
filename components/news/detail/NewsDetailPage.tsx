@@ -1,5 +1,13 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+
+type FooterSiteProps = {
+  instagramUrl?: string;
+  linkedinUrl?: string;
+  copyright?: string;
+  privacyPolicyUrl?: string;
+};
+
 type NewsDetailData = {
   slug: string;
   title: string;
@@ -15,9 +23,10 @@ import NewsDetailTop from "./NewsDetailTop";
 
 type NewsDetailPageProps = {
   detail: NewsDetailData;
+  siteProps?: FooterSiteProps;
 };
 
-export default function NewsDetailPage({ detail }: NewsDetailPageProps) {
+export default function NewsDetailPage({ detail, siteProps }: NewsDetailPageProps) {
   return (
     <main id="main" className="bg-primary text-secondary w-full ">
       <Header activeItem="news" />
@@ -28,7 +37,12 @@ export default function NewsDetailPage({ detail }: NewsDetailPageProps) {
           <NewsDetailGallery images={detail.galleryImages} title={detail.title} />
         </div>
       </section>
-      <Footer />
+      <Footer
+        instagramUrl={siteProps?.instagramUrl}
+        linkedinUrl={siteProps?.linkedinUrl}
+        copyright={siteProps?.copyright}
+        privacyPolicyUrl={siteProps?.privacyPolicyUrl}
+      />
     </main>
   );
 }

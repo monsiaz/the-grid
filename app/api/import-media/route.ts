@@ -14,7 +14,74 @@ type Source = {
   driverSlug?: string;
   tags: string[];
   alt: string;
+  description?: string;
+  subject?: string;
 };
+
+type ManifestEntry = {
+  description?: string;
+  subject?: string | null;
+  tags?: string[];
+  path?: string;
+};
+
+async function loadManifest(): Promise<Record<string, ManifestEntry>> {
+  try {
+    const p = path.join(process.cwd(), "public", "_manifest", "image-descriptions.json");
+    const raw = await fs.readFile(p, "utf8");
+    return JSON.parse(raw);
+  } catch {
+    return {};
+  }
+}
+
+async function describeWithVision(buf: Buffer, filename: string): Promise<{
+  description: string;
+  subject: string;
+  tags: string[];
+} | null> {
+  const key = process.env.OPENAI_API_KEY;
+  if (!key) return null;
+  try {
+    const b64 = buf.toString("base64");
+    const r = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        temperature: 0,
+        max_tokens: 200,
+        response_format: { type: "json_object" },
+        messages: [
+          {
+            role: "system",
+            content:
+              "Describe this motorsport photo factually in <=30 English words. Return strict JSON: { description, subject, tags: string[] }. Include named drivers (Pierre Gasly, Isack Hadjar, Enzo Deligny, Fred Makowiecki, Kush Maini, Alessandro Giusti, Nathan Tye, Stan Ratajski, Andrea Dupe, Jack Iliffe, Louis Cochet, Luka Scelles, Vivek Kanthan, Alex Truchot, Fabio Quartararo, Nyck de Vries, Guillaume Le Goff, Jérémy Satis, Laura Fredel) when identifiable, plus action/setting/brand.",
+          },
+          {
+            role: "user",
+            content: [
+              { type: "text", text: `File: ${filename}` },
+              { type: "image_url", image_url: { url: `data:image/jpeg;base64,${b64}`, detail: "low" } },
+            ],
+          },
+        ],
+      }),
+    });
+    if (!r.ok) return null;
+    const j: unknown = await r.json();
+    const content = (j as { choices?: Array<{ message?: { content?: string } }> }).choices?.[0]?.message?.content;
+    if (!content) return null;
+    const parsed = JSON.parse(content) as { description?: string; subject?: string; tags?: string[] };
+    return {
+      description: parsed.description || "",
+      subject: parsed.subject || "",
+      tags: Array.isArray(parsed.tags) ? parsed.tags : [],
+    };
+  } catch {
+    return null;
+  }
+}
 
 const CATEGORY_BY_FOLDER: Record<string, string> = {
   HOMEPAGE: "homepage",
@@ -153,29 +220,53 @@ function classifyFromPublic(absPath: string, publicRoot: string): Source | null 
 }
 
 export async function POST(request: Request) {
-  if (process.env.NODE_ENV === "production") {
-    return NextResponse.json({ error: "disabled in production" }, { status: 403 });
-  }
   const { searchParams } = new URL(request.url);
+  const expectedSecret = process.env.TRANSLATE_SECRET || process.env.PAYLOAD_SECRET;
+  const provided =
+    request.headers.get("x-translate-secret") || searchParams.get("secret") || "";
+  if (process.env.NODE_ENV === "production" && (!expectedSecret || provided !== expectedSecret)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   const force = searchParams.get("force") === "1";
   const limit = parseInt(searchParams.get("limit") || "0", 10) || 0;
+  const describeMissing = searchParams.get("describeMissing") === "1";
+  const describeAll = searchParams.get("describeAll") === "1";
 
   const body = await request.json().catch(() => ({}));
   const collecteRoot: string = body.collecteRoot || "/Users/simonazoulay/Downloads/COLLECTE IMAGES";
   const publicRoot: string = path.join(process.cwd(), "public");
 
   const payload = await getPayloadClient();
+  const manifest = await loadManifest();
 
   const sources: Source[] = [];
   const collecteFiles = await walk(collecteRoot);
   for (const f of collecteFiles) {
     const src = classifyFromCollecte(f, collecteRoot);
-    if (src) sources.push(src);
+    if (src) {
+      const manifestKey = `Downloads/COLLECTE IMAGES/${src.relPath}`;
+      const entry = manifest[manifestKey];
+      if (entry) {
+        src.description = entry.description;
+        src.subject = entry.subject || undefined;
+        if (Array.isArray(entry.tags)) src.tags = [...src.tags, ...entry.tags];
+      }
+      sources.push(src);
+    }
   }
   const publicFiles = await walk(publicRoot);
   for (const f of publicFiles) {
     const src = classifyFromPublic(f, publicRoot);
-    if (src) sources.push(src);
+    if (src) {
+      const manifestKey = `the-grid/public/${src.relPath}`;
+      const entry = manifest[manifestKey];
+      if (entry) {
+        src.description = entry.description;
+        src.subject = entry.subject || undefined;
+        if (Array.isArray(entry.tags)) src.tags = [...src.tags, ...entry.tags];
+      }
+      sources.push(src);
+    }
   }
 
   const slice = limit > 0 ? sources.slice(0, limit) : sources;
@@ -195,6 +286,37 @@ export async function POST(request: Request) {
           depth: 0,
         });
         if (existing.totalDocs > 0) {
+          if (describeAll || (describeMissing && !existing.docs[0]?.description)) {
+            const buffer = await fs.readFile(src.absPath);
+            let description = src.description;
+            let subject = src.subject;
+            let extraTags: string[] = [];
+            if (!description) {
+              const vision = await describeWithVision(buffer, path.basename(src.absPath));
+              if (vision) {
+                description = vision.description;
+                subject = vision.subject || subject;
+                extraTags = vision.tags;
+              }
+            }
+            if (description) {
+              await payload.update({
+                collection: "media",
+                id: existing.docs[0].id,
+                data: {
+                  description,
+                  subject: subject || existing.docs[0].subject,
+                  tags: [
+                    ...(existing.docs[0].tags || []),
+                    ...extraTags.map((t) => ({ tag: t })),
+                  ],
+                },
+                overrideAccess: true,
+              });
+              imported += 1;
+              continue;
+            }
+          }
           skipped += 1;
           continue;
         }
@@ -212,13 +334,28 @@ export async function POST(request: Request) {
               : ext === ".gif"
                 ? "image/gif"
                 : "image/jpeg";
+
+      let description = src.description;
+      let subject = src.subject;
+      let visionTags: string[] = [];
+      if (!description) {
+        const vision = await describeWithVision(buffer, originalName);
+        if (vision) {
+          description = vision.description;
+          subject = vision.subject || subject;
+          visionTags = vision.tags;
+        }
+      }
+
       await payload.create({
         collection: "media",
         data: {
           alt: src.alt,
+          description: description || undefined,
+          subject: subject || undefined,
           category: src.category,
           driverSlug: src.driverSlug,
-          tags: src.tags.map((t) => ({ tag: t })),
+          tags: [...src.tags, ...visionTags].map((t) => ({ tag: t })),
           source: src.relPath,
         },
         file: {
@@ -243,6 +380,6 @@ export async function POST(request: Request) {
     imported,
     skipped,
     errors,
-    log,
+    log: log.slice(-50),
   });
 }

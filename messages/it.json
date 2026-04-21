@@ -30,6 +30,10 @@
     "contact": {
       "title": "Contatti",
       "description": "Contatta The Grid Agency per la gestione piloti, le partnership e le opportunità commerciali."
+    },
+    "privacy": {
+      "title": "Informativa sulla Privacy",
+      "description": "Scoprite come The Grid Agency raccoglie, utilizza e protegge le vostre informazioni personali."
     }
   },
   "skip": {
@@ -52,7 +56,6 @@
   },
   "footer": {
     "instagramLabel": "Instagram (si apre in una nuova scheda)",
-    "linkedinLabel": "LinkedIn (si apre in una nuova scheda)",
     "privacyPolicy": "Informativa sulla privacy",
     "copyrightFallback": "(C) 2026 THE GRID AGENCY, TUTTI I DIRITTI RISERVATI",
     "newsletter": {
@@ -66,7 +69,18 @@
     "language": {
       "label": "Lingua",
       "srOnly": "Seleziona lingua"
-    }
+    },
+    "contact": {
+      "label": "Inviaci un messaggio",
+      "firstName": "Nome",
+      "email": "Email",
+      "message": "Messaggio",
+      "send": "Invia",
+      "sending": "Invio…",
+      "success": "Messaggio inviato!",
+      "error": "Qualcosa è andato storto."
+    },
+    "linkedinLabel": "LinkedIn (si apre in una nuova scheda)"
   },
   "home": {
     "explore": "Esplora",
@@ -117,6 +131,7 @@
     },
     "follow": {
       "getInTouch": "Contattaci",
+      "getInTouchAria": "Contattare Côme Ensemble via email a proposito del programma ACCÉLÈRE",
       "heading": "Seguici",
       "headingAccent": "noi",
       "instagramCta": "Instagram",
@@ -203,6 +218,7 @@
       "accent": "News"
     },
     "filters": {
+      "all": "Tutte le news",
       "sporting": "News sportive",
       "commercial": "News commerciali"
     },
@@ -231,5 +247,38 @@
       "success": "Grazie, il tuo messaggio è stato inviato.",
       "error": "Impossibile inviare il messaggio."
     }
+  },
+  "privacy": {
+    "pageTitle": "Informativa sulla Privacy",
+    "metaDescription": "Scopri come The Grid Agency raccoglie, utilizza e protegge le tue informazioni personali.",
+    "title": "La Nostra Informativa sulla Privacy",
+    "s1": {
+      "title": "1. Informazioni che Raccogliamo",
+      "p1": "Quando utilizzi il nostro sito web o ti iscrivi alla nostra newsletter, potremmo raccogliere informazioni personali come il tuo nome, indirizzo email e qualsiasi altra informazione che fornisci volontariamente.",
+      "p2": "Potremmo raccogliere informazioni sul tuo dispositivo, indirizzo IP, tipo di browser e comportamento di navigazione sul nostro sito web per scopi analitici."
+    },
+    "s2": {
+      "title": "2. Utilizzo delle Informazioni",
+      "p1": "Utilizziamo le informazioni raccolte per fornire e migliorare i nostri servizi, personalizzare la tua esperienza, inviare newsletter e comunicare con te riguardo agli aggiornamenti.",
+      "p2": "Non venderemo, scambieremo o affitteremo le tue informazioni personali a terzi senza il tuo consenso, salvo quanto richiesto dalla legge."
+    },
+    "s3": {
+      "title": "3. Link a Siti di Terzi",
+      "p1": "Il nostro sito web potrebbe contenere link a siti web di terzi. Non siamo responsabili per le pratiche sulla privacy o il contenuto di questi siti esterni."
+    },
+    "s4": {
+      "title": "4. Sicurezza dei Dati",
+      "p1": "Adottiamo misure ragionevoli per proteggere le tue informazioni personali da accessi non autorizzati, divulgazione, alterazione e distruzione."
+    },
+    "s5": {
+      "title": "5. Le Tue Scelte",
+      "p1": "Hai il diritto di accedere, correggere o eliminare le tue informazioni personali. Puoi anche disiscriverti dalla ricezione delle newsletter seguendo le istruzioni di disiscrizione in ogni email.",
+      "p2": "Se hai domande o preoccupazioni relative alla privacy, ti preghiamo di contattarci all'indirizzo info@thegrid.agency"
+    },
+    "s6": {
+      "title": "6. Modifiche a Questa Informativa sulla Privacy",
+      "p1": "Ci riserviamo il diritto di aggiornare o modificare questa Informativa sulla Privacy in qualsiasi momento. Ti informeremo di eventuali modifiche pubblicando la politica rivista su questa pagina."
+    },
+    "consent": "Utilizzando il nostro sito web e i nostri servizi, acconsenti ai termini di questa Informativa sulla Privacy."
   }
 }

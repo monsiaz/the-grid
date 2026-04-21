@@ -29,7 +29,7 @@ export default function AboutHero({ description, backgroundImage }: AboutHeroPro
         </>
       }
       description={description || undefined}
-      descriptionClassName="m-0 text-center text-base leading-[1.55] font-light [text-shadow:0_2px_12px_rgba(0,0,0,0.55)]"
+      descriptionClassName="m-0 text-center text-base leading-[1.55] font-light uppercase [text-shadow:0_2px_12px_rgba(0,0,0,0.55)]"
       cta={{
         href: "#about-core",
         ariaLabel: t("cta"),

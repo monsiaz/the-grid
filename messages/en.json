@@ -30,6 +30,10 @@
     "contact": {
       "title": "Contact",
       "description": "Get in touch with The Grid Agency for driver management, partnerships and commercial opportunities."
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "description": "Learn how The Grid Agency collects, uses, and protects your personal information in compliance with data privacy regulations."
     }
   },
   "skip": {
@@ -52,7 +56,6 @@
   },
   "footer": {
     "instagramLabel": "Instagram (opens in new tab)",
-    "linkedinLabel": "LinkedIn (opens in new tab)",
     "privacyPolicy": "Privacy policy",
     "copyrightFallback": "(C) 2026 THE GRID AGENCY, ALL RIGHTS RESERVED",
     "newsletter": {
@@ -63,10 +66,21 @@
       "success": "Access request received",
       "error": "Something went wrong."
     },
+    "contact": {
+      "label": "Send us a message",
+      "firstName": "First name",
+      "email": "Email",
+      "message": "Message",
+      "send": "Send",
+      "sending": "Sending...",
+      "success": "Message sent!",
+      "error": "Something went wrong."
+    },
     "language": {
       "label": "Language",
       "srOnly": "Select language"
-    }
+    },
+    "linkedinLabel": "LinkedIn (opens in new tab)"
   },
   "home": {
     "explore": "Explore",
@@ -117,6 +131,7 @@
     },
     "follow": {
       "getInTouch": "Get in touch",
+      "getInTouchAria": "Contact Côme Ensemble by email about the ACCÉLÈRE program",
       "heading": "Follow",
       "headingAccent": "us",
       "instagramCta": "Instagram",
@@ -197,6 +212,7 @@
       "accent": "News"
     },
     "filters": {
+      "all": "All News",
       "sporting": "Sporting News",
       "commercial": "Commercial News"
     },
@@ -225,5 +241,38 @@
       "success": "Thanks, your message has been sent.",
       "error": "Unable to send message."
     }
+  },
+  "privacy": {
+    "pageTitle": "Privacy Policy",
+    "metaDescription": "Learn how The Grid Agency collects, uses, and protects your personal information.",
+    "title": "Our Privacy Policy",
+    "s1": {
+      "title": "1. Information We Collect",
+      "p1": "When you use our website or subscribe to our newsletter, we may collect personal information such as your name, email address, and any other information you voluntarily provide.",
+      "p2": "We may collect information about your device, IP address, browser type, and browsing behaviour on our website for analytical purposes."
+    },
+    "s2": {
+      "title": "2. Use of Information",
+      "p1": "We use the information collected to provide and improve our services, customise your experience, send newsletters, and communicate with you about updates.",
+      "p2": "We will not sell, trade, or rent your personal information to third parties without your consent, except as required by law."
+    },
+    "s3": {
+      "title": "3. Third-Party Links",
+      "p1": "Our website may contain links to third-party websites. We are not responsible for the privacy practices or content of these external sites."
+    },
+    "s4": {
+      "title": "4. Data Security",
+      "p1": "We take reasonable measures to protect your personal information from unauthorised access, disclosure, alteration, and destruction."
+    },
+    "s5": {
+      "title": "5. Your Choices",
+      "p1": "You have the right to access, correct, or delete your personal information. You may also opt-out of receiving newsletters by following the unsubscribe instructions in each email.",
+      "p2": "If you have any privacy-related concerns or questions, please contact us at info@thegrid.agency"
+    },
+    "s6": {
+      "title": "6. Changes to This Privacy Policy",
+      "p1": "We reserve the right to update or modify this Privacy Policy at any time. We will notify you of any changes by posting the revised policy on this page."
+    },
+    "consent": "By using our website and services, you consent to the terms of this Privacy Policy."
   }
 }
