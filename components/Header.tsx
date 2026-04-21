@@ -82,7 +82,7 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
         </button>
       </div>
       <nav
-        className="flex items-center gap-7 text-base leading-[1.2] uppercase max-[900px]:hidden"
+        className="flex items-center gap-[clamp(16px,2.5vw,28px)] text-[clamp(11px,1vw,14px)] leading-[1.2] uppercase max-[900px]:hidden"
         aria-label={t("primary")}
       >
         {headerItems.map((item, idx) => (
@@ -97,7 +97,7 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
               href={item.href.startsWith("#") ? `${anchorPrefix}${item.href}` : item.href}
               aria-current={activeItem === item.id ? "page" : undefined}
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`${activeItem === item.id ? "text-accent" : "text-secondary"} no-underline uppercase transition-colors duration-300 hover:text-accent`}
+              className={`${activeItem === item.id ? "text-accent" : "text-secondary"} whitespace-nowrap no-underline uppercase tracking-[0.04em] transition-colors duration-300 hover:text-accent`}
             >
               {t(`nav.${item.id}`)}
             </Link>
