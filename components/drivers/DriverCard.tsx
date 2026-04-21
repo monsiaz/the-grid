@@ -1,42 +1,30 @@
-"use client";
-
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import DriverFlags from "./DriverFlags";
 import type { DriverCardData } from "./driversData";
-import { motion, fadeUp, smoothTransition } from "../motion";
 
 type DriverCardProps = {
   driver: DriverCardData;
   compact?: boolean;
 };
 
-export default function DriverCard({ driver, compact = false }: DriverCardProps) {
-  const t = useTranslations("drivers.card");
+export default async function DriverCard({ driver, compact = false }: DriverCardProps) {
+  const t = await getTranslations("drivers.card");
   return (
-    <motion.article
-      className={`bg-primary border-secondary flex flex-col overflow-hidden rounded-[32px] border ${
+    <article
+      className={`bg-primary border-secondary group flex flex-col overflow-hidden rounded-[32px] border transition-transform duration-300 ease-out hover:-translate-y-2 ${
         compact ? "min-h-[460px]" : "min-h-[488px]"
       } max-[900px]:min-h-0`}
-      variants={fadeUp}
-      transition={smoothTransition}
-      whileHover={{ y: -8, transition: { duration: 0.3, ease: "easeOut" } }}
     >
       <div className="relative aspect-square w-full overflow-hidden">
-        <motion.div
-          className="relative h-full w-full"
-          whileHover={{ scale: 1.06 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-        >
-          <Image
-            src={driver.image}
-            alt={driver.name}
-            fill
-            className="object-cover"
-            sizes="(max-width: 700px) 100vw, (max-width: 1200px) 50vw, (max-width: 1440px) 33vw, 336px"
-          />
-        </motion.div>
+        <Image
+          src={driver.image}
+          alt={driver.name}
+          fill
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
+          sizes="(max-width: 700px) 100vw, (max-width: 1200px) 50vw, (max-width: 1440px) 33vw, 336px"
+        />
       </div>
       <div className="flex flex-1 flex-col justify-between p-6">
         <div className="flex items-start justify-between gap-4">
@@ -71,6 +59,6 @@ export default function DriverCard({ driver, compact = false }: DriverCardProps)
           </Link>
         </div>
       </div>
-    </motion.article>
+    </article>
   );
 }
