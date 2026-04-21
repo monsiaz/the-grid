@@ -178,18 +178,26 @@ export async function POST(request: Request) {
   };
   const TEAM_DEFAULTS = [
     {
+      name: "Guillaume Le Goff",
+      role: "Founder & Partner",
+      image: "/assets/v2/about/guillaume-le-goff.webp",
+      linkedinUrl: "https://www.linkedin.com/in/glegoff/",
+      bio: "With 20 years of experience in motorsport, Guillaume has worked across multiple roles in the paddock. He served as a simulation & race engineer for ART Grand Prix for six years before co-founding AOTech — a company specialising in simulators, aerodynamics, and composite parts manufacturing — in 2010. After a two-year stint at McLaren in a business development position, Guillaume went on to found Soter Analytics, a tech start-up, and The Grid Agency simultaneously in 2018. Both businesses thrived, and Guillaume chose to focus exclusively on The Grid in 2021.",
+      order: 1,
+    },
+    {
       name: "Jérémy Satis",
       role: "Driver Agent",
       image: "/assets/v2/about/team-jeremy.webp",
       linkedinUrl: TEAM_LINKEDIN["Jérémy Satis"],
-      order: 1,
+      order: 2,
     },
     {
       name: "Laura Fredel",
       role: "Marketing Associate",
       image: "/assets/v2/about/team-laura.webp",
       linkedinUrl: TEAM_LINKEDIN["Laura Fredel"],
-      order: 2,
+      order: 3,
     },
   ];
   for (const member of TEAM_DEFAULTS) {
