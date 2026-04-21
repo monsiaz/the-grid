@@ -81,6 +81,39 @@ video {
   animation: contactFadeUp 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* -------------------------------------------------------------------------
+ * Discrete scrollbar used on dark surfaces (flip-card backs, overflow panels).
+ * Same monochrome palette as the rest of the site — no new color token.
+ * Firefox uses `scrollbar-width` / `scrollbar-color`, WebKit uses the
+ * pseudo-element selectors below. Track stays fully transparent so the
+ * only visible hint is a very thin, translucent thumb that brightens
+ * slightly on hover. Does not appear when content fits (native behaviour).
+ * ------------------------------------------------------------------------- */
+.scroll-soft {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.14) transparent;
+  scrollbar-gutter: stable;
+}
+
+.scroll-soft::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.scroll-soft::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-soft::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  transition: background-color 160ms ease;
+}
+
+.scroll-soft::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.28);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

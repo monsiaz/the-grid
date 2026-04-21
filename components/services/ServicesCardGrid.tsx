@@ -116,7 +116,7 @@ function ServiceCard({
 
         {/* ── BACK ── */}
         <div className="absolute inset-0 flex flex-col justify-between overflow-hidden rounded-[32px] border border-accent/20 bg-[#0e0e0e] p-5 [backface-visibility:hidden] [transform:rotateY(180deg)]">
-          <div className="flex flex-col gap-3 overflow-y-auto">
+          <div className="scroll-soft flex flex-col gap-3 overflow-y-auto pr-2">
             <p className="m-0 text-sm font-bold uppercase tracking-[0.08em] text-accent whitespace-pre-line leading-[1.2]">
               {card.title}
             </p>

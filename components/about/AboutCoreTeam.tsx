@@ -165,7 +165,7 @@ function CardBack({
 
       {/* bio */}
       {bio ? (
-        <p className="mt-5 flex-1 overflow-auto text-[13px] leading-[1.6] font-light text-secondary/80">
+        <p className="scroll-soft mt-5 flex-1 overflow-auto pr-2 text-[13px] leading-[1.6] font-light text-secondary/80">
           {bio}
         </p>
       ) : (
