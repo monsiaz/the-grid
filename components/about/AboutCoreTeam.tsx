@@ -378,7 +378,7 @@ export default function AboutCoreTeam({
             <FounderCard
               name={founderName}
               role={founderRole}
-              image={founderImage || "/assets/v2/about/guillaume-le-goff.webp"}
+              image={founderImage || "https://sgq4ppufmm4e3svk.public.blob.vercel-storage.com/assets/v2/about/guillaume-le-goff.webp"}
               bio={_founderBio}
               linkedinUrl={founderLinkedinUrl}
               t={t}
