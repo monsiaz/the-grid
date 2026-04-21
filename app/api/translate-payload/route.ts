@@ -5,7 +5,7 @@ import config from "@/payload.config";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-export const maxDuration = 800;
+export const maxDuration = 300;
 
 const TARGET_LOCALES: Record<string, string> = {
   fr: "French (France)",
@@ -205,8 +205,13 @@ async function translateDoc(
 }
 
 export async function POST(request: Request) {
-  if (process.env.NODE_ENV === "production") {
-    return NextResponse.json({ error: "Not allowed in production" }, { status: 403 });
+  const expectedSecret = process.env.TRANSLATE_SECRET || process.env.PAYLOAD_SECRET;
+  const provided =
+    request.headers.get("x-translate-secret") ||
+    new URL(request.url).searchParams.get("secret") ||
+    "";
+  if (process.env.NODE_ENV === "production" && (!expectedSecret || provided !== expectedSecret)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
@@ -214,6 +219,8 @@ export async function POST(request: Request) {
   }
   const { searchParams } = new URL(request.url);
   const force = searchParams.get("force") === "1" || searchParams.get("force") === "true";
+  const onlyLocale = searchParams.get("locale") || "";
+  const scope = searchParams.get("scope") || "all";
 
   const openai = new OpenAI({ apiKey });
   const payload = await getPayloadClient();
@@ -224,8 +231,13 @@ export async function POST(request: Request) {
   const globals = (resolved.globals || []) as { slug: string; fields: FieldDef[] }[];
   const collections = (resolved.collections || []) as { slug: string; fields: FieldDef[] }[];
 
+  const locales = Object.entries(TARGET_LOCALES).filter(
+    ([code]) => !onlyLocale || code === onlyLocale,
+  );
+
   const log: string[] = [];
 
+  if (scope === "all" || scope === "globals") {
   for (const g of globals) {
     const paths = collectLocalizedPaths(g.fields);
     if (paths.length === 0) continue;
@@ -236,7 +248,7 @@ export async function POST(request: Request) {
       fallbackLocale: false,
       depth: 0,
     });
-    for (const [locale, label] of Object.entries(TARGET_LOCALES)) {
+    for (const [locale, label] of locales) {
       const existing = await payload
         .findGlobal({
           slug: g.slug as never,
@@ -258,7 +270,9 @@ export async function POST(request: Request) {
       }
     }
   }
+  }
 
+  if (scope === "all" || scope === "collections") {
   for (const c of collections) {
     if (["users", "media"].includes(c.slug)) continue;
     const paths = collectLocalizedPaths(c.fields);
@@ -272,7 +286,7 @@ export async function POST(request: Request) {
       depth: 0,
     });
     for (const sourceDoc of all.docs as AnyRecord[]) {
-      for (const [locale, label] of Object.entries(TARGET_LOCALES)) {
+      for (const [locale, label] of locales) {
         const existing = await payload
           .findByID({
             collection: c.slug as never,
@@ -296,6 +310,7 @@ export async function POST(request: Request) {
         }
       }
     }
+  }
   }
 
   return NextResponse.json({ success: true, log });
