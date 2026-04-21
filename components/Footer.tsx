@@ -51,13 +51,13 @@ export default function Footer({
               target="_blank"
               rel="noreferrer"
               aria-label={t("instagramLabel")}
-              className="pill-button pill-button-outline h-11 min-h-11 w-11 px-0 text-secondary"
+              className="pill-button pill-button-outline h-11 min-h-11 w-11 px-0"
             >
               {/* Instagram icon */}
-              <svg aria-hidden viewBox="0 0 24 24" width={20} height={20} fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+              <svg aria-hidden viewBox="0 0 24 24" width={20} height={20} fill="none" stroke="white" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
                 <circle cx="12" cy="12" r="4"/>
-                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+                <circle cx="17.5" cy="6.5" r="0.5" fill="white" stroke="none"/>
               </svg>
             </Link>
             <Link
@@ -65,10 +65,10 @@ export default function Footer({
               target="_blank"
               rel="noreferrer"
               aria-label={t("linkedinLabel")}
-              className="pill-button pill-button-outline h-11 min-h-11 w-11 px-0 text-secondary"
+              className="pill-button pill-button-outline h-11 min-h-11 w-11 px-0"
             >
               {/* LinkedIn icon */}
-              <svg aria-hidden viewBox="0 0 24 24" width={20} height={20} fill="currentColor">
+              <svg aria-hidden viewBox="0 0 24 24" width={20} height={20} fill="white">
                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
                 <rect x="2" y="9" width="4" height="12"/>
                 <circle cx="4" cy="4" r="2"/>
