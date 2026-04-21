@@ -158,13 +158,27 @@ export const ServicesPage: GlobalConfig = {
         "From karting to the pinnacle of motorsport, the path is filled with challenges. It demands resilience, teamwork and trust. We stand with deserving drivers every step of the way.",
     },
     {
+      name: "talentIntroTitle",
+      type: "text",
+      localized: true,
+      label: "4. Talent — Intro card title (Performance)",
+      defaultValue: "PERFORMANCE",
+    },
+    {
       name: "talentIntroText",
       type: "textarea",
       localized: true,
-      label: "4. Talent — Intro card text (Performance)",
+      label: "4. Talent — Intro card text (back of Performance flip card)",
       defaultValue:
         "We create the optimal environment for drivers to excel. By aligning their goals with team objectives and fostering collaboration, we empower them to perform at their peak level.",
     },
+    imageField({
+      name: "talentIntroImage",
+      label: "4. Talent — Intro card image (Performance — front of flip card)",
+      defaultValue: "/assets/v2/services/talent-performance.webp",
+      description:
+        "Photo used on the first card of the Talent grid. Leave empty to display the intro as a plain text card.",
+    }),
     {
       name: "talentCards",
       type: "array",

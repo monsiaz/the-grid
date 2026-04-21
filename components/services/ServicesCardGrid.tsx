@@ -24,12 +24,16 @@ type ServicesCardGridProps = {
   heading: React.ReactNode;
   description: string;
   introText: string;
+  /** Optional: when provided, the intro card becomes a flip card with image + title */
+  introImage?: string | null;
+  introTitle?: string | null;
   cards: ServiceCard[];
   gridClassName: string;
   imageHeightClassName: string;
   bodyPaddingClassName: string;
 };
 
+/** Text-only intro card (fallback when no intro image is provided). */
 function ServiceIntroCard({ text }: { text: string }) {
   return (
     <motion.article
@@ -139,11 +143,25 @@ export default function ServicesCardGrid({
   heading,
   description,
   introText,
+  introImage,
+  introTitle,
   cards,
   gridClassName,
   imageHeightClassName,
   bodyPaddingClassName,
 }: ServicesCardGridProps) {
+  // When an intro image is provided, the intro becomes a proper flip card
+  // (same style as the other ServiceCards) with `introTitle` on the front
+  // and `introText` as the back-face description.
+  const introAsFlipCard: ServiceCard | null =
+    introImage && introImage.trim()
+      ? {
+          title: (introTitle || "").trim() || "PERFORMANCE",
+          image: introImage,
+          alt: (introTitle || "Performance").trim(),
+          description: introText,
+        }
+      : null;
   return (
     <section className="bg-primary py-20" id={id}>
       <div className="mx-auto grid w-full max-w-[1344px] gap-16 px-[clamp(20px,4vw,48px)]">
@@ -177,7 +195,15 @@ export default function ServicesCardGrid({
           whileInView="visible"
           viewport={viewport}
         >
-          <ServiceIntroCard text={introText} />
+          {introAsFlipCard ? (
+            <ServiceCard
+              card={introAsFlipCard}
+              imageHeightClassName={imageHeightClassName}
+              bodyPaddingClassName={bodyPaddingClassName}
+            />
+          ) : (
+            <ServiceIntroCard text={introText} />
+          )}
           {cards.map((card) => (
             <ServiceCard
               key={card.title}

@@ -73,7 +73,9 @@ export default async function ServicesPage({
         heading={servicesPage.talentHeading}
         headingAccent={servicesPage.talentHeadingAccent}
         description={servicesPage.talentDescription}
+        introTitle={servicesPage.talentIntroTitle}
         introText={servicesPage.talentIntroText}
+        introImage={servicesPage.talentIntroImage}
         cards={servicesPage.talentCards?.map((c: { title: string; image: string; description?: string | null }) => ({
           title: c.title,
           image: c.image,

@@ -7,11 +7,21 @@ type ServicesTalentProps = {
   heading?: string | null;
   headingAccent?: string | null;
   description?: string | null;
+  introTitle?: string | null;
   introText?: string | null;
+  introImage?: string | null;
   cards: { title: string; image: string; alt: string; description?: string | null }[];
 };
 
-export default function ServicesTalent({ heading, headingAccent, description, introText, cards }: ServicesTalentProps) {
+export default function ServicesTalent({
+  heading,
+  headingAccent,
+  description,
+  introTitle,
+  introText,
+  introImage,
+  cards,
+}: ServicesTalentProps) {
   const t = useTranslations("services.talent");
   return (
     <ServicesCardGrid
@@ -25,6 +35,8 @@ export default function ServicesTalent({ heading, headingAccent, description, in
       }
       description={description || ""}
       introText={introText || ""}
+      introImage={introImage}
+      introTitle={introTitle}
       cards={cards}
       gridClassName="min-[600px]:grid-cols-2 min-[900px]:grid-cols-3 min-[1200px]:grid-cols-[repeat(6,minmax(0,1fr))]"
       imageHeightClassName="h-[240px] min-[900px]:h-[280px]"

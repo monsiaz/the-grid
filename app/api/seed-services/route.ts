@@ -98,8 +98,10 @@ const SERVICES_DATA = {
   talentHeadingAccent: "WE PAVE THE WAY",
   talentDescription:
     "From karting to the pinnacle of motorsport, the path is filled with challenges. It demands resilience, teamwork, and trust. We stand with deserving drivers every step of the way.",
+  talentIntroTitle: "PERFORMANCE",
   talentIntroText:
     "We create the optimal environment for drivers to excel. By aligning their goals with team objectives and fostering collaboration, we empower them to perform at their peak level.",
+  talentIntroImage: "/assets/v2/services/talent-performance.webp",
 
   talentCards: [
     {
