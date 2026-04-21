@@ -156,12 +156,26 @@ export async function POST(request: Request) {
 
   const payload = await getPayloadClient();
 
-  await payload.updateGlobal({
-    slug: "services-page",
-    locale: "en",
-    data: SERVICES_DATA as Parameters<typeof payload.updateGlobal>[0]["data"],
-    overrideAccess: true,
-  });
+  try {
+    await payload.updateGlobal({
+      slug: "services-page",
+      locale: "en",
+      data: SERVICES_DATA as Parameters<typeof payload.updateGlobal>[0]["data"],
+      overrideAccess: true,
+    });
+  } catch (err) {
+    const e = err as Error & { code?: string; detail?: string };
+    return NextResponse.json(
+      {
+        ok: false,
+        error: e.message,
+        code: e.code,
+        detail: e.detail,
+        stack: e.stack?.split("\n").slice(0, 5),
+      },
+      { status: 500 },
+    );
+  }
 
   return NextResponse.json({ ok: true, message: "services-page seeded with correct EN content" });
 }
