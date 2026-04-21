@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { Pool } from "pg";
 import { getPayloadClient } from "@/lib/payload";
 
 export const maxDuration = 60;
@@ -15,7 +14,10 @@ async function ensureSchema(): Promise<{ ran: string[]; errors: string[] }> {
   const errors: string[] = [];
   const dburl = process.env.DATABASE_URL || "";
   if (!dburl.startsWith("postgres")) return { ran, errors };
-  const pool = new Pool({ connectionString: dburl, max: 2 });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const pg: any = await import(/* webpackIgnore: true */ "pg" as string);
+  const PoolCtor = pg.Pool || pg.default?.Pool;
+  const pool = new PoolCtor({ connectionString: dburl, max: 2 });
   const statements = [
     // Collection tables (no-ops if Payload already created them).
     `CREATE TABLE IF NOT EXISTS "news_tags" (
