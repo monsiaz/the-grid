@@ -45,44 +45,46 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ ...smoothTransition, duration: 0.6 }}
     >
-      <div className="flex w-full items-center justify-between gap-4">
-        <Link href="/" aria-label={t("homeLink")}>
-          <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
-            <Image
-              src="/images/logo.svg"
-              alt={t("logoAlt")}
-              width={122}
-              height={44}
-              priority
-              fetchPriority="high"
-              unoptimized
-              className="h-[44px] w-auto"
-            />
-          </motion.div>
-        </Link>
-        <button
-          type="button"
-          aria-controls="site-navigation"
-          aria-expanded={isMobileMenuOpen}
-          aria-label={isMobileMenuOpen ? t("closeMenu") : t("openMenu")}
-          className="relative z-[60] hidden h-11 w-11 items-center justify-center rounded border border-white/20 text-secondary transition-colors hover:border-accent hover:text-accent max-[900px]:inline-flex"
-          onClick={() => setIsMobileMenuOpen((current) => !current)}
-        >
-          <span className="relative block h-[14px] w-[18px]">
-            <span
-              className={`absolute left-0 top-0 h-[2px] w-full bg-current transition-transform duration-300 ${isMobileMenuOpen ? "translate-y-[6px] rotate-45" : ""}`}
-            />
-            <span
-              className={`absolute left-0 top-[6px] h-[2px] w-full bg-current transition-opacity duration-300 ${isMobileMenuOpen ? "opacity-0" : "opacity-100"}`}
-            />
-            <span
-              className={`absolute left-0 top-[12px] h-[2px] w-full bg-current transition-transform duration-300 ${isMobileMenuOpen ? "-translate-y-[6px] -rotate-45" : ""}`}
-            />
-          </span>
-        </button>
-      </div>
+      {/* Logo — shrink-0 so it never gets squeezed by the nav */}
+      <Link href="/" aria-label={t("homeLink")} className="shrink-0">
+        <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
+          <Image
+            src="/images/logo.svg"
+            alt={t("logoAlt")}
+            width={122}
+            height={44}
+            priority
+            fetchPriority="high"
+            unoptimized
+            className="h-[44px] w-auto"
+          />
+        </motion.div>
+      </Link>
+
+      {/* Mobile burger */}
+      <button
+        type="button"
+        aria-controls="site-navigation"
+        aria-expanded={isMobileMenuOpen}
+        aria-label={isMobileMenuOpen ? t("closeMenu") : t("openMenu")}
+        className="relative z-[60] hidden h-11 w-11 items-center justify-center rounded border border-white/20 text-secondary transition-colors hover:border-accent hover:text-accent max-[900px]:inline-flex"
+        onClick={() => setIsMobileMenuOpen((current) => !current)}
+      >
+        <span className="relative block h-[14px] w-[18px]">
+          <span
+            className={`absolute left-0 top-0 h-[2px] w-full bg-current transition-transform duration-300 ${isMobileMenuOpen ? "translate-y-[6px] rotate-45" : ""}`}
+          />
+          <span
+            className={`absolute left-0 top-[6px] h-[2px] w-full bg-current transition-opacity duration-300 ${isMobileMenuOpen ? "opacity-0" : "opacity-100"}`}
+          />
+          <span
+            className={`absolute left-0 top-[12px] h-[2px] w-full bg-current transition-transform duration-300 ${isMobileMenuOpen ? "-translate-y-[6px] -rotate-45" : ""}`}
+          />
+        </span>
+      </button>
+
       <nav
-        className="flex items-center gap-[clamp(16px,2.5vw,28px)] text-[clamp(11px,1vw,14px)] leading-[1.2] uppercase max-[900px]:hidden"
+        className="flex shrink-0 items-center gap-[clamp(14px,2vw,28px)] text-[clamp(11px,0.9vw,13px)] leading-[1.2] uppercase max-[900px]:hidden"
         aria-label={t("primary")}
       >
         {headerItems.map((item, idx) => (
