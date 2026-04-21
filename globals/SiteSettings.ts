@@ -16,12 +16,12 @@ export const SiteSettings: GlobalConfig = {
     {
       name: "instagramUrl",
       type: "text",
-      defaultValue: "#",
+      defaultValue: "https://www.instagram.com/thegrid.agency",
     },
     {
       name: "linkedinUrl",
       type: "text",
-      defaultValue: "#",
+      defaultValue: "https://www.linkedin.com/company/the-grid-agency/",
     },
     {
       name: "email",
@@ -35,6 +35,6 @@ export const SiteSettings: GlobalConfig = {
     },
   ],
   hooks: {
-    afterChange: [() => { revalidateAll; }],
+    afterChange: [() => revalidateAll()],
   },
 };
