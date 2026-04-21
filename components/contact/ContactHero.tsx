@@ -32,7 +32,9 @@ export default function ContactHero({
     <Hero
       backgroundImage={backgroundImage}
       minHeightClassName="min-h-[clamp(640px,100svh,901px)]"
-      overlayClassName="bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.3)_45%,rgba(0,0,0,0.7)_100%)]"
+      overlayClassName="bg-[linear-gradient(180deg,rgba(0,0,0,0.05)_0%,rgba(0,0,0,0.12)_55%,rgba(0,0,0,0.28)_100%)]"
+      backdropAt="50% 42%"
+      backdropScale="75% 65%"
       headerAnchorPrefix="/"
       activeHeaderItem="contact"
       contentClassName="mx-auto flex w-full max-w-[1116px] flex-col items-center justify-center gap-6 py-16 text-center min-[900px]:py-24"

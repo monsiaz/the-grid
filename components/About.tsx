@@ -89,7 +89,20 @@ export default function About({ text, buttonLabel, backgroundImage }: AboutProps
         className="absolute inset-0 object-cover object-[35%_center]"
         aria-hidden
       />
-      <div className="absolute inset-0 z-10 bg-[linear-gradient(270deg,rgba(0,0,0,0.8)_0%,rgba(0,0,0,0.4)_45%,rgba(0,0,0,0.1)_100%)]" />
+      {/* Light global tint */}
+      <div className="absolute inset-0 z-10 bg-[linear-gradient(270deg,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0.06)_55%,transparent_100%)]" />
+      {/* Blurred radial shadow on the RIGHT where text lives */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-[11] overflow-hidden">
+        <div
+          style={{
+            position: "absolute",
+            inset: "-80px",
+            background:
+              "radial-gradient(ellipse 55% 90% at 84% 58%, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.58) 36%, rgba(0,0,0,0.18) 58%, transparent 72%)",
+            filter: "blur(48px)",
+          }}
+        />
+      </div>
 
       {/* ── Headlight sweep ────────────────────────────────────────────────
           Two beams ~90px apart simulate the two headlights of a single car

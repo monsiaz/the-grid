@@ -24,6 +24,15 @@ type HeroProps = {
   titleClassName?: string;
   descriptionClassName?: string;
   overlayClassName?: string;
+  /**
+   * Position of the blurred radial text-backdrop as CSS "x% y%".
+   * Defaults to left-aligned text ("16% 62%").
+   * Pass "50% 55%" for centred text, "82% 55%" for right-aligned.
+   * Pass false to disable the backdrop entirely.
+   */
+  backdropAt?: string | false;
+  /** Ellipse size of the backdrop as "w% h%". Default "60% 90%". */
+  backdropScale?: string;
   headerAnchorPrefix?: string;
   activeHeaderItem?: "about" | "services" | "drivers" | "news" | "contact";
   footerSlot?: React.ReactNode;
@@ -43,9 +52,12 @@ export default function Hero({
   children,
   minHeightClassName = "min-h-[clamp(420px,80svh,560px)]",
   contentClassName = "my-32 max-w-[680px] text-left",
-  titleClassName = "font-[var(--font-league-spartan)] text-[64px] leading-none font-bold uppercase [text-shadow:0_4px_24px_rgba(0,0,0,0.55),0_2px_8px_rgba(0,0,0,0.4)] max-[1200px]:text-[clamp(44px,6vw,64px)]",
-  descriptionClassName = "mt-2 text-base leading-[1.4] uppercase [text-shadow:0_2px_12px_rgba(0,0,0,0.55)]",
-  overlayClassName = "bg-[linear-gradient(180deg,rgba(0,0,0,0.05)_0%,rgba(0,0,0,0.2)_55%,rgba(0,0,0,0.55)_100%)]",
+  titleClassName = "font-[var(--font-league-spartan)] text-[64px] leading-none font-bold uppercase [text-shadow:0_2px_16px_rgba(0,0,0,0.4),0_1px_6px_rgba(0,0,0,0.3)] max-[1200px]:text-[clamp(44px,6vw,64px)]",
+  descriptionClassName = "mt-2 text-base leading-[1.4] uppercase [text-shadow:0_1px_8px_rgba(0,0,0,0.5)]",
+  // Very light global overlay — the blurred text backdrop handles local contrast
+  overlayClassName = "bg-[linear-gradient(180deg,rgba(0,0,0,0.03)_0%,rgba(0,0,0,0.08)_60%,rgba(0,0,0,0.22)_100%)]",
+  backdropAt = "16% 62%",   // left-aligned text default
+  backdropScale = "60% 90%",
   headerAnchorPrefix,
   activeHeaderItem,
   footerSlot,
@@ -91,7 +103,32 @@ export default function Hero({
           />
         </motion.div>
       )}
+      {/* ── Global tint (very light) ──────────────────────────────────── */}
       <div className={`absolute inset-0 z-10 ${overlayClassName}`} />
+
+      {/* ── Blurred radial text backdrop ──────────────────────────────────
+          A soft elliptical shadow positioned where the text lives.
+          The inner div extends 80px beyond all edges so filter:blur doesn't
+          get hard-clipped by overflow:hidden on the outer container.
+          Result: a smooth "ink bleed" that makes text crisp while the rest
+          of the image stays vivid — same technique as the PDF reference.
+      ──────────────────────────────────────────────────────────────────── */}
+      {backdropAt !== false && (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-[11] overflow-hidden"
+        >
+          <div
+            style={{
+              position: "absolute",
+              inset: "-80px",
+              background: `radial-gradient(ellipse ${backdropScale} at ${backdropAt}, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.58) 36%, rgba(0,0,0,0.18) 58%, transparent 72%)`,
+              filter: "blur(48px)",
+            }}
+          />
+        </div>
+      )}
+
       <Header activeItem={activeHeaderItem} anchorPrefix={headerAnchorPrefix} />
       <div className="relative z-20 mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)]">
         <div className={`${contentClassName} max-[900px]:mt-[82px] max-[900px]:mb-[72px] max-[900px]:max-w-full`}>

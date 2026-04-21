@@ -31,7 +31,9 @@ export default function ServicesHero({ title, description, backgroundImage }: Se
     <Hero
       backgroundImage={backgroundImage || "/assets/v2/services/hero.webp"}
       minHeightClassName="min-h-[clamp(560px,90svh,800px)]"
-      overlayClassName="bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0.2)_45%,rgba(0,0,0,0.6)_100%)]"
+      overlayClassName="bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.1)_60%,rgba(0,0,0,0.25)_100%)]"
+      backdropAt="50% 55%"
+      backdropScale="65% 82%"
       headerAnchorPrefix="/"
       activeHeaderItem="services"
       contentClassName="mx-auto flex w-full max-w-[640px] flex-col items-center justify-center gap-8 py-16 text-center min-[900px]:min-h-[640px] min-[900px]:py-0"
