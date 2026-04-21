@@ -231,6 +231,9 @@
       "title": "Get",
       "titleAccent": "in touch"
     },
+    "tabContact": "Get in touch",
+    "tabNewsletter": "Newsletter",
+    "formSelector": "Choose a form",
     "form": {
       "firstName": "First Name",
       "lastName": "Last Name",

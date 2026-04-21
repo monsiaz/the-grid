@@ -5,7 +5,7 @@
       "template": "%s | THE GRID"
     },
     "description": "The Grid is een 360° motorsport agency die talentmanagement en strategische marketing combineert om carrières op te bouwen en waardevolle partnerships te ontwikkelen binnen het hele ecosysteem.",
-    "keywords": "motorsport agency, talentmanagement, Formula 1, Formula 2, Formula 3, karting, sportmarketing, Pierre Gasly, Isack Hadjar, The Grid",
+    "keywords": "motorsportbureau, coureursmanagement, Formule 1, Formule 2, Formule 3, karting, sportmarketing, Pierre Gasly, Isack Hadjar, The Grid",
     "ogImageAlt": "The Grid — Het openen van de poorten naar elite motorsport",
     "home": {
       "title": "THE GRID — Motorsport Agentschap",
@@ -237,6 +237,9 @@
       "title": "Kom",
       "titleAccent": "in contact"
     },
+    "tabContact": "Contact",
+    "tabNewsletter": "Nieuwsbrief",
+    "formSelector": "Kies een formulier",
     "form": {
       "firstName": "Voornaam",
       "lastName": "Achternaam",

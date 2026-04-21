@@ -5,7 +5,7 @@
       "template": "%s | THE GRID"
     },
     "description": "The Grid es una agencia de motorsport 360° que combina gestión de pilotos y marketing estratégico para construir carreras y desarrollar alianzas de alto impacto en todo el ecosistema.",
-    "keywords": "agencia de motorsport, gestión de pilotos, Formula 1, Formula 2, Formula 3, karting, marketing deportivo, Pierre Gasly, Isack Hadjar, The Grid",
+    "keywords": "agencia de motorsport, gestión de pilotos, Fórmula 1, Fórmula 2, Fórmula 3, karting, marketing deportivo, Pierre Gasly, Isack Hadjar, The Grid",
     "ogImageAlt": "The Grid — Abriendo las puertas al motorsport de élite",
     "home": {
       "title": "THE GRID — Agencia de Motorsport",
@@ -237,6 +237,9 @@
       "title": "Conéctate",
       "titleAccent": "con nosotros"
     },
+    "tabContact": "Contáctanos",
+    "tabNewsletter": "Newsletter",
+    "formSelector": "Elige un formulario",
     "form": {
       "firstName": "Nombre",
       "lastName": "Apellidos",

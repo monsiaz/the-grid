@@ -5,7 +5,7 @@
       "template": "%s | THE GRID"
     },
     "description": "The Grid 是一家 360° motorsport agency，将车手管理与战略性市场营销结合起来，打造职业发展并在整个生态系统中发展高影响力合作伙伴关系。",
-    "keywords": "motorsport agency, 车手管理, Formula 1, Formula 2, Formula 3, 卡丁车, 体育营销, Pierre Gasly, Isack Hadjar, The Grid",
+    "keywords": "赛车经纪公司, 车手管理, 一级方程式, 二级方程式, 三级方程式, 卡丁车, 体育营销, Pierre Gasly, Isack Hadjar, The Grid",
     "ogImageAlt": "The Grid — 开启精英赛车大门",
     "home": {
       "title": "THE GRID — 赛车运动经纪公司",
@@ -237,6 +237,9 @@
       "title": "获取",
       "titleAccent": "联系"
     },
+    "tabContact": "联系我们",
+    "tabNewsletter": "新闻订阅",
+    "formSelector": "选择表单",
     "form": {
       "firstName": "名",
       "lastName": "姓",
