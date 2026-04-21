@@ -1,6 +1,7 @@
 import type { GlobalConfig } from "payload";
 import { imageField } from "@/fields/imageField";
 import { getSiteUrl } from "@/lib/siteUrl";
+import { revalidateContact } from "@/lib/revalidate";
 
 export const ContactPage: GlobalConfig = {
   slug: "contact-page",
@@ -42,4 +43,7 @@ export const ContactPage: GlobalConfig = {
       description: "Image plein écran en haut de /contact/.",
     }),
   ],
+  hooks: {
+    afterChange: [() => { revalidateContact(); }],
+  },
 };

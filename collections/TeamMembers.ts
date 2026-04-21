@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { imageField } from "@/fields/imageField";
+import { revalidateAbout } from "@/lib/revalidate";
 
 export const TeamMembers: CollectionConfig = {
   slug: "team-members",
@@ -53,4 +54,12 @@ export const TeamMembers: CollectionConfig = {
       },
     },
   ],
+  hooks: {
+    afterChange: [
+      ({ doc }: { doc: unknown }) => { revalidateAbout(); },
+    ],
+    afterDelete: [
+      ({ doc }: { doc: unknown }) => { revalidateAbout(); },
+    ],
+  },
 };

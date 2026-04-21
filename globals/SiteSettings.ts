@@ -1,4 +1,5 @@
 import type { GlobalConfig } from "payload";
+import { revalidateAll } from "@/lib/revalidate";
 
 export const SiteSettings: GlobalConfig = {
   slug: "site-settings",
@@ -33,4 +34,7 @@ export const SiteSettings: GlobalConfig = {
       defaultValue: "/privacy-policy",
     },
   ],
+  hooks: {
+    afterChange: [() => { revalidateAll; }],
+  },
 };

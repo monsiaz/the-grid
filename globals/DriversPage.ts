@@ -1,6 +1,7 @@
 import type { GlobalConfig } from "payload";
 import { imageField } from "@/fields/imageField";
 import { getSiteUrl } from "@/lib/siteUrl";
+import { revalidateDriversIndex } from "@/lib/revalidate";
 
 export const DriversPage: GlobalConfig = {
   slug: "drivers-page",
@@ -42,4 +43,7 @@ export const DriversPage: GlobalConfig = {
       description: "Image plein écran au top de /drivers/.",
     }),
   ],
+  hooks: {
+    afterChange: [() => { revalidateDriversIndex(); }],
+  },
 };

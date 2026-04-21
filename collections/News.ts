@@ -1,6 +1,7 @@
 import type { CollectionConfig } from "payload";
 import { imageField } from "@/fields/imageField";
 import { getSiteUrl } from "@/lib/siteUrl";
+import { revalidateNewsDetail } from "@/lib/revalidate";
 
 export const News: CollectionConfig = {
   slug: "news",
@@ -121,4 +122,12 @@ export const News: CollectionConfig = {
       ],
     },
   ],
+  hooks: {
+    afterChange: [
+      ({ doc }: { doc: unknown }) => { revalidateNewsDetail((doc as { slug?: string }).slug); },
+    ],
+    afterDelete: [
+      ({ doc }: { doc: unknown }) => { revalidateNewsDetail((doc as { slug?: string }).slug); },
+    ],
+  },
 };

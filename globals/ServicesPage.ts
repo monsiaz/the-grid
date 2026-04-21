@@ -1,6 +1,7 @@
 import type { GlobalConfig } from "payload";
 import { imageField } from "@/fields/imageField";
 import { getSiteUrl } from "@/lib/siteUrl";
+import { revalidateServices } from "@/lib/revalidate";
 
 export const ServicesPage: GlobalConfig = {
   slug: "services-page",
@@ -181,4 +182,7 @@ export const ServicesPage: GlobalConfig = {
       ],
     },
   ],
+  hooks: {
+    afterChange: [() => { revalidateServices(); }],
+  },
 };

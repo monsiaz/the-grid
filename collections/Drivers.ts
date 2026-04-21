@@ -1,6 +1,7 @@
 import type { CollectionConfig } from "payload";
 import { imageField } from "@/fields/imageField";
 import { getSiteUrl } from "@/lib/siteUrl";
+import { revalidateDriverDetail } from "@/lib/revalidate";
 
 export const Drivers: CollectionConfig = {
   slug: "drivers",
@@ -219,4 +220,12 @@ export const Drivers: CollectionConfig = {
       ],
     },
   ],
+  hooks: {
+    afterChange: [
+      ({ doc }: { doc: unknown }) => { revalidateDriverDetail((doc as { slug?: string }).slug); },
+    ],
+    afterDelete: [
+      ({ doc }: { doc: unknown }) => { revalidateDriverDetail((doc as { slug?: string }).slug); },
+    ],
+  },
 };
