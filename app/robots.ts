@@ -29,12 +29,9 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: [
-      `${siteUrl}/sitemap-index.xml`,
-      ...["en", "fr", "es", "de", "it", "nl", "zh"].map(
-        (l) => `${siteUrl}/sitemap/${l}.xml`,
-      ),
-    ],
+    // The index already references every per-locale sitemap; listing each
+    // locale individually would create duplicate EN entries in robots.txt.
+    sitemap: [`${siteUrl}/sitemap-index.xml`],
     host: siteUrl,
   };
 }

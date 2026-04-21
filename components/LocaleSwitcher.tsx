@@ -51,9 +51,11 @@ export default function LocaleSwitcher() {
     const nextLocale = event.target.value as Locale;
     if (nextLocale === locale) return;
 
-    // Persist the user's explicit choice BEFORE navigating. Otherwise the
-    // next-intl middleware would read the stale `NEXT_LOCALE` cookie and
-    // redirect e.g. `/` back to `/it/` when switching from IT → EN.
+    // Use the pre-computed sister-page URL embedded in the page (accurate for
+    // dynamic routes like /news/[slug] or /drivers/[name]). Fall back to
+    // next-intl router only if the data element is missing.
+    // localeDetection:false means the URL is the sole locale signal — no need
+    // to also write a NEXT_LOCALE cookie, but we keep it as a harmless hint.
     if (typeof document !== "undefined") {
       const oneYear = 60 * 60 * 24 * 365;
       document.cookie = `NEXT_LOCALE=${nextLocale}; Path=/; Max-Age=${oneYear}; SameSite=Lax`;
@@ -62,8 +64,11 @@ export default function LocaleSwitcher() {
     const explicit = alternates?.switcher?.[nextLocale]?.url;
     startTransition(() => {
       if (explicit) {
+        // Hard-navigate so the full page reloads with the correct locale HTML.
         window.location.assign(explicit);
       } else {
+        // Fallback: next-intl generates the prefixed (or un-prefixed for EN)
+        // URL automatically thanks to localePrefix:"as-needed".
         router.replace(pathname, { locale: nextLocale });
       }
     });
