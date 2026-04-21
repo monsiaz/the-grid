@@ -16,7 +16,7 @@ export default function NewsCard({ item, href }: { item: NewsItem; href: string 
   return (
     <motion.div
       data-news-card
-      className="w-[300px] shrink-0 max-[900px]:w-[min(78vw,300px)]"
+      className="w-[300px] shrink-0 max-[900px]:w-[min(72vw,280px)]"
       whileHover={{ y: -8, transition: { duration: 0.3, ease: "easeOut" } }}
     >
       <Link
@@ -24,7 +24,7 @@ export default function NewsCard({ item, href }: { item: NewsItem; href: string 
         aria-label={t("readAria", { title: item.title })}
         className="text-secondary focus-visible:ring-accent block rounded-[32px] no-underline outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
       >
-        <article className="bg-primary border-secondary overflow-hidden rounded-[32px] border">
+        <article className="surface-card-soft overflow-hidden">
           <div className="relative aspect-[300/301] w-full overflow-hidden">
             <motion.div
               className="absolute inset-0"
@@ -41,8 +41,8 @@ export default function NewsCard({ item, href }: { item: NewsItem; href: string 
             </motion.div>
           </div>
           <div className="grid gap-2 p-6">
-            <h3 className="m-0 text-base leading-[1.2] font-medium uppercase">{item.title}</h3>
-            <p className="text-soft m-0 text-base leading-[1.4] font-light italic">{item.excerpt}</p>
+            <h3 className="display-card m-0 text-white">{item.title}</h3>
+            <p className="body-md text-soft m-0 italic">{item.excerpt}</p>
           </div>
         </article>
       </Link>
