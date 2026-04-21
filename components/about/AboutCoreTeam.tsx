@@ -439,7 +439,7 @@ function FounderCard({
                 width={628}
                 height={628}
                 sizes="(max-width: 700px) 100vw, (max-width: 980px) 50vw, (max-width: 1200px) 33vw, 300px"
-                className="aspect-square w-full object-cover object-[center_30%] transition-transform duration-500 ease-out"
+                className="aspect-square w-full object-cover object-[center_65%] transition-transform duration-500 ease-out"
               />
             </div>
           )}
