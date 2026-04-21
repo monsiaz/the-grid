@@ -37,6 +37,13 @@ async function ensureSchema(
        "name" varchar
      );`,
     `ALTER TABLE "news" ADD COLUMN IF NOT EXISTS "tag_id" integer;`,
+    /**
+     * Payload keeps polymorphic relationship join tables for locked docs &
+     * user preferences; adding a new collection means we also have to expose
+     * a <collection>_id column in each _rels table the admin uses.
+     */
+    `ALTER TABLE "payload_locked_documents_rels" ADD COLUMN IF NOT EXISTS "news_tags_id" integer;`,
+    `ALTER TABLE "payload_preferences_rels" ADD COLUMN IF NOT EXISTS "news_tags_id" integer;`,
   ];
   for (const s of statements) {
     try {
