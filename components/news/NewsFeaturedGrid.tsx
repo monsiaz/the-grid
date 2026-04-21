@@ -64,8 +64,7 @@ export default function NewsFeaturedGrid({ cards }: NewsFeaturedGridProps) {
         className="grid w-full grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 min-[1280px]:hidden"
         variants={staggerContainer}
         initial="hidden"
-        whileInView="visible"
-        viewport={viewport}
+        animate="visible"
       >
         {cards.map((card) => (
           <NewsCard

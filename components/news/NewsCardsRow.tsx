@@ -1,7 +1,7 @@
 "use client";
 
 import NewsCard from "./NewsCard";
-import { motion, staggerContainer, viewport } from "../motion";
+import { motion, staggerContainer } from "../motion";
 
 type NewsCardData = {
   slug: string;
@@ -21,8 +21,7 @@ export default function NewsCardsRow({ cards }: NewsCardsRowProps) {
       className="grid w-full grid-cols-1 gap-7 sm:grid-cols-2 min-[1280px]:grid-cols-4"
       variants={staggerContainer}
       initial="hidden"
-      whileInView="visible"
-      viewport={viewport}
+      animate="visible"
     >
       {cards.map((card) => (
         <NewsCard
