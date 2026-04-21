@@ -89,7 +89,7 @@ function CoreAreaCard({ area }: { area: CoreArea }) {
       transition={smoothTransition}
     >
       {/* row 1: image */}
-      <div className="overflow-hidden rounded-sm">
+      <div className="overflow-hidden rounded-[28px]">
         <motion.div
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
@@ -106,7 +106,7 @@ function CoreAreaCard({ area }: { area: CoreArea }) {
       </div>
 
       {/* row 2: title — self-end so all align to the bottom of their row */}
-      <h2 className="m-0 flex items-start gap-3 text-[clamp(28px,2.1vw,36px)] leading-[1.15] font-bold uppercase min-[1200px]:self-end min-[1200px]:pt-6 min-[1200px]:pb-5">
+      <h2 className="display-card m-0 flex items-start gap-3 text-[clamp(28px,2.1vw,36px)] leading-[1.05] min-[1200px]:self-end min-[1200px]:pt-6 min-[1200px]:pb-5">
         <span className="text-accent shrink-0">{area.number}</span>
         <span className="whitespace-pre-line">{area.title}</span>
       </h2>
@@ -121,7 +121,7 @@ function CoreAreaCard({ area }: { area: CoreArea }) {
       />
 
       {/* row 4: description */}
-      <p className="m-0 text-base leading-[1.4] font-light min-[1200px]:pt-5">{area.text}</p>
+      <p className="body-md m-0 text-white/82 min-[1200px]:pt-5">{area.text}</p>
     </motion.article>
   );
 }
@@ -144,20 +144,20 @@ function CardBack({
 }) {
   return (
     <article
-      className="border-accent absolute inset-0 flex flex-col overflow-hidden rounded-[32px] border bg-primary p-6 [backface-visibility:hidden] [transform:rotateY(180deg)]"
+      className="surface-outline absolute inset-0 flex flex-col overflow-hidden p-6 [backface-visibility:hidden] [transform:rotateY(180deg)]"
       aria-label={t("flipBack")}
     >
       {/* header row */}
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h3 className="m-0 text-xl leading-[1.2] font-bold uppercase">{name}</h3>
-          <p className="m-0 mt-1 text-[13px] leading-[1.4] uppercase text-secondary/60">{role}</p>
+          <h3 className="display-card m-0 text-[clamp(24px,2vw,30px)] text-white">{name}</h3>
+          <p className="ui-label m-0 mt-1 text-secondary/60">{role}</p>
         </div>
         <button
           type="button"
           onClick={onClose}
           aria-label={t("flipBack")}
-          className="text-accent border-accent inline-flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full border-2 transition-all duration-200 hover:bg-accent hover:text-black"
+          className="icon-pill shrink-0"
         >
           <X className="h-4 w-4" />
         </button>
@@ -165,11 +165,11 @@ function CardBack({
 
       {/* bio */}
       {bio ? (
-        <p className="scroll-soft mt-5 flex-1 overflow-auto pr-2 text-[13px] leading-[1.6] font-light text-secondary/80">
+        <p className="body-sm scroll-soft mt-5 flex-1 overflow-auto pr-2 text-secondary/80">
           {bio}
         </p>
       ) : (
-        <p className="mt-5 flex-1 text-[13px] italic text-secondary/40">{t("bioFallback")}</p>
+        <p className="body-sm mt-5 flex-1 italic text-secondary/40">{t("bioFallback")}</p>
       )}
 
       {/* LinkedIn CTA */}
@@ -179,7 +179,7 @@ function CardBack({
           target="_blank"
           rel="noreferrer me"
           onClick={(e) => e.stopPropagation()}
-          className="border-accent text-accent mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-full border-2 text-[13px] font-semibold uppercase tracking-[0.06em] no-underline transition-all duration-300 hover:bg-accent hover:text-black"
+          className="pill-button pill-button-accent-outline mt-4 w-full gap-2"
         >
           <Linkedin className="h-4 w-4" />
           LinkedIn
@@ -221,7 +221,7 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
         }`}
       >
         {/* ── FRONT ── */}
-        <article className="border-secondary absolute inset-0 flex flex-col overflow-hidden rounded-[32px] border bg-primary [backface-visibility:hidden]">
+        <article className="surface-card-soft absolute inset-0 flex flex-col overflow-hidden [backface-visibility:hidden]">
           <div className="overflow-hidden">
             <Image
               src={member.image}
@@ -235,14 +235,14 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
           <div className="flex flex-1 flex-col justify-between gap-3 p-6">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <h3 className="m-0 text-xl leading-[1.2] font-bold uppercase">{member.name}</h3>
-                <p className="m-0 mt-1 text-[13px] leading-[1.4] uppercase text-secondary/60">
+                <h3 className="display-card m-0 text-[clamp(24px,2vw,30px)] text-white">{member.name}</h3>
+                <p className="ui-label m-0 mt-1 text-secondary/60">
                   {member.role}
                 </p>
               </div>
               {hasLinkedIn && (
                 <span
-                  className="text-accent border-accent inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2"
+                  className="icon-pill shrink-0"
                   aria-hidden
                 >
                   <Linkedin className="h-4 w-4" />
@@ -256,7 +256,7 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
                   type="button"
                   onClick={flip}
                   aria-label={t("learnMore", { name: member.name })}
-                  className="text-accent border-accent inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 transition-all duration-300 hover:bg-accent hover:text-black"
+                  className="icon-pill"
                 >
                   <ArrowRight className="h-4 w-4" />
                 </button>
@@ -268,7 +268,7 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
                   rel="noreferrer me"
                   onClick={(e) => e.stopPropagation()}
                   aria-label={t("linkedinLabel", { name: member.name })}
-                  className="text-accent border-accent inline-flex h-10 w-10 items-center justify-center rounded-full border-2 no-underline transition-all duration-300 hover:bg-accent hover:text-black"
+                  className="icon-pill no-underline"
                 >
                   <ArrowRight className="h-4 w-4" />
                 </Link>
@@ -316,7 +316,7 @@ export default function AboutCoreTeam({
       <div className="mx-auto grid w-full max-w-[1344px] gap-20 px-[clamp(20px,4vw,48px)]">
         <div className="grid gap-12">
           <motion.p
-            className="text-muted m-0 mx-auto max-w-[888px] text-center text-[clamp(20px,2.2vw,28px)] leading-[1.4] uppercase"
+            className="body-lg text-muted m-0 mx-auto max-w-[888px] text-center"
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
@@ -354,7 +354,7 @@ export default function AboutCoreTeam({
 
         <div className="grid items-start gap-8 min-[1200px]:grid-cols-[auto_1fr]">
           <motion.h2
-            className="m-0 font-[var(--font-league-spartan)] text-[clamp(44px,4.5vw,64px)] leading-[1.05] font-bold uppercase min-[1200px]:max-w-[320px]"
+            className="display-section m-0 min-[1200px]:max-w-[320px]"
             variants={slideInLeft}
             initial="hidden"
             whileInView="visible"
@@ -430,7 +430,7 @@ function FounderCard({
         }`}
       >
         {/* FRONT */}
-        <article className="border-secondary absolute inset-0 flex flex-col overflow-hidden rounded-[32px] border bg-primary [backface-visibility:hidden]">
+        <article className="surface-card-soft absolute inset-0 flex flex-col overflow-hidden [backface-visibility:hidden]">
           {image && (
             <div className="overflow-hidden">
               <Image
@@ -439,17 +439,17 @@ function FounderCard({
                 width={628}
                 height={628}
                 sizes="(max-width: 700px) 100vw, (max-width: 980px) 50vw, (max-width: 1200px) 33vw, 300px"
-                className="aspect-square w-full object-cover object-top transition-transform duration-500 ease-out"
+                className="aspect-square w-full object-cover object-[center_30%] transition-transform duration-500 ease-out"
               />
             </div>
           )}
           <div className="flex flex-1 flex-col justify-between gap-3 p-6">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <h3 className="m-0 text-xl leading-[1.2] font-bold uppercase">{name}</h3>
-                <p className="m-0 mt-1 text-[13px] leading-[1.4] uppercase text-secondary/60">{role}</p>
+                <h3 className="display-card m-0 text-[clamp(24px,2vw,30px)] text-white">{name}</h3>
+                <p className="ui-label m-0 mt-1 text-secondary/60">{role}</p>
               </div>
-              <span className="text-accent border-accent inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2" aria-hidden>
+              <span className="icon-pill shrink-0" aria-hidden>
                 <Linkedin className="h-4 w-4" />
               </span>
             </div>
@@ -458,7 +458,7 @@ function FounderCard({
                 type="button"
                 onClick={flip}
                 aria-label={t("learnMore", { name })}
-                className="text-accent border-accent inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 transition-all duration-300 hover:bg-accent hover:text-black"
+                className="icon-pill"
               >
                 <ArrowRight className="h-4 w-4" />
               </button>
