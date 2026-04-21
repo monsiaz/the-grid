@@ -33,7 +33,7 @@ export const TeamMembers: CollectionConfig = {
       name: "linkedinUrl",
       type: "text",
       admin: {
-        description: "Full LinkedIn profile URL (displayed as the in icon + flip card CTA).",
+        description: "Full LinkedIn profile URL (rendered as the LinkedIn icon on the card).",
       },
     },
     {
@@ -41,7 +41,7 @@ export const TeamMembers: CollectionConfig = {
       type: "textarea",
       localized: true,
       admin: {
-        description: "Short bio shown on the back of the card when flipped.",
+        description: "Internal bio (not displayed on the public About page for now).",
       },
     },
     {

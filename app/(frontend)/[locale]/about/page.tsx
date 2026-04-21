@@ -64,7 +64,6 @@ export default async function AboutPage({
           role: m.role,
           image: m.image,
           linkedinUrl: (m as { linkedinUrl?: string | null }).linkedinUrl ?? null,
-          bio: (m as { bio?: string | null }).bio ?? null,
         }))}
       />
       <AboutAccelereBanner />

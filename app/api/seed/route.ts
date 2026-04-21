@@ -197,9 +197,17 @@ export async function POST(request: Request) {
       collection: "team-members",
       where: { name: { equals: member.name } },
       limit: 1,
+      locale: "en",
     });
     if (existing.totalDocs === 0) {
-      await payload.create({ collection: "team-members", data: member });
+      await payload.create({ collection: "team-members", data: member, locale: "en" });
+    } else if (upsert) {
+      await payload.update({
+        collection: "team-members",
+        id: existing.docs[0].id,
+        data: member,
+        locale: "en",
+      });
     } else {
       const current = existing.docs[0] as unknown as { id: number | string; linkedinUrl?: string | null };
       if (!current.linkedinUrl && member.linkedinUrl) {
@@ -208,6 +216,31 @@ export async function POST(request: Request) {
           id: current.id,
           data: { linkedinUrl: member.linkedinUrl },
         });
+      }
+    }
+  }
+
+  // Cleanup: remove legacy team-members duplicates that never got a name in the
+  // default (EN) locale. These are stray entries left over from an early seed
+  // run that preceded localisation and would otherwise render as empty ghost
+  // cards on the About page.
+  if (upsert) {
+    const allTeam = await payload.find({
+      collection: "team-members",
+      limit: 100,
+      locale: "en",
+      fallbackLocale: false,
+      depth: 0,
+    });
+    const validNames = new Set(TEAM_DEFAULTS.map((m) => m.name));
+    for (const doc of allTeam.docs as Array<{ id: number | string; name?: string | null }>) {
+      const hasName = typeof doc.name === "string" && doc.name.trim().length > 0;
+      if (!hasName || !validNames.has(doc.name as string)) {
+        try {
+          await payload.delete({ collection: "team-members", id: doc.id });
+        } catch {
+          // ignore deletion errors – the frontend filter still hides them
+        }
       }
     }
   }
