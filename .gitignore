@@ -52,3 +52,4 @@ public/
 # local working files
 *.pdf
 /terminals/
+/backups/

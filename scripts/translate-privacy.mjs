@@ -5,7 +5,11 @@
  */
 import { readFileSync, writeFileSync } from "fs";
 
-const OPENAI_KEY = process.env.OPENAI_API_KEY || "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";
+const OPENAI_KEY = process.env.OPENAI_API_KEY;
+
+if (!OPENAI_KEY) {
+  throw new Error("OPENAI_API_KEY is required to run this script.");
+}
 
 const LOCALES = {
   fr: "French (France)",

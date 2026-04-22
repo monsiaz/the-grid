@@ -1,32 +1,32 @@
 # The Grid
 
-Site corporate premium construit avec `Next.js 16`, `React 19`, `Payload CMS 3`, `next-intl` et un back-office sur mesure pour piloter le contenu, les traductions, les medias et la direction artistique.
+Premium corporate website built with `Next.js 16`, `React 19`, `Payload CMS 3`, and `next-intl`, with a custom back office designed to manage content, translations, media, and visual direction.
 
 Production: `https://the-grid.vercel.app`  
 Repository backup: `https://github.com/monsiaz/the-grid`
 
-## Ce projet met en avant
+## What This Project Showcases
 
-Ce repo illustre une approche produit tres complete, a la croisee du design, de la performance et de l'outillage editorial:
+This repository highlights a full product-oriented approach at the intersection of design, performance, and editorial tooling:
 
-- architecture frontend moderne avec `Next.js App Router`
-- CMS headless/admin customise avec `Payload`
-- internationalisation multi-locale
-- optimisation images, CDN, cache et rendu
-- iteration rapide en production via `Vercel`
-- experience admin pensee pour des equipes non techniques
+- modern frontend architecture with `Next.js App Router`
+- a custom headless CMS and admin experience powered by `Payload`
+- multi-locale internationalization
+- image, CDN, caching, and rendering optimization
+- fast iteration in production through `Vercel`
+- an admin experience designed for non-technical teams
 
-## Savoir-faire technique mis en avant
+## Technical Expertise Highlighted
 
-Le projet valorise particulierement les competences suivantes:
+This project is a strong showcase of the following capabilities:
 
-- conception d'experiences web premium, rapides et orientees conversion
-- integration pixel-perfect a partir de maquettes et demandes client
-- structuration de contenus pilotables depuis un back-office
-- SEO technique et architecture de rendu performante
-- optimisation Core Web Vitals, assets, cache et delivery
-- mise en place de workflows de publication, traduction et revalidation
-- creation d'outils editoriaux qui reduisent la dependance au code
+- building premium web experiences that are fast and conversion-oriented
+- delivering pixel-perfect integrations from mockups and client feedback
+- structuring content so it can be managed from a back office
+- technical SEO and performance-focused rendering architecture
+- optimizing Core Web Vitals, assets, caching, and delivery
+- setting up publishing, translation, and revalidation workflows
+- creating editorial tools that reduce dependence on developers
 
 ## Stack
 
@@ -35,62 +35,62 @@ Le projet valorise particulierement les competences suivantes:
 - `TypeScript`
 - `Payload CMS 3`
 - `next-intl`
-- `Postgres` en prod / `SQLite` en local
-- `Vercel Blob` pour la mediatheque
-- `Resend` pour les formulaires email
-- `Framer Motion` pour les animations
-- `Sass` + styles globaux personnalises
+- `Postgres` in production / `SQLite` locally
+- `Vercel Blob` for the media library
+- `Resend` for email forms
+- `Framer Motion` for animations
+- `Sass` plus custom global styling
 
-## Fonctionnalites cles
+## Key Features
 
-- pages marketing multi-sections: home, about, services, drivers, news, contact
-- back-office personnalise avec branding The Grid, labels FR et navigation adaptee
-- globals et collections editables depuis le BO
-- gestion des tags news et des blocs de contenu
-- mediatheque connectee a `Vercel Blob`
-- formulaires contact et newsletter avec traitement email
-- systeme de traductions sur plusieurs locales
-- revalidation a la demande pour voir les changements du BO en production rapidement
-- composants visuels riches: sliders, cartes retournables, hero sections, contenus dynamiques
+- multi-section marketing pages: home, about, services, drivers, news, and contact
+- custom back office with The Grid branding, French labels, and tailored navigation
+- editable globals and collections from the admin panel
+- dynamic news tags and content blocks
+- media library connected to `Vercel Blob`
+- contact and newsletter forms with email handling
+- translation workflow across multiple locales
+- on-demand revalidation so admin updates appear quickly in production
+- rich visual components: sliders, flip cards, hero sections, and dynamic content
 
-## Focus Vercel et performance
+## Vercel and Performance Focus
 
-Le projet a ete pense pour une mise en ligne fluide sur `Vercel`:
+The project was designed for smooth deployment and iteration on `Vercel`:
 
-- deploiement simple du frontend et du CMS sur une meme base Next.js
-- optimisation des connexions base de donnees pour eviter la saturation en build
-- revalidation on-demand apres sauvegarde BO
-- images servies en `AVIF` / `WebP`
-- cache long sur les assets statiques
-- compatibilite `Vercel Blob` pour les uploads medias
+- frontend and CMS deployed within the same Next.js application
+- database connection tuning to avoid build-time saturation
+- on-demand revalidation after CMS saves
+- images served in `AVIF` and `WebP`
+- long-lived caching for static assets
+- `Vercel Blob` support for media uploads
 
-## Historique recent des livraisons Vercel
+## Recent Vercel Delivery History
 
-Extrait des iterations recentes poussees avant deploiement:
+A snapshot of recent iterations pushed before deployment:
 
-- `bde99b8` - backup complet de l'etat actuel du projet
-- `e0c466f` - ajustement du cadrage image services sur mobile
-- `2f718f3` - affinage du scale et du focus de l'image services
-- `d7d2cb3` - design admin The Grid, navigation groupee, labels FR
-- `46a16bd` - footer mobile raccourci et plus propre
-- `c175fa3` - bandeau traductions collapsible dans le BO
-- `4cb0565` - footer + locale switcher mobiles simplifies
-- `6a4310f` - recadrage final de la photo Guillaume via Blob
-- `9fa5660` - simplification du locale switcher
-- `f0367b4` - homepage traduite en chinois dans la base
-- `be57203` - SVG inline restants pour fiabiliser le rendu prod
-- `4c9808f` - formulaire contact mobile avec reveal anime
+- `bde99b8` - full backup of the current project state
+- `e0c466f` - adjusted the services image framing on mobile
+- `2f718f3` - refined scale and focal point for the services image
+- `d7d2cb3` - added The Grid admin design, grouped navigation, and French editor labels
+- `46a16bd` - simplified and cleaned up the mobile footer
+- `c175fa3` - added a collapsible translations summary in the back office
+- `4cb0565` - streamlined the mobile footer and locale switcher
+- `6a4310f` - finalized Guillaume's Blob-based image crop
+- `9fa5660` - simplified the locale switcher
+- `f0367b4` - translated the homepage into Chinese in the database
+- `be57203` - inlined the remaining SVG assets to improve production reliability
+- `4c9808f` - added animated mobile contact form interactions
 
-## Lancer le projet en local
+## Run Locally
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Puis ouvrir `http://localhost:3000`.
+Then open `http://localhost:3000`.
 
-## Scripts utiles
+## Useful Scripts
 
 ```bash
 pnpm dev
@@ -100,17 +100,17 @@ pnpm lint
 pnpm seed
 ```
 
-## Environnement
+## Environment
 
-Variables attendues selon l'environnement:
+Expected environment variables depending on the target environment:
 
 - `PAYLOAD_SECRET`
-- `DATABASE_URL` ou `DATABASE_URI`
+- `DATABASE_URL` or `DATABASE_URI`
 - `BLOB_READ_WRITE_TOKEN`
-- variables email liees a l'envoi des formulaires
+- email-related variables used by the form handlers
 
-Les fichiers `.env*` sont gardes hors versionning.
+`.env*` files are intentionally kept out of version control.
 
-## Resume
+## Summary
 
-`The Grid` n'est pas seulement un site vitrine. C'est un socle web moderne qui montre la capacite a concevoir une plateforme editoriale haut de gamme, performante, multi-locale et exploitable en autonomie par une equipe metier.
+`The Grid` is more than a marketing website. It is a modern web foundation that demonstrates the ability to build a high-end, high-performance, multi-locale editorial platform that a business team can operate autonomously.
