@@ -9,6 +9,8 @@ import DriversGrid from "@/components/drivers/DriversGrid";
 import type { DriverCardData, DriverCountryCode } from "@/components/drivers/driversData";
 import DriversHero from "@/components/drivers/DriversHero";
 import { getPayloadClient } from "@/lib/payload";
+import { resolveSectionOrder } from "@/lib/sectionOrder";
+import { getDesignSettings } from "@/lib/designSettings";
 
 export const revalidate = 60;
 
@@ -88,8 +90,11 @@ export default async function DriversPage({
   setRequestLocale(locale);
 
   const payload = await getPayloadClient();
-  const driversPage = await payload.findGlobal({ slug: "drivers-page", locale });
-  const siteSettings = await payload.findGlobal({ slug: "site-settings", locale });
+  const [driversPage, siteSettings, designSettings] = await Promise.all([
+    payload.findGlobal({ slug: "drivers-page", locale }),
+    payload.findGlobal({ slug: "site-settings", locale }),
+    getDesignSettings(),
+  ]);
   const drivers = await payload.find({
     collection: "drivers",
     sort: "order",
@@ -111,15 +116,33 @@ export default async function DriversPage({
     .map(([, docs]) => docs);
 
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/drivers" });
+  const orderedSections = resolveSectionOrder(
+    driversPage.sectionOrder,
+    ["hero", "grid"] as const,
+  );
 
-  return (
-    <main id="main" className="bg-primary text-secondary w-full ">
+  const sections = {
+    hero: (
       <DriversHero
         title={driversPage.heroTitle}
         description={driversPage.heroDescription}
         backgroundImage={driversPage.heroBackgroundImage}
+        heroCta={designSettings.heroCta}
+        stickyHeader={designSettings.stickyHeader}
+        menuStyle={designSettings.headerMenuStyle}
+        menuTextSize={designSettings.headerMenuTextSize}
+        heroTextBackdropOpacity={designSettings.heroTextBackdropOpacity}
+        heroTextBackdropBlur={designSettings.heroTextBackdropBlur}
       />
-      <DriversGrid gridRows={gridRows} />
+    ),
+    grid: <DriversGrid gridRows={gridRows} />,
+  } as const;
+
+  return (
+    <main id="main" className="bg-primary text-secondary w-full ">
+      {orderedSections.map((sectionId) => (
+        <div key={sectionId}>{sections[sectionId]}</div>
+      ))}
       <LocaleAlternatesData alternates={alternates} />
       <Footer
         copyright={siteSettings.footerCopyright}

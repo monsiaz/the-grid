@@ -10,7 +10,7 @@ export const Drivers: CollectionConfig = {
     plural: "Pilotes",
   },
   admin: {
-    group: "📰 Contenu",
+    group: "Contenu",
     useAsTitle: "name",
     description: "Profils des pilotes affichés sur /drivers. Chaque profil inclut stats, galerie, biographie et actualités liées.",
     defaultColumns: ["name", "role", "order"],

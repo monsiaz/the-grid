@@ -10,12 +10,9 @@ type NewsDetailData = {
   date: string;
   heroImage: string;
   introParagraphs: string[];
-  bodyParagraphs: string[];
-  galleryImages: string[];
 };
 import {
   motion,
-  fadeUp,
   slideInLeft,
   slideInRight,
   smoothTransition,
@@ -30,7 +27,7 @@ export default function NewsDetailTop({ detail }: NewsDetailTopProps) {
   return (
     <div className="grid items-start gap-10 min-[1100px]:grid-cols-[433px_minmax(0,1fr)]">
       <motion.div
-        className="relative aspect-[4/5] w-full overflow-hidden min-[700px]:h-[512px] min-[700px]:aspect-auto"
+        className="surface-card-soft relative aspect-[4/5] w-full overflow-hidden min-[700px]:h-[512px] min-[700px]:aspect-auto"
         variants={slideInLeft}
         initial="hidden"
         animate="visible"
@@ -55,17 +52,17 @@ export default function NewsDetailTop({ detail }: NewsDetailTopProps) {
         <Link
           href="/news"
           aria-label={t("back")}
-          className="text-accent border-accent inline-flex h-[34px] w-[57px] items-center justify-center rounded-full border-2 no-underline transition-all duration-300 hover:bg-accent hover:text-black hover:scale-110"
+          className="pill-button pill-button-accent-outline h-[34px] min-h-[34px] w-[57px] px-0"
         >
           <ChevronLeft className="h-5 w-5 shrink-0" aria-hidden />
         </Link>
 
         <div className="grid gap-4">
-          <h1 className="m-0 font-[var(--font-league-spartan)] text-[clamp(42px,7vw,64px)] leading-none font-bold uppercase">
+          <h1 className="display-section m-0 text-[clamp(42px,7vw,64px)] text-white">
             {detail.title}
           </h1>
-          <p className="text-accent m-0 text-[14px] leading-none font-bold uppercase">{detail.date}</p>
-          <div className="grid gap-4 text-base leading-[1.4] font-light">
+          <p className="ui-label text-accent m-0">{detail.date}</p>
+          <div className="body-md grid gap-4 text-white/84">
             {detail.introParagraphs.map((paragraph) => (
               <p key={paragraph} className="m-0">
                 {paragraph}

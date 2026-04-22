@@ -104,6 +104,12 @@ export default async function NewsDetailRoute({ params }: NewsDetailRouteProps) 
     fallbackListPath: "/news",
   });
 
+  const contentBlocks = Array.isArray(newsDoc.content)
+    ? (newsDoc.content as Array<Record<string, unknown>>)
+        .filter((block) => typeof block?.blockType === "string")
+        .map((block) => block as unknown)
+    : [];
+
   const detail = {
     slug: newsDoc.slug,
     title: newsDoc.title,
@@ -112,6 +118,8 @@ export default async function NewsDetailRoute({ params }: NewsDetailRouteProps) 
     introParagraphs: newsDoc.introParagraphs?.split("\n") || [],
     bodyParagraphs: newsDoc.bodyParagraphs?.split("\n") || [],
     galleryImages: newsDoc.galleryImages?.map((g: { image: string }) => g.image) || [],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    contentBlocks: contentBlocks as any,
   };
 
   return (

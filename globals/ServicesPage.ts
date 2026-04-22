@@ -13,12 +13,12 @@ import { revalidateServices } from "@/lib/revalidate";
  */
 export const ServicesPage: GlobalConfig = {
   slug: "services-page",
-  label: "⚙️ Services",
+  label: "Services",
   access: {
     read: () => true,
   },
   admin: {
-    group: "🗂️ Pages",
+    group: "Pages",
     description: "Contenu de la page Services : offres talents, commercial, partenaires, études de cas. L'ordre des sections est réglable.",
     livePreview: {
       url: ({ locale }) => {

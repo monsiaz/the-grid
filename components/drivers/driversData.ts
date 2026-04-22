@@ -9,6 +9,18 @@ export type DriverCardData = {
   instagramUrl: string;
 };
 
+export type DriverRelatedNews = {
+  /** If set, the card becomes a <Link> to /news/<slug>/. */
+  slug?: string | null;
+  title: string;
+  image: string;
+};
+
+export type DriverStatCard = {
+  value: string;
+  label: string;
+};
+
 export type DriverDetailData = {
   slug: string;
   profileTitle: string;
@@ -23,6 +35,14 @@ export type DriverDetailData = {
   careerPoints: string;
   grandPrixEntered: string;
   careerPodiums: string;
+  profileImage?: string | null;
+  careerImage?: string | null;
+  agencyImage?: string | null;
+  galleryLeft?: string | null;
+  galleryCenter?: string | null;
+  galleryRight?: string | null;
+  relatedNews?: DriverRelatedNews[];
+  statsCards?: DriverStatCard[];
 };
 
 export const driversCards: DriverCardData[] = [
@@ -201,6 +221,7 @@ const gaslyDetail: DriverDetailData = {
   careerPoints: "458",
   grandPrixEntered: "177",
   careerPodiums: "05",
+  statsCards: [],
 };
 
 export function getDriverBySlug(slug: string): DriverCardData | undefined {
@@ -235,5 +256,6 @@ export function getDriverDetailData(slug: string): DriverDetailData {
       "This profile is in progress and will include expanded insight on sporting, media, and commercial development.",
       "The same framework is intentionally reused to keep the experience cohesive across all driver detail pages.",
     ],
+    statsCards: [],
   };
 }

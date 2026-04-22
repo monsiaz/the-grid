@@ -18,6 +18,7 @@ import { ServicesPage } from "./globals/ServicesPage";
 import { ContactPage } from "./globals/ContactPage";
 import { DriversPage } from "./globals/DriversPage";
 import { SiteSettings } from "./globals/SiteSettings";
+import { DesignSettings } from "./globals/DesignSettings";
 
 const postgresUrl = process.env.DATABASE_URL || "";
 const sqliteUrl = process.env.DATABASE_URI || "";
@@ -54,6 +55,14 @@ export default buildConfig({
       icons: [{ rel: "icon", type: "image/svg+xml", url: "/favicon.svg" }],
     },
     theme: "dark",
+    components: {
+      graphics: {
+        Logo: "@/components/admin/Logo#default",
+        Icon: "@/components/admin/NavIcon#default",
+      },
+      beforeDashboard: ["@/components/admin/BeforeDashboard#default"],
+      afterNavLinks: ["@/components/admin/AfterNavLinks#default"],
+    },
     livePreview: {
       breakpoints: [
         { label: "Mobile", name: "mobile", width: 390, height: 844 },
@@ -63,7 +72,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Drivers, News, NewsTags, TeamMembers],
-  globals: [Homepage, AboutPage, ServicesPage, ContactPage, DriversPage, SiteSettings],
+  globals: [Homepage, AboutPage, ServicesPage, ContactPage, DriversPage, SiteSettings, DesignSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "default-secret-change-me",
   typescript: {

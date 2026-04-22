@@ -11,7 +11,7 @@ export const News: CollectionConfig = {
     plural: "Actualités",
   },
   admin: {
-    group: "📰 Contenu",
+    group: "Contenu",
     useAsTitle: "title",
     description: "Gérez les articles publiés sur /news. Chaque article peut avoir des blocs de contenu riches (texte, images, stats, galeries).",
     defaultColumns: ["title", "tag", "date"],

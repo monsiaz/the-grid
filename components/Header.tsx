@@ -5,12 +5,15 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { AnimatePresence } from "framer-motion";
 import { motion, fadeDown, smoothTransition } from "./motion";
+import LocaleSwitcher from "./LocaleSwitcher";
 
 type HeaderItemId = "about" | "services" | "drivers" | "news" | "contact";
 
 type HeaderProps = {
   activeItem?: HeaderItemId;
   anchorPrefix?: string;
+  menuStyle?: "default" | "liquid";
+  menuTextSize?: "regular" | "large";
 };
 
 const headerItems: Array<{ id: HeaderItemId; href: string }> = [
@@ -21,9 +24,25 @@ const headerItems: Array<{ id: HeaderItemId; href: string }> = [
   { id: "contact", href: "/contact" },
 ];
 
-export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
+export default function Header({
+  activeItem,
+  anchorPrefix = "",
+  menuStyle = "default",
+  menuTextSize = "large",
+}: HeaderProps) {
   const t = useTranslations("header");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isLiquidMenu = menuStyle === "liquid";
+  const desktopTextClass = isLiquidMenu
+    ? menuTextSize === "large"
+      ? "text-[13.5px] font-semibold uppercase tracking-[0.14em]"
+      : "text-[12px] font-semibold uppercase tracking-[0.12em]"
+    : menuTextSize === "large"
+      ? "text-[13px] font-semibold uppercase tracking-[0.13em]"
+      : "text-[11.5px] font-medium uppercase tracking-[0.11em]";
+  const mobileTextClass = menuTextSize === "large"
+    ? "text-[clamp(22px,5.6vw,30px)] font-semibold uppercase tracking-[0.12em]"
+    : "text-[clamp(20px,5.1vw,27px)] font-semibold uppercase tracking-[0.1em]";
 
   useEffect(() => {
     if (typeof document === "undefined") return;
@@ -102,7 +121,11 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
       </button>
 
       <nav
-        className="flex shrink-0 items-center gap-[clamp(14px,2vw,28px)] max-[900px]:hidden"
+        className={`flex shrink-0 items-center max-[900px]:hidden ${
+          isLiquidMenu
+            ? "gap-[clamp(10px,1.5vw,18px)] rounded-[999px] border border-white/20 bg-[rgba(14,14,14,0.36)] px-4 py-2 shadow-[0_12px_40px_rgba(0,0,0,0.36)] backdrop-blur-xl supports-[backdrop-filter]:bg-[rgba(14,14,14,0.28)]"
+            : "gap-[clamp(14px,2vw,28px)]"
+        }`}
         aria-label={t("primary")}
       >
         {headerItems.map((item, idx) => (
@@ -117,12 +140,22 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
               href={item.href.startsWith("#") ? `${anchorPrefix}${item.href}` : item.href}
               aria-current={activeItem === item.id ? "page" : undefined}
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`ui-label whitespace-nowrap no-underline transition-colors duration-300 hover:text-accent ${activeItem === item.id ? "text-accent" : "text-secondary/86"}`}
+              className={`whitespace-nowrap no-underline transition-colors duration-300 hover:text-accent ${desktopTextClass} ${
+                activeItem === item.id ? "text-accent" : "text-secondary/90"
+              }`}
             >
               {t(`nav.${item.id}`)}
             </Link>
           </motion.div>
         ))}
+        <motion.div
+          variants={fadeDown}
+          initial="hidden"
+          animate="visible"
+          transition={{ ...smoothTransition, delay: 0.1 + headerItems.length * 0.06 }}
+        >
+          <LocaleSwitcher dropdownDir="down" />
+        </motion.div>
       </nav>
       <AnimatePresence>
         {isMobileMenuOpen ? (
@@ -137,7 +170,11 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
             <motion.nav
               id="site-navigation"
               aria-label={t("mobile")}
-              className="flex w-full flex-1 flex-col items-center justify-center gap-6"
+              className={`flex w-full flex-1 flex-col items-center justify-center gap-6 ${
+                isLiquidMenu
+                  ? "mx-auto max-w-[420px] rounded-[28px] border border-white/20 bg-[rgba(12,12,12,0.42)] px-5 py-8 shadow-[0_18px_54px_rgba(0,0,0,0.45)] backdrop-blur-xl supports-[backdrop-filter]:bg-[rgba(12,12,12,0.3)]"
+                  : ""
+              }`}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
@@ -156,12 +193,23 @@ export default function Header({ activeItem, anchorPrefix = "" }: HeaderProps) {
                     href={item.href.startsWith("#") ? `${anchorPrefix}${item.href}` : item.href}
                     aria-current={activeItem === item.id ? "page" : undefined}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`display-card block px-4 py-3 no-underline transition-colors duration-300 hover:text-accent ${activeItem === item.id ? "text-accent" : "text-secondary"}`}
+                    className={`block px-4 py-3 no-underline transition-colors duration-300 hover:text-accent ${mobileTextClass} ${
+                      activeItem === item.id ? "text-accent" : "text-secondary"
+                    }`}
                   >
                     {t(`nav.${item.id}`)}
                   </Link>
                 </motion.div>
               ))}
+              <motion.div
+                variants={fadeDown}
+                initial="hidden"
+                animate="visible"
+                transition={{ ...smoothTransition, duration: 0.35, delay: headerItems.length * 0.04 }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <LocaleSwitcher dropdownDir="down" />
+              </motion.div>
             </motion.nav>
           </motion.div>
         ) : null}

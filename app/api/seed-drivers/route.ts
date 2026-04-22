@@ -18,6 +18,7 @@ type DriverSeed = {
   name: string;
   role: string;
   detail: {
+    statsCards?: { value: string; label: string }[];
     profileTitle: string;
     profileParagraphs: string;
     careerTitle: string;
@@ -130,6 +131,12 @@ const DRIVERS: DriverSeed[] = [
         "Frédéric Makowiecki's career is managed and strategically developed by The Grid Agency, providing comprehensive support across sporting, technical, and commercial dimensions. The Grid Agency works closely with Makowiecki to optimise career strategy and manufacturer positioning, contract negotiations and long-term programme alignment, performance structure and technical collaboration, and brand development within international endurance racing.",
         "This partnership ensures that Frédéric Makowiecki's career continues to evolve at the highest level of global motorsport, aligning performance excellence with long-term strategic vision.",
       ].join("\n\n"),
+      statsCards: [
+        { value: "05", label: "GLOBAL\nMANUFACTURERS" },
+        { value: "WEC", label: "CURRENT\nCHAMPIONSHIP" },
+        { value: "IMSA", label: "ENDURANCE\nEXPERIENCE" },
+        { value: "2X", label: "ALPINE\nSEASONS" },
+      ],
       profileImage: img("fred-makowiecki", 2),
       careerImage: img("fred-makowiecki", 1),
       agencyImage: img("fred-makowiecki", 5),
@@ -159,6 +166,12 @@ const DRIVERS: DriverSeed[] = [
       agencyTitle: "Kush Maini and The Grid Agency",
       agencyParagraphs:
         "Kush Maini joined The Grid Agency in 2024. This dual involvement with Alpine F1 and Mahindra Formula E demonstrates the trust placed in him by major international manufacturers and reinforces his status as one of India's leading motorsport representatives on the global stage. The partnership with The Grid Agency supports his long-term path toward Formula 1.",
+      statsCards: [
+        { value: "07", label: "F2\nPODIUMS" },
+        { value: "02", label: "F2\nWINS" },
+        { value: "01", label: "F2\nPOLE" },
+        { value: "F2", label: "CURRENT\nSERIES" },
+      ],
       profileImage: img("kush-maini", 1),
       careerImage: img("kush-maini", 4),
       agencyImage: img("kush-maini", 2),
@@ -189,6 +202,12 @@ const DRIVERS: DriverSeed[] = [
       agencyTitle: "Alessandro Giusti and The Grid Agency",
       agencyParagraphs:
         "Alessandro Giusti joined The Grid Agency at the end of the 2024 season. His career is supported by The Grid Agency with a structured development pathway aimed at Formula 2 and ultimately Formula 1. With Williams Academy backing and proven speed across multiple categories, the focus is on consistent front-running performances at international level.",
+      statsCards: [
+        { value: "02", label: "FRENCH F4\nTITLES" },
+        { value: "03", label: "FRECA\nWINS" },
+        { value: "02", label: "FRECA\nPOLES" },
+        { value: "P04", label: "FRECA\nFINISH" },
+      ],
       profileImage: img("alessandro-giusti", 6),
       careerImage: img("alessandro-giusti", 1),
       agencyImage: img("alessandro-giusti", 5),
@@ -219,6 +238,12 @@ const DRIVERS: DriverSeed[] = [
       agencyTitle: "Enzo Deligny and The Grid Agency",
       agencyParagraphs:
         "The Grid Agency supports Enzo Deligny's career development with long-term strategic vision as he steps into FIA Formula 3 competition. His previous results in Spanish F4 and FRECA demonstrate that he possesses the qualifying speed, racecraft, and championship consistency required to compete at this level.",
+      statsCards: [
+        { value: "04", label: "FRECA\nWINS" },
+        { value: "04", label: "FRECA\nPOLES" },
+        { value: "09", label: "FRECA\nPODIUMS" },
+        { value: "P03", label: "FRECA\nFINISH" },
+      ],
       profileImage: img("enzo-deligny", 1),
       careerImage: img("enzo-deligny", 3),
       agencyImage: img("enzo-deligny", 2),
@@ -246,6 +271,12 @@ const DRIVERS: DriverSeed[] = [
       agencyTitle: "Andrea Dupe and The Grid Agency",
       agencyParagraphs:
         "The Grid Agency supports Andrea Dupe's career with a long-term development plan combining international exposure and a structured technical programme. The transition into FRECA with Van Amersfoort Racing positions him firmly on the single-seater ladder, backed by the agency's expertise in driver management and career strategy.",
+      statsCards: [
+        { value: "2023", label: "ITALIAN\nVICE-CHAMPION" },
+        { value: "2025", label: "CAR RACING\nDEBUT" },
+        { value: "2026", label: "FRECA\nSTEP-UP" },
+        { value: "VAR", label: "CURRENT\nTEAM" },
+      ],
       profileImage: img("andrea-dupe", 1),
       careerImage: img("andrea-dupe", 3),
       agencyImage: img("andrea-dupe", 5),
@@ -275,6 +306,12 @@ const DRIVERS: DriverSeed[] = [
       agencyTitle: "Nathan Tye and The Grid Agency",
       agencyParagraphs:
         "The progression shown throughout Nathan Tye's career was recognised early by The Grid Agency, which supports his development with a structured and performance-focused approach. With factory karting experience, multiple podium finishes at national and European level, and increasing maturity in Formula 4, the combination of British racing foundations and international exposure positions him strongly for future advancement within the single-seater pyramid.",
+      statsCards: [
+        { value: "2021", label: "FACTORY DRIVER\nCALL-UP" },
+        { value: "03", label: "CAR RACING\nSEASON" },
+        { value: "F4", label: "CURRENT\nSERIES" },
+        { value: "DRIVEX", label: "CURRENT\nTEAM" },
+      ],
       profileImage: img("nathan-tye", 1),
       careerImage: img("nathan-tye", 2),
       agencyImage: img("nathan-tye", 5),
@@ -303,6 +340,12 @@ const DRIVERS: DriverSeed[] = [
       agencyTitle: "Vivek Kanthan and The Grid Agency",
       agencyParagraphs:
         "Vivek Kanthan joined The Grid Agency in 2024. As his career continues to evolve, the focus is on converting experience into consistent front-running results and positioning himself for the next step on the European single-seater ladder.",
+      statsCards: [
+        { value: "01", label: "ROTAX\nTITLE" },
+        { value: "01", label: "ROK WORLD\nSUPERFINAL" },
+        { value: "01", label: "SPANISH WINTER\nROOKIE TITLE" },
+        { value: "F4", label: "CURRENT\nSERIES" },
+      ],
       profileImage: img("vivek-kanthan", 1),
       careerImage: img("vivek-kanthan", 3),
       agencyImage: img("vivek-kanthan", 4),
@@ -331,6 +374,12 @@ const DRIVERS: DriverSeed[] = [
       agencyTitle: "Jack Iliffe and The Grid Agency",
       agencyParagraphs:
         "Jack Iliffe joined The Grid Agency during the 2024 season. With a background that includes multiple national championships and a major European karting title, Jack enters this new single-seater phase equipped with strong foundational skills and long-term agency support.",
+      statsCards: [
+        { value: "04", label: "US NATIONAL\nTITLES" },
+        { value: "01", label: "WSK EURO\nTITLE" },
+        { value: "2026", label: "FRENCH F4\nDEBUT" },
+        { value: "FFSA", label: "CURRENT\nPROGRAMME" },
+      ],
       profileImage: img("jack-iliffe", 1),
       careerImage: img("jack-iliffe", 2),
       agencyImage: img("jack-iliffe", 4),
@@ -358,6 +407,12 @@ const DRIVERS: DriverSeed[] = [
       agencyTitle: "Louis Cochet and The Grid Agency",
       agencyParagraphs:
         "Louis Cochet joined The Grid Agency in 2025. His career is supported with a long-term development plan that leverages his karting pedigree and accelerates his progression through the European single-seater ladder.",
+      statsCards: [
+        { value: "2022", label: "NSK CADET\nTITLE" },
+        { value: "P04", label: "VITERBO\nFINISH" },
+        { value: "2026", label: "SPANISH F4\nDEBUT" },
+        { value: "MP", label: "CURRENT\nTEAM" },
+      ],
       profileImage: img("louis-cochet", 2),
       careerImage: img("louis-cochet", 1),
       agencyImage: img("louis-cochet", 4),
@@ -386,6 +441,12 @@ const DRIVERS: DriverSeed[] = [
       agencyTitle: "Luka Scelles and The Grid Agency",
       agencyParagraphs:
         "Luka Scelles joined The Grid Agency in 2025. His career is supported with a long-term development plan focused on the transition from international karting success to professional single-seater racing.",
+      statsCards: [
+        { value: "2023", label: "NSK\nTITLE" },
+        { value: "P05", label: "EURO\nFINISH" },
+        { value: "TOP10", label: "WORLD CHAMP.\nRESULT" },
+        { value: "P04", label: "WSK FINAL CUP\nFINAL" },
+      ],
       profileImage: img("luka-scelles", 1),
       careerImage: img("luka-scelles", 3),
       agencyImage: img("luka-scelles", 5),
@@ -417,6 +478,12 @@ const DRIVERS: DriverSeed[] = [
       agencyTitle: "Alessandro Truchot and The Grid Agency",
       agencyParagraphs:
         "He joined The Grid Agency in 2026. Given his early results, championship consistency, and adaptability across international platforms, Alessandro Truchot's career is widely regarded as one to watch closely in the coming years.",
+      statsCards: [
+        { value: "02", label: "SKUSA WINTER\nTITLES" },
+        { value: "01", label: "ANDREA MARGUTTI\nWIN" },
+        { value: "01", label: "TROFEO PRIMAVERA\nWIN" },
+        { value: "P02", label: "WSK EURO\nFINISH" },
+      ],
       profileImage: img("alex-truchot", 1),
       careerImage: img("alex-truchot", 2),
       agencyImage: img("alex-truchot", 4),
@@ -444,6 +511,12 @@ const DRIVERS: DriverSeed[] = [
       agencyTitle: "Stan Ratajski and The Grid Agency",
       agencyParagraphs:
         "Stan Ratajski joined The Grid Agency in 2026. Given his results and rate of progression, his career is widely regarded as one to follow closely in the coming years.",
+      statsCards: [
+        { value: "2022", label: "NSK\nTITLE" },
+        { value: "2024", label: "WSK OPEN\nTITLE" },
+        { value: "P02", label: "WSK FINAL CUP\nFINISH" },
+        { value: "2025", label: "TROFEO DELLE\nINDUSTRIE" },
+      ],
       profileImage: img("stan-ratajski", 1),
       careerImage: img("stan-ratajski", 3),
       agencyImage: img("stan-ratajski", 5),

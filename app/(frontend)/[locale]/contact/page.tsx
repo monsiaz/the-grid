@@ -6,6 +6,7 @@ import { buildRouteAlternates } from "@/lib/routeAlternates";
 import LocaleAlternatesData from "@/components/LocaleAlternatesData";
 import ContactHero from "@/components/contact/ContactHero";
 import { getPayloadClient } from "@/lib/payload";
+import { resolveSectionOrder } from "@/lib/sectionOrder";
 
 export const revalidate = 60;
 
@@ -38,10 +39,13 @@ export default async function ContactPage({
   const siteSettings = await payload.findGlobal({ slug: "site-settings", locale });
   const t = await getTranslations({ locale, namespace: "contact" });
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/contact" });
+  const orderedSections = resolveSectionOrder(
+    contactPage.sectionOrder,
+    ["hero"] as const,
+  );
 
-  return (
-    <main id="main" className="bg-primary text-secondary w-full ">
-      <LocaleAlternatesData alternates={alternates} />
+  const sections = {
+    hero: (
       <ContactHero
         backgroundImage={contactPage.heroBackgroundImage}
         title={
@@ -67,6 +71,15 @@ export default async function ContactPage({
           privacyPolicyUrl: siteSettings.privacyPolicyUrl,
         }}
       />
+    ),
+  } as const;
+
+  return (
+    <main id="main" className="bg-primary text-secondary w-full ">
+      <LocaleAlternatesData alternates={alternates} />
+      {orderedSections.map((sectionId) => (
+        <div key={sectionId}>{sections[sectionId]}</div>
+      ))}
     </main>
   );
 }

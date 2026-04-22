@@ -55,6 +55,8 @@ export default async function NewsPage({
 }) {
   const [{ locale }, { filter }] = await Promise.all([params, searchParams]);
   setRequestLocale(locale);
+  const heroVariant = "editorial" as const;
+  const rowVariant = "magazine" as const;
 
   const payload = await getPayloadClient();
   const siteSettings = await payload.findGlobal({ slug: "site-settings", locale });
@@ -140,19 +142,22 @@ export default async function NewsPage({
   let rowCards: NewsCardData[][];
 
   if (activeFilter) {
+    // Filtered view: no hero bento, just a clean 4-per-row stream of matches.
     featuredCards = [];
     rowCards = [];
-    for (let i = 0; i < filteredCards.length; i += 4) {
-      rowCards.push(filteredCards.slice(i, i + 4));
+    const chunkSize = rowVariant === "magazine" ? 2 : 3;
+    for (let i = 0; i < filteredCards.length; i += chunkSize) {
+      rowCards.push(filteredCards.slice(i, i + chunkSize));
     }
   } else {
-    featuredCards = filteredCards.slice(0, 6);
-    rowCards = [
-      filteredCards.slice(6, 10),
-      filteredCards.slice(10, 14),
-      filteredCards.slice(14, 18),
-      filteredCards.slice(18, 22),
-    ];
+    // Use a larger, more editorial hero area on desktop, then flow the rest below.
+    const featuredCount = 6;
+    const chunkSize = 2;
+    featuredCards = filteredCards.slice(0, featuredCount);
+    rowCards = [];
+    for (let i = featuredCount; i < filteredCards.length; i += chunkSize) {
+      rowCards.push(filteredCards.slice(i, i + chunkSize));
+    }
   }
 
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/news" });
@@ -164,15 +169,15 @@ export default async function NewsPage({
   return (
     <main id="main" className="bg-primary text-secondary w-full ">
       <Header activeItem="news" />
-      <section className="mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)] pt-20 pb-24">
-        <div className="grid gap-16">
+      <section className="mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)] pt-16 pb-20">
+        <div className="grid gap-10">
           <NewsHeading activeFilter={activeFilter} tags={headingTags} />
-          <div className="grid gap-7">
-            <NewsFeaturedGrid cards={featuredCards} />
+          <div className="grid gap-5">
+            <NewsFeaturedGrid cards={featuredCards} variant={heroVariant} />
             {rowCards
               .filter((row) => row.length > 0)
               .map((row, index) => (
-                <NewsCardsRow key={index} cards={row} />
+                <NewsCardsRow key={index} cards={row} variant={rowVariant} />
               ))}
           </div>
         </div>

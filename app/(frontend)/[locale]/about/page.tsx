@@ -10,6 +10,8 @@ import AboutAccelereFollow from "@/components/about/AboutAccelereFollow";
 import AboutCoreTeam from "@/components/about/AboutCoreTeam";
 import AboutHero from "@/components/about/AboutHero";
 import { getPayloadClient } from "@/lib/payload";
+import { resolveSectionOrder } from "@/lib/sectionOrder";
+import { getDesignSettings } from "@/lib/designSettings";
 
 export const revalidate = 60;
 
@@ -38,18 +40,39 @@ export default async function AboutPage({
   setRequestLocale(locale);
 
   const payload = await getPayloadClient();
-  const aboutPage = await payload.findGlobal({ slug: "about-page", locale });
-  const siteSettings = await payload.findGlobal({ slug: "site-settings", locale });
+  const [aboutPage, siteSettings, designSettings] = await Promise.all([
+    payload.findGlobal({ slug: "about-page", locale }),
+    payload.findGlobal({ slug: "site-settings", locale }),
+    getDesignSettings(),
+  ]);
   const teamMembers = await payload.find({ collection: "team-members", sort: "order", locale });
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/about" });
+  const aboutInstagramUrl =
+    typeof aboutPage.instagramUrl === "string" &&
+    aboutPage.instagramUrl.trim() &&
+    aboutPage.instagramUrl.trim() !== "https://instagram.com"
+      ? aboutPage.instagramUrl.trim()
+      : siteSettings.instagramUrl;
+  const orderedSections = resolveSectionOrder(
+    aboutPage.sectionOrder,
+    ["hero", "coreTeam", "accelereBanner", "accelereFollow"] as const,
+  );
 
-  return (
-    <main id="main" className="bg-primary text-secondary w-full ">
+  const sections = {
+    hero: (
       <AboutHero
         title={aboutPage.heroTitle}
         description={aboutPage.heroDescription}
         backgroundImage={aboutPage.heroBackgroundImage}
+        heroCta={designSettings.heroCta}
+        stickyHeader={designSettings.stickyHeader}
+        menuStyle={designSettings.headerMenuStyle}
+        menuTextSize={designSettings.headerMenuTextSize}
+        heroTextBackdropOpacity={designSettings.heroTextBackdropOpacity}
+        heroTextBackdropBlur={designSettings.heroTextBackdropBlur}
       />
+    ),
+    coreTeam: (
       <AboutCoreTeam
         coreIntroText={aboutPage.coreIntroText}
         coreAreas={aboutPage.coreAreas || []}
@@ -68,7 +91,9 @@ export default async function AboutPage({
           linkedinUrl: (m as { linkedinUrl?: string | null }).linkedinUrl ?? null,
         }))}
       />
-      <AboutAccelereBanner bannerImage={aboutPage.accelereBannerImage} />
+    ),
+    accelereBanner: <AboutAccelereBanner bannerImage={aboutPage.accelereBannerImage} />,
+    accelereFollow: (
       <AboutAccelereFollow
         description={aboutPage.accelereDescription}
         quote={aboutPage.accelereQuote}
@@ -76,10 +101,18 @@ export default async function AboutPage({
         quoteRole={aboutPage.accelereQuoteRole}
         quoteTitle={aboutPage.accelereQuoteTitle}
         instagramHandle={aboutPage.instagramHandle}
-        instagramUrl={aboutPage.instagramUrl}
+        instagramUrl={aboutInstagramUrl}
         instagramImages={aboutPage.instagramImages?.map((i: { image: string }) => i.image) || []}
         portraitImage={aboutPage.accelerePortraitImage}
       />
+    ),
+  } as const;
+
+  return (
+    <main id="main" className="bg-primary text-secondary w-full ">
+      {orderedSections.map((sectionId) => (
+        <div key={sectionId}>{sections[sectionId]}</div>
+      ))}
       <LocaleAlternatesData alternates={alternates} />
       <Footer
         copyright={siteSettings.footerCopyright}

@@ -9,7 +9,7 @@ export const TeamMembers: CollectionConfig = {
     plural: "Équipe",
   },
   admin: {
-    group: "📰 Contenu",
+    group: "Contenu",
     useAsTitle: "name",
     description: "Membres de l'équipe The Grid affichés sur la page À propos. L'ordre d'affichage est contrôlé par le champ « Ordre ».",
     defaultColumns: ["name", "role", "order"],

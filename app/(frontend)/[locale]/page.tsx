@@ -12,6 +12,8 @@ import Services from "@/components/Services";
 import News from "@/components/News";
 import Drivers from "@/components/Drivers";
 import { getPayloadClient } from "@/lib/payload";
+import { resolveSectionOrder } from "@/lib/sectionOrder";
+import { getDesignSettings } from "@/lib/designSettings";
 
 export const revalidate = 60;
 
@@ -66,34 +68,62 @@ export default async function Home({
   setRequestLocale(locale);
 
   const payload = await getPayloadClient();
-  const homepage = await payload.findGlobal({ slug: "homepage", locale });
-  const siteSettings = await payload.findGlobal({ slug: "site-settings", locale });
+  const [homepage, siteSettings, designSettings] = await Promise.all([
+    payload.findGlobal({ slug: "homepage", locale }),
+    payload.findGlobal({ slug: "site-settings", locale }),
+    getDesignSettings(),
+  ]);
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/" });
+  const orderedSections = resolveSectionOrder(
+    homepage.sectionOrder,
+    ["hero", "about", "experience", "services", "news", "drivers"] as const,
+  );
 
-  return (
-    <main id="main" className="bg-primary text-secondary w-full ">
+  const sections = {
+    hero: (
       <Hero
         backgroundImage={homepage.heroBackgroundImage}
         title={renderHeroTitle(homepage.heroTitle)}
         contentClassName="my-32 max-w-[820px] text-left"
-        titleClassName="font-[var(--font-league-spartan)] text-[64px] leading-[1.05] font-bold uppercase drop-shadow-[4px_4px_8px_rgba(0,0,0,0.1)] max-[1200px]:text-[clamp(40px,5.2vw,60px)] whitespace-nowrap max-[600px]:whitespace-normal max-[600px]:text-[clamp(32px,10vw,44px)]"
+        titleClassName="display-hero whitespace-nowrap max-[600px]:whitespace-normal max-[600px]:text-[clamp(32px,10vw,44px)]"
+        stickyHeader={designSettings.stickyHeader}
+        menuStyle={designSettings.headerMenuStyle}
+        menuTextSize={designSettings.headerMenuTextSize}
+        backdropOpacity={designSettings.heroTextBackdropOpacity}
+        backdropBlur={designSettings.heroTextBackdropBlur}
+        parallaxIntensity={designSettings.parallaxIntensity}
+        heroGradientIntensity={designSettings.heroGradientIntensity}
       />
+    ),
+    about: (
       <About
         text={homepage.aboutText}
         buttonLabel={homepage.aboutButtonLabel || undefined}
         backgroundImage={homepage.aboutBackgroundImage}
       />
-      <Experience text={homepage.experienceText} />
+    ),
+    experience: <Experience text={homepage.experienceText} />,
+    services: (
       <Services
         labels={homepage.serviceLabels?.map((s: { label: string }) => s.label) || []}
         backgroundImage={homepage.servicesBackgroundImage}
       />
-      <News items={homepage.homepageNewsItems || []} />
+    ),
+    news: <News items={homepage.homepageNewsItems || []} />,
+    drivers: (
       <Drivers
         heading={homepage.driversHeading || undefined}
         headingAccent={homepage.driversHeadingAccent || undefined}
         backgroundImage={homepage.driversBackgroundImage}
       />
+    ),
+  } as const;
+
+  return (
+    <main id="main" className="bg-primary text-secondary w-full ">
+      {orderedSections.map((sectionId) => (
+        <div key={sectionId}>{sections[sectionId]}</div>
+      ))}
       <LocaleAlternatesData alternates={alternates} />
       <Footer
         copyright={siteSettings.footerCopyright}

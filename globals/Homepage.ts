@@ -9,9 +9,9 @@ export const Homepage: GlobalConfig = {
   access: {
     read: () => true,
   },
-  label: "🏠 Page d'accueil",
+  label: "Page d'accueil",
   admin: {
-    group: "🗂️ Pages",
+    group: "Pages",
     description: "Contenu de la page principale du site : hero, services, pilotes, actualités. Les modifications sont appliquées en temps réel.",
     livePreview: {
       url: ({ locale }) => {
@@ -51,10 +51,11 @@ export const Homepage: GlobalConfig = {
     }),
     imageField({
       name: "aboutBackgroundImage",
-      label: "About section background image",
+      label: "About strip background (home block 2)",
       required: true,
-      defaultValue: "/images/about.webp",
-      description: "Image plein largeur derrière le pitch « About ».",
+      defaultValue: "/assets/v2/home/services.webp",
+      description:
+        "Bandeau sous le hero : visuel F1 + gradient (sans texte sur la home).",
     }),
     {
       name: "aboutText",
@@ -84,10 +85,11 @@ export const Homepage: GlobalConfig = {
     },
     imageField({
       name: "servicesBackgroundImage",
-      label: "Services section background image",
+      label: "Services section background (home block 4)",
       required: true,
-      defaultValue: "/images/services.webp",
-      description: "Image plein largeur derrière la liste des services.",
+      defaultValue: "/assets/v2/home/about.webp",
+      description:
+        "Photo plein bloc derrière Sport management / Image & media / Commercial development.",
     }),
     {
       name: "serviceLabels",

@@ -8,8 +8,10 @@ import path from "path";
 const SRC = "/Users/simonazoulay/Downloads/COLLECTE IMAGES";
 const DEST = "/Users/simonazoulay/the-grid/public/assets/v2";
 
-// [sourcePath, targetPath, width, height?, fit?, quality?]
-// width/height in px, fit = cover|contain|inside
+// [sourcePath, targetPath, width, height?, fit?, quality?, extract?]
+// width/height in px, fit = cover|contain|inside|cover-top
+// extract = { left, top, width, height } — optional pre-crop applied BEFORE
+// resize (lets us frame the subject before the cover crop).
 const JOBS = [
   // ===== HOMEPAGE =====
   // Hero (landscape 1920x1080 style) — Pierre cockpit
@@ -26,8 +28,13 @@ const JOBS = [
 
   // ===== ABOUT =====
   // Core areas — use client's high-res source images, mapped to correct slots
-  // 01 Sport Management = Isack in pit with helmet (from CDN original mapping)
-  ["ABOUT/@GregoireTruchet-6018.jpg.jpeg", "about/core-sport-management.webp", 900, 1300, "cover", 82],
+  // 01 Sport Management = Pierre Gasly Singapore 2025 cockpit portrait (BWT
+  // helmet, visor up, red halo in foreground). Source is a 3767×5650 portrait
+  // at a natural 2:3 ratio, subject (helmet + face) centered vertically. The
+  // About card renders this as `aspect-square` with `object-top`, so a
+  // 900×1300 cover resize keeps the helmet + face safely inside the top
+  // square crop without over-stretching.
+  ["HOMEPAGE/Pierre Gasly GP Singapore 2025_ Crédit GregoireTruchetjpg.jpg", "about/core-sport-management.webp", 900, 1300, "cover", 82],
   // 02 Image & Branding = Isack GQ magazine cover (red background)
   ["ABOUT/12.png", "about/core-image-branding.webp", 900, 1300, "cover", 82],
   // 03 Commercial Development = Pierre Gasly portrait (dark, with perfume bottle like Givenchy)
@@ -35,8 +42,14 @@ const JOBS = [
   ["ABOUT/gg25-bts-2@2x.avif", "about/core-commercial-development.webp", 900, 1300, "cover", 82],
   // Founder / Guillaume
   ["ABOUT/@GregoireTruchet-7079.jpg", "about/founder.webp", 900, 1200, "cover", 82],
-  // Team: Jérémy Satis = bearded, dark-green polo, black headphones, paddock blue bg
-  ["ABOUT/E54FE91C-EF6B-4D5A-9CEE-90F3D087C9DF_1_105_c.avif", "about/team-jeremy.webp", 800, 1100, "cover", 82],
+  // Team: Jérémy Satis = bearded, dark-green polo, black headphones, paddock blue bg.
+  // Source is 780x606 landscape. Previously targeted 800x1100 which forced a
+  // ~1.8x upscale AND cropped tight on the face — the card (aspect-square +
+  // object-top) then showed mostly headphones + chin and felt "too zoomed".
+  // New target is a natural 900x900 square (tiny 1.3x upscale) cropped around
+  // the subject so the card displays the full head + shoulders + green polo
+  // without heavy enlargement.
+  ["ABOUT/E54FE91C-EF6B-4D5A-9CEE-90F3D087C9DF_1_105_c.avif", "about/team-jeremy.webp", 900, 900, "cover", 85, { left: 162, top: 0, width: 606, height: 606 }],
   // Team: Laura Fredel = no client asset provided — keep empty placeholder, we restore from CDN separately
   // (intentionally no JOB here, see post-processing step in deploy-laura script)
   // ACCÉLÈRE banner — the PNG with subtitle+logos (new client-provided visual)
@@ -63,7 +76,12 @@ const JOBS = [
   ["SERVICES/PARTIE 1 SPORTIF/f7330b69-d810-4a45-bbd4-cbeaa67d8b13.jpg", "services/talent-branding.webp", 700, 1100, "cover", 78],
   // Hintsa partner (gym scene)
   ["SERVICES/PARTIE 1 SPORTIF/BAR_F3_DL-4018.jpg", "services/hintsa.webp", 1600, 900, "cover", 78],
-  // Value cards (4): Partnerships, Network, Activation, Private
+  // Value cards (5): Strategy (intro flip card), Partnerships, Network, Activation, Private
+  // Strategy & Positioning = Reebok × Pierre Gasly campaign shot (portrait, dark bg).
+  // Source is ~800x862 (near-square). We keep the subject centred with a cover
+  // resize into the same 700x1100 portrait slot the other value cards use, so the
+  // five cards in the grid stay visually consistent.
+  ["SERVICES/PARTIE 2 COMMERCIAL/HP_Reebok__Pierre_Gasly_3_3230966c-6fbf-4899-84f7-b5dd8e62579c.webp", "services/value-strategy.webp", 700, 1100, "cover", 80],
   ["SERVICES/PARTIE 2 COMMERCIAL/@GregoireTruchet-3504.jpg", "services/value-partnerships.webp", 700, 1100, "cover", 78],
   ["SERVICES/PARTIE 2 COMMERCIAL/@GregoireTruchet-5857.jpg", "services/value-network.webp", 700, 1100, "cover", 78],
   ["SERVICES/PARTIE 2 COMMERCIAL/@GregoireTruchet-7100.jpg", "services/value-activation.webp", 700, 1100, "cover", 78],
@@ -129,12 +147,17 @@ async function buildAboutHeroComposite() {
 
 async function run() {
   let ok = 0, fail = 0;
-  for (const [src, dst, w, h, fit = "cover", q = 80] of JOBS) {
+  for (const [src, dst, w, h, fit = "cover", q = 80, extract] of JOBS) {
     const srcPath = path.join(SRC, src);
     const dstPath = path.join(DEST, dst);
     try {
       await fs.mkdir(path.dirname(dstPath), { recursive: true });
       const pipeline = sharp(srcPath, { failOn: "none" });
+      if (extract) {
+        // Pre-crop to a specific region of the source BEFORE resizing so the
+        // subsequent `cover` resize doesn't over-crop or heavily upscale.
+        pipeline.extract(extract);
+      }
       if (h) {
         if (fit === "cover-top") {
           pipeline.resize(w, h, { fit: "cover", position: "top" });

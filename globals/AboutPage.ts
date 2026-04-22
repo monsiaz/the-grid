@@ -6,12 +6,12 @@ import { revalidateAbout } from "@/lib/revalidate";
 
 export const AboutPage: GlobalConfig = {
   slug: "about-page",
-  label: "👥 À propos",
+  label: "À propos",
   access: {
     read: () => true,
   },
   admin: {
-    group: "🗂️ Pages",
+    group: "Pages",
     description: "Contenu de la page À propos : équipe, cœur de métier, section ACCÉLÈRE, galerie Instagram.",
     livePreview: {
       url: ({ locale }) => {

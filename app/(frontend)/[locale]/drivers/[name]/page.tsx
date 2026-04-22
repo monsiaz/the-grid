@@ -82,6 +82,8 @@ export default async function DriverDetailRoutePage({ params }: DriverDetailRout
     where: { slug: { equals: name } },
     limit: 1,
     locale,
+    // Populate `detailNewsLinks` → news docs so we can build /news/<slug>/ links.
+    depth: 2,
   });
 
   if (result.docs.length === 0) {
@@ -113,6 +115,98 @@ export default async function DriverDetailRoutePage({ params }: DriverDetailRout
     instagramUrl: driverDoc.instagramUrl,
   };
 
+  /**
+   * Latest news for the driver.
+   *
+   * Preferred source: `detailNewsLinks` (relationship → news). Each linked
+   * article becomes a clickable card that goes to /news/<slug>/ with the
+   * article's own title and list image.
+   *
+   * Fallback: the legacy `detailNews` array (hand-entered {title, image}
+   * pairs). Rendered non-clickable so old data keeps working until admins
+   * migrate every driver over to the relationship field.
+   */
+  type LinkedNews = {
+    slug?: string | null;
+    title: string;
+    image: string;
+  };
+
+  const linkedRaw = Array.isArray(driverDoc.detailNewsLinks)
+    ? (driverDoc.detailNewsLinks as unknown[])
+    : [];
+
+  const linkedNews: LinkedNews[] = linkedRaw
+    .map((item): LinkedNews | null => {
+      if (!item || typeof item !== "object") return null;
+      const doc = item as {
+        slug?: unknown;
+        title?: unknown;
+        listImage?: unknown;
+      };
+      const slug = typeof doc.slug === "string" ? doc.slug.trim() : "";
+      const title = typeof doc.title === "string" ? doc.title.trim() : "";
+      const image =
+        typeof doc.listImage === "string" ? doc.listImage.trim() : "";
+      if (!slug || !title || !image) return null;
+      return { slug, title, image };
+    })
+    .filter((n): n is LinkedNews => n !== null);
+
+  const legacyNews: LinkedNews[] = Array.isArray(driverDoc.detailNews)
+    ? (driverDoc.detailNews as { title?: string; image?: string | null }[])
+        .map((item): LinkedNews | null => {
+          if (!item) return null;
+          const title = typeof item.title === "string" ? item.title.trim() : "";
+          const image = typeof item.image === "string" ? item.image.trim() : "";
+          if (!title || !image) return null;
+          return { slug: null, title, image };
+        })
+        .filter((n): n is LinkedNews => n !== null)
+    : [];
+
+  const curatedNews = linkedNews.length > 0 ? linkedNews : legacyNews;
+
+  const fallbackNewsDocs =
+    curatedNews.length >= 3
+      ? []
+      : (
+          await payload.find({
+            collection: "news",
+            sort: "-createdAt",
+            limit: 6,
+            locale,
+            depth: 0,
+          })
+        ).docs;
+
+  const fallbackNews: LinkedNews[] = fallbackNewsDocs
+    .map((item): LinkedNews | null => {
+      if (!item || typeof item !== "object") return null;
+      const doc = item as {
+        slug?: unknown;
+        title?: unknown;
+        listImage?: unknown;
+      };
+      const slug = typeof doc.slug === "string" ? doc.slug.trim() : "";
+      const title = typeof doc.title === "string" ? doc.title.trim() : "";
+      const image = typeof doc.listImage === "string" ? doc.listImage.trim() : "";
+      if (!slug || !title || !image) return null;
+      return { slug, title, image };
+    })
+    .filter((n): n is LinkedNews => n !== null);
+
+  const relatedNews: LinkedNews[] = [];
+  const seenNewsKeys = new Set<string>();
+
+  for (const item of [...curatedNews, ...fallbackNews]) {
+    const key = item.slug?.trim() || item.title.trim().toLowerCase();
+    if (!key || seenNewsKeys.has(key)) continue;
+    seenNewsKeys.add(key);
+    relatedNews.push(item);
+    if (relatedNews.length === 3) break;
+  }
+
   const detail = {
     slug: driverDoc.slug,
     profileTitle: driverDoc.detail?.profileTitle || "Career Overview and Driver Profile",
@@ -127,6 +221,24 @@ export default async function DriverDetailRoutePage({ params }: DriverDetailRout
     careerPoints: driverDoc.detail?.careerPoints || "--",
     grandPrixEntered: driverDoc.detail?.grandPrixEntered || "--",
     careerPodiums: driverDoc.detail?.careerPodiums || "--",
+    profileImage: driverDoc.detail?.profileImage || null,
+    careerImage: driverDoc.detail?.careerImage || null,
+    agencyImage: driverDoc.detail?.agencyImage || null,
+    galleryLeft: driverDoc.detail?.galleryLeft || null,
+    galleryCenter: driverDoc.detail?.galleryCenter || null,
+    galleryRight: driverDoc.detail?.galleryRight || null,
+    relatedNews,
+    statsCards: Array.isArray(driverDoc.detail?.statsCards)
+      ? (driverDoc.detail.statsCards as unknown[])
+          .map((item: unknown) => {
+            const stat = item as { value?: unknown; label?: unknown } | null;
+            const value = typeof stat?.value === "string" ? stat.value.trim() : "";
+            const label = typeof stat?.label === "string" ? stat.label.trim() : "";
+            if (!value || !label) return null;
+            return { value, label };
+          })
+          .filter((item): item is { value: string; label: string } => item !== null)
+      : [],
   };
 
   return (

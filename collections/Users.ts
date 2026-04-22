@@ -8,7 +8,7 @@ export const Users: CollectionConfig = {
     plural: "Utilisateurs",
   },
   admin: {
-    group: "⚙️ Paramètres",
+    group: "Paramètres",
     useAsTitle: "email",
     description: "Comptes administrateurs du back-office. Chaque utilisateur peut se connecter avec son email et mot de passe.",
   },

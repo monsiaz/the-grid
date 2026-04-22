@@ -15,6 +15,8 @@ type AboutProps = {
   text: string;
   buttonLabel?: string;
   backgroundImage?: string | null;
+  /** Image + gradient only (no pitch text / CTA). Used on the homepage strip with the F1 visual. */
+  visualOnly?: boolean;
 };
 
 /**
@@ -37,11 +39,9 @@ function HeadlightBeam({
       className="pointer-events-none absolute inset-y-0 w-[180px]"
       style={{
         left: xOffset,
-        // Conical gradient — bright white core, soft warm edges
         background:
-          "linear-gradient(90deg, transparent 0%, rgba(255,252,230,0.07) 18%, rgba(255,255,245,0.48) 50%, rgba(255,252,230,0.07) 82%, transparent 100%)",
+          "linear-gradient(90deg, transparent 0%, rgba(239,237,237,0.06) 18%, rgba(255,255,255,0.42) 50%, rgba(239,237,237,0.06) 82%, transparent 100%)",
         mixBlendMode: "screen",
-        // Slight negative skew → makes the beam look like a forward-slanting cone
         transform: "skewX(-5deg)",
         willChange: "transform, opacity",
       }}
@@ -70,7 +70,12 @@ function HeadlightBeam({
   );
 }
 
-export default function About({ text, buttonLabel, backgroundImage }: AboutProps) {
+export default function About({
+  text,
+  buttonLabel,
+  backgroundImage,
+  visualOnly = false,
+}: AboutProps) {
   const t = useTranslations("home");
   const label = buttonLabel || t("explore");
   const bg = backgroundImage || "/images/about.webp";
@@ -84,41 +89,37 @@ export default function About({ text, buttonLabel, backgroundImage }: AboutProps
         alt=""
         fill
         loading="lazy"
-        sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
-        quality={65}
-        className="absolute inset-0 object-cover object-[35%_center]"
+        sizes="(max-width: 640px) 100vw, (max-width: 1200px) 100vw, (max-width: 1920px) 1920px, 2560px"
+        quality={100}
+        className="absolute inset-0 object-cover"
+        style={{ objectPosition: "38% 78%" }}
         aria-hidden
       />
-      {/* Light global tint */}
-      <div className="absolute inset-0 z-10 bg-[linear-gradient(270deg,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0.06)_55%,transparent_100%)]" />
-      {/* Blurred radial shadow on the RIGHT where text lives */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 z-[11] overflow-hidden">
-        <div
-          style={{
-            position: "absolute",
-            inset: "-80px",
-            background:
-              "radial-gradient(ellipse 55% 90% at 84% 58%, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.58) 36%, rgba(0,0,0,0.18) 58%, transparent 72%)",
-            filter: "blur(48px)",
-          }}
-        />
-      </div>
+      <div className="absolute inset-0 z-10 bg-[linear-gradient(270deg,rgba(15,15,15,0.36)_0%,rgba(15,15,15,0.14)_55%,transparent_100%)]" />
+      {!visualOnly ? (
+        <>
+          <div aria-hidden className="pointer-events-none absolute inset-0 z-[11] overflow-hidden">
+            <div
+              style={{
+                position: "absolute",
+                inset: "-80px",
+                background:
+                  "radial-gradient(ellipse 55% 90% at 84% 58%, rgba(15,15,15,0.9) 0%, rgba(15,15,15,0.62) 36%, rgba(15,15,15,0.18) 58%, transparent 72%)",
+                filter: "blur(48px)",
+              }}
+            />
+          </div>
+          <div className="pointer-events-none absolute inset-0 z-[11]" aria-hidden>
+            <HeadlightBeam delay={2} xOffset={0} />
+            <HeadlightBeam delay={2.15} xOffset={90} />
+          </div>
+        </>
+      ) : null}
 
-      {/* ── Headlight sweep ────────────────────────────────────────────────
-          Two beams ~90px apart simulate the two headlights of a single car
-          passing from left to right. The second beam is slightly delayed so
-          the pair arrives as a compact unit rather than two separate events.
-      ──────────────────────────────────────────────────────────────────── */}
-      <div className="pointer-events-none absolute inset-0 z-[11]" aria-hidden>
-        {/* Left headlight */}
-        <HeadlightBeam delay={2} xOffset={0} />
-        {/* Right headlight — 90px to the right, 0.15s later */}
-        <HeadlightBeam delay={2.15} xOffset={90} />
-      </div>
-
+      {!visualOnly ? (
       <div className="relative z-20 mx-auto my-16 flex w-full max-w-[1344px] flex-col items-end justify-center gap-7 px-[clamp(20px,4vw,48px)] max-[900px]:items-start max-[900px]:gap-5">
         <motion.p
-          className="m-0 max-w-[660px] text-right text-xl leading-[1.35] font-light max-[900px]:max-w-full max-[900px]:text-left max-[900px]:text-[17px]"
+          className="body-lg m-0 max-w-[660px] text-right text-white/84 max-[900px]:max-w-full max-[900px]:text-left"
           variants={slideInRight}
           initial="hidden"
           whileInView="visible"
@@ -136,12 +137,13 @@ export default function About({ text, buttonLabel, backgroundImage }: AboutProps
         >
           <Link
             href="/about"
-            className="text-secondary border-secondary inline-flex min-h-[48px] cursor-pointer items-center justify-center rounded-full border-2 bg-black/20 px-9 py-3 text-base leading-[1.2] no-underline uppercase hover:text-black hover:bg-white hover:scale-105 transition-all duration-300"
+            className="pill-button pill-button-outline"
           >
             {label}
           </Link>
         </motion.div>
       </div>
+      ) : null}
     </section>
   );
 }

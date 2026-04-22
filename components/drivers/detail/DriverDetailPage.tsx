@@ -29,7 +29,7 @@ export default function DriverDetailPage({ driver, detail, siteProps }: DriverDe
   return (
     <main id="main" className="bg-primary text-secondary w-full ">
       <Header activeItem="drivers" />
-      <section className="mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)] pt-6 pb-20">
+      <section className="mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)] pt-4 pb-16">
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -38,13 +38,13 @@ export default function DriverDetailPage({ driver, detail, siteProps }: DriverDe
         >
           <Link
             href="/drivers"
-            className="text-accent border-accent mb-8 inline-flex h-[34px] w-[57px] items-center justify-center rounded-full border-2 no-underline transition-all duration-300 hover:bg-accent hover:text-black hover:scale-110"
+            className="pill-button pill-button-accent-outline mb-4 h-[34px] min-h-[34px] w-[57px] px-0"
             aria-label={t("back")}
           >
             <ChevronLeft className="h-5 w-5 shrink-0" aria-hidden />
           </Link>
         </motion.div>
-        <div className="grid gap-16">
+        <div className="grid gap-12">
           <DriverDetailTop driver={driver} detail={detail} />
           <DriverDetailCareer detail={detail} />
           <DriverDetailAgency detail={detail} />

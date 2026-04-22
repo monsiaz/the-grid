@@ -2,35 +2,16 @@
 
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-type DriverDetailData = {
-  slug: string;
-  profileTitle: string;
-  profileParagraphs: string[];
-  careerTitle: string;
-  careerParagraphs: string[];
-  transitionTitle: string;
-  transitionParagraph: string;
-  agencyTitle: string;
-  agencyParagraphs: string[];
-  highestFinish: string;
-  careerPoints: string;
-  grandPrixEntered: string;
-  careerPodiums: string;
-};
-
-const detailImages = {
-  profile: "/images/drivers/detail-profile-gasly.webp",
-  career: "/images/drivers/detail-career-image.webp",
-  agency: "/images/drivers/detail-agency-image.webp",
-};
+import type { DriverDetailData } from "../driversData";
 import {
   motion,
-  fadeUp,
   slideInLeft,
   slideInRight,
   smoothTransition,
   viewport,
 } from "../../motion";
+
+const LEGACY_AGENCY_IMAGE = "/images/drivers/detail-agency-image.webp";
 
 type DriverDetailAgencyProps = {
   detail: DriverDetailData;
@@ -38,24 +19,41 @@ type DriverDetailAgencyProps = {
 
 export default function DriverDetailAgency({ detail }: DriverDetailAgencyProps) {
   const t = useTranslations("drivers.detail.agency");
+
+  const agencyImage =
+    detail.agencyImage ||
+    (detail.slug === "pierre-gasly" ? LEGACY_AGENCY_IMAGE : null);
+
   return (
-    <section className="grid grid-cols-[888px_1fr] gap-10 max-[1200px]:grid-cols-1">
-      <motion.div
-        className="relative min-h-[clamp(360px,55vh,546px)] overflow-hidden"
-        variants={slideInLeft}
-        initial="hidden"
-        whileInView="visible"
-        viewport={viewport}
-        transition={smoothTransition}
-      >
+    <section
+      className={`grid gap-10 max-[1200px]:grid-cols-1 ${
+        agencyImage ? "grid-cols-[888px_1fr]" : "grid-cols-1"
+      }`}
+    >
+      {agencyImage ? (
         <motion.div
-          className="relative h-full w-full"
-          whileHover={{ scale: 1.03 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="relative min-h-[clamp(360px,55vh,546px)] overflow-hidden"
+          variants={slideInLeft}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+          transition={smoothTransition}
         >
-          <Image src={detailImages.agency} alt={t("imageAlt")} fill className="object-cover" sizes="(max-width: 1200px) 100vw, 888px" />
+          <motion.div
+            className="relative h-full w-full"
+            whileHover={{ scale: 1.03 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            <Image
+              src={agencyImage}
+              alt={t("imageAlt")}
+              fill
+              className="object-cover"
+              sizes="(max-width: 1200px) 100vw, 888px"
+            />
+          </motion.div>
         </motion.div>
-      </motion.div>
+      ) : null}
       <motion.div
         variants={slideInRight}
         initial="hidden"

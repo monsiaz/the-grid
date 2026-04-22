@@ -58,13 +58,13 @@ export default function AboutAccelereFollow({
             viewport={viewport}
             transition={smoothTransition}
           >
-            <p className="m-0 text-[clamp(16px,1.8vw,20px)] leading-[1.55] font-light uppercase whitespace-pre-line">
+            <p className="body-lg m-0 whitespace-pre-line text-white/84">
               {description}
             </p>
             <Link
               href={COME_MAILTO}
               aria-label={t("getInTouchAria")}
-              className="text-accent border-accent mx-auto inline-flex w-fit items-center justify-center rounded-full border-2 bg-black/20 px-9 py-4 text-base leading-[1.2] no-underline uppercase transition-all duration-300 hover:bg-accent hover:text-black hover:scale-105"
+              className="pill-button pill-button-accent-outline mx-auto w-fit"
             >
               {t("getInTouch")}
             </Link>
@@ -77,7 +77,7 @@ export default function AboutAccelereFollow({
               whileInView="visible"
               viewport={viewport}
               transition={smoothTransition}
-              className="overflow-hidden"
+              className="surface-card-soft overflow-hidden"
             >
               <Image
                 src={portraitImage || "/assets/v2/about/accelere-portrait.webp"}
@@ -89,7 +89,7 @@ export default function AboutAccelereFollow({
               />
             </motion.div>
             <motion.div
-              className="border-secondary relative border-l pl-7"
+              className="relative border-l border-white/18 pl-7"
               variants={slideInRight}
               initial="hidden"
               whileInView="visible"
@@ -97,11 +97,11 @@ export default function AboutAccelereFollow({
               transition={{ ...smoothTransition, delay: 0.2 }}
             >
               <span className="text-accent absolute -left-2 top-1 text-[120px] leading-none opacity-30">&ldquo;</span>
-              <p className="m-0 text-[clamp(16px,1.8vw,20px)] leading-[1.4] font-light italic">
+              <p className="body-lg m-0 italic text-white/88">
                 {quote}
               </p>
-              <p className="mt-5 mb-0 text-base leading-[1.2]">
-                <span className="font-semibold">{quoteAuthor}</span>
+              <p className="body-md mt-5 mb-0 text-white/72">
+                <span className="display-card text-[18px] text-white">{quoteAuthor}</span>
                 <br />
                 {quoteRole}
                 <br />
@@ -113,7 +113,7 @@ export default function AboutAccelereFollow({
 
         <div className="grid gap-6">
           <motion.h2
-            className="m-0 font-[var(--font-league-spartan)] text-[64px] leading-none font-bold uppercase max-[1200px]:text-[clamp(44px,6vw,64px)]"
+            className="display-section m-0"
             variants={slideInLeft}
             initial="hidden"
             whileInView="visible"
@@ -131,12 +131,12 @@ export default function AboutAccelereFollow({
               viewport={viewport}
               transition={smoothTransition}
             >
-              <p className="m-0 text-xl leading-[1.2] font-bold uppercase">{instagramHandle}</p>
+              <p className="display-card m-0 text-[clamp(22px,2.4vw,28px)] text-white">{instagramHandle}</p>
               <Link
                 href={instagramUrl || "https://instagram.com"}
                 target="_blank"
                 rel="noreferrer"
-                className="text-accent border-accent inline-flex items-center justify-center rounded-full border-2 bg-black/20 px-9 py-4 text-base leading-[1.2] no-underline uppercase transition-all duration-300 hover:bg-accent hover:text-black hover:scale-105"
+                className="pill-button pill-button-accent-outline"
               >
                 {t("instagramCta")}
               </Link>

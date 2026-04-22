@@ -77,7 +77,15 @@ export default function NewsletterForm({
     <motion.form
       onSubmit={onSubmit}
       noValidate
-      className="flex h-full w-full flex-col justify-between gap-8 rounded-[2px] border border-accent/90 bg-accent/10 px-8 py-10 backdrop-blur-[2px] min-[900px]:px-10 min-[900px]:py-12"
+      /*
+        Right card — outlined accent on a dark translucent fill. Matched
+        radius (`rounded-2xl`) and identical padding rhythm to the filled
+        left card so the two cards read as a balanced pair. `bg-black/25`
+        + stronger backdrop-blur creates a frosted-glass effect against the
+        road photo, keeping the field labels readable without hiding the
+        background.
+      */
+      className="surface-outline flex h-full w-full flex-col justify-between gap-8 px-7 py-9 min-[900px]:px-9 min-[900px]:py-11"
       variants={staggerContainer}
       initial="hidden"
       animate="visible"
@@ -91,14 +99,14 @@ export default function NewsletterForm({
         <FloatingField id="nl-job-title" label={jobTitleLabel} autoComplete="organization-title" variant="outlined" required={false} />
         {state === "success" ? (
           <p
-            className="m-0 text-[13px] font-medium uppercase tracking-[0.12em] text-white"
+            className="ui-label m-0 text-white"
             role="status"
           >
             {t("success")}
           </p>
         ) : null}
         {state === "error" ? (
-          <p className="m-0 text-[13px] font-medium uppercase tracking-[0.08em] text-white" role="alert">
+          <p className="ui-label m-0 text-white" role="alert">
             {errorMessage}
           </p>
         ) : null}
@@ -106,7 +114,7 @@ export default function NewsletterForm({
       <motion.button
         type="submit"
         disabled={state === "sending" || state === "success"}
-        className="inline-flex min-h-[44px] w-fit items-center justify-center self-start rounded-full border border-accent/90 bg-transparent px-6 py-2.5 text-[12px] leading-[1.2] uppercase tracking-[0.12em] text-accent transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-white hover:bg-white hover:text-accent active:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:opacity-60 disabled:cursor-not-allowed"
+        className="pill-button pill-button-accent-outline w-fit self-start disabled:cursor-not-allowed disabled:opacity-60"
         variants={fadeUp}
         transition={{ ...smoothTransition, delay: 0.3 }}
         whileHover={state === "idle" || state === "error" ? { scale: 1.03 } : undefined}

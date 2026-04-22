@@ -10,6 +10,7 @@ type ServicesTalentProps = {
   introTitle?: string | null;
   introText?: string | null;
   introImage?: string | null;
+  servicesArrowStyle?: "default" | "slim";
   cards: { title: string; image: string; alt: string; description?: string | null }[];
 };
 
@@ -20,6 +21,7 @@ export default function ServicesTalent({
   introTitle,
   introText,
   introImage,
+  servicesArrowStyle = "default",
   cards,
 }: ServicesTalentProps) {
   const t = useTranslations("services.talent");
@@ -37,9 +39,10 @@ export default function ServicesTalent({
       introText={introText || ""}
       introImage={introImage}
       introTitle={introTitle}
+      servicesArrowStyle={servicesArrowStyle}
       cards={cards}
-      gridClassName="min-[600px]:grid-cols-2 min-[900px]:grid-cols-3 min-[1200px]:grid-cols-[repeat(6,minmax(0,1fr))]"
-      imageHeightClassName="h-[240px] min-[900px]:h-[280px]"
+      gridClassName="px-[clamp(8px,1.6vw,20px)] min-[600px]:grid-cols-2 min-[900px]:grid-cols-3 min-[1200px]:grid-cols-6"
+      imageHeightClassName="h-[260px] min-[900px]:h-[300px]"
       bodyPaddingClassName="p-6"
     />
   );

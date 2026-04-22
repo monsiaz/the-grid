@@ -15,6 +15,7 @@ type CaseStudy = {
 
 type ServicesCaseStudiesProps = {
   caseStudies: CaseStudy[];
+  sliderSpeed?: number;
 };
 
 function CaseStudyCard({ card }: { card: CaseStudy }) {
@@ -49,7 +50,7 @@ function CaseStudyCard({ card }: { card: CaseStudy }) {
   );
 }
 
-export default function ServicesCaseStudies({ caseStudies }: ServicesCaseStudiesProps) {
+export default function ServicesCaseStudies({ caseStudies, sliderSpeed = 0.5 }: ServicesCaseStudiesProps) {
   const t = useTranslations("services.caseStudies");
   const scrollRef = useRef<HTMLDivElement>(null);
   const [paused, setPaused] = useState(false);
@@ -94,7 +95,7 @@ export default function ServicesCaseStudies({ caseStudies }: ServicesCaseStudies
     const el = scrollRef.current;
     if (!el) return;
 
-    const SPEED = 0.5; // px per frame
+    const SPEED = sliderSpeed; // px per frame — configurable via BO Design Settings
 
     const tick = () => {
       if (!paused) {
@@ -110,7 +111,7 @@ export default function ServicesCaseStudies({ caseStudies }: ServicesCaseStudies
     return () => {
       if (animFrameRef.current !== null) cancelAnimationFrame(animFrameRef.current);
     };
-  }, [isDesktop, shouldLoop, paused]);
+  }, [isDesktop, shouldLoop, paused, sliderSpeed]);
 
   // Desktop arrow navigation: advance/retreat by one card width
   const scrollBy = useCallback(

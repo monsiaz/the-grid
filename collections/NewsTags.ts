@@ -21,7 +21,7 @@ export const NewsTags: CollectionConfig = {
     defaultColumns: ["name", "slug", "order"],
     description:
       "Tags used to filter the /news page. Each news article picks one tag in its sidebar. Add or rename tags here; the filter bar on /news updates automatically.",
-    group: "📰 Contenu",
+    group: "Contenu",
     components: {
       edit: {
         beforeDocumentControls: ["@/components/admin/TranslationStatus"],

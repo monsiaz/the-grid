@@ -6,12 +6,12 @@ import { revalidateDriversIndex } from "@/lib/revalidate";
 
 export const DriversPage: GlobalConfig = {
   slug: "drivers-page",
-  label: "🏎️ Page Pilotes",
+  label: "Page Pilotes",
   access: {
     read: () => true,
   },
   admin: {
-    group: "🗂️ Pages",
+    group: "Pages",
     description: "Contenu de la page listing des pilotes : hero et grille. Les fiches individuelles se gèrent dans la collection Pilotes.",
     livePreview: {
       url: ({ locale }) => {

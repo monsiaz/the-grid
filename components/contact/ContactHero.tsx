@@ -49,13 +49,24 @@ export default function ContactHero({
   return (
     <Hero
       backgroundImage={backgroundImage}
-      minHeightClassName="min-h-[clamp(720px,100svh,960px)]"
-      overlayClassName="bg-[linear-gradient(180deg,rgba(0,0,0,0.3)_0%,rgba(0,0,0,0.45)_60%,rgba(0,0,0,0.65)_100%)]"
+      minHeightClassName="min-h-[clamp(720px,100svh,1040px)]"
+      /*
+        Deeper bottom-anchored overlay (black at 80% bottom) so the footer
+        links + social icons stay comfortably legible against the road asphalt
+        photo, and the forms stack above the cleanest section of the image.
+      */
+      overlayClassName="bg-[linear-gradient(180deg,rgba(0,0,0,0.25)_0%,rgba(0,0,0,0.5)_50%,rgba(0,0,0,0.78)_100%)]"
       backdropAt={false}
       headerAnchorPrefix="/"
       activeHeaderItem="contact"
-      contentClassName="mx-auto flex w-full max-w-[1280px] flex-col items-start justify-start gap-4 pb-10 pt-[120px] text-left min-[900px]:pt-[140px]"
-      titleClassName="m-0 font-[var(--font-league-spartan)] text-[clamp(48px,7vw,84px)] leading-[0.95] font-bold uppercase text-secondary [text-shadow:0_4px_24px_rgba(0,0,0,0.55),0_2px_8px_rgba(0,0,0,0.4)]"
+      /*
+        Centered composition — title horizontally centered, cards grid below
+        using a ~960px container. `items-center` collapses auto-width children
+        to content width, but the children wrapper in `Hero` now forces
+        `w-full`, so the grid still stretches to this section's max-width.
+      */
+      contentClassName="mx-auto flex w-full max-w-[1040px] flex-col items-center justify-start gap-10 pb-16 pt-[110px] text-center min-[900px]:gap-12 min-[900px]:pt-[140px] min-[900px]:pb-20"
+      titleClassName="display-hero m-0 max-w-[11ch] text-secondary"
       title={title}
       footerSlot={
         <Footer

@@ -58,17 +58,17 @@ export default async function PrivacyPolicyPage({
 
       <main className="bg-primary min-h-screen pt-28 pb-20">
         <article className="mx-auto w-full max-w-[800px] px-[clamp(20px,4vw,48px)]">
-          <h1 className="mb-10 font-[var(--font-league-spartan)] text-[clamp(36px,5vw,64px)] leading-none font-bold uppercase text-secondary">
+          <h1 className="display-section mb-10 text-secondary">
             {t("title")}
           </h1>
 
-          <div className="grid gap-10 text-secondary/80">
+          <div className="surface-card-soft grid gap-10 px-6 py-8 text-secondary/80 min-[900px]:px-8 min-[900px]:py-10">
             {/* Section 1 */}
             <section>
-              <h2 className="mb-4 text-lg font-semibold uppercase tracking-[0.08em] text-secondary">
+              <h2 className="display-card mb-4 text-[22px] text-secondary">
                 {t("s1.title")}
               </h2>
-              <div className="grid gap-3 text-[15px] leading-[1.7]">
+              <div className="body-md grid gap-3">
                 <p><strong className="text-secondary/90">1.1</strong> {t("s1.p1")}</p>
                 <p><strong className="text-secondary/90">1.2</strong> {t("s1.p2")}</p>
               </div>
@@ -76,10 +76,10 @@ export default async function PrivacyPolicyPage({
 
             {/* Section 2 */}
             <section>
-              <h2 className="mb-4 text-lg font-semibold uppercase tracking-[0.08em] text-secondary">
+              <h2 className="display-card mb-4 text-[22px] text-secondary">
                 {t("s2.title")}
               </h2>
-              <div className="grid gap-3 text-[15px] leading-[1.7]">
+              <div className="body-md grid gap-3">
                 <p><strong className="text-secondary/90">2.1</strong> {t("s2.p1")}</p>
                 <p><strong className="text-secondary/90">2.2</strong> {t("s2.p2")}</p>
               </div>
@@ -87,30 +87,30 @@ export default async function PrivacyPolicyPage({
 
             {/* Section 3 */}
             <section>
-              <h2 className="mb-4 text-lg font-semibold uppercase tracking-[0.08em] text-secondary">
+              <h2 className="display-card mb-4 text-[22px] text-secondary">
                 {t("s3.title")}
               </h2>
-              <p className="text-[15px] leading-[1.7]">
+              <p className="body-md">
                 <strong className="text-secondary/90">3.1</strong> {t("s3.p1")}
               </p>
             </section>
 
             {/* Section 4 */}
             <section>
-              <h2 className="mb-4 text-lg font-semibold uppercase tracking-[0.08em] text-secondary">
+              <h2 className="display-card mb-4 text-[22px] text-secondary">
                 {t("s4.title")}
               </h2>
-              <p className="text-[15px] leading-[1.7]">
+              <p className="body-md">
                 <strong className="text-secondary/90">4.1</strong> {t("s4.p1")}
               </p>
             </section>
 
             {/* Section 5 */}
             <section>
-              <h2 className="mb-4 text-lg font-semibold uppercase tracking-[0.08em] text-secondary">
+              <h2 className="display-card mb-4 text-[22px] text-secondary">
                 {t("s5.title")}
               </h2>
-              <div className="grid gap-3 text-[15px] leading-[1.7]">
+              <div className="body-md grid gap-3">
                 <p><strong className="text-secondary/90">5.1</strong> {t("s5.p1")}</p>
                 <p>
                   <strong className="text-secondary/90">5.2</strong>{" "}
@@ -127,16 +127,16 @@ export default async function PrivacyPolicyPage({
 
             {/* Section 6 */}
             <section>
-              <h2 className="mb-4 text-lg font-semibold uppercase tracking-[0.08em] text-secondary">
+              <h2 className="display-card mb-4 text-[22px] text-secondary">
                 {t("s6.title")}
               </h2>
-              <p className="text-[15px] leading-[1.7]">
+              <p className="body-md">
                 <strong className="text-secondary/90">6.1</strong> {t("s6.p1")}
               </p>
             </section>
 
             {/* Consent */}
-            <p className="border-t border-secondary/10 pt-8 text-sm leading-[1.7] text-secondary/60 italic">
+            <p className="body-sm border-t border-secondary/10 pt-8 text-secondary/60 italic">
               {t("consent")}
             </p>
           </div>

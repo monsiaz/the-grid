@@ -37,10 +37,22 @@ export default function Drivers({ heading, headingAccent, backgroundImage }: Dri
         className="absolute inset-0 object-cover"
         aria-hidden
       />
-      <div className="absolute inset-0 z-10 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.65)_0%,rgba(0,0,0,0.35)_55%,rgba(0,0,0,0.15)_100%)]" />
+      {/* Very light global tint */}
+      <div className="absolute inset-0 z-10 bg-black/15" />
+      {/* Soft blob shadow concentrated on the text — same technique as Hero */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-[11] overflow-hidden">
+        <div
+          style={{
+            position: "absolute",
+            inset: "-80px",
+            background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.52) 38%, rgba(0,0,0,0.16) 60%, transparent 74%)",
+            filter: "blur(52px)",
+          }}
+        />
+      </div>
       <div className="relative z-20 mx-auto my-32 grid w-full max-w-[1344px] justify-items-center gap-14 px-[clamp(20px,4vw,48px)] text-center max-[900px]:my-[88px] max-[900px]:gap-[38px]">
         <motion.h2
-          className="m-0 font-[var(--font-league-spartan)] text-[64px] leading-none font-bold uppercase drop-shadow-[4px_4px_8px_rgba(0,0,0,0.1)] max-[1200px]:text-[clamp(44px,6vw,64px)]"
+          className="display-section m-0 text-balance drop-shadow-[0_8px_24px_rgba(0,0,0,0.22)]"
           variants={scaleIn}
           initial="hidden"
           whileInView="visible"
@@ -60,7 +72,7 @@ export default function Drivers({ heading, headingAccent, backgroundImage }: Dri
         >
           <Link
             href="/drivers"
-            className="text-accent border-accent inline-flex min-h-[48px] cursor-pointer items-center justify-center rounded-full border-2 bg-black/20 px-9 py-3 text-base leading-[1.2] no-underline uppercase hover:text-black hover:bg-accent hover:scale-105 transition-all duration-300"
+            className="pill-button pill-button-accent-outline"
           >
             {t("cta")}
           </Link>

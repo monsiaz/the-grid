@@ -38,7 +38,7 @@ const localeCodes: Record<Locale, string> = {
   zh: "中文",
 };
 
-export default function LocaleSwitcher() {
+export default function LocaleSwitcher({ dropdownDir = "up" }: { dropdownDir?: "up" | "down" }) {
   const t = useTranslations("footer.language");
   const locale = useLocale() as Locale;
   const router = useRouter();
@@ -92,7 +92,7 @@ export default function LocaleSwitcher() {
         disabled={isPending}
         onClick={() => setOpen((v) => !v)}
         className={[
-          "inline-flex h-8 items-center gap-1.5 rounded-full border px-3 text-[11px] font-semibold",
+          "inline-flex h-8 items-center gap-1.5 rounded-full border px-3",
           "border-white/15 bg-white/5 text-secondary/70 backdrop-blur-sm",
           "transition-all duration-200",
           "hover:border-accent/60 hover:text-secondary",
@@ -101,7 +101,16 @@ export default function LocaleSwitcher() {
           "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent",
         ].join(" ")}
       >
-        <span aria-hidden style={{ fontFamily: "inherit", letterSpacing: "0.08em" }}>
+        <span
+          aria-hidden
+          style={{
+            fontFamily: "inherit",
+            fontSize: 11,
+            fontWeight: 600,
+            letterSpacing: locale === "zh" ? 0 : "0.1em",
+            lineHeight: 1,
+          }}
+        >
           {localeCodes[locale]}
         </span>
         <ChevronDown
@@ -116,7 +125,9 @@ export default function LocaleSwitcher() {
           role="listbox"
           aria-label={t("srOnly")}
           className={[
-            "absolute bottom-full right-0 z-[200] mb-2",
+            dropdownDir === "down"
+              ? "absolute top-full right-0 z-[200] mt-2"
+              : "absolute bottom-full right-0 z-[200] mb-2",
             "min-w-[160px] rounded-2xl border border-white/10 py-1.5",
             "bg-[#111] shadow-[0_8px_32px_rgba(0,0,0,0.6)] backdrop-blur-md",
             "animate-in fade-in slide-in-from-bottom-2 duration-150",

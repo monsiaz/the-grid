@@ -22,25 +22,25 @@ type NewsHeadingProps = {
 };
 
 const activeClass =
-  "inline-flex h-[40px] items-center rounded-full border-2 border-accent bg-accent px-4 text-[12px] leading-[1.2] font-semibold tracking-[0.04em] text-white uppercase transition-all duration-300 hover:bg-white hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white whitespace-nowrap";
+  "pill-button pill-button-accent h-10 min-h-10 px-5 whitespace-nowrap";
 
 const inactiveClass =
-  "inline-flex h-[40px] items-center rounded-full border-2 border-secondary bg-transparent px-4 text-[12px] leading-[1.2] font-semibold tracking-[0.04em] text-secondary uppercase transition-all duration-300 hover:bg-secondary hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white whitespace-nowrap";
+  "pill-button pill-button-accent-outline h-10 min-h-10 px-5 whitespace-nowrap";
 
 export default function NewsHeading({ activeFilter, tags }: NewsHeadingProps) {
   const t = useTranslations("news");
   return (
     <div className="flex w-full flex-col items-start gap-4 min-[900px]:flex-row min-[900px]:items-center min-[900px]:justify-between">
       <motion.h1
-        className="m-0 font-[var(--font-league-spartan)] text-[clamp(40px,6vw,64px)] leading-none font-bold uppercase"
+        className="display-section m-0"
         variants={slideInLeft}
         initial="hidden"
         whileInView="visible"
         viewport={viewport}
         transition={smoothTransition}
       >
-        <span className="text-muted">{t("heading.muted")}</span>
-        <span className="text-secondary">{t("heading.accent")}</span>
+        <span className="text-secondary">{t("heading.muted")}</span>
+        <span className="text-muted">{t("heading.accent")}</span>
       </motion.h1>
       <motion.div
         className="flex shrink-0 flex-wrap items-center gap-2"

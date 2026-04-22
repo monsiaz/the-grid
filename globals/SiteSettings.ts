@@ -3,9 +3,9 @@ import { revalidateAll } from "@/lib/revalidate";
 
 export const SiteSettings: GlobalConfig = {
   slug: "site-settings",
-  label: "⚙️ Réglages du site",
+  label: "Réglages du site",
   admin: {
-    group: "⚙️ Paramètres",
+    group: "Paramètres",
     description: "URLs des réseaux sociaux, email de contact, lien Privacy Policy et copyright du footer.",
   },
   access: {

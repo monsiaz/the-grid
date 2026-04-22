@@ -6,12 +6,12 @@ import { revalidateContact } from "@/lib/revalidate";
 
 export const ContactPage: GlobalConfig = {
   slug: "contact-page",
-  label: "✉️ Contact",
+  label: "Contact",
   access: {
     read: () => true,
   },
   admin: {
-    group: "🗂️ Pages",
+    group: "Pages",
     description: "Contenu de la page Contact : hero, formulaire de contact et newsletter.",
     livePreview: {
       url: ({ locale }) => {

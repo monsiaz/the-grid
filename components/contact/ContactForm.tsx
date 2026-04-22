@@ -71,7 +71,13 @@ export default function ContactForm({
     <motion.form
       onSubmit={onSubmit}
       noValidate
-      className="flex h-full w-full flex-col justify-between gap-8 rounded-[2px] bg-accent/85 px-8 py-10 backdrop-blur-[2px] min-[900px]:px-10 min-[900px]:py-12"
+      /*
+        Left card — solid red fill. Radius bumped to 16px + subtle shadow
+        for a more premium feel than the previous near-square `rounded-[2px]`.
+        Padding rhythm tightened so both the red card and the outlined card
+        have the exact same inner layout, keeping them visually balanced.
+      */
+      className="flex h-full w-full flex-col justify-between gap-8 rounded-[32px] bg-accent/92 px-7 py-9 shadow-[0_24px_72px_-28px_rgba(0,0,0,0.72)] backdrop-blur-[4px] min-[900px]:px-9 min-[900px]:py-11"
       variants={staggerContainer}
       initial="hidden"
       animate="visible"
@@ -96,18 +102,18 @@ export default function ContactForm({
           />
           <label
             htmlFor="message"
-            className="pointer-events-none absolute left-0 top-0 text-[11px] leading-none uppercase tracking-[0.1em] text-white/95 transition-all duration-200 peer-placeholder-shown:top-[26px] peer-placeholder-shown:text-[14px] peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-placeholder-shown:text-white/80 peer-focus:top-0 peer-focus:text-[11px] peer-focus:uppercase peer-focus:tracking-[0.1em] peer-focus:text-white"
+            className="ui-label pointer-events-none absolute left-0 top-0 text-white/95 transition-all duration-200 peer-placeholder-shown:top-[26px] peer-placeholder-shown:text-[14px] peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-placeholder-shown:text-white/80 peer-focus:top-0 peer-focus:text-[11px] peer-focus:uppercase peer-focus:tracking-[0.16em] peer-focus:text-white"
           >
             {messageLabel}
           </label>
         </motion.div>
         {state === "success" ? (
-          <p className="m-0 text-[13px] font-medium uppercase tracking-[0.08em] text-white" role="status">
+          <p className="ui-label m-0 text-white" role="status">
             {t("success")}
           </p>
         ) : null}
         {state === "error" ? (
-          <p className="m-0 text-[13px] font-medium uppercase tracking-[0.08em] text-white" role="alert">
+          <p className="ui-label m-0 text-white" role="alert">
             {errorMessage}
           </p>
         ) : null}
@@ -115,7 +121,7 @@ export default function ContactForm({
       <motion.button
         type="submit"
         disabled={state === "sending"}
-        className="inline-flex min-h-[44px] w-fit items-center justify-center self-start rounded-full border border-white/90 px-6 py-2.5 text-[12px] leading-[1.2] uppercase tracking-[0.12em] text-white transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-white hover:text-accent active:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:opacity-60 disabled:cursor-not-allowed"
+        className="pill-button pill-button-white-outline w-fit self-start disabled:cursor-not-allowed disabled:opacity-60"
         variants={fadeUp}
         transition={{ ...smoothTransition, delay: 0.3 }}
         whileHover={state !== "sending" ? { scale: 1.03 } : undefined}
@@ -167,7 +173,7 @@ export function FloatingField({
       />
       <label
         htmlFor={id}
-        className="pointer-events-none absolute left-0 top-0 text-[11px] leading-none uppercase tracking-[0.1em] text-white/95 transition-all duration-200 peer-placeholder-shown:top-[24px] peer-placeholder-shown:text-[14px] peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-placeholder-shown:text-white/80 peer-focus:top-0 peer-focus:text-[11px] peer-focus:uppercase peer-focus:tracking-[0.1em] peer-focus:text-white"
+        className="ui-label pointer-events-none absolute left-0 top-0 text-white/95 transition-all duration-200 peer-placeholder-shown:top-[24px] peer-placeholder-shown:text-[14px] peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-placeholder-shown:text-white/80 peer-focus:top-0 peer-focus:text-[11px] peer-focus:uppercase peer-focus:tracking-[0.16em] peer-focus:text-white"
       >
         {label}
       </label>

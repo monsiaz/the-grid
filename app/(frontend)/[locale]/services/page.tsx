@@ -6,10 +6,13 @@ import { buildRouteAlternates } from "@/lib/routeAlternates";
 import LocaleAlternatesData from "@/components/LocaleAlternatesData";
 import Footer from "@/components/Footer";
 import ServicesHero from "@/components/services/ServicesHero";
+import ServicesCaseStudies from "@/components/services/ServicesCaseStudies";
 import ServicesPartner from "@/components/services/ServicesPartner";
 import ServicesTalent from "@/components/services/ServicesTalent";
 import ServicesValue from "@/components/services/ServicesValue";
 import { getPayloadClient } from "@/lib/payload";
+import { resolveSectionOrder } from "@/lib/sectionOrder";
+import { getDesignSettings } from "@/lib/designSettings";
 
 export const revalidate = 60;
 
@@ -50,36 +53,71 @@ export default async function ServicesPage({
   const siteSettings: any = await payload
     .findGlobal({ slug: "site-settings", locale })
     .catch(() => ({}));
+  const designSettings = await getDesignSettings().catch(() => ({
+    heroCta: "large" as const,
+    stickyHeader: false,
+    headerMenuStyle: "default" as const,
+    headerMenuTextSize: "large" as const,
+    heroTextBackdropOpacity: 1,
+    heroTextBackdropBlur: 56,
+    servicesArrowStyle: "default" as const,
+    sliderSpeed: 0.5,
+    accentColor: "red" as const,
+    parallaxIntensity: 15,
+    cardHoverStyle: "zoom" as const,
+    cardBorderRadius: "default" as const,
+    sectionSpacing: "normal" as const,
+    heroGradientIntensity: 1,
+    heroTitleSize: "normal" as const,
+    globalFont: "spartan" as const,
+  }));
   /* eslint-enable @typescript-eslint/no-explicit-any */
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/services" });
+  const orderedSections = resolveSectionOrder(
+    servicesPage.sectionOrder,
+    ["hero", "value", "partner", "talent", "caseStudies"] as const,
+  );
 
-  return (
-    <main id="main" className="bg-primary text-secondary w-full ">
+  const sections = {
+    hero: (
       <ServicesHero
         title={servicesPage.heroTitle}
         description={servicesPage.heroDescription}
         backgroundImage={servicesPage.heroBackgroundImage}
+        heroCta={designSettings.heroCta}
+        stickyHeader={designSettings.stickyHeader}
+        menuStyle={designSettings.headerMenuStyle}
+        menuTextSize={designSettings.headerMenuTextSize}
+        heroTextBackdropOpacity={designSettings.heroTextBackdropOpacity}
+        heroTextBackdropBlur={designSettings.heroTextBackdropBlur}
+        parallaxIntensity={designSettings.parallaxIntensity}
+        heroGradientIntensity={designSettings.heroGradientIntensity}
       />
-      {/* 1. Commercial — WHERE PERFORMANCE CREATES VALUE + case studies */}
+    ),
+    value: (
       <ServicesValue
         heading={servicesPage.valueHeading}
         headingAccent={servicesPage.valueHeadingAccent}
         description={servicesPage.valueDescription}
+        introTitle={servicesPage.valueIntroTitle || "STRATEGY\n& POSITIONING"}
         introText={servicesPage.valueIntroText}
+        introImage={servicesPage.valueIntroImage || "/assets/v2/services/value-strategy.webp"}
+        servicesArrowStyle={designSettings.servicesArrowStyle}
         cards={servicesPage.valueCards?.map((c: { title: string; image: string; description?: string | null }) => ({
           title: c.title,
           image: c.image,
           alt: c.title.replace("\n", " "),
           description: c.description || null,
         })) || []}
-        caseStudies={servicesPage.caseStudies || []}
       />
-      {/* 2. Hintsa partnership — BETWEEN commercial and talent per client brief */}
+    ),
+    partner: (
       <ServicesPartner
         description={servicesPage.partnerDescription}
         backgroundImage={servicesPage.partnerBackgroundImage}
       />
-      {/* 3. Talent — TALENT TAKES THE WHEEL / WE PAVE THE WAY */}
+    ),
+    talent: (
       <ServicesTalent
         heading={servicesPage.talentHeading}
         headingAccent={servicesPage.talentHeadingAccent}
@@ -87,6 +125,7 @@ export default async function ServicesPage({
         introTitle={servicesPage.talentIntroTitle}
         introText={servicesPage.talentIntroText}
         introImage={servicesPage.talentIntroImage}
+        servicesArrowStyle={designSettings.servicesArrowStyle}
         cards={servicesPage.talentCards?.map((c: { title: string; image: string; description?: string | null }) => ({
           title: c.title,
           image: c.image,
@@ -94,6 +133,15 @@ export default async function ServicesPage({
           description: c.description || null,
         })) || []}
       />
+    ),
+    caseStudies: <ServicesCaseStudies caseStudies={servicesPage.caseStudies || []} sliderSpeed={designSettings.sliderSpeed} />,
+  } as const;
+
+  return (
+    <main id="main" className="bg-primary text-secondary w-full ">
+      {orderedSections.map((sectionId) => (
+        <div key={sectionId}>{sections[sectionId]}</div>
+      ))}
       <LocaleAlternatesData alternates={alternates} />
       <Footer
         copyright={siteSettings.footerCopyright}

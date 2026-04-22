@@ -1,79 +1,98 @@
 /* ═══════════════════════════════════════════════════════════════════
-   THE GRID — Payload CMS Admin Panel · Custom DA
+   THE GRID — Payload CMS Admin Panel · Custom DA v2
+   Premium dark theme · No emojis · Lucide-style icons via CSS
    ═══════════════════════════════════════════════════════════════════ */
 
-/* ── 1. Brand tokens (dark theme) ─────────────────────────────────── */
+/* ── 1. Brand tokens ───────────────────────────────────────────────── */
 :root,
 [data-theme="dark"] {
-  /* Accent rouge The Grid */
-  --theme-success-500: #e63a2e;
-  --theme-success-100: rgba(230, 58, 46, 0.12);
+  --tg-red:          #e63a2e;
+  --tg-red-dim:      rgba(230, 58, 46, 0.12);
+  --tg-red-hover:    #c93127;
 
-  /* Elevation plus sombres — atmosphère premium */
-  --theme-elevation-0:   #0a0a0a;
-  --theme-elevation-50:  #111111;
-  --theme-elevation-100: #1a1a1a;
-  --theme-elevation-150: #222222;
-  --theme-elevation-200: #2a2a2a;
-  --theme-elevation-300: #333333;
-  --theme-elevation-400: #555555;
-  --theme-elevation-500: #888888;
-  --theme-elevation-600: #aaaaaa;
-  --theme-elevation-800: #cccccc;
-  --theme-elevation-900: #f0f0f0;
-  --theme-bg:            #0a0a0a;
-  --theme-text:          #f0f0f0;
+  /* Elevation scale — très sombres pour l'atmosphère premium */
+  --theme-elevation-0:    #080808;
+  --theme-elevation-50:   #0f0f0f;
+  --theme-elevation-100:  #161616;
+  --theme-elevation-150:  #1e1e1e;
+  --theme-elevation-200:  #262626;
+  --theme-elevation-300:  #333333;
+  --theme-elevation-400:  #4a4a4a;
+  --theme-elevation-500:  #777777;
+  --theme-elevation-600:  #999999;
+  --theme-elevation-800:  #cccccc;
+  --theme-elevation-900:  #f0f0f0;
+  --theme-bg:             #080808;
+  --theme-text:           #f0f0f0;
+
+  /* Accent = rouge The Grid */
+  --theme-success-500: var(--tg-red);
+  --theme-success-100: var(--tg-red-dim);
+
+  /* Scrollbar */
+  --theme-scrollbar-track: #111;
+  --theme-scrollbar-thumb: #2a2a2a;
 }
 
-/* ── 2. Logo The Grid dans la sidebar ─────────────────────────────── */
-.nav__header {
-  padding: 20px 20px 16px;
-  border-bottom: 1px solid var(--theme-elevation-150);
+/* ── 2. Scrollbar globale ──────────────────────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--theme-scrollbar-thumb) var(--theme-scrollbar-track);
 }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--theme-scrollbar-track); }
+::-webkit-scrollbar-thumb { background: var(--theme-scrollbar-thumb); border-radius: 3px; }
 
-/* Remplace le texte "Payload" par le wordmark The Grid */
-.nav__brand {
-  display: flex !important;
-  align-items: center;
-  gap: 10px;
-}
-
-/* Petit logo SVG inline via CSS content — remplacé par branding text */
-.nav__brand::before {
-  content: "";
-  display: block;
-  width: 28px;
-  height: 10px;
-  background: #e63a2e;
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-
-/* ── 3. Sidebar navigation ─────────────────────────────────────────── */
+/* ── 3. Sidebar ─────────────────────────────────────────────────────── */
 .nav {
   background: var(--theme-elevation-0) !important;
   border-right: 1px solid var(--theme-elevation-150) !important;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Groups (🗂️ Pages, 📰 Contenu, etc.) */
+/* Logo area */
+.nav__header {
+  padding: 20px 16px 16px !important;
+  border-bottom: 1px solid var(--theme-elevation-150) !important;
+}
+
+.nav__brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0 !important;
+  text-decoration: none !important;
+}
+
+/* Hide default Payload "Dashboard" brand text if any */
+.nav__brand span {
+  display: none !important;
+}
+
+/* ── 4. Navigation groups ──────────────────────────────────────────── */
 .nav__group-label {
   font-size: 9px !important;
   font-weight: 700 !important;
-  letter-spacing: 0.12em !important;
+  letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
-  color: var(--theme-elevation-500) !important;
-  padding: 20px 20px 6px !important;
+  color: var(--theme-elevation-400) !important;
+  padding: 18px 18px 6px !important;
 }
 
-/* Nav items */
+/* Nav links */
 .nav__link {
-  border-radius: 6px !important;
+  border-radius: 7px !important;
   margin: 1px 8px !important;
-  padding: 7px 12px !important;
+  padding: 8px 12px !important;
   font-size: 13px !important;
   font-weight: 500 !important;
-  transition: background 0.15s, color 0.15s !important;
+  letter-spacing: 0.01em !important;
   color: var(--theme-elevation-600) !important;
+  transition: background 0.12s ease, color 0.12s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  text-decoration: none !important;
 
   &:hover {
     background: var(--theme-elevation-100) !important;
@@ -82,105 +101,294 @@
 
   &.active,
   &[aria-current="page"] {
-    background: rgba(230, 58, 46, 0.1) !important;
-    color: #e63a2e !important;
+    background: var(--tg-red-dim) !important;
+    color: var(--tg-red) !important;
     font-weight: 600 !important;
   }
 }
 
-/* ── 4. Header de l'admin ──────────────────────────────────────────── */
-.render-title {
-  font-weight: 700 !important;
-  letter-spacing: -0.01em;
+/* ── 5. Header de l'admin ──────────────────────────────────────────── */
+.app-header {
+  background: var(--theme-elevation-0) !important;
+  border-bottom: 1px solid var(--theme-elevation-150) !important;
+  backdrop-filter: blur(8px) !important;
 }
 
-/* ── 5. Boutons principaux → rouge The Grid ─────────────────────────── */
-.btn--style-primary {
-  background-color: #e63a2e !important;
-  border-color: #e63a2e !important;
+.render-title {
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+  font-size: 20px !important;
+}
+
+/* Breadcrumb */
+.step-nav__step {
+  font-size: 12px !important;
+  color: var(--theme-elevation-500) !important;
+}
+.step-nav__step--last {
+  color: var(--theme-text) !important;
+  font-weight: 600 !important;
+}
+
+/* ── 6. Dashboard cards ─────────────────────────────────────────────── */
+.dashboard__card-list {
+  gap: 12px !important;
+}
+
+.card {
+  background: var(--theme-elevation-50) !important;
+  border: 1px solid var(--theme-elevation-150) !important;
+  border-radius: 10px !important;
+  transition: border-color 0.15s ease, background 0.15s ease !important;
 
   &:hover {
-    background-color: #c93127 !important;
-    border-color: #c93127 !important;
+    border-color: var(--tg-red) !important;
+    background: var(--theme-elevation-100) !important;
+  }
+}
+
+.card__title {
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  letter-spacing: -0.01em !important;
+  color: var(--theme-text) !important;
+}
+
+.card__actions {
+  opacity: 0.6;
+  transition: opacity 0.12s;
+}
+.card:hover .card__actions {
+  opacity: 1;
+}
+
+/* ── 7. Collection list / Table ─────────────────────────────────────── */
+.list-controls {
+  border-bottom: 1px solid var(--theme-elevation-150) !important;
+  padding: 12px 0 !important;
+}
+
+.table th {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: var(--theme-elevation-500) !important;
+  border-bottom: 1px solid var(--theme-elevation-150) !important;
+}
+
+.table td {
+  border-bottom: 1px solid var(--theme-elevation-100) !important;
+  font-size: 13px !important;
+  padding: 12px 16px !important;
+}
+
+.table .row:hover td {
+  background: var(--theme-elevation-100) !important;
+}
+
+/* ── 8. Boutons ─────────────────────────────────────────────────────── */
+.btn {
+  border-radius: 7px !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.02em !important;
+  transition: background 0.12s ease, border-color 0.12s ease, opacity 0.12s ease !important;
+}
+
+.btn--style-primary {
+  background-color: var(--tg-red) !important;
+  border-color: var(--tg-red) !important;
+
+  &:hover {
+    background-color: var(--tg-red-hover) !important;
+    border-color: var(--tg-red-hover) !important;
   }
 }
 
 .btn--style-secondary {
-  border-color: var(--theme-elevation-300) !important;
+  background: var(--theme-elevation-100) !important;
+  border-color: var(--theme-elevation-200) !important;
   color: var(--theme-elevation-800) !important;
+
+  &:hover {
+    background: var(--theme-elevation-150) !important;
+    border-color: var(--theme-elevation-300) !important;
+  }
 }
 
-/* ── 6. Save button ─────────────────────────────────────────────────── */
 .form-submit .btn {
   min-width: 120px;
 }
 
-/* ── 7. Champs — focus ring rouge ────────────────────────────────────── */
+/* ── 9. Champs — focus ring rouge ────────────────────────────────────── */
 input:focus,
 textarea:focus,
 select:focus,
 .rich-text-editor:focus-within,
 .lexical-editor__editor-shell:focus-within {
   outline: none !important;
-  box-shadow: 0 0 0 2px rgba(230, 58, 46, 0.4) !important;
+  box-shadow: 0 0 0 2px rgba(230, 58, 46, 0.35) !important;
 }
 
-/* ── 8. Checkbox + radio → accent rouge ──────────────────────────────── */
-input[type="checkbox"]:checked {
-  accent-color: #e63a2e;
-}
-
-/* ── 9. Collection list — table hover ──────────────────────────────── */
-.table .row:hover td {
+input,
+textarea,
+select,
+.field-type > input {
   background: var(--theme-elevation-100) !important;
+  border-color: var(--theme-elevation-200) !important;
+  border-radius: 7px !important;
+  font-size: 13px !important;
+
+  &:hover {
+    border-color: var(--theme-elevation-300) !important;
+  }
 }
 
-/* ── 10. Tags / pills dans les listes ──────────────────────────────── */
-.pill {
-  border-radius: 4px !important;
+/* ── 10. Labels champs ───────────────────────────────────────────────── */
+.field-label {
   font-size: 11px !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.04em !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: var(--theme-elevation-600) !important;
+  margin-bottom: 6px !important;
 }
 
-/* ── 11. Live Preview badge ──────────────────────────────────────────── */
-.doc-controls__controls {
-  gap: 8px;
-}
-
-/* ── 12. Description champs — plus lisible ─────────────────────────── */
 .field-description {
   font-size: 11.5px !important;
   color: var(--theme-elevation-500) !important;
-  line-height: 1.5 !important;
+  line-height: 1.55 !important;
   margin-top: 4px !important;
+  font-style: italic !important;
 }
 
-/* ── 13. Sidebar des documents — fond légèrement distinct ──────────── */
+/* ── 11. Checkbox → rouge ─────────────────────────────────────────── */
+input[type="checkbox"]:checked {
+  accent-color: var(--tg-red);
+}
+
+/* ── 12. Pills / tags ───────────────────────────────────────────────── */
+.pill {
+  border-radius: 4px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+}
+
+/* ── 13. Document header ─────────────────────────────────────────────── */
+.doc-header__title {
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.025em !important;
+  color: var(--theme-text) !important;
+}
+
+.doc-controls__controls {
+  gap: 8px !important;
+}
+
+/* ── 14. Document sidebar ───────────────────────────────────────────── */
 .document-sidebar {
   background: var(--theme-elevation-50) !important;
   border-left: 1px solid var(--theme-elevation-150) !important;
 }
 
-/* ── 14. Global/Page titles dans le header ─────────────────────────── */
-.doc-header__title {
-  font-size: 20px !important;
-  font-weight: 800 !important;
-  letter-spacing: -0.02em !important;
-}
-
-/* ── 15. Toast notifications ───────────────────────────────────────── */
+/* ── 15. Toasts ─────────────────────────────────────────────────────── */
 .toast--success {
-  border-left: 3px solid #e63a2e !important;
+  border-left: 3px solid var(--tg-red) !important;
+  background: var(--theme-elevation-100) !important;
+}
+.toast--error {
+  border-left: 3px solid #f74f4f !important;
 }
 
-/* ── 16. Breadcrumb ─────────────────────────────────────────────────── */
-.step-nav__step {
+/* ── 16. Tabs ───────────────────────────────────────────────────────── */
+.tabs-component__tab {
   font-size: 12px !important;
-  color: var(--theme-elevation-500) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
 }
 
-.step-nav__step--last {
-  color: var(--theme-text) !important;
-  font-weight: 600 !important;
+.tabs-component__tab--active {
+  border-bottom-color: var(--tg-red) !important;
+  color: var(--tg-red) !important;
+}
+
+/* ── 17. Upload / Media field ───────────────────────────────────────── */
+.file-details {
+  background: var(--theme-elevation-100) !important;
+  border: 1px solid var(--theme-elevation-200) !important;
+  border-radius: 8px !important;
+}
+
+/* ── 18. Collapsible / Array fields ─────────────────────────────────── */
+.array-field__row-handle {
+  color: var(--theme-elevation-400) !important;
+}
+
+.collapsible__toggle {
+  border-radius: 7px !important;
+  background: var(--theme-elevation-50) !important;
+  border: 1px solid var(--theme-elevation-150) !important;
+
+  &:hover {
+    background: var(--theme-elevation-100) !important;
+    border-color: var(--theme-elevation-200) !important;
+  }
+}
+
+/* ── 19. Select dropdown ─────────────────────────────────────────────── */
+.rs__control {
+  background: var(--theme-elevation-100) !important;
+  border-color: var(--theme-elevation-200) !important;
+  border-radius: 7px !important;
+
+  &:hover {
+    border-color: var(--theme-elevation-300) !important;
+  }
+}
+
+.rs__menu {
+  background: var(--theme-elevation-100) !important;
+  border: 1px solid var(--theme-elevation-200) !important;
+  border-radius: 8px !important;
+}
+
+.rs__option--is-focused {
+  background: var(--theme-elevation-150) !important;
+}
+
+.rs__option--is-selected {
+  background: var(--tg-red-dim) !important;
+  color: var(--tg-red) !important;
+}
+
+/* ── 20. Login page ──────────────────────────────────────────────────── */
+.login__form {
+  background: var(--theme-elevation-50) !important;
+  border: 1px solid var(--theme-elevation-150) !important;
+  border-radius: 14px !important;
+  padding: 36px !important;
+}
+
+/* ── 21. Pagination ──────────────────────────────────────────────────── */
+.per-page-select .rs__control,
+.pagination__page-selector {
+  font-size: 12px !important;
+}
+
+/* ── 22. Rich text / Lexical editor ──────────────────────────────────── */
+.lexical-editor__editor-shell {
+  background: var(--theme-elevation-100) !important;
+  border: 1px solid var(--theme-elevation-200) !important;
+  border-radius: 8px !important;
+}
+
+.lexical-editor__toolbar {
+  background: var(--theme-elevation-150) !important;
+  border-bottom: 1px solid var(--theme-elevation-200) !important;
+  border-radius: 8px 8px 0 0 !important;
 }

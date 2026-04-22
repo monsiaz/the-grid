@@ -233,12 +233,37 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
             />
           </div>
           <div className="flex flex-1 flex-col justify-between gap-3 p-6">
-            <div className="flex items-start justify-between gap-3">
+            {/* Name + role — LinkedIn pinned to bottom-right via flex-col */}
+            <div className="flex flex-1 flex-col">
+              <h3 className="display-card m-0 text-[clamp(24px,2vw,30px)] text-white">{member.name}</h3>
+              <p className="ui-label m-0 mt-1 text-secondary/60">
+                {member.role}
+              </p>
+            </div>
+            {/* Bottom row: arrow (left) + LinkedIn (right) — always on the same baseline */}
+            <div className="flex items-center justify-between gap-3">
               <div>
-                <h3 className="display-card m-0 text-[clamp(24px,2vw,30px)] text-white">{member.name}</h3>
-                <p className="ui-label m-0 mt-1 text-secondary/60">
-                  {member.role}
-                </p>
+                {hasBio ? (
+                  <button
+                    type="button"
+                    onClick={flip}
+                    aria-label={t("learnMore", { name: member.name })}
+                    className="icon-pill"
+                  >
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                ) : hasLinkedIn ? (
+                  <Link
+                    href={member.linkedinUrl as string}
+                    target="_blank"
+                    rel="noreferrer me"
+                    onClick={(e) => e.stopPropagation()}
+                    aria-label={t("linkedinLabel", { name: member.name })}
+                    className="icon-pill no-underline"
+                  >
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                ) : null}
               </div>
               {hasLinkedIn && (
                 <span
@@ -248,31 +273,6 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
                   <Linkedin className="h-4 w-4" />
                 </span>
               )}
-            </div>
-            <div className="flex justify-start">
-              {hasBio ? (
-                /* Arrow flips to bio */
-                <button
-                  type="button"
-                  onClick={flip}
-                  aria-label={t("learnMore", { name: member.name })}
-                  className="icon-pill"
-                >
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-              ) : hasLinkedIn ? (
-                /* No bio → arrow goes directly to LinkedIn */
-                <Link
-                  href={member.linkedinUrl as string}
-                  target="_blank"
-                  rel="noreferrer me"
-                  onClick={(e) => e.stopPropagation()}
-                  aria-label={t("linkedinLabel", { name: member.name })}
-                  className="icon-pill no-underline"
-                >
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              ) : null}
             </div>
           </div>
         </article>
@@ -444,16 +444,11 @@ function FounderCard({
             </div>
           )}
           <div className="flex flex-1 flex-col justify-between gap-3 p-6">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <h3 className="display-card m-0 text-[clamp(24px,2vw,30px)] text-white">{name}</h3>
-                <p className="ui-label m-0 mt-1 text-secondary/60">{role}</p>
-              </div>
-              <span className="icon-pill shrink-0" aria-hidden>
-                <Linkedin className="h-4 w-4" />
-              </span>
+            <div className="flex flex-1 flex-col">
+              <h3 className="display-card m-0 text-[clamp(24px,2vw,30px)] text-white">{name}</h3>
+              <p className="ui-label m-0 mt-1 text-secondary/60">{role}</p>
             </div>
-            <div className="flex justify-start">
+            <div className="flex items-center justify-between gap-3">
               <button
                 type="button"
                 onClick={flip}
@@ -462,6 +457,9 @@ function FounderCard({
               >
                 <ArrowRight className="h-4 w-4" />
               </button>
+              <span className="icon-pill shrink-0" aria-hidden>
+                <Linkedin className="h-4 w-4" />
+              </span>
             </div>
           </div>
         </article>
