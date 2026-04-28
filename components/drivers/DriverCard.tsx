@@ -42,24 +42,7 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
               />
             ) : null}
           </div>
-          {driver.instagramUrl ? (
-            <Link
-              href={driver.instagramUrl}
-              target="_blank"
-              rel="noreferrer me"
-              aria-label={t("instagramLabel", { name: driver.name })}
-              className="text-white hover:text-white/80 transition-colors shrink-0 mt-1"
-            >
-              <svg aria-hidden viewBox="0 0 24 24" style={{ width: 22, height: 22, display: "block" }} fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
-              </svg>
-            </Link>
-          ) : null}
-        </div>
-        <div className="mt-6 flex items-center justify-between gap-3">
-          <ul className="flex list-none items-center gap-1 p-0 m-0 shrink-0" aria-label={t("nationalities")}>
+          <ul className="flex list-none items-center gap-1 p-0 m-0 shrink-0 mt-1.5" aria-label={t("nationalities")}>
             <DriverFlags
               codes={driver.flags}
               keyPrefix={`${driver.slug}-flag`}
@@ -67,6 +50,23 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
               wrapper="li"
             />
           </ul>
+        </div>
+        <div className="mt-6 flex items-center justify-between gap-3">
+          {driver.instagramUrl ? (
+            <Link
+              href={driver.instagramUrl}
+              target="_blank"
+              rel="noreferrer me"
+              aria-label={t("instagramLabel", { name: driver.name })}
+              className="text-white hover:text-white/80 transition-colors shrink-0"
+            >
+              <svg aria-hidden viewBox="0 0 24 24" style={{ width: 22, height: 22, display: "block" }} fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
+              </svg>
+            </Link>
+          ) : <div />}
           <Link
             href={`/drivers/${driver.slug}`}
             className="pill-button pill-button-accent-outline"
