@@ -29,17 +29,7 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
       <div className="flex flex-1 flex-col justify-between p-6">
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1 min-w-0">
-            <div className="flex items-start justify-between gap-3">
-              <h2 className="display-card m-0 text-white leading-tight" style={{ fontSize: "clamp(24px,2.2vw,30px)" }}>{driver.name}</h2>
-              <ul className="flex list-none items-center gap-1 p-0 m-0 mt-1 shrink-0" aria-label={t("nationalities")}>
-                <DriverFlags
-                  codes={driver.flags}
-                  keyPrefix={`${driver.slug}-flag`}
-                  className="h-[18px] w-[28px] overflow-hidden rounded-sm"
-                  wrapper="li"
-                />
-              </ul>
-            </div>
+            <h2 className="display-card m-0 text-white leading-tight" style={{ fontSize: "clamp(24px,2.2vw,30px)" }}>{driver.name}</h2>
             <p className="m-0 mt-1.5 text-white/60 uppercase line-clamp-2" style={{ fontFamily: "var(--font-poppins), sans-serif", fontSize: "clamp(10px, 0.9vw, 12px)", letterSpacing: "0.15em", lineHeight: 1.4 }}>{driver.role}</p>
             {driver.teamLogo ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -52,27 +42,37 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
               />
             ) : null}
           </div>
+          {driver.instagramUrl ? (
+            <Link
+              href={driver.instagramUrl}
+              target="_blank"
+              rel="noreferrer me"
+              aria-label={t("instagramLabel", { name: driver.name })}
+              className="text-white hover:text-white/80 transition-colors shrink-0 mt-1"
+            >
+              <svg aria-hidden viewBox="0 0 24 24" style={{ width: 22, height: 22, display: "block" }} fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
+              </svg>
+            </Link>
+          ) : null}
         </div>
-        <div className="mt-6 flex items-center gap-3">
+        <div className="mt-6 flex items-center justify-between gap-3">
+          <ul className="flex list-none items-center gap-1 p-0 m-0 shrink-0" aria-label={t("nationalities")}>
+            <DriverFlags
+              codes={driver.flags}
+              keyPrefix={`${driver.slug}-flag`}
+              className="h-[18px] w-[28px] overflow-hidden rounded-sm"
+              wrapper="li"
+            />
+          </ul>
           <Link
             href={`/drivers/${driver.slug}`}
-            className="pill-button pill-button-accent-outline flex-1 justify-center"
+            className="pill-button pill-button-accent-outline"
           >
             {t("learnMore")}
             <span className="sr-only">{t("learnMoreSr", { name: driver.name })}</span>
-          </Link>
-          <Link
-            href={driver.instagramUrl}
-            target="_blank"
-            rel="noreferrer me"
-            aria-label={t("instagramLabel", { name: driver.name })}
-            className="pill-button pill-button-outline h-[44px] min-h-[44px] w-[44px] shrink-0 px-0 text-lg no-underline flex items-center justify-center"
-          >
-            <svg aria-hidden viewBox="0 0 24 24" style={{ width: 20, height: 20, display: "block" }} fill="none" stroke="white" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-              <circle cx="12" cy="12" r="4" />
-              <circle cx="17.5" cy="6.5" r="0.5" fill="white" stroke="none" />
-            </svg>
           </Link>
         </div>
       </div>
