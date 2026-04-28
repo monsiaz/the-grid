@@ -194,7 +194,7 @@ export default function Hero({
       <div
         className={
           centerContentVertically
-            ? "relative z-20 mx-auto flex w-full max-w-[1344px] flex-1 flex-col justify-center px-[clamp(20px,4vw,48px)] pb-[clamp(28px,6vw,56px)]"
+            ? "relative z-20 mx-auto flex w-full max-w-[1344px] flex-1 flex-col justify-center px-[clamp(20px,4vw,48px)] py-[clamp(28px,6vw,56px)]"
             : "relative z-20 mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)]"
         }
       >
