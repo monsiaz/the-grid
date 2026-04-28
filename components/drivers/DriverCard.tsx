@@ -2,6 +2,7 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import DriverFlags from "./DriverFlags";
+import TeamLogo from "./TeamLogo";
 import type { DriverCardData } from "./driversData";
 
 type DriverCardProps = {
@@ -33,18 +34,7 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
             <p className="m-0 mt-1.5 text-white/60 uppercase line-clamp-2" style={{ fontFamily: "var(--font-poppins), sans-serif", fontSize: "clamp(10px, 0.9vw, 12px)", letterSpacing: "0.15em", lineHeight: 1.4, minHeight: "2.8em" }}>{driver.role}</p>
             <div className="mt-4 flex items-center h-[24px]">
               {driver.teamLogo ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={driver.teamLogo}
-                  alt=""
-                  aria-hidden
-                  className="object-contain object-left"
-                  style={{ 
-                    height: driver.teamLogo.includes("1777409261101") || driver.teamLogo.toLowerCase().includes("redbull") ? "14px" : "20px", 
-                    maxWidth: "90px", 
-                    width: "auto" 
-                  }}
-                />
+                <TeamLogo src={driver.teamLogo} variant="card" />
               ) : null}
             </div>
           </div>

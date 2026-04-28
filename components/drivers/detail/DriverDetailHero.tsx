@@ -5,6 +5,7 @@ import { ChevronLeft } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import DriverFlags from "../DriverFlags";
+import TeamLogo from "../TeamLogo";
 import type { DriverCardData } from "../driversData";
 
 type DriverDetailHeroProps = {
@@ -65,18 +66,7 @@ export default function DriverDetailHero({ driver }: DriverDetailHeroProps) {
             </p>
             {driver.teamLogo ? (
               <div className="mt-4 flex items-center h-[32px]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={driver.teamLogo}
-                  alt=""
-                  aria-hidden
-                  className="object-contain object-left"
-                  style={{ 
-                    height: driver.teamLogo.includes("1777409261101") || driver.teamLogo.toLowerCase().includes("redbull") ? "20px" : "28px", 
-                    maxWidth: "125px", 
-                    width: "auto" 
-                  }}
-                />
+                <TeamLogo src={driver.teamLogo} variant="hero" />
               </div>
             ) : null}
           </div>
