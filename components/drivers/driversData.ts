@@ -24,7 +24,6 @@ export type DriverStatCard = {
 
 export type DriverDetailData = {
   slug: string;
-  pageBlocks?: any[];
   profileTitle: string;
   profileParagraphs: string[];
   careerTitle: string;

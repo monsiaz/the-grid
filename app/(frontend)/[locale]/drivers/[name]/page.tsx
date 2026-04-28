@@ -214,7 +214,6 @@ export default async function DriverDetailRoutePage({ params }: DriverDetailRout
 
   const detail = {
     slug: driverDoc.slug,
-    pageBlocks: driverDoc.pageBlocks || [],
     profileTitle: driverDoc.detail?.profileTitle || "Career Overview and Driver Profile",
     profileParagraphs: driverDoc.detail?.profileParagraphs?.split("\n") || [],
     careerTitle: driverDoc.detail?.careerTitle || `${driverDoc.name}'s Career Snapshot`,
