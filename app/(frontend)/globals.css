@@ -150,6 +150,19 @@ video {
     0 2px 10px rgba(0, 0, 0, 0.42);
 }
 
+/* Home hero: exactly two visual lines (split on “ … to … ”), no extra wraps inside each line */
+.hero-title-two-lines {
+  text-wrap: pretty;
+}
+.hero-title-two-lines .hero-title-line {
+  white-space: nowrap;
+}
+@media (max-width: 360px) {
+  .hero-title-two-lines .hero-title-line {
+    white-space: normal;
+  }
+}
+
 .display-section {
   font-family: var(--font-league-spartan), sans-serif;
   font-size: clamp(40px, 5.6vw, 64px);

@@ -37,11 +37,12 @@ function renderHeroTitle(title: string): React.ReactNode {
   if (!title) return title;
   const matchTo = title.toLowerCase().indexOf(" to ");
   if (matchTo > 0) {
+    const line1 = title.slice(0, matchTo).trimEnd();
+    const line2 = title.slice(matchTo + 1).trimStart();
     return (
       <>
-        {title.slice(0, matchTo)}
-        <br />
-        {title.slice(matchTo + 1)}
+        <span className="hero-title-line block">{line1}</span>
+        <span className="hero-title-line block">{line2}</span>
       </>
     );
   }
@@ -50,9 +51,8 @@ function renderHeroTitle(title: string): React.ReactNode {
     const mid = Math.ceil(words.length / 2);
     return (
       <>
-        {words.slice(0, mid).join(" ")}
-        <br />
-        {words.slice(mid).join(" ")}
+        <span className="hero-title-line block">{words.slice(0, mid).join(" ")}</span>
+        <span className="hero-title-line block">{words.slice(mid).join(" ")}</span>
       </>
     );
   }
@@ -85,7 +85,7 @@ export default async function Home({
         backgroundImage={homepage.heroBackgroundImage}
         title={renderHeroTitle(homepage.heroTitle)}
         contentClassName="my-32 max-w-[820px] text-left"
-        titleClassName="display-hero whitespace-nowrap max-[600px]:whitespace-normal max-[600px]:text-[clamp(32px,10vw,44px)]"
+        titleClassName="display-hero hero-title-two-lines !text-[clamp(38px,6vw,84px)] max-[600px]:!text-[clamp(30px,9vw,42px)]"
         stickyHeader={designSettings.stickyHeader}
         menuStyle={designSettings.headerMenuStyle}
         menuTextSize={designSettings.headerMenuTextSize}
