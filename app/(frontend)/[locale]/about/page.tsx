@@ -46,6 +46,12 @@ export default async function AboutPage({
     getDesignSettings(),
   ]);
   const teamMembers = await payload.find({ collection: "team-members", sort: "order", locale });
+  const founderName = (aboutPage.founderName as string | undefined) || "Guillaume Le Goff";
+  // Prefer the bio stored in the team-member record (editable per-locale in the admin)
+  // so editors don't have to maintain two separate bio fields.
+  const founderTeamMember = (teamMembers.docs as Array<{ name?: string | null; bio?: string | null }>)
+    .find((m) => typeof m.name === "string" && m.name.trim().toLowerCase() === founderName.trim().toLowerCase());
+  const resolvedFounderBio = founderTeamMember?.bio ?? (aboutPage.founderBio as string | null | undefined);
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/about" });
   const aboutInstagramUrl =
     typeof aboutPage.instagramUrl === "string" &&
@@ -76,8 +82,8 @@ export default async function AboutPage({
       <AboutCoreTeam
         coreIntroText={aboutPage.coreIntroText}
         coreAreas={aboutPage.coreAreas || []}
-        founderBio={aboutPage.founderBio}
-        founderName={aboutPage.founderName || "Guillaume Le Goff"}
+        founderBio={resolvedFounderBio}
+        founderName={founderName}
         founderRole={aboutPage.founderRole || "Founder & Partner"}
         founderImage="/assets/v2/about/guillaume-le-goff.webp"
         founderLinkedinUrl={
