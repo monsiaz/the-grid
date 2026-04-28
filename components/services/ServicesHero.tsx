@@ -66,7 +66,7 @@ export default function ServicesHero({
       backdropBlur={heroTextBackdropBlur}
       parallaxIntensity={parallaxIntensity}
       heroGradientIntensity={heroGradientIntensity}
-      contentClassName="mx-auto flex w-full max-w-[960px] flex-col items-center justify-center gap-5 py-16 text-center min-[900px]:min-h-[640px] min-[900px]:py-0 min-[900px]:pt-12"
+      contentClassName="mx-auto flex w-full max-w-[960px] flex-col items-center justify-center gap-5 py-14 text-center min-[900px]:gap-5 min-[900px]:py-0"
       ctaMarginTopClass="mt-0"
       titleClassName="display-hero mx-auto whitespace-nowrap text-center max-[600px]:whitespace-normal"
       title={renderServicesTitle(effectiveTitle)}

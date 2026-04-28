@@ -68,6 +68,12 @@ type HeroProps = {
   backgroundObjectPosition?: string;
   /** Extra margin above the CTA link (chevron). Default a bit tight vs title block. */
   ctaMarginTopClass?: string;
+  /**
+   * When true (default), the content column fills space below the header and
+   * uses flexbox to vertically centre the block — fixes About/Services/Drivers heroes.
+   * Set false for layouts like /contact (footer anchored, explicit top padding).
+   */
+  centerContentVertically?: boolean;
 };
 
 export default function Hero({
@@ -92,6 +98,7 @@ export default function Hero({
   priorityBackground = true,
   backgroundObjectPosition,
   ctaMarginTopClass = "mt-5",
+  centerContentVertically = true,
   stickyHeader = false,
   menuStyle = "default",
   menuTextSize = "large",
@@ -112,7 +119,10 @@ export default function Hero({
   const clampedBackdropBlur = Math.min(90, Math.max(24, backdropBlur));
 
   return (
-    <section ref={sectionRef} className={`relative w-full overflow-hidden ${minHeightClassName}`}>
+    <section
+      ref={sectionRef}
+      className={`relative flex w-full flex-col overflow-hidden ${minHeightClassName}`}
+    >
       {priorityBackground ? (
         <Image
           src={backgroundImage}
@@ -181,7 +191,13 @@ export default function Hero({
           menuTextSize={menuTextSize}
         />
       </StickyHeaderWrapper>
-      <div className="relative z-20 mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)]">
+      <div
+        className={
+          centerContentVertically
+            ? "relative z-20 mx-auto flex w-full max-w-[1344px] flex-1 flex-col justify-center px-[clamp(20px,4vw,48px)] pb-[clamp(28px,6vw,56px)]"
+            : "relative z-20 mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)]"
+        }
+      >
         <div
           className={
             skipDefaultContentMobileMargins

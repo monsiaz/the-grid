@@ -90,6 +90,7 @@ export default async function Home({
       <Hero
         backgroundImage={homepage.heroBackgroundImage}
         title={renderHeroTitle(homepage.heroTitle)}
+        centerContentVertically={false}
         minHeightClassName="min-h-[clamp(440px,78svh,600px)]"
         contentClassName="mb-10 max-w-[min(780px,92vw)] text-left md:mb-14 hero-content-tunable"
         titleClassName="display-hero hero-title-two-lines !flex !flex-col hero-title-tunable"

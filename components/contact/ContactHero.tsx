@@ -49,6 +49,7 @@ export default function ContactHero({
   return (
     <Hero
       backgroundImage={backgroundImage}
+      centerContentVertically={false}
       minHeightClassName="min-h-[clamp(720px,100svh,1040px)]"
       /*
         Deeper bottom-anchored overlay (black at 80% bottom) so the footer
