@@ -163,6 +163,44 @@ video {
   }
 }
 
+/* Homepage hero title — driven by CMS (Homepage → hero title layout), CSS vars set inline */
+.hero-content-tunable {
+  margin-top: clamp(
+    var(--hero-mt-min, 88px),
+    var(--hero-mt-mid, 17.5vh),
+    var(--hero-mt-max, 168px)
+  ) !important;
+}
+@media (max-width: 900px) {
+  .hero-content-tunable {
+    margin-top: clamp(
+      var(--hero-mt-mob-min, 72px),
+      var(--hero-mt-mob-mid, 15vh),
+      var(--hero-mt-mob-max, 132px)
+    ) !important;
+  }
+}
+
+.hero-title-tunable {
+  font-size: clamp(
+    var(--hero-fs-min, 26px),
+    var(--hero-fs-mid, 4.1vw),
+    var(--hero-fs-max, 76px)
+  ) !important;
+  line-height: var(--hero-lh, 0.93) !important;
+  letter-spacing: var(--hero-track, -0.028em) !important;
+  gap: var(--hero-gap, 0.08em) !important;
+}
+@media (max-width: 600px) {
+  .hero-title-tunable {
+    font-size: clamp(
+      var(--hero-fs-mob-min, 24px),
+      var(--hero-fs-mob-mid, 7.5vw),
+      var(--hero-fs-mob-max, 38px)
+    ) !important;
+  }
+}
+
 .display-section {
   font-family: var(--font-league-spartan), sans-serif;
   font-size: clamp(40px, 5.6vw, 64px);

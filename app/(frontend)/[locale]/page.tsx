@@ -14,6 +14,8 @@ import Drivers from "@/components/Drivers";
 import { getPayloadClient } from "@/lib/payload";
 import { resolveSectionOrder } from "@/lib/sectionOrder";
 import { getDesignSettings } from "@/lib/designSettings";
+import { homeHeroTitleLayoutToCss } from "@/lib/homeHeroTitleLayout";
+import type { HomeHeroTitleLayout } from "@/lib/homeHeroTitleLayout";
 
 export const revalidate = 60;
 
@@ -79,15 +81,22 @@ export default async function Home({
     ["hero", "about", "experience", "services", "news", "drivers"] as const,
   );
 
+  const heroTitleCss = homeHeroTitleLayoutToCss(
+    (homepage as { heroTitleLayout?: HomeHeroTitleLayout }).heroTitleLayout,
+  );
+
   const sections = {
     hero: (
       <Hero
         backgroundImage={homepage.heroBackgroundImage}
         title={renderHeroTitle(homepage.heroTitle)}
         minHeightClassName="min-h-[clamp(440px,78svh,600px)]"
-        contentClassName="!mt-[clamp(88px,17.5vh,168px)] max-[900px]:!mt-[clamp(72px,15vh,132px)] mb-10 max-w-[min(780px,92vw)] text-left md:mb-14"
-        titleClassName="display-hero hero-title-two-lines !flex !flex-col !gap-[0.08em] !text-[clamp(26px,4.1vw,76px)] !leading-[0.93] !tracking-[-0.028em] max-[600px]:!text-[clamp(24px,7.5vw,38px)]"
-        backdropAt="21% 54%"
+        contentClassName="mb-10 max-w-[min(780px,92vw)] text-left md:mb-14 hero-content-tunable"
+        titleClassName="display-hero hero-title-two-lines !flex !flex-col hero-title-tunable"
+        contentStyle={heroTitleCss.contentStyle}
+        titleStyle={heroTitleCss.titleStyle}
+        backdropAt={heroTitleCss.backdropAt}
+        skipDefaultContentMobileMargins
         stickyHeader={designSettings.stickyHeader}
         menuStyle={designSettings.headerMenuStyle}
         menuTextSize={designSettings.headerMenuTextSize}

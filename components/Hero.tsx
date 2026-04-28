@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type CSSProperties } from "react";
 import Image from "next/image";
 import Header from "./Header";
 import StickyHeaderWrapper from "./StickyHeaderWrapper";
@@ -48,6 +48,15 @@ type HeroProps = {
   parallaxIntensity?: number;
   /** Multiplier for the global overlay gradient darkness. 1 = default. */
   heroGradientIntensity?: number;
+  /** Inline styles (e.g. CSS variables) merged onto the hero content wrapper */
+  contentStyle?: CSSProperties;
+  /** Inline styles merged onto the main title (h1) */
+  titleStyle?: CSSProperties;
+  /**
+   * When true, omits the default `max-[900px]:mt-[82px]` block so CMS-driven
+   * margins (e.g. `.hero-content-tunable`) apply on tablet/mobile.
+   */
+  skipDefaultContentMobileMargins?: boolean;
   cta?: {
     href: string;
     label: React.ReactNode;
@@ -82,6 +91,9 @@ export default function Hero({
   menuTextSize = "large",
   parallaxIntensity = 15,
   heroGradientIntensity = 1,
+  contentStyle,
+  titleStyle,
+  skipDefaultContentMobileMargins = false,
 }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -163,9 +175,17 @@ export default function Hero({
         />
       </StickyHeaderWrapper>
       <div className="relative z-20 mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)]">
-        <div className={`${contentClassName} max-[900px]:mt-[82px] max-[900px]:mb-[72px] max-[900px]:max-w-full`}>
+        <div
+          className={
+            skipDefaultContentMobileMargins
+              ? `${contentClassName} max-[900px]:max-w-full`
+              : `${contentClassName} max-[900px]:mt-[82px] max-[900px]:mb-[72px] max-[900px]:max-w-full`
+          }
+          style={contentStyle}
+        >
           <motion.h1
             className={titleClassName}
+            style={titleStyle}
             variants={heroTitle}
             initial="hidden"
             animate="visible"
