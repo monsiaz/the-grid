@@ -61,13 +61,13 @@ export default function AboutAccelereFollow({
             <p className="body-lg m-0 whitespace-pre-line text-white/84">
               {description}
             </p>
-            <Link
+            <a
               href={COME_MAILTO}
               aria-label={t("getInTouchAria")}
               className="pill-button pill-button-accent-outline mx-auto w-fit"
             >
               {t("getInTouch")}
-            </Link>
+            </a>
           </motion.div>
 
           <div className="grid items-center gap-7 min-[900px]:grid-cols-[432px_1fr]">
