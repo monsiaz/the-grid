@@ -405,6 +405,14 @@ const STATEMENTS = [
   `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_font_size_mobile_mid_vw" numeric;`,
   `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_font_size_mobile_max_px" numeric;`,
 
+  // ────────────────── Services page: case study focal point (2026-04 migration) ────
+  //
+  // New `imageFocalPoint` text field on the `caseStudies` array. Payload stores
+  // array items for the `services-page` global in `services_page_case_studies`.
+  // We must pre-create the column here so Payload's `push: true` sync finds nothing
+  // to ALTER at cold-start (prevents lock contention and HTTP 500 on admin).
+  `ALTER TABLE "services_page_case_studies" ADD COLUMN IF NOT EXISTS "image_focal_point" varchar;`,
+
   // ────────────────── news.category nullable (2026-04 fix) ──────────────────────────
   //
   // The `category` column was created as NOT NULL (from original Payload push) but the
