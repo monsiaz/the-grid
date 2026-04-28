@@ -64,6 +64,10 @@ type HeroProps = {
     ariaLabel?: string;
   };
   priorityBackground?: boolean;
+  /** Passed to the background `next/image` when using object-cover (e.g. `50% 28%` to keep a face in frame). */
+  backgroundObjectPosition?: string;
+  /** Extra margin above the CTA link (chevron). Default a bit tight vs title block. */
+  ctaMarginTopClass?: string;
 };
 
 export default function Hero({
@@ -86,6 +90,8 @@ export default function Hero({
   footerSlot,
   cta,
   priorityBackground = true,
+  backgroundObjectPosition,
+  ctaMarginTopClass = "mt-5",
   stickyHeader = false,
   menuStyle = "default",
   menuTextSize = "large",
@@ -117,6 +123,7 @@ export default function Hero({
           sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
           quality={70}
           className="absolute inset-0 -z-0 object-cover"
+          style={backgroundObjectPosition ? { objectPosition: backgroundObjectPosition } : undefined}
           aria-hidden
         />
       ) : (
@@ -214,7 +221,7 @@ export default function Hero({
               <Link
                 href={cta.href}
                 aria-label={cta.ariaLabel}
-                className={`pill-button pill-button-accent-outline mt-8 ${cta.className ?? ""}`}
+                className={`pill-button pill-button-accent-outline ${ctaMarginTopClass} ${cta.className ?? ""}`}
               >
                 {cta.label}
               </Link>

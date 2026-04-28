@@ -40,9 +40,10 @@ export default function DriversHero({
       }
       description={description || t("descriptionFallback")}
       minHeightClassName="min-h-[clamp(560px,90svh,800px)]"
-      contentClassName="mx-auto my-24 max-w-[820px] text-center min-[900px]:my-32"
+      contentClassName="mx-auto flex w-full max-w-[820px] flex-col items-center justify-center gap-5 py-16 text-center min-[900px]:min-h-[640px] min-[900px]:py-0 min-[900px]:pt-12"
       titleClassName="display-hero mx-auto max-w-[12ch] text-center"
-      descriptionClassName="body-lg mx-auto mt-4 max-w-[54ch] text-center text-white/84 [text-shadow:0_2px_12px_rgba(0,0,0,0.6)]"
+      ctaMarginTopClass="mt-0"
+      descriptionClassName="body-lg m-0 mx-auto max-w-[54ch] text-center text-white/84 [text-shadow:0_2px_12px_rgba(0,0,0,0.6)]"
       overlayClassName="bg-[linear-gradient(180deg,rgba(15,15,15,0.04)_0%,rgba(15,15,15,0.1)_60%,rgba(15,15,15,0.28)_100%)]"
       backdropAt="50% 52%"
       backdropScale="72% 88%"

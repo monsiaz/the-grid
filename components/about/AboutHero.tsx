@@ -35,6 +35,7 @@ export default function AboutHero({
   return (
     <Hero
       backgroundImage={backgroundImage || "/images/about/hero.webp"}
+      backgroundObjectPosition="50% 24%"
       minHeightClassName="min-h-[clamp(560px,90svh,800px)]"
       overlayClassName="bg-[linear-gradient(180deg,rgba(15,15,15,0.02)_0%,rgba(15,15,15,0.06)_60%,rgba(15,15,15,0.18)_100%)]"
       backdropAt="50% 55%"
@@ -46,7 +47,8 @@ export default function AboutHero({
       menuTextSize={menuTextSize}
       backdropOpacity={heroTextBackdropOpacity}
       backdropBlur={heroTextBackdropBlur}
-      contentClassName="mx-auto flex w-full max-w-[760px] flex-col items-center justify-center gap-8 py-16 text-center min-[900px]:min-h-[640px] min-[900px]:py-0"
+      contentClassName="mx-auto flex w-full max-w-[760px] flex-col items-center justify-center gap-5 py-16 text-center min-[900px]:min-h-[640px] min-[900px]:py-0 min-[900px]:pt-12"
+      ctaMarginTopClass="mt-0"
       titleClassName="display-hero mx-auto whitespace-nowrap text-center max-[600px]:whitespace-normal"
       title={
         <>
