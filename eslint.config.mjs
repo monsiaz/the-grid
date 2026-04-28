@@ -7,6 +7,8 @@ const eslintConfig = defineConfig([
   ...nextTs,
   // Override default ignores of eslint-config-next.
   globalIgnores([
+    // macOS / exFAT AppleDouble sidecar files (e.g. on external disks) — break ESLint parsing
+    "**/._*",
     // Default ignores of eslint-config-next:
     ".next/**",
     "out/**",

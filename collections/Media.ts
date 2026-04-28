@@ -34,7 +34,9 @@ async function describeBufferWithVision(buf: Buffer, filename: string): Promise<
       }),
     });
     if (!r.ok) return null;
-    const j: any = await r.json();
+    const j = (await r.json()) as {
+      choices?: Array<{ message?: { content?: string } }>;
+    };
     const content = j?.choices?.[0]?.message?.content;
     if (!content) return null;
     const parsed = JSON.parse(content);

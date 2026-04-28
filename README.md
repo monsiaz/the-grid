@@ -100,6 +100,25 @@ pnpm lint
 pnpm seed
 ```
 
+## Pre-deploy checklist
+
+Run locally before pushing (or rely on [GitHub Actions](.github/workflows/ci.yml) for `tsc` + `lint` on each PR):
+
+1. **`pnpm exec tsc --noEmit`** — TypeScript must pass.
+2. **`pnpm lint`** — ESLint (macOS `._*` sidecar files on external volumes are ignored via `eslint.config.mjs`).
+3. **`pnpm build`** — Full Next.js + Payload build; requires the same env vars as production (`DATABASE_URL`, `PAYLOAD_SECRET`, `BLOB_READ_WRITE_TOKEN`, etc.). Use a `.env.local` that mirrors Vercel or pull from your secrets manager.
+4. **After deploy (optional smoke test)** — `node scripts/_verify-prod.mjs` captures full-page screenshots of key URLs (needs Chrome at the path in that script; adjust for your machine).
+
+## CI (GitHub Actions)
+
+- **On push/PR to `main`:** installs deps with a frozen lockfile, runs `tsc --noEmit` and `eslint .`.
+- **Optional full build:** in the Actions tab, run workflow **CI** manually and enable **run_build** — set repository secrets (`DATABASE_URL`, `PAYLOAD_SECRET`, `BLOB_READ_WRITE_TOKEN`, `NEXT_PUBLIC_SERVER_URL`, etc.) to match Vercel.
+
+## Vercel
+
+- For **`the-grid-sa`**, the Vercel API reports **`buildCommand` and `installCommand` as unset** (`null`). With **Framework Preset: Next.js** and a **`pnpm-lock.yaml`** in the repo, Vercel uses **`pnpm install`** and **`pnpm run build`** automatically — matching this project’s `package.json` `build` script (`generate:importmap` → `ensure-schema` → `next build`). You only need to override those fields if you intentionally diverge from that.
+- To require green CI before merging to production: GitHub **Settings → Branches → Branch protection** on `main` → enable **Require status checks to pass** and select the **quality** job from [`.github/workflows/ci.yml`](.github/workflows/ci.yml) (after the first successful run so the check appears in the list).
+
 ## Environment
 
 Expected environment variables depending on the target environment:

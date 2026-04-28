@@ -57,8 +57,10 @@ export default function TranslationStatus() {
   useEffect(() => {
     if (!docId || !slug || !probeFields) return;
     let cancelled = false;
-    setStatus("loading");
-    setError(null);
+    queueMicrotask(() => {
+      setStatus("loading");
+      setError(null);
+    });
 
     (async () => {
       try {

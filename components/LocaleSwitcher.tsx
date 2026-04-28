@@ -68,6 +68,8 @@ export default function LocaleSwitcher({ dropdownDir = "up" }: { dropdownDir?: "
     if (next === locale) return;
     if (typeof document !== "undefined") {
       const oneYear = 60 * 60 * 24 * 365;
+      // Cookie write is intentional DOM sync for locale persistence (not React state).
+      // eslint-disable-next-line react-hooks/immutability -- document.cookie is external browser API
       document.cookie = `NEXT_LOCALE=${next}; Path=/; Max-Age=${oneYear}; SameSite=Lax`;
     }
     const alternates = readAlternatesFromDom();
