@@ -32,6 +32,8 @@ type ServicesCardGridProps = {
   gridClassName: string;
   imageHeightClassName: string;
   bodyPaddingClassName: string;
+  /** Override the responsive `sizes` attribute for <Image> in each card. */
+  cardImageSizes?: string;
 };
 
 /** Text-only intro card (fallback when no intro image is provided). */
@@ -57,11 +59,13 @@ function ServiceCard({
   card,
   imageHeightClassName,
   servicesArrowStyle,
+  sizes,
 }: {
   card: ServiceCard;
   imageHeightClassName: string;
   servicesArrowStyle: "default" | "slim";
   bodyPaddingClassName: string;
+  sizes: string;
 }) {
   const [flipped, setFlipped] = useState(false);
   const hasDescription = Boolean(card.description?.trim());
@@ -96,7 +100,7 @@ function ServiceCard({
               alt={card.alt}
               fill
               quality={100}
-              sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, (max-width: 1400px) 20vw, 280px"
+              sizes={sizes}
               className={`object-cover ${objectPosition} transition-transform duration-500 ease-out ${
                 needsMicroZoom ? "scale-[1.035] hover:scale-[1.06]" : "hover:scale-[1.03]"
               }`}
@@ -163,6 +167,7 @@ export default function ServicesCardGrid({
   gridClassName,
   imageHeightClassName,
   bodyPaddingClassName,
+  cardImageSizes = "(max-width: 600px) 100vw, (max-width: 900px) 50vw, (max-width: 1400px) 33vw, 400px",
 }: ServicesCardGridProps) {
   // When an intro image is provided, the intro becomes a proper flip card
   // (same style as the other ServiceCards) with `introTitle` on the front
@@ -215,6 +220,7 @@ export default function ServicesCardGrid({
               imageHeightClassName={imageHeightClassName}
               servicesArrowStyle={servicesArrowStyle}
               bodyPaddingClassName={bodyPaddingClassName}
+              sizes={cardImageSizes}
             />
           ) : (
             <ServiceIntroCard text={introText} />
@@ -226,6 +232,7 @@ export default function ServicesCardGrid({
               imageHeightClassName={imageHeightClassName}
               servicesArrowStyle={servicesArrowStyle}
               bodyPaddingClassName={bodyPaddingClassName}
+              sizes={cardImageSizes}
             />
           ))}
         </motion.div>

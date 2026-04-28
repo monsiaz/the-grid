@@ -54,6 +54,7 @@ export default function ServicesValue({
           gridClassName="px-[clamp(16px,3vw,40px)] min-[600px]:grid-cols-2 min-[900px]:grid-cols-3 min-[1200px]:grid-cols-5"
           imageHeightClassName="h-[260px] min-[900px]:h-[300px]"
           bodyPaddingClassName="p-6"
+          cardImageSizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, (max-width: 1200px) 34vw, (max-width: 1660px) 21vw, 350px"
         />
       </div>
     </section>
