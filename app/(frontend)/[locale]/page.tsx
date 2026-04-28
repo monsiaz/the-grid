@@ -84,8 +84,10 @@ export default async function Home({
       <Hero
         backgroundImage={homepage.heroBackgroundImage}
         title={renderHeroTitle(homepage.heroTitle)}
-        contentClassName="my-32 max-w-[820px] text-left"
-        titleClassName="display-hero hero-title-two-lines !text-[clamp(38px,6vw,84px)] max-[600px]:!text-[clamp(30px,9vw,42px)]"
+        minHeightClassName="min-h-[clamp(440px,78svh,600px)]"
+        contentClassName="mt-[clamp(40px,10.5vh,96px)] mb-10 max-w-[min(820px,92vw)] text-left md:mb-14"
+        titleClassName="display-hero hero-title-two-lines !text-[clamp(32px,5.25vw,90px)] !leading-[0.88] !tracking-[-0.03em] max-[600px]:!text-[clamp(28px,8.2vw,40px)]"
+        backdropAt="19% 46%"
         stickyHeader={designSettings.stickyHeader}
         menuStyle={designSettings.headerMenuStyle}
         menuTextSize={designSettings.headerMenuTextSize}
