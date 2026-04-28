@@ -137,6 +137,7 @@ export const Media: CollectionConfig = {
     afterChange: [autoDescribeHook],
   },
   upload: {
+    disableLocalStorage: true,
     mimeTypes: ["image/*"],
     focalPoint: true,
     crop: true,

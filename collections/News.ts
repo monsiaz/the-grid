@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { after } from "next/server";
 import { imageField } from "@/fields/imageField";
 import { getSiteUrl } from "@/lib/siteUrl";
 import { revalidateNewsDetail } from "@/lib/revalidate";
@@ -161,7 +162,16 @@ export const News: CollectionConfig = {
   ],
   hooks: {
     afterChange: [
-      ({ doc }: { doc: unknown }) => { revalidateNewsDetail((doc as { slug?: string }).slug); },
+      ({ doc, req }: { doc: Record<string, unknown>; req: { locale?: string | null } }) => {
+        revalidateNewsDetail((doc as { slug?: string }).slug);
+        const locale = req?.locale || "en";
+        const apiKey = process.env.OPENAI_API_KEY;
+        if (!apiKey) return;
+        const secret = process.env.TRANSLATE_SECRET || process.env.PAYLOAD_SECRET || "";
+        const base = getSiteUrl();
+        const url = `${base}/api/translate-payload?scope=collections&collection=news&id=${doc.id}&force=1&sourceLocale=${locale}&secret=${encodeURIComponent(secret)}`;
+        after(() => fetch(url, { method: "POST" }).catch(() => {}));
+      },
     ],
     afterDelete: [
       ({ doc }: { doc: unknown }) => { revalidateNewsDetail((doc as { slug?: string }).slug); },
