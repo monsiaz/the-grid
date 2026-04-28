@@ -5,6 +5,9 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { motion, useScroll, useTransform, scaleIn, smoothTransition, viewport } from "../motion";
 
+const THE_GRID_LOGO = "/images/The Grid Agency_White.png";
+const COME_LOGO = "/images/come-logo-white.png";
+
 type AboutAccelereBannerProps = {
   bannerImage?: string | null;
 };
@@ -59,6 +62,33 @@ export default function AboutAccelereBanner({ bannerImage }: AboutAccelereBanner
           className="object-cover object-center max-[640px]:object-contain"
         />
       </motion.div>
+
+      {/* Gradient overlay for text/logo legibility */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+
+      {/* Bottom-left: tagline + logos */}
+      <div className="absolute bottom-[6%] left-[4%] flex flex-col gap-[1.2%]">
+        <p className="m-0 font-sans text-white/70 uppercase tracking-[0.18em] leading-snug text-[clamp(8px,0.9vw,14px)]">
+          BEHIND EVERY GREAT DRIVER,<br />SOMEONE BELIEVED FIRST.
+        </p>
+        <div className="flex items-center gap-[3%]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={THE_GRID_LOGO}
+            alt="The Grid Agency"
+            className="h-[clamp(18px,1.8vw,30px)] w-auto object-contain"
+            draggable={false}
+          />
+          <span className="text-white/40 text-[clamp(10px,1vw,16px)]">×</span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={COME_LOGO}
+            alt="Côme Ensemble"
+            className="h-[clamp(18px,1.8vw,30px)] w-auto object-contain"
+            draggable={false}
+          />
+        </div>
+      </div>
     </motion.section>
   );
 }
