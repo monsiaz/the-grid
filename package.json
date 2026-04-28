@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "next dev",
     "generate:importmap": "node --import tsx/esm ./node_modules/payload/dist/bin/index.js generate:importmap",
-    "build": "pnpm generate:importmap && node scripts/ensure-schema.mjs && next build",
+    "build": "env NEXT_TELEMETRY_DISABLED=1 pnpm generate:importmap && node scripts/ensure-schema.mjs && env NEXT_TELEMETRY_DISABLED=1 NODE_OPTIONS=--max-old-space-size=6144 next build",
     "start": "next start",
     "lint": "eslint",
     "seed": "curl -s -X POST http://localhost:3000/api/seed"

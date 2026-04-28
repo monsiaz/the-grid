@@ -40,6 +40,7 @@ jobs:
     needs: quality
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
 
@@ -57,6 +58,8 @@ jobs:
       - name: Production build (same as Vercel)
         run: pnpm build
         env:
+          NEXT_TELEMETRY_DISABLED: "1"
+          NODE_OPTIONS: --max-old-space-size=6144
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
           DATABASE_URI: ${{ secrets.DATABASE_URI }}

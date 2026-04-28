@@ -376,15 +376,42 @@ const STATEMENTS = [
   `ALTER TABLE "services_page_locales" ADD COLUMN IF NOT EXISTS "value_intro_title" varchar;`,
 ];
 
+/** Neon/serverless Postgres often returns transient errors during Vercel build (cold compute, OOM, connection limits). */
+const RETRIABLE_SQL =
+  /connect|compute|timeout|ECONNREFUSED|ETIMEDOUT|ECONNRESET|EPIPE|XX000|too many connections|out of memory|couldn'?t connect|server closed the connection/i;
+
+const MAX_ATTEMPTS = 4;
+
+async function queryStatement(sql) {
+  let lastErr;
+  for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+    try {
+      await pool.query(sql);
+      return { ok: true };
+    } catch (err) {
+      lastErr = err;
+      const msg = err?.message || String(err);
+      if (attempt < MAX_ATTEMPTS - 1 && RETRIABLE_SQL.test(msg)) {
+        const waitMs = 1500 * (attempt + 1);
+        console.warn(`[ensure-schema] transient (${attempt + 1}/${MAX_ATTEMPTS}), retry in ${waitMs}ms: ${msg.slice(0, 120)}`);
+        await new Promise((r) => setTimeout(r, waitMs));
+        continue;
+      }
+      return { ok: false, err: msg };
+    }
+  }
+  return { ok: false, err: lastErr?.message || String(lastErr) };
+}
+
 async function main() {
   const ran = [];
   const errors = [];
   for (const s of STATEMENTS) {
-    try {
-      await pool.query(s);
+    const { ok, err } = await queryStatement(s);
+    if (ok) {
       ran.push(s.split("\n")[0].slice(0, 80));
-    } catch (err) {
-      errors.push(`${s.split("\n")[0].slice(0, 80)} — ${err.message}`);
+    } else {
+      errors.push(`${s.split("\n")[0].slice(0, 80)} — ${err}`);
     }
   }
 
