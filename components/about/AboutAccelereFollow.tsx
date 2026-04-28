@@ -96,9 +96,8 @@ export default function AboutAccelereFollow({
               viewport={viewport}
               transition={{ ...smoothTransition, delay: 0.2 }}
             >
-              <span className="text-accent absolute -left-2 top-1 text-[120px] leading-none opacity-30">&ldquo;</span>
               <p className="body-lg m-0 italic text-white/88">
-                {quote}
+                &ldquo;{quote}&rdquo;
               </p>
               <p className="body-md mt-5 mb-0 text-white/72">
                 <span className="display-card text-[18px] text-white">{quoteAuthor}</span>
