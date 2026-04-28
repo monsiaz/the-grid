@@ -14,11 +14,14 @@ export function createSectionOrderField(
     type: "array",
     label,
     defaultValue: options.map(({ value }) => ({ sectionId: value })),
-    admin: {
-      description:
-        "Réordonnez les sections par glisser-déposer. L'ordre sauvegardé est répercuté sur la page publique après revalidation.",
-      initCollapsed: true,
-    },
+      admin: {
+        description:
+          "Réordonnez les sections par glisser-déposer. L'ordre sauvegardé est répercuté sur la page publique après revalidation.",
+        initCollapsed: true,
+        components: {
+          RowLabel: "@/components/admin/SectionRowLabel",
+        },
+      },
     fields: [
       {
         name: "sectionId",
