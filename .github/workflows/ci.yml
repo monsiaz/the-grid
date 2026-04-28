@@ -29,8 +29,10 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "24"
+          # 24.x matches package.json engines; if setup-node ever fails, pin e.g. 22 and align engines.
+          node-version: "24.x"
           cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
       - run: pnpm install --frozen-lockfile
 
@@ -56,8 +58,10 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "24"
+          # 24.x matches package.json engines; if setup-node ever fails, pin e.g. 22 and align engines.
+          node-version: "24.x"
           cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
       - run: pnpm install --frozen-lockfile
 
