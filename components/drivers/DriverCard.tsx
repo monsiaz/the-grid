@@ -28,19 +28,25 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
       </div>
       <div className="flex flex-1 flex-col justify-between p-6">
         <div className="flex items-start justify-between gap-4">
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0 flex flex-col">
             <h2 className="display-card m-0 text-white leading-tight" style={{ fontSize: "clamp(24px,2.2vw,30px)" }}>{driver.name}</h2>
-            <p className="m-0 mt-1.5 text-white/60 uppercase line-clamp-2" style={{ fontFamily: "var(--font-poppins), sans-serif", fontSize: "clamp(10px, 0.9vw, 12px)", letterSpacing: "0.15em", lineHeight: 1.4 }}>{driver.role}</p>
-            {driver.teamLogo ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={driver.teamLogo}
-                alt=""
-                aria-hidden
-                className="mt-4 object-contain object-left"
-                style={{ height: "20px", maxWidth: "90px", width: "auto" }}
-              />
-            ) : null}
+            <p className="m-0 mt-1.5 text-white/60 uppercase line-clamp-2" style={{ fontFamily: "var(--font-poppins), sans-serif", fontSize: "clamp(10px, 0.9vw, 12px)", letterSpacing: "0.15em", lineHeight: 1.4, minHeight: "2.8em" }}>{driver.role}</p>
+            <div className="mt-4 flex items-center h-[24px]">
+              {driver.teamLogo ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={driver.teamLogo}
+                  alt=""
+                  aria-hidden
+                  className="object-contain object-left"
+                  style={{ 
+                    height: driver.teamLogo.includes("1777409261101") || driver.teamLogo.toLowerCase().includes("redbull") ? "14px" : "20px", 
+                    maxWidth: "90px", 
+                    width: "auto" 
+                  }}
+                />
+              ) : null}
+            </div>
           </div>
           <ul className="flex list-none items-center gap-1 p-0 m-0 shrink-0 mt-1.5" aria-label={t("nationalities")}>
             <DriverFlags

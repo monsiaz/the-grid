@@ -64,14 +64,20 @@ export default function DriverDetailHero({ driver }: DriverDetailHeroProps) {
               {driver.role}
             </p>
             {driver.teamLogo ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={driver.teamLogo}
-                alt=""
-                aria-hidden
-                className="mt-4 object-contain object-left"
-                style={{ height: "28px", maxWidth: "125px", width: "auto" }}
-              />
+              <div className="mt-4 flex items-center h-[32px]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={driver.teamLogo}
+                  alt=""
+                  aria-hidden
+                  className="object-contain object-left"
+                  style={{ 
+                    height: driver.teamLogo.includes("1777409261101") || driver.teamLogo.toLowerCase().includes("redbull") ? "20px" : "28px", 
+                    maxWidth: "125px", 
+                    width: "auto" 
+                  }}
+                />
+              </div>
             ) : null}
           </div>
         </div>
