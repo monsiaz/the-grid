@@ -5,8 +5,8 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { motion, useScroll, useTransform, scaleIn, smoothTransition, viewport } from "../motion";
 
-const THE_GRID_LOGO = "/images/grid-agency-white.png";
-const COME_LOGO = "/images/come-logo-white.png";
+const THE_GRID_LOGO = "/assets/grid-agency-white.png";
+const COME_LOGO = "/assets/come-logo-white.png";
 
 type AboutAccelereBannerProps = {
   bannerImage?: string | null;
@@ -34,7 +34,7 @@ type AboutAccelereBannerProps = {
  */
 export default function AboutAccelereBanner({ bannerImage }: AboutAccelereBannerProps = {}) {
   const t = useTranslations("about.accelere");
-  const bg = bannerImage || "/images/250130_FWS_archive_161512.jpg";
+  const bg = bannerImage || "/assets/accelere-bg.jpg";
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
