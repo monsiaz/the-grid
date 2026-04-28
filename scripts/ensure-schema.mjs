@@ -374,6 +374,36 @@ const STATEMENTS = [
   // description, no valueCards). Create the columns defensively here.
   `ALTER TABLE "services_page" ADD COLUMN IF NOT EXISTS "value_intro_image" varchar;`,
   `ALTER TABLE "services_page_locales" ADD COLUMN IF NOT EXISTS "value_intro_title" varchar;`,
+
+  // ────────────────── Homepage: heroTitleLayout group (2026-04 migration) ───────────
+  //
+  // The heroTitleLayout group adds fine-grained CMS controls for the hero title's
+  // position (clamp margins), size (desktop + mobile), letter-spacing, line-height,
+  // and backdrop gradient position. All fields are non-localized numbers stored as
+  // columns on the `homepage` table.
+  //
+  // IMPORTANT: these columns must exist before `push: false` is enforced.
+  // Previously, `push: true` would try to add them at every serverless cold-start,
+  // causing AccessExclusiveLock contention between parallel Vercel function instances
+  // → deadlock → HTTP 500 on ALL Payload API calls (not just homepage). Pre-creating
+  // them here (idempotent ALTER TABLE IF NOT EXISTS) fixes the root cause.
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_margin_top_min_px" numeric;`,
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_margin_top_mid_vh" numeric;`,
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_margin_top_max_px" numeric;`,
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_backdrop_x_percent" numeric;`,
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_backdrop_y_percent" numeric;`,
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_line_height" numeric;`,
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_line_gap_em" numeric;`,
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_tracking_em" numeric;`,
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_font_size_min_px" numeric;`,
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_font_size_mid_vw" numeric;`,
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_font_size_max_px" numeric;`,
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_margin_top_mobile_min_px" numeric;`,
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_margin_top_mobile_mid_vh" numeric;`,
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_margin_top_mobile_max_px" numeric;`,
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_font_size_mobile_min_px" numeric;`,
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_font_size_mobile_mid_vw" numeric;`,
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_font_size_mobile_max_px" numeric;`,
 ];
 
 /** Neon/serverless Postgres often returns transient errors during Vercel build (cold compute, OOM, connection limits). */
