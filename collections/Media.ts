@@ -1,4 +1,5 @@
 import type { CollectionConfig, CollectionAfterChangeHook } from "payload";
+import { authenticated, publicRead } from "@/lib/payloadAccess";
 
 async function describeBufferWithVision(buf: Buffer, filename: string): Promise<{
   description: string;
@@ -131,7 +132,10 @@ export const Media: CollectionConfig = {
     listSearchableFields: ["alt", "category", "driverSlug", "tags.tag", "filename"],
   },
   access: {
-    read: () => true,
+    read: publicRead,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
   },
   hooks: {
     afterChange: [autoDescribeHook],

@@ -30,7 +30,12 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
       <div className="flex flex-1 flex-col justify-between p-6">
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1 min-w-0 flex flex-col">
-            <h2 className="display-card m-0 text-white leading-tight" style={{ fontSize: "clamp(24px,2.2vw,30px)" }}>{driver.name}</h2>
+            <h2
+              className="display-card m-0 line-clamp-2 text-white"
+              style={{ fontSize: "clamp(24px,2.2vw,30px)", lineHeight: 1.05, minHeight: "2.1em" }}
+            >
+              {driver.name}
+            </h2>
             <p className="m-0 mt-1.5 text-white/60 uppercase line-clamp-2" style={{ fontFamily: "var(--font-poppins), sans-serif", fontSize: "clamp(10px, 0.9vw, 12px)", letterSpacing: "0.15em", lineHeight: 1.4, minHeight: "2.8em" }}>{driver.role}</p>
             <div className="mt-4 flex items-center h-[24px]">
               {driver.teamLogo ? (

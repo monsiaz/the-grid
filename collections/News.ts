@@ -4,6 +4,7 @@ import { imageField } from "@/fields/imageField";
 import { getSiteUrl } from "@/lib/siteUrl";
 import { revalidateNewsDetail } from "@/lib/revalidate";
 import { newsContentBlocks } from "@/blocks/newsBlocks";
+import { authenticated, publicRead } from "@/lib/payloadAccess";
 
 export const News: CollectionConfig = {
   slug: "news",
@@ -39,7 +40,10 @@ export const News: CollectionConfig = {
     },
   },
   access: {
-    read: () => true,
+    read: publicRead,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
   },
   fields: [
     {

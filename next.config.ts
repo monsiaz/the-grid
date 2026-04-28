@@ -4,6 +4,14 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const cdnBase = "https://cdn.orbs.cloud/the-grid";
 const cdnHost = "cdn.orbs.cloud";
+const blobStoreId = process.env.BLOB_READ_WRITE_TOKEN?.match(
+  /^vercel_blob_rw_([a-z\d]+)_[a-z\d]+$/i,
+)?.[1]?.toLowerCase();
+const blobBase =
+  process.env.NEXT_PUBLIC_BLOB_BASE_URL ||
+  (blobStoreId
+    ? `https://${blobStoreId}.public.blob.vercel-storage.com`
+    : "https://sgq4ppufmm4e3svk.public.blob.vercel-storage.com");
 
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
@@ -28,6 +36,14 @@ const nextConfig: NextConfig = {
           source: "/images/:path*",
           destination: `${cdnBase}/:path*`,
         },
+        ...(blobBase
+          ? [
+              {
+                source: "/api/media/file/:path*",
+                destination: `${blobBase}/:path*`,
+              },
+            ]
+          : []),
       ],
     };
   },
@@ -62,6 +78,15 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/assets/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        source: "/api/media/file/:path*",
         headers: [
           {
             key: "Cache-Control",

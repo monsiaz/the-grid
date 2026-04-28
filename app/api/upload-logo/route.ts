@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getPayloadClient } from "@/lib/payload";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -10,6 +11,12 @@ const ALLOWED_TYPES: Record<string, string> = {
 
 export async function POST(req: NextRequest) {
   try {
+    const payload = await getPayloadClient();
+    const auth = await payload.auth({ headers: req.headers });
+    if (!auth.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const formData = await req.formData();
     const file = formData.get("file");
     if (!file || !(file instanceof File)) {

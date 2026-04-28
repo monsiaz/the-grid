@@ -3,6 +3,7 @@ import { after } from "next/server";
 import { imageField } from "@/fields/imageField";
 import { revalidateAbout } from "@/lib/revalidate";
 import { getSiteUrl } from "@/lib/siteUrl";
+import { authenticated, publicRead } from "@/lib/payloadAccess";
 
 export const TeamMembers: CollectionConfig = {
   slug: "team-members",
@@ -17,7 +18,10 @@ export const TeamMembers: CollectionConfig = {
     defaultColumns: ["name", "role", "order"],
   },
   access: {
-    read: () => true,
+    read: publicRead,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
   },
   fields: [
     {
@@ -89,7 +93,7 @@ export const TeamMembers: CollectionConfig = {
       },
     ],
     afterDelete: [
-      ({ doc }: { doc: unknown }) => { revalidateAbout(); },
+      () => { revalidateAbout(); },
     ],
   },
 };

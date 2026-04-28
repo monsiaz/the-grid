@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { revalidateNewsIndex } from "@/lib/revalidate";
+import { authenticated, publicRead } from "@/lib/payloadAccess";
 
 /**
  * News filters displayed on /news (and per-article badge).
@@ -29,7 +30,10 @@ export const NewsTags: CollectionConfig = {
     },
   },
   access: {
-    read: () => true,
+    read: publicRead,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
   },
   fields: [
     {

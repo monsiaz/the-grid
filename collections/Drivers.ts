@@ -4,6 +4,7 @@ import { imageField } from "@/fields/imageField";
 import { logoField } from "@/fields/logoField";
 import { getSiteUrl } from "@/lib/siteUrl";
 import { revalidateDriverDetail } from "@/lib/revalidate";
+import { authenticated, publicRead } from "@/lib/payloadAccess";
 
 export const Drivers: CollectionConfig = {
   slug: "drivers",
@@ -39,7 +40,10 @@ export const Drivers: CollectionConfig = {
     },
   },
   access: {
-    read: () => true,
+    read: publicRead,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
   },
   fields: [
     {
