@@ -47,7 +47,7 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
                 src={driver.teamLogo}
                 alt=""
                 aria-hidden
-                className="mt-4 h-[34px] w-auto max-w-[120px] object-contain"
+                className="mt-4 h-[24px] w-auto max-w-[90px] object-contain object-left"
                 style={{ filter: "brightness(0) invert(1)", opacity: 0.85 }}
               />
             ) : null}
