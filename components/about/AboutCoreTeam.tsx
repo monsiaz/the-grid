@@ -20,6 +20,7 @@ type CoreArea = {
   title: string;
   text: string;
   image: string;
+  priority?: boolean;
 };
 
 type TeamMember = {
@@ -78,7 +79,7 @@ function parseHighlightText(text: string) {
  * The parent grid must declare [grid-template-rows:subgrid] support via
  * the "min-[1200px]:[grid-row:span_4] min-[1200px]:[grid-template-rows:subgrid]" classes.
  */
-function CoreAreaCard({ area }: { area: CoreArea }) {
+function CoreAreaCard({ area, priority }: { area: CoreArea; priority?: boolean }) {
   return (
     <motion.article
       className="grid gap-y-8
@@ -101,6 +102,7 @@ function CoreAreaCard({ area }: { area: CoreArea }) {
             height={628}
             sizes="(max-width: 700px) 100vw, (max-width: 1200px) 50vw, 400px"
             className="aspect-square w-full object-cover object-[center_15%]"
+            priority={priority}
           />
         </motion.div>
       </div>
@@ -347,7 +349,7 @@ export default function AboutCoreTeam({
             viewport={viewport}
           >
             {coreAreas.map((area, idx) => (
-              <CoreAreaCard area={area} key={area.number || idx} />
+              <CoreAreaCard area={area} key={area.number || idx} priority={idx < 3} />
             ))}
           </motion.div>
         </div>
