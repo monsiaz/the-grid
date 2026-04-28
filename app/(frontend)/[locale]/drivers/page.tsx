@@ -50,6 +50,10 @@ function normalizeDriver(doc: unknown): DriverRowData | null {
   const image = candidate.image;
   const instagramUrl = candidate.instagramUrl;
   const flags = candidate.flags;
+  const teamLogo =
+    typeof candidate.teamLogo === "string" && candidate.teamLogo.trim()
+      ? candidate.teamLogo
+      : null;
 
   if (
     typeof slug !== "string" ||
@@ -77,6 +81,7 @@ function normalizeDriver(doc: unknown): DriverRowData | null {
     image,
     flags,
     instagramUrl,
+    teamLogo,
     gridRow,
   };
 }

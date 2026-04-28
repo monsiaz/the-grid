@@ -7,6 +7,7 @@ export type DriverCardData = {
   image: string;
   flags: DriverCountryCode[];
   instagramUrl: string;
+  teamLogo?: string | null;
 };
 
 export type DriverRelatedNews = {

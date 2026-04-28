@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { imageField } from "@/fields/imageField";
+import { logoField } from "@/fields/logoField";
 import { getSiteUrl } from "@/lib/siteUrl";
 import { revalidateDriverDetail } from "@/lib/revalidate";
 
@@ -68,6 +69,12 @@ export const Drivers: CollectionConfig = {
       label: "Grid card image",
       required: true,
       description: "Vignette pilote (grille /drivers/ et teaser homepage).",
+    }),
+    logoField({
+      name: "teamLogo",
+      label: "Logo écurie",
+      description:
+        "Logo de l'écurie affiché sous le nom du pilote sur sa carte. SVG recommandé pour une qualité parfaite. PNG accepté. Affiché en blanc (filter: brightness(0) invert(1)) sur fond sombre.",
     }),
     {
       name: "flags",

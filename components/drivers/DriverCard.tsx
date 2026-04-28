@@ -31,6 +31,16 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
           <div>
             <h2 className="display-card m-0 text-[clamp(24px,2vw,30px)] text-white">{driver.name}</h2>
             <p className="ui-label m-0 mt-1 text-secondary/70">{driver.role}</p>
+            {driver.teamLogo ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={driver.teamLogo}
+                alt=""
+                aria-hidden
+                className="mt-2 h-5 w-auto max-w-[80px] object-contain"
+                style={{ filter: "brightness(0) invert(1)", opacity: 0.75 }}
+              />
+            ) : null}
           </div>
           <ul className="mt-1 flex list-none items-center gap-1 p-0" aria-label={t("nationalities")}>
             <DriverFlags
