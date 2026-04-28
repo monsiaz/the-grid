@@ -28,33 +28,35 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
       </div>
       <div className="flex flex-1 flex-col justify-between p-6">
         <div className="flex items-start justify-between gap-4">
-          <div>
-            <h2 className="display-card m-0 text-white" style={{ fontSize: "clamp(33px,2.8vw,42px)" }}>{driver.name}</h2>
-            <p className="m-0 mt-1 text-secondary/70" style={{ fontSize: "clamp(12px,1.1vw,15px)" }}>{driver.role}</p>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-start justify-between gap-3">
+              <h2 className="display-card m-0 text-white leading-tight" style={{ fontSize: "clamp(24px,2.2vw,30px)" }}>{driver.name}</h2>
+              <ul className="flex list-none items-center gap-1 p-0 m-0 mt-1 shrink-0" aria-label={t("nationalities")}>
+                <DriverFlags
+                  codes={driver.flags}
+                  keyPrefix={`${driver.slug}-flag`}
+                  className="h-[18px] w-[28px] overflow-hidden rounded-sm"
+                  wrapper="li"
+                />
+              </ul>
+            </div>
+            <p className="m-0 mt-1.5 text-white/60 uppercase line-clamp-2" style={{ fontFamily: "var(--font-poppins), sans-serif", fontSize: "clamp(10px, 0.9vw, 12px)", letterSpacing: "0.15em", lineHeight: 1.4 }}>{driver.role}</p>
             {driver.teamLogo ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={driver.teamLogo}
                 alt=""
                 aria-hidden
-                className="mt-3 h-[28px] w-auto max-w-[110px] object-contain"
-                style={{ filter: "brightness(0) invert(1)", opacity: 0.75 }}
+                className="mt-4 h-[34px] w-auto max-w-[120px] object-contain"
+                style={{ filter: "brightness(0) invert(1)", opacity: 0.85 }}
               />
             ) : null}
           </div>
-          <ul className="mt-1 flex list-none items-center gap-1 p-0" aria-label={t("nationalities")}>
-            <DriverFlags
-              codes={driver.flags}
-              keyPrefix={`${driver.slug}-flag`}
-              className="h-[22px] w-[36px] shrink-0 overflow-hidden rounded-sm"
-              wrapper="li"
-            />
-          </ul>
         </div>
-        <div className="mt-4 flex items-center justify-between">
+        <div className="mt-6 flex items-center gap-3">
           <Link
             href={`/drivers/${driver.slug}`}
-            className="pill-button pill-button-accent-outline"
+            className="pill-button pill-button-accent-outline flex-1 justify-center"
           >
             {t("learnMore")}
             <span className="sr-only">{t("learnMoreSr", { name: driver.name })}</span>
@@ -64,9 +66,9 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
             target="_blank"
             rel="noreferrer me"
             aria-label={t("instagramLabel", { name: driver.name })}
-            className="pill-button pill-button-outline h-11 min-h-11 w-11 px-0 text-lg no-underline"
+            className="pill-button pill-button-outline h-[44px] min-h-[44px] w-[44px] shrink-0 px-0 text-lg no-underline flex items-center justify-center"
           >
-            <svg aria-hidden viewBox="0 0 24 24" style={{ width: 20, height: 20, display: "block", flexShrink: 0 }} fill="none" stroke="white" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+            <svg aria-hidden viewBox="0 0 24 24" style={{ width: 20, height: 20, display: "block" }} fill="none" stroke="white" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
               <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
               <circle cx="12" cy="12" r="4" />
               <circle cx="17.5" cy="6.5" r="0.5" fill="white" stroke="none" />
