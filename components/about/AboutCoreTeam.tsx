@@ -352,9 +352,9 @@ export default function AboutCoreTeam({
           </motion.div>
         </div>
 
-        <div className="grid items-start gap-8 min-[1200px]:grid-cols-[auto_1fr]">
+        <div className="grid items-start gap-8 min-[1400px]:grid-cols-[auto_1fr]">
           <motion.h2
-            className="display-section m-0 min-[1200px]:max-w-[320px]"
+            className="display-section m-0 min-[1400px]:max-w-[440px]"
             variants={slideInLeft}
             initial="hidden"
             whileInView="visible"
@@ -368,7 +368,7 @@ export default function AboutCoreTeam({
             {t("meetThe")}<span className="text-muted">{t("meetTeam")}</span>
           </motion.h2>
           <motion.div
-            className="grid gap-7 min-[980px]:grid-cols-3"
+            className="relative z-10 grid min-w-0 gap-7 min-[980px]:grid-cols-3"
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
