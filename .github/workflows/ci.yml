@@ -27,12 +27,11 @@ jobs:
         with:
           version: 9
 
+      # No pnpm cache here: setup-node's pnpm cache integration failed on this repo's lockfile layout;
+      # install remains fast enough for CI. Node LTS used here; Vercel still follows package.json engines.
       - uses: actions/setup-node@v4
         with:
-          # 24.x matches package.json engines; if setup-node ever fails, pin e.g. 22 and align engines.
-          node-version: "24.x"
-          cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
+          node-version: "22"
 
       - run: pnpm install --frozen-lockfile
 
@@ -56,12 +55,11 @@ jobs:
         with:
           version: 9
 
+      # No pnpm cache here: setup-node's pnpm cache integration failed on this repo's lockfile layout;
+      # install remains fast enough for CI. Node LTS used here; Vercel still follows package.json engines.
       - uses: actions/setup-node@v4
         with:
-          # 24.x matches package.json engines; if setup-node ever fails, pin e.g. 22 and align engines.
-          node-version: "24.x"
-          cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
+          node-version: "22"
 
       - run: pnpm install --frozen-lockfile
 
