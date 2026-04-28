@@ -26,11 +26,10 @@ const usePostgres = postgresUrl.startsWith("postgres");
 
 const db = usePostgres
   ? postgresAdapter({
-      // push: false — schema is managed exclusively by scripts/ensure-schema.mjs at
-      // build time. Enabling push: true in a Vercel serverless environment causes
-      // every cold-start function instance to run ALTER TABLE, which creates
-      // AccessExclusiveLock contention between parallel instances → deadlocks → 500s.
-      push: false,
+      // push: true — safe now that ensure-schema.mjs pre-creates all columns at build
+      // time. Payload's schema diff finds nothing to ALTER, completes instantly, and
+      // no lock contention occurs on Vercel serverless cold-starts.
+      push: true,
       pool: {
         connectionString: postgresUrl,
         // Limit concurrent connections — Neon free tier has a low cap.
