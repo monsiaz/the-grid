@@ -381,7 +381,7 @@ export default function ImagePicker(props: ImagePickerProps) {
           ) : null}
           <div className="grid-image-picker__hint">
             Formats acceptés&nbsp;: JPG · PNG · WebP · AVIF · GIF. Conversion automatique
-            en WebP (qualité 82) + génération de 3 tailles (400 · 900 · 1920). Poids max
+            en WebP lossless (sans perte) + génération de 3 tailles (400 · 900 · 1920). Poids max
             upload&nbsp;~8 MB — au-delà, compresse avant.
           </div>
           {uploadProgress ? (
