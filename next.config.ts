@@ -8,8 +8,7 @@ const cdnHost = "cdn.orbs.cloud";
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
-  /** `true` breaks Payload admin deep links (e.g. `/admin/globals/homepage/`) — segment count / routing. */
-  trailingSlash: false,
+  trailingSlash: true,
   poweredByHeader: false,
   compress: true,
   reactStrictMode: true,
