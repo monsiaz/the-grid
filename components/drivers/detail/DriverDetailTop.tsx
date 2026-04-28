@@ -5,7 +5,6 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { DriverCardData, DriverDetailData, DriverRelatedNews } from "../driversData";
-import DetailProfileCard from "./DetailProfileCard";
 import {
   motion,
   fadeUp,
@@ -209,32 +208,22 @@ export default function DriverDetailTop({ driver, detail }: DriverDetailTopProps
   if (!showFeaturedSplit) {
     return (
       <section className="grid gap-8">
-        <div className="grid grid-cols-[300px_1fr] items-start gap-8 max-[900px]:grid-cols-1">
-          <motion.div
-            variants={slideInLeft}
-            initial="hidden"
-            animate="visible"
-            transition={smoothTransition}
-            className="max-[900px]:mx-auto"
-          >
-            <DetailProfileCard driver={driver} image={profileImage} compact />
-          </motion.div>
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            transition={{ ...smoothTransition, delay: 0.2 }}
-          >
-            <h2 className="display-card m-0 text-[clamp(26px,2.6vw,34px)] text-white">{detail.profileTitle}</h2>
-            <div className="body-md mt-4 space-y-3 text-white/82">
-              {detail.profileParagraphs.map((paragraph, index) => (
-                <p key={`${detail.slug}-profile-${index}`} className="m-0">
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </motion.div>
-        </div>
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          transition={{ ...smoothTransition, delay: 0.2 }}
+          className="max-w-3xl"
+        >
+          <h2 className="display-card m-0 text-[clamp(26px,2.6vw,34px)] text-white">{detail.profileTitle}</h2>
+          <div className="body-md mt-4 space-y-3 text-white/82">
+            {detail.profileParagraphs.map((paragraph, index) => (
+              <p key={`${detail.slug}-profile-${index}`} className="m-0">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </motion.div>
         {hasRelatedNews ? (
           <motion.div
             variants={fadeUp}
@@ -254,38 +243,23 @@ export default function DriverDetailTop({ driver, detail }: DriverDetailTopProps
   }
 
   return (
-    <section className="grid grid-cols-2 gap-6 max-[1200px]:grid-cols-1">
-      <div className="grid grid-cols-[260px_1fr] gap-6 max-[700px]:grid-cols-1">
-        <motion.div
-          variants={slideInLeft}
-          initial="hidden"
-          animate="visible"
-          transition={smoothTransition}
-        >
-          <DetailProfileCard driver={driver} image={profileImage} />
-        </motion.div>
-        <motion.div
-          className="grid grid-cols-[1fr_2px] gap-3 overflow-hidden max-[700px]:grid-cols-1"
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          transition={{ ...smoothTransition, delay: 0.2 }}
-        >
-          <div>
-            <h2 className="display-card m-0 text-[clamp(26px,2.6vw,34px)] text-white">{detail.profileTitle}</h2>
-            <div className="body-md mt-4 space-y-3 text-white/82">
-              {detail.profileParagraphs.map((paragraph, index) => (
-                <p key={`${detail.slug}-profile-${index}`} className="m-0">
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </div>
-          <div className="bg-white/10 max-[700px]:hidden">
-            <div className="bg-soft h-[140px] w-full" />
-          </div>
-        </motion.div>
-      </div>
+    <section className="grid grid-cols-2 gap-12 max-[1200px]:grid-cols-1">
+      <motion.div
+        variants={fadeUp}
+        initial="hidden"
+        animate="visible"
+        transition={{ ...smoothTransition, delay: 0.2 }}
+        className="pr-8 max-[1200px]:pr-0"
+      >
+        <h2 className="display-card m-0 text-[clamp(26px,2.6vw,34px)] text-white">{detail.profileTitle}</h2>
+        <div className="body-md mt-4 space-y-3 text-white/82">
+          {detail.profileParagraphs.map((paragraph, index) => (
+            <p key={`${detail.slug}-profile-${index}`} className="m-0">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      </motion.div>
 
       <motion.div
         className="grid gap-5"
