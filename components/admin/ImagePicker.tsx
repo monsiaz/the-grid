@@ -59,10 +59,13 @@ function pickThumbUrl(doc: MediaDoc): string {
   );
 }
 
+const BROKEN_IMG_SVG =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpath d='m21 15-5-5L5 21'/%3E%3Cline x1='2' y1='2' x2='22' y2='22'/%3E%3C/svg%3E";
+
 /**
  * Tiny in-module cache so re-opening the modal within a short window (or
  * switching between ImagePicker instances on the same page) doesn't re-hit
- * the network. Keyed by `${search}|${filter}`.
+ * the network. Keyed by `${search}|${filter}|${page}`.
  */
 const CACHE_TTL_MS = 30_000;
 const cache = new Map<string, { at: number; docs: MediaDoc[]; total: number }>();
@@ -86,10 +89,30 @@ export default function ImagePicker(props: ImagePickerProps) {
   const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<string>("");
+
+  // Inline upload (from field toolbar)
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [uploadProgress, setUploadProgress] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  // Modal upload (from inside the library)
+  const [modalUploading, setModalUploading] = useState(false);
+  const [modalUploadError, setModalUploadError] = useState<string | null>(null);
+  const [modalUploadProgress, setModalUploadProgress] = useState<string | null>(null);
+  const modalFileInputRef = useRef<HTMLInputElement | null>(null);
+
+  // Track tiles that failed to load their image
+  const [imgErrors, setImgErrors] = useState<Set<string>>(new Set());
+
+  // Reset broken-tile tracking whenever the docs list refreshes
+  useEffect(() => {
+    setImgErrors(new Set());
+  }, [docs]);
+
+  const handleImgError = useCallback((id: string) => {
+    setImgErrors((prev) => new Set([...prev, id]));
+  }, []);
 
   // Debounce search → 300ms after user stops typing
   useEffect(() => {
@@ -151,28 +174,24 @@ export default function ImagePicker(props: ImagePickerProps) {
     loadDocs();
   }, [open, loadDocs]);
 
+  // ── Inline upload (from field toolbar) ──────────────────────────────────────
   const handleUpload = useCallback(
     async (file: File) => {
       setUploading(true);
       setUploadError(null);
       setUploadProgress(`${Math.round(file.size / 1024)} KB → conversion WebP…`);
       try {
-        // 8MB hard limit: Vercel serverless caps body to ~4.5MB; Payload
-        // receives multipart so real headroom is a bit lower. Friendly error
-        // before we fire the request.
         if (file.size > 8 * 1024 * 1024) {
           throw new Error(
             `Fichier trop volumineux (${Math.round(file.size / 1024 / 1024)} MB). Max ~8 MB. Compresse le fichier ou réduit sa taille avant upload.`,
           );
         }
-
         const form = new FormData();
-        const payload = {
-          alt: file.name.replace(/\.[^.]+$/, ""),
-          category: filter || "other",
-        };
         form.append("file", file);
-        form.append("_payload", JSON.stringify(payload));
+        form.append(
+          "_payload",
+          JSON.stringify({ alt: file.name.replace(/\.[^.]+$/, ""), category: filter || "other" }),
+        );
         const res = await fetch("/api/media", {
           method: "POST",
           credentials: "include",
@@ -184,7 +203,6 @@ export default function ImagePicker(props: ImagePickerProps) {
         }
         const data = await res.json();
         const newDoc: MediaDoc | undefined = data?.doc || data;
-        // Invalidate all cached pages — a new asset just appeared.
         cache.clear();
         if (newDoc?.url) {
           setValue(newDoc.url);
@@ -202,12 +220,69 @@ export default function ImagePicker(props: ImagePickerProps) {
     [filter, loadDocs, setValue],
   );
 
+  // ── Modal upload (from inside the library) ──────────────────────────────────
+  const handleModalUpload = useCallback(
+    async (file: File) => {
+      setModalUploading(true);
+      setModalUploadError(null);
+      setModalUploadProgress(`${Math.round(file.size / 1024)} KB → upload & conversion WebP…`);
+      try {
+        if (file.size > 8 * 1024 * 1024) {
+          throw new Error(
+            `Fichier trop volumineux (${Math.round(file.size / 1024 / 1024)} MB). Max ~8 MB.`,
+          );
+        }
+        const form = new FormData();
+        form.append("file", file);
+        form.append(
+          "_payload",
+          JSON.stringify({ alt: file.name.replace(/\.[^.]+$/, ""), category: filter || "other" }),
+        );
+        const res = await fetch("/api/media", {
+          method: "POST",
+          credentials: "include",
+          body: form,
+        });
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(text.slice(0, 300) || `HTTP ${res.status}`);
+        }
+        const data = await res.json();
+        const newDoc: MediaDoc | undefined = data?.doc || data;
+        // Invalidate all cache pages so the new image appears immediately.
+        cache.clear();
+        // Jump to page 1 so the freshly uploaded image (sorted by -updatedAt) is visible first.
+        setPage(1);
+        await loadDocs({ fresh: true });
+        // Auto-select the new image
+        if (newDoc?.url) {
+          setValue(newDoc.url);
+          setOpen(false);
+        }
+      } catch (err) {
+        setModalUploadError(err instanceof Error ? err.message : String(err));
+      } finally {
+        setModalUploading(false);
+        setModalUploadProgress(null);
+      }
+    },
+    [filter, loadDocs, setValue],
+  );
+
   const onFileSelect = useCallback(
     (file: File | undefined) => {
       if (!file) return;
       handleUpload(file);
     },
     [handleUpload],
+  );
+
+  const onModalFileSelect = useCallback(
+    (file: File | undefined) => {
+      if (!file) return;
+      handleModalUpload(file);
+    },
+    [handleModalUpload],
   );
 
   const previewUrl = useMemo(() => (raw ? normalizeUrl(raw) : ""), [raw]);
@@ -357,10 +432,40 @@ export default function ImagePicker(props: ImagePickerProps) {
                     </option>
                   ))}
                 </select>
+                {/* ── Upload button inside the modal ── */}
+                <button
+                  type="button"
+                  className="grid-image-picker__btn grid-image-picker__btn--upload"
+                  onClick={() => modalFileInputRef.current?.click()}
+                  disabled={modalUploading}
+                  title="Uploader une nouvelle image"
+                >
+                  {modalUploading ? (
+                    <span className="grid-image-picker__upload-spinner" aria-hidden />
+                  ) : (
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                  )}
+                  {modalUploading ? "Upload…" : "Uploader"}
+                </button>
+                <input
+                  ref={modalFileInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/avif,image/gif"
+                  style={{ display: "none" }}
+                  onChange={(e) => {
+                    onModalFileSelect(e.target.files?.[0]);
+                    e.target.value = "";
+                  }}
+                />
                 <button
                   type="button"
                   className="grid-image-picker__btn"
                   onClick={() => loadDocs({ fresh: true })}
+                  disabled={loading}
                 >
                   Rafraîchir
                 </button>
@@ -372,6 +477,17 @@ export default function ImagePicker(props: ImagePickerProps) {
                   Fermer
                 </button>
               </div>
+              {/* Upload feedback row */}
+              {(modalUploadProgress || modalUploadError) ? (
+                <div className="grid-image-picker__modal-upload-status">
+                  {modalUploadProgress ? (
+                    <span className="grid-image-picker__progress">{modalUploadProgress}</span>
+                  ) : null}
+                  {modalUploadError ? (
+                    <span className="grid-image-picker__error">{modalUploadError}</span>
+                  ) : null}
+                </div>
+              ) : null}
             </header>
             <div className="grid-image-picker__modal-grid">
               {loading && docs.length === 0 ? (
@@ -379,42 +495,57 @@ export default function ImagePicker(props: ImagePickerProps) {
               ) : docs.length === 0 ? (
                 <div className="grid-image-picker__modal-empty">
                   Aucune image trouvée.
-                  {uploading ? " Upload en cours…" : ""}
+                  {modalUploading ? " Upload en cours…" : ""}
                 </div>
               ) : (
                 docs.map((doc) => {
                   const url = pickBestUrl(doc);
                   const thumb = pickThumbUrl(doc);
                   if (!url) return null;
-                  // Use thumbnail dims if available for correct aspect-ratio.
                   const thumbDims =
                     doc.sizes?.thumbnail && doc.sizes.thumbnail.width && doc.sizes.thumbnail.height
                       ? { w: doc.sizes.thumbnail.width, h: doc.sizes.thumbnail.height }
                       : { w: 400, h: 300 };
+                  const docIdStr = String(doc.id);
+                  const isBroken = imgErrors.has(docIdStr);
                   return (
                     <button
-                      key={String(doc.id)}
+                      key={docIdStr}
                       type="button"
-                      className="grid-image-picker__tile"
+                      className={`grid-image-picker__tile${isBroken ? " is-broken" : ""}`}
                       onClick={() => {
                         setValue(url);
                         setOpen(false);
                       }}
                       title={doc.alt || doc.filename || url}
                     >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={thumb || url}
-                        alt={doc.alt || ""}
-                        width={thumbDims.w}
-                        height={thumbDims.h}
-                        loading="lazy"
-                        decoding="async"
-                        // Low priority: the browser defers these until the
-                        // user scrolls them into view. Non-standard on Safari
-                        // but harmless.
-                        {...({ fetchpriority: "low" } as Record<string, string>)}
-                      />
+                      {isBroken ? (
+                        <div className="grid-image-picker__tile-broken">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={BROKEN_IMG_SVG}
+                            alt=""
+                            width={40}
+                            height={40}
+                            aria-hidden
+                          />
+                          <span className="grid-image-picker__tile-broken-label">
+                            {doc.filename || "image cassée"}
+                          </span>
+                        </div>
+                      ) : (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={normalizeUrl(thumb || url)}
+                          alt={doc.alt || ""}
+                          width={thumbDims.w}
+                          height={thumbDims.h}
+                          loading="lazy"
+                          decoding="async"
+                          onError={() => handleImgError(docIdStr)}
+                          {...({ fetchpriority: "low" } as Record<string, string>)}
+                        />
+                      )}
                       <div className="grid-image-picker__tile-meta">
                         <span className="grid-image-picker__tile-alt">
                           {doc.alt || doc.filename}

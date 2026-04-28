@@ -271,6 +271,48 @@
     color: var(--theme-elevation-700);
   }
 
+  &__modal-upload-status {
+    width: 100%;
+    padding: 0.35rem 0;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  &__btn--upload {
+    background: var(--theme-elevation-100);
+    border: 1px solid var(--theme-elevation-150);
+    color: var(--theme-elevation-900);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+
+    &:not(:disabled):hover {
+      background: var(--theme-elevation-200);
+      border-color: var(--theme-elevation-300);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  &__upload-spinner {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: grid-picker-spin 0.7s linear infinite;
+  }
+
+  @keyframes grid-picker-spin {
+    to { transform: rotate(360deg); }
+  }
+
   &__tile {
     appearance: none;
     background: var(--theme-elevation-50);
@@ -289,6 +331,11 @@
       border-color: var(--theme-success-500, #0e7c3a);
     }
 
+    &.is-broken {
+      border-color: var(--theme-elevation-100);
+      opacity: 0.75;
+    }
+
     img {
       width: 100%;
       aspect-ratio: 4 / 3;
@@ -296,6 +343,42 @@
       display: block;
       background: var(--theme-elevation-100);
     }
+  }
+
+  &__tile-broken {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    background:
+      linear-gradient(45deg, var(--theme-elevation-100) 25%, transparent 25%) -6px 0 / 12px 12px,
+      linear-gradient(-45deg, var(--theme-elevation-100) 25%, transparent 25%) -6px 0 / 12px 12px,
+      linear-gradient(45deg, transparent 75%, var(--theme-elevation-100) 75%) 0 6px / 12px 12px,
+      linear-gradient(-45deg, transparent 75%, var(--theme-elevation-100) 75%) 0 6px / 12px 12px;
+    background-color: var(--theme-elevation-50);
+
+    img {
+      width: 36px !important;
+      height: 36px !important;
+      aspect-ratio: 1 !important;
+      object-fit: contain !important;
+      background: transparent !important;
+      opacity: 0.45;
+    }
+  }
+
+  &__tile-broken-label {
+    font-size: 0.65rem;
+    color: var(--theme-elevation-400);
+    text-align: center;
+    padding: 0 0.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
   }
 
   &__tile-meta {

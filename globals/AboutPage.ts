@@ -10,9 +10,10 @@ export const AboutPage: GlobalConfig = {
   access: {
     read: () => true,
   },
-  admin: {
-    group: "Pages",
-    description: "Contenu de la page À propos : équipe, cœur de métier, section ACCÉLÈRE, galerie Instagram.",
+    admin: {
+        group: "Pages",
+    description:
+      "Contenu de la page À propos : hero, les trois cartes métier (images éditables sous « Les 3 piliers »), équipe, ACCÉLÈRE, galerie Instagram.",
     livePreview: {
       url: ({ locale }) => {
         const base = getSiteUrl();
@@ -67,30 +68,43 @@ export const AboutPage: GlobalConfig = {
     {
       name: "coreAreas",
       type: "array",
+      label: "Les 3 piliers (cartes sous l’intro « Who we are »)",
       required: true,
+      minRows: 3,
+      maxRows: 3,
+      admin: {
+        description:
+          "Trois entrées (01 / 02 / 03) : Sport Management, Image & Branding, Commercial Development. Le champ « Image de la carte » sur chaque ligne est la photo affichée sur /about/ — uploadez ou choisissez un média via le sélecteur.",
+      },
       fields: [
         {
           name: "number",
           type: "text",
+          label: "Numéro",
           required: true,
+          admin: { description: "Ex. 01, 02, 03" },
         },
         {
           name: "title",
           type: "text",
+          label: "Titre",
           required: true,
           localized: true,
+          admin: { description: "Saut de ligne autorisé (ex. Sport + Management sur deux lignes)." },
         },
         {
           name: "text",
           type: "textarea",
+          label: "Texte",
           required: true,
           localized: true,
         },
         imageField({
           name: "image",
-          label: "Core area image",
+          label: "Image de la carte",
           required: true,
-          description: "Illustration de la carte métier (Sport, Image, Commercial).",
+          description:
+            "Photo de la carte (même recadrage que le site). Remplacez ici l’image affichée en public pour ce pilier.",
         }),
       ],
     },
