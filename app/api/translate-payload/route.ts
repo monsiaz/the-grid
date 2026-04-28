@@ -7,7 +7,8 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
 
-const TARGET_LOCALES: Record<string, string> = {
+const ALL_LOCALES: Record<string, string> = {
+  en: "English",
   fr: "French (France)",
   es: "Spanish (Spain)",
   de: "German (Germany)",
@@ -15,8 +16,6 @@ const TARGET_LOCALES: Record<string, string> = {
   nl: "Dutch (Netherlands)",
   zh: "Simplified Chinese (China)",
 };
-
-const SOURCE_LOCALE = "en";
 const MODEL = process.env.OPENAI_TRANSLATOR_MODEL || "gpt-5.4-nano";
 
 const SYSTEM_PROMPT = `You are a senior marketing translator for a premium 360° motorsport agency called "The Grid".
@@ -226,6 +225,8 @@ async function translateHandler(request: Request) {
   const onlyId = searchParams.get("id") || "";
   const limitDocs = Number.parseInt(searchParams.get("limit") || "0", 10) || 0;
   const offsetDocs = Number.parseInt(searchParams.get("offset") || "0", 10) || 0;
+  // Translate FROM this locale; defaults to "en" for backwards-compatibility.
+  const SOURCE_LOCALE = searchParams.get("sourceLocale") || "en";
 
   const openai = new OpenAI({ apiKey });
   const payload = await getPayloadClient();
@@ -236,8 +237,8 @@ async function translateHandler(request: Request) {
   const globals = (resolved.globals || []) as { slug: string; fields: FieldDef[] }[];
   const collections = (resolved.collections || []) as { slug: string; fields: FieldDef[] }[];
 
-  const locales = Object.entries(TARGET_LOCALES).filter(
-    ([code]) => !onlyLocale || code === onlyLocale,
+  const locales = Object.entries(ALL_LOCALES).filter(
+    ([code]) => code !== SOURCE_LOCALE && (!onlyLocale || code === onlyLocale),
   );
 
   const log: string[] = [];
