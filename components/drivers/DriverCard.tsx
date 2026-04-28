@@ -38,7 +38,7 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
                 alt=""
                 aria-hidden
                 className="mt-4 w-auto object-contain object-left"
-                style={{ height: "16px", maxWidth: "70px", filter: "brightness(0) invert(1)", opacity: 0.85 }}
+                style={{ height: "16px", maxWidth: "70px" }}
               />
             ) : null}
           </div>

@@ -70,7 +70,7 @@ export default function DriverDetailHero({ driver }: DriverDetailHeroProps) {
                 alt=""
                 aria-hidden
                 className="mt-4 w-auto object-contain object-left"
-                style={{ height: "22px", maxWidth: "100px", filter: "brightness(0) invert(1)", opacity: 0.85 }}
+                style={{ height: "22px", maxWidth: "100px" }}
               />
             ) : null}
           </div>
