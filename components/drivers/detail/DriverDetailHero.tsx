@@ -43,23 +43,23 @@ export default function DriverDetailHero({ driver }: DriverDetailHeroProps) {
       <div className="absolute bottom-0 left-0 right-0 px-[clamp(20px,4vw,48px)] pb-8">
         <div className="flex items-end gap-4">
           <div className="flex-1 min-w-0">
-            <ul className="mb-2 flex list-none items-center gap-1.5 p-0 m-0">
+            <ul className="mb-2 flex list-none items-center gap-2 p-0 m-0">
               <DriverFlags
                 codes={driver.flags}
                 keyPrefix={`${driver.slug}-hero-flag`}
-                className="h-4 w-[26px] shrink-0 overflow-hidden rounded-sm"
+                className="h-[22px] w-[36px] shrink-0 overflow-hidden rounded-sm"
                 wrapper="li"
               />
             </ul>
             <h1
               className="display-hero m-0 text-white leading-none"
-              style={{ fontSize: "clamp(36px, 5.5vw, 80px)", letterSpacing: "-0.02em" }}
+              style={{ fontSize: "clamp(50px, 7.6vw, 111px)", letterSpacing: "-0.02em" }}
             >
               {driver.name}
             </h1>
             <p
               className="m-0 mt-1 text-white/70 uppercase"
-              style={{ fontFamily: "var(--font-poppins), sans-serif", fontSize: "clamp(10px, 1vw, 14px)", letterSpacing: "0.15em" }}
+              style={{ fontFamily: "var(--font-poppins), sans-serif", fontSize: "clamp(14px, 1.4vw, 19px)", letterSpacing: "0.15em" }}
             >
               {driver.role}
             </p>
@@ -69,7 +69,7 @@ export default function DriverDetailHero({ driver }: DriverDetailHeroProps) {
                 src={driver.teamLogo}
                 alt=""
                 aria-hidden
-                className="mt-3 h-6 w-auto max-w-[100px] object-contain"
+                className="mt-4 h-[33px] w-auto max-w-[140px] object-contain"
                 style={{ filter: "brightness(0) invert(1)", opacity: 0.85 }}
               />
             ) : null}
