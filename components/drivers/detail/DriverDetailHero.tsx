@@ -58,11 +58,21 @@ export default function DriverDetailHero({ driver }: DriverDetailHeroProps) {
               {driver.name}
             </h1>
             <p
-              className="m-0 mt-2 text-white/70 uppercase"
+              className="m-0 mt-1 text-white/70 uppercase"
               style={{ fontFamily: "var(--font-poppins), sans-serif", fontSize: "clamp(10px, 1vw, 14px)", letterSpacing: "0.15em" }}
             >
               {driver.role}
             </p>
+            {driver.teamLogo ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={driver.teamLogo}
+                alt=""
+                aria-hidden
+                className="mt-3 h-6 w-auto max-w-[100px] object-contain"
+                style={{ filter: "brightness(0) invert(1)", opacity: 0.85 }}
+              />
+            ) : null}
           </div>
         </div>
       </div>

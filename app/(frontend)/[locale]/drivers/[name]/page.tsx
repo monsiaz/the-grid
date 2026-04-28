@@ -113,6 +113,11 @@ export default async function DriverDetailRoutePage({ params }: DriverDetailRout
     image: driverDoc.image,
     flags: driverDoc.flags as ("FR" | "IN" | "GB" | "US" | "PL")[],
     instagramUrl: driverDoc.instagramUrl,
+    teamLogo:
+      typeof (driverDoc as { teamLogo?: unknown }).teamLogo === "string" &&
+      ((driverDoc as { teamLogo?: string }).teamLogo?.trim() ?? "")
+        ? (driverDoc as { teamLogo?: string }).teamLogo ?? null
+        : null,
   };
 
   /**
