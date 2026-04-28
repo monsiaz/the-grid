@@ -95,7 +95,7 @@ export default function About({
         style={{ objectPosition: "38% 78%" }}
         aria-hidden
       />
-      <div className="absolute inset-0 z-10 bg-[linear-gradient(270deg,rgba(15,15,15,0.36)_0%,rgba(15,15,15,0.14)_55%,transparent_100%)]" />
+      <div className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(270deg,rgba(15,15,15,0.36)_0%,rgba(15,15,15,0.14)_55%,transparent_100%)]" />
       {!visualOnly ? (
         <>
           <div aria-hidden className="pointer-events-none absolute inset-0 z-[11] overflow-hidden">

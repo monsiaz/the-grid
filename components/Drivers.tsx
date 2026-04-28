@@ -37,8 +37,8 @@ export default function Drivers({ heading, headingAccent, backgroundImage }: Dri
         className="absolute inset-0 object-cover"
         aria-hidden
       />
-      {/* Very light global tint */}
-      <div className="absolute inset-0 z-10 bg-black/15" />
+      {/* Very light global tint — decorative only; must not steal clicks (footer locale menu overlaps this band when open). */}
+      <div className="pointer-events-none absolute inset-0 z-10 bg-black/15" />
       {/* Soft blob shadow concentrated on the text — same technique as Hero */}
       <div aria-hidden className="pointer-events-none absolute inset-0 z-[11] overflow-hidden">
         <div
