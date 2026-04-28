@@ -75,7 +75,7 @@ export default async function ServicesPage({
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/services" });
   const orderedSections = resolveSectionOrder(
     servicesPage.sectionOrder,
-    ["hero", "value", "partner", "talent", "caseStudies"] as const,
+    ["hero", "value", "caseStudies", "talent", "partner"] as const,
   );
 
   const sections = {
