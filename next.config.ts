@@ -9,6 +9,7 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
   trailingSlash: true,
+  skipTrailingSlashRedirect: true,
   poweredByHeader: false,
   compress: true,
   reactStrictMode: true,

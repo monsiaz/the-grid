@@ -413,6 +413,12 @@ const STATEMENTS = [
   // to ALTER at cold-start (prevents lock contention and HTTP 500 on admin).
   `ALTER TABLE "services_page_case_studies" ADD COLUMN IF NOT EXISTS "image_focal_point" varchar;`,
 
+  // ────────────────── Drivers: teamLogo field (2026-04 migration) ─────────────────────
+  //
+  // New `teamLogo` text field added via `logoField()` helper in Drivers collection.
+  // Stores the public URL of the team logo (SVG or PNG).
+  `ALTER TABLE "drivers" ADD COLUMN IF NOT EXISTS "team_logo" varchar;`,
+
   // ────────────────── news.category nullable (2026-04 fix) ──────────────────────────
   //
   // The `category` column was created as NOT NULL (from original Payload push) but the
