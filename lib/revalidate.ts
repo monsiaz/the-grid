@@ -33,6 +33,14 @@ export function revalidateLocalizedPaths(paths: string[]) {
   }
 }
 
+/** Refresh SEO discovery files after content changes. */
+export function revalidateSitemaps() {
+  revalidatePath("/sitemap-index.xml", "page");
+  for (const locale of locales) {
+    revalidatePath(`/sitemap/${locale}.xml`, "page");
+  }
+}
+
 /** Helpers per content type ──────────────────────────────────────────── */
 
 export function revalidateHomepage() {
@@ -53,20 +61,24 @@ export function revalidateContact() {
 
 export function revalidateDriversIndex() {
   revalidateLocalizedPath("/drivers");
+  revalidateSitemaps();
 }
 
 export function revalidateDriverDetail(slug?: string | null) {
   revalidateLocalizedPath("/drivers");
   if (slug) revalidateLocalizedPath(`/drivers/${slug}`);
+  revalidateSitemaps();
 }
 
 export function revalidateNewsIndex() {
   revalidateLocalizedPath("/news");
+  revalidateSitemaps();
 }
 
 export function revalidateNewsDetail(slug?: string | null) {
   revalidateLocalizedPath("/news");
   if (slug) revalidateLocalizedPath(`/news/${slug}`);
+  revalidateSitemaps();
 }
 
 /** SiteSettings is used in the footer which is on every page. */
