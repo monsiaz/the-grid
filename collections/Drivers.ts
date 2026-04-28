@@ -81,7 +81,7 @@ export const Drivers: CollectionConfig = {
               name: "teamLogo",
               label: "Logo écurie",
               description:
-                "Logo de l'écurie affiché sous le nom du pilote sur sa carte. SVG recommandé pour une qualité parfaite. PNG accepté. Affiché en blanc (filter: brightness(0) invert(1)) sur fond sombre.",
+                "Logo de l'écurie affiché sous le nom du pilote. 💡 ASTUCE FORMAT : Utilisez des fichiers PNG ou SVG avec fond transparent. Pour équilibrer visuellement des logos de proportions différentes (ex: un logo Red Bull 'carré' paraîtra plus gros qu'un logo Alpine 'allongé'), n'hésitez pas à ajouter de la marge transparente autour des logos les plus massifs avant upload. Les couleurs d'origine sont conservées.",
             }),
             {
               name: "flags",

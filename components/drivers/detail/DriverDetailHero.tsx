@@ -69,8 +69,8 @@ export default function DriverDetailHero({ driver }: DriverDetailHeroProps) {
                 src={driver.teamLogo}
                 alt=""
                 aria-hidden
-                className="mt-4 w-auto object-contain object-left"
-                style={{ height: "22px", maxWidth: "100px" }}
+                className="mt-4 object-contain object-left"
+                style={{ height: "28px", maxWidth: "125px", width: "auto" }}
               />
             ) : null}
           </div>
