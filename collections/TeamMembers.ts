@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { after } from "next/server";
 import { imageField } from "@/fields/imageField";
 import { revalidateAbout } from "@/lib/revalidate";
 import { getSiteUrl } from "@/lib/siteUrl";
@@ -81,7 +82,10 @@ export const TeamMembers: CollectionConfig = {
         const secret = process.env.TRANSLATE_SECRET || process.env.PAYLOAD_SECRET || "";
         const base = getSiteUrl();
         const url = `${base}/api/translate-payload?scope=collections&collection=team-members&id=${doc.id}&force=1&secret=${encodeURIComponent(secret)}`;
-        fetch(url, { method: "POST" }).catch(() => {});
+        // `after` keeps the serverless function alive after the admin response is
+        // sent — without it, a fire-and-forget fetch gets killed on Vercel before
+        // the translate endpoint is ever reached.
+        after(() => fetch(url, { method: "POST" }).catch(() => {}));
       },
     ],
     afterDelete: [
