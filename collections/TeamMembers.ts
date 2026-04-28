@@ -70,12 +70,12 @@ export const TeamMembers: CollectionConfig = {
   ],
   hooks: {
     afterChange: [
-      ({ doc, req }: { doc: Record<string, unknown>; req: { locale?: string } }) => {
+      ({ doc, req }: { doc: Record<string, unknown>; req: { locale?: string | null } }) => {
         revalidateAbout();
         // Auto-translate localized fields (name, role, bio) to all other locales
         // whenever the English version is saved. Fires in the background so it
         // never delays the admin save response.
-        const locale = req?.locale ?? "en";
+        const locale = req?.locale || "en";
         if (locale !== "en") return;
         const apiKey = process.env.OPENAI_API_KEY;
         if (!apiKey) return;
