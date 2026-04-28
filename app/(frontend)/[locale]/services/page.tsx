@@ -134,7 +134,20 @@ export default async function ServicesPage({
         })) || []}
       />
     ),
-    caseStudies: <ServicesCaseStudies caseStudies={servicesPage.caseStudies || []} sliderSpeed={designSettings.sliderSpeed} />,
+    caseStudies: (
+      <ServicesCaseStudies
+        caseStudies={(servicesPage.caseStudies || []).map(
+          (c: { title?: string | null; image: string; imageFocalPoint?: string | null; description?: string | null; dimmed?: boolean | null }) => ({
+            title: c.title,
+            image: c.image,
+            imageFocalPoint: c.imageFocalPoint || null,
+            description: c.description,
+            dimmed: c.dimmed,
+          }),
+        )}
+        sliderSpeed={designSettings.sliderSpeed}
+      />
+    ),
   } as const;
 
   return (

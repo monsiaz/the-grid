@@ -134,6 +134,18 @@ export const ServicesPage: GlobalConfig = {
           required: true,
           description: "Photo principale du case study.",
         }),
+        {
+          name: "imageFocalPoint",
+          type: "text",
+          defaultValue: "50% 50%",
+          admin: {
+            description:
+              "Cliquez sur l'aperçu pour choisir la zone à mettre en valeur dans le cadre 16/9.",
+            components: {
+              Field: "@/components/admin/FocalPointPicker",
+            },
+          },
+        },
         { name: "description", type: "textarea", localized: true },
         { name: "dimmed", type: "checkbox", defaultValue: false },
       ],
