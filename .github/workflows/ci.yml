@@ -1,4 +1,5 @@
-# Minimal CI: typecheck + lint on every push/PR; optional full build on demand (needs repo secrets).
+# CI mirrors production: same Node/pnpm as package.json, lint + types on every run,
+# full `pnpm build` unless PR comes from a fork (no repo secrets available).
 name: CI
 
 on:
@@ -6,12 +7,6 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
-    inputs:
-      run_build:
-        description: "Run pnpm build (requires DATABASE_URL, PAYLOAD_SECRET, and other secrets in repo Settings → Secrets)"
-        required: false
-        default: false
-        type: boolean
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -27,10 +22,10 @@ jobs:
         with:
           version: 10.33.0
 
-      # Must match package.json engines.node (24.x) or pnpm install can fail. Skip cache: pnpm cache on setup-node failed with our lockfile.
       - uses: actions/setup-node@v4
         with:
-          node-version: "24"
+          node-version-file: ".node-version"
+          cache: pnpm
 
       - run: pnpm install --frozen-lockfile
 
@@ -40,12 +35,10 @@ jobs:
       - name: ESLint
         run: pnpm exec eslint .
 
-  # Mirrors Vercel build; only runs when manually triggered with "run_build" checked.
-  # Add secrets in GitHub: Settings → Secrets and variables → Actions (same names as Vercel env).
+  # Same install + build as Vercel (vercel.json). Fork PRs skip — secrets unavailable.
   build:
     needs: quality
-    # workflow_dispatch boolean inputs are strings in GitHub-hosted runners
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.run_build == 'true'
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -54,14 +47,14 @@ jobs:
         with:
           version: 10.33.0
 
-      # Must match package.json engines.node (24.x) or pnpm install can fail. Skip cache: pnpm cache on setup-node failed with our lockfile.
       - uses: actions/setup-node@v4
         with:
-          node-version: "24"
+          node-version-file: ".node-version"
+          cache: pnpm
 
       - run: pnpm install --frozen-lockfile
 
-      - name: Production build
+      - name: Production build (same as Vercel)
         run: pnpm build
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}

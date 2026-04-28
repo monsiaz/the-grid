@@ -102,22 +102,31 @@ pnpm seed
 
 ## Pre-deploy checklist
 
-Run locally before pushing (or rely on [GitHub Actions](.github/workflows/ci.yml) for `tsc` + `lint` on each PR):
+GitHub Actions runs the same checks on every push (see below). Locally you can still:
 
 1. **`pnpm exec tsc --noEmit`** — TypeScript must pass.
-2. **`pnpm lint`** — ESLint (macOS `._*` sidecar files on external volumes are ignored via `eslint.config.mjs`).
-3. **`pnpm build`** — Full Next.js + Payload build; requires the same env vars as production (`DATABASE_URL`, `PAYLOAD_SECRET`, `BLOB_READ_WRITE_TOKEN`, etc.). Use a `.env.local` that mirrors Vercel or pull from your secrets manager.
-4. **After deploy (optional smoke test)** — `node scripts/_verify-prod.mjs` captures full-page screenshots of key URLs (needs Chrome at the path in that script; adjust for your machine).
+2. **`pnpm exec eslint .`** — ESLint (macOS `._*` sidecar files on external volumes are ignored via `eslint.config.mjs`).
+3. **`pnpm build`** — Same command as Vercel (`vercel.json`); requires env vars similar to production (`DATABASE_URL`, `PAYLOAD_SECRET`, `BLOB_READ_WRITE_TOKEN`, etc.).
+4. **After deploy (optional)** — `node scripts/_verify-prod.mjs` for screenshots (Chrome path in script).
 
 ## CI (GitHub Actions)
 
-- **On push/PR to `main`:** installs deps with a frozen lockfile, runs `tsc --noEmit` and `eslint .`.
-- **Optional full build:** in the Actions tab, run workflow **CI** manually and enable **run_build** — set repository secrets (`DATABASE_URL`, `PAYLOAD_SECRET`, `BLOB_READ_WRITE_TOKEN`, `NEXT_PUBLIC_SERVER_URL`, etc.) to match Vercel.
+Workflow: [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
+
+| Job | When |
+|-----|------|
+| **quality** | Every push to `main`, every PR, manual dispatch |
+| **build** | Same + pushes that aren’t fork PRs — runs **`pnpm install --frozen-lockfile`** then **`pnpm build`** (identical to [`vercel.json`](vercel.json)) |
+
+**Secrets (repository Settings → Secrets and variables → Actions):** mirror Vercel env — at minimum `DATABASE_URL` (or `POSTGRES_URL`), `PAYLOAD_SECRET`, `BLOB_READ_WRITE_TOKEN`, `NEXT_PUBLIC_SERVER_URL`. Without them, `build` fails on `main` before bad code reaches Vercel. Fork PRs skip `build` (GitHub does not expose secrets to forks).
+
+Node **24** is pinned via [`.node-version`](.node-version) for Actions and for tooling that reads it; **pnpm 10.33.0** matches `package.json` `packageManager`.
+
+**Branch protection:** GitHub **Settings → Rules → Rulesets** (or classic branch protection) on `main` → require **`quality`** and **`build`** to pass before merge (names appear after one successful run).
 
 ## Vercel
 
-- For **`the-grid-sa`**, the Vercel API reports **`buildCommand` and `installCommand` as unset** (`null`). With **Framework Preset: Next.js** and a **`pnpm-lock.yaml`** in the repo, Vercel uses **`pnpm install`** and **`pnpm run build`** automatically — matching this project’s `package.json` `build` script (`generate:importmap` → `ensure-schema` → `next build`). You only need to override those fields if you intentionally diverge from that.
-- To require green CI before merging to production: GitHub **Settings → Branches → Branch protection** on `main` → enable **Require status checks to pass** and select the **quality** job from [`.github/workflows/ci.yml`](.github/workflows/ci.yml) (after the first successful run so the check appears in the list).
+[`vercel.json`](vercel.json) sets **`installCommand`** (`pnpm install --frozen-lockfile`) and **`buildCommand`** (`pnpm build`) so production never diverges from CI or local installs.
 
 ## Environment
 
