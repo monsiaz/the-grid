@@ -56,11 +56,11 @@ const syne = Syne({
 const SITE_URL = getSiteUrl();
 const SITE_NAME = "The Grid Agency";
 
-export const dynamicParams = true;
+/** Avoid Postgres during `next build`: Neon/serverless DB is often unreachable from CI,
+ * which breaks prerender of Payload-backed pages. Render locale routes on-demand instead. */
+export const dynamic = "force-dynamic";
 
-export function generateStaticParams() {
-  return [{ locale: routing.defaultLocale }];
-}
+export const dynamicParams = true;
 
 export async function generateMetadata({
   params,

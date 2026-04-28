@@ -4,7 +4,8 @@ import { getPayloadClient } from "@/lib/payload";
 import { locales, defaultLocale, type Locale } from "@/i18n/config";
 import { detectTranslatedLocales } from "@/lib/docTranslations";
 
-export const revalidate = 3600;
+/** Same rationale as `[locale]/layout`: don’t require a live DB during Vercel build. */
+export const dynamic = "force-dynamic";
 
 type ChangeFrequency = MetadataRoute.Sitemap[number]["changeFrequency"];
 
