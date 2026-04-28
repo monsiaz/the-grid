@@ -223,6 +223,7 @@ async function translateHandler(request: Request) {
   const scope = searchParams.get("scope") || "all";
   const onlyCollection = searchParams.get("collection") || "";
   const onlyGlobal = searchParams.get("global") || "";
+  const onlyId = searchParams.get("id") || "";
   const limitDocs = Number.parseInt(searchParams.get("limit") || "0", 10) || 0;
   const offsetDocs = Number.parseInt(searchParams.get("offset") || "0", 10) || 0;
 
@@ -284,15 +285,26 @@ async function translateHandler(request: Request) {
     const paths = collectLocalizedPaths(c.fields);
     if (paths.length === 0) continue;
     log.push(`collection ${c.slug} (${paths.length} paths)`);
-    const all = await payload.find({
-      collection: c.slug as never,
-      limit: limitDocs || 1000,
-      page: offsetDocs > 0 ? Math.floor(offsetDocs / (limitDocs || 1000)) + 1 : 1,
-      locale: SOURCE_LOCALE,
-      fallbackLocale: false,
-      depth: 0,
-      sort: "id",
-    });
+    const all = onlyId
+      ? await payload
+          .findByID({
+            collection: c.slug as never,
+            id: onlyId as never,
+            locale: SOURCE_LOCALE,
+            fallbackLocale: false,
+            depth: 0,
+          })
+          .then((doc) => ({ docs: [doc] }))
+          .catch(() => ({ docs: [] }))
+      : await payload.find({
+          collection: c.slug as never,
+          limit: limitDocs || 1000,
+          page: offsetDocs > 0 ? Math.floor(offsetDocs / (limitDocs || 1000)) + 1 : 1,
+          locale: SOURCE_LOCALE,
+          fallbackLocale: false,
+          depth: 0,
+          sort: "id",
+        });
     for (const sourceDoc of all.docs as AnyRecord[]) {
       for (const [locale, label] of locales) {
         const existing = await payload

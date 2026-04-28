@@ -1,6 +1,7 @@
 import type { CollectionConfig } from "payload";
 import { imageField } from "@/fields/imageField";
 import { revalidateAbout } from "@/lib/revalidate";
+import { getSiteUrl } from "@/lib/siteUrl";
 
 export const TeamMembers: CollectionConfig = {
   slug: "team-members",
@@ -68,7 +69,20 @@ export const TeamMembers: CollectionConfig = {
   ],
   hooks: {
     afterChange: [
-      ({ doc }: { doc: unknown }) => { revalidateAbout(); },
+      ({ doc, req }: { doc: Record<string, unknown>; req: { locale?: string } }) => {
+        revalidateAbout();
+        // Auto-translate localized fields (name, role, bio) to all other locales
+        // whenever the English version is saved. Fires in the background so it
+        // never delays the admin save response.
+        const locale = req?.locale ?? "en";
+        if (locale !== "en") return;
+        const apiKey = process.env.OPENAI_API_KEY;
+        if (!apiKey) return;
+        const secret = process.env.TRANSLATE_SECRET || process.env.PAYLOAD_SECRET || "";
+        const base = getSiteUrl();
+        const url = `${base}/api/translate-payload?scope=collections&collection=team-members&id=${doc.id}&force=1&secret=${encodeURIComponent(secret)}`;
+        fetch(url, { method: "POST" }).catch(() => {});
+      },
     ],
     afterDelete: [
       ({ doc }: { doc: unknown }) => { revalidateAbout(); },
