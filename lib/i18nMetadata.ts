@@ -34,12 +34,19 @@ function normalizePath(segment: string): string {
   return p.replace(/\/+$/, "");
 }
 
+function withTrailingSlash(path: string): string {
+  return path.endsWith("/") ? path : `${path}/`;
+}
+
 function buildLocalizedPath(locale: Locale, pathSegment: string): string {
   const clean = pathSegment === "/" ? "" : pathSegment.replace(/^\/|\/$/g, "");
+  let path: string;
   if (locale === defaultLocale) {
-    return clean ? `/${clean}` : "/";
+    path = clean ? `/${clean}` : "/";
+  } else {
+    path = clean ? `/${locale}/${clean}` : `/${locale}`;
   }
-  return clean ? `/${locale}/${clean}` : `/${locale}`;
+  return withTrailingSlash(path);
 }
 
 export async function buildI18nMetadata({

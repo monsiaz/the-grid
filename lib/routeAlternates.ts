@@ -35,9 +35,13 @@ function joinPath(...parts: string[]): string {
   return clean ? `/${clean}` : "/";
 }
 
+function withTrailingSlash(path: string): string {
+  return path.endsWith("/") ? path : `${path}/`;
+}
+
 function localePath(locale: Locale, pathSegment: string): string {
-  if (locale === defaultLocale) return joinPath(pathSegment);
-  return joinPath(locale, pathSegment);
+  const path = locale === defaultLocale ? joinPath(pathSegment) : joinPath(locale, pathSegment);
+  return withTrailingSlash(path);
 }
 
 export function buildRouteAlternates(opts: {
