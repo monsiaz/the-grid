@@ -67,6 +67,7 @@ export default function NewsFeaturedGrid({
       >
         {cards.map((card, idx) => {
           const isFirst = idx === 0;
+          const isTopRowSideCard = idx === 1;
           const isLast = idx === cards.length - 1;
           const lgSpan = isFirst ? "lg:col-span-2" : (isLonelyOnLg && isLast ? "lg:col-span-3" : "");
           const smSpan = isFirst ? "sm:col-span-2" : (isLonelyOnSm && isLast ? "sm:col-span-2" : "");
@@ -78,7 +79,7 @@ export default function NewsFeaturedGrid({
               image={card.image}
               excerpt={card.excerpt}
               tag={card.tag}
-              cardClassName={`${isFirst ? "h-[420px]" : "h-[360px]"} ${smSpan} ${lgSpan}`}
+              cardClassName={`${isFirst || isTopRowSideCard ? "h-[420px]" : "h-[360px]"} ${smSpan} ${lgSpan}`}
               titleClassName={isFirst ? "text-[clamp(24px,3vw,34px)]" : ""}
               showExcerpt={isFirst}
               priority={isFirst}

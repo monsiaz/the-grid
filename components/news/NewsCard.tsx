@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { motion, fadeUp, smoothTransition } from "../motion";
 
@@ -64,14 +65,17 @@ export default function NewsCard({
   cardHoverStyle = "zoom",
 }: NewsCardProps) {
   const t = useTranslations("news.card");
+  const [failedImage, setFailedImage] = useState<string | null>(null);
   const showTag = !hideTag && !!tag;
-  const hasImage = typeof image === "string" && image.trim().length > 0;
+  const imageSrc = typeof image === "string" ? image.trim() : "";
+  const hasImage = imageSrc.length > 0 && failedImage !== imageSrc;
   const hoverMotion =
     cardHoverStyle === "flat"
       ? undefined
       : cardHoverStyle === "lift"
         ? { y: -10 }
         : { y: -6 };
+
   return (
     <motion.article
       className={`surface-card-soft group relative overflow-hidden transition-colors duration-300 hover:border-accent/60 ${cardClassName ?? ""}`}
@@ -86,12 +90,13 @@ export default function NewsCard({
       >
         {hasImage ? (
           <Image
-            src={image}
+            src={imageSrc}
             alt={title}
             fill
             className={`object-cover transition-transform duration-[600ms] ease-out ${cardHoverStyle === "zoom" ? "group-hover:scale-[1.06]" : ""} ${imageClassName ?? ""}`}
             sizes={sizes}
             priority={priority}
+            onError={() => setFailedImage(imageSrc)}
           />
         ) : (
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(182,72,63,0.32),transparent_42%),linear-gradient(180deg,rgba(35,35,35,1)_0%,rgba(12,12,12,1)_100%)]" />
