@@ -69,7 +69,7 @@ export default function DriverDetailHero({ driver }: DriverDetailHeroProps) {
                 src={driver.teamLogo}
                 alt=""
                 aria-hidden
-                className="mt-4 h-[26px] w-auto max-w-[120px] object-contain object-left"
+                className="mt-4 h-[20px] w-auto max-w-[90px] object-contain object-left"
                 style={{ filter: "brightness(0) invert(1)", opacity: 0.85 }}
               />
             ) : null}
