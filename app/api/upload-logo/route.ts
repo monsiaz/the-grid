@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").replace(/\.+$/, "");
     const pathname = `logos/${Date.now()}-${safeName}${safeName.endsWith(ext) ? "" : ext}`;
 
-    const blob = await put(pathname, file.stream(), {
+    const blob = await put(pathname, file, {
       access: "public",
       contentType: file.type,
       token: process.env.BLOB_READ_WRITE_TOKEN,

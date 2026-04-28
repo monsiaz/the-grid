@@ -21,6 +21,7 @@
     "@payloadcms/richtext-lexical": "^3.80.0",
     "@payloadcms/storage-vercel-blob": "^3.80.0",
     "@payloadcms/ui": "^3.80.0",
+    "@vercel/blob": "^2.3.3",
     "country-flag-icons": "^1.6.15",
     "framer-motion": "^12.38.0",
     "lucide-react": "^0.577.0",
