@@ -45,9 +45,9 @@ function parseDate(value: unknown): Date {
 function buildLocalizedUrl(siteUrl: string, locale: Locale, routePath: string): string {
   const clean = routePath === "/" ? "" : routePath.replace(/^\/|\/$/g, "");
   if (locale === defaultLocale) {
-    return clean ? `${siteUrl}/${clean}/` : `${siteUrl}/`;
+    return clean ? `${siteUrl}/${clean}` : `${siteUrl}`;
   }
-  return clean ? `${siteUrl}/${locale}/${clean}/` : `${siteUrl}/${locale}/`;
+  return clean ? `${siteUrl}/${locale}/${clean}` : `${siteUrl}/${locale}`;
 }
 
 function buildAlternates(

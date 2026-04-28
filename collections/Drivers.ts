@@ -19,7 +19,7 @@ export const Drivers: CollectionConfig = {
         const base = getSiteUrl();
         const l = locale?.code && locale.code !== "en" ? `/${locale.code}` : "";
         const slug = (data as { slug?: string } | undefined)?.slug || "";
-        return slug ? `${base}${l}/drivers/${slug}/` : `${base}${l}/drivers/`;
+        return slug ? `${base}${l}/drivers/${slug}` : `${base}${l}/drivers`;
       },
     },
     preview: (doc, options) => {
@@ -28,7 +28,7 @@ export const Drivers: CollectionConfig = {
       const code = typeof raw === "string" ? raw : "";
       const l = code && code !== "en" ? `/${code}` : "";
       const slug = (doc as { slug?: string } | undefined)?.slug || "";
-      return slug ? `${base}${l}/drivers/${slug}/` : `${base}${l}/drivers/`;
+      return slug ? `${base}${l}/drivers/${slug}` : `${base}${l}/drivers`;
     },
     components: {
       edit: {

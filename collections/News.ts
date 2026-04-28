@@ -20,7 +20,7 @@ export const News: CollectionConfig = {
         const base = getSiteUrl();
         const l = locale?.code && locale.code !== "en" ? `/${locale.code}` : "";
         const slug = (data as { slug?: string } | undefined)?.slug || "";
-        return slug ? `${base}${l}/news/${slug}/` : `${base}${l}/news/`;
+        return slug ? `${base}${l}/news/${slug}` : `${base}${l}/news`;
       },
     },
     preview: (doc, options) => {
@@ -29,7 +29,7 @@ export const News: CollectionConfig = {
       const code = typeof raw === "string" ? raw : "";
       const l = code && code !== "en" ? `/${code}` : "";
       const slug = (doc as { slug?: string } | undefined)?.slug || "";
-      return slug ? `${base}${l}/news/${slug}/` : `${base}${l}/news/`;
+      return slug ? `${base}${l}/news/${slug}` : `${base}${l}/news`;
     },
     components: {
       edit: {

@@ -30,17 +30,16 @@ type BuildMetadataOptions = {
 
 function normalizePath(segment: string): string {
   if (!segment || segment === "/") return "/";
-  let p = segment.startsWith("/") ? segment : `/${segment}`;
-  if (!p.endsWith("/")) p = `${p}/`;
-  return p;
+  const p = segment.startsWith("/") ? segment : `/${segment}`;
+  return p.replace(/\/+$/, "");
 }
 
 function buildLocalizedPath(locale: Locale, pathSegment: string): string {
   const clean = pathSegment === "/" ? "" : pathSegment.replace(/^\/|\/$/g, "");
   if (locale === defaultLocale) {
-    return clean ? `/${clean}/` : "/";
+    return clean ? `/${clean}` : "/";
   }
-  return clean ? `/${locale}/${clean}/` : `/${locale}/`;
+  return clean ? `/${locale}/${clean}` : `/${locale}`;
 }
 
 export async function buildI18nMetadata({

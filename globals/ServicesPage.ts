@@ -24,13 +24,13 @@ export const ServicesPage: GlobalConfig = {
       url: ({ locale }) => {
         const base = getSiteUrl();
         const l = locale?.code && locale.code !== "en" ? `/${locale.code}` : "";
-        return `${base}${l}/services/`;
+        return `${base}${l}/services`;
       },
     },
     preview: ({ locale }: { locale?: { code?: string } } = {}) => {
       const base = getSiteUrl();
       const l = locale?.code && locale.code !== "en" ? `/${locale.code}` : "";
-      return `${base}${l}/services/`;
+      return `${base}${l}/services`;
     },
   },
   fields: [

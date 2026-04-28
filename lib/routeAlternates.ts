@@ -32,7 +32,7 @@ function joinPath(...parts: string[]): string {
     .map((p) => p.replace(/^\/+|\/+$/g, ""))
     .filter(Boolean)
     .join("/");
-  return clean ? `/${clean}/` : "/";
+  return clean ? `/${clean}` : "/";
 }
 
 function localePath(locale: Locale, pathSegment: string): string {

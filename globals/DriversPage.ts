@@ -17,13 +17,13 @@ export const DriversPage: GlobalConfig = {
       url: ({ locale }) => {
         const base = getSiteUrl();
         const l = locale?.code && locale.code !== "en" ? `/${locale.code}` : "";
-        return `${base}${l}/drivers/`;
+        return `${base}${l}/drivers`;
       },
     },
     preview: ({ locale }: { locale?: { code?: string } } = {}) => {
       const base = getSiteUrl();
       const l = locale?.code && locale.code !== "en" ? `/${locale.code}` : "";
-      return `${base}${l}/drivers/`;
+      return `${base}${l}/drivers`;
     },
   },
   fields: [
