@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { motion, useScroll, useTransform, scaleIn, smoothTransition, viewport } from "../motion";
 
-const THE_GRID_LOGO = "/images/The Grid Agency_White.png";
+const THE_GRID_LOGO = "/images/grid-agency-white.png";
 const COME_LOGO = "/images/come-logo-white.png";
 
 type AboutAccelereBannerProps = {
@@ -34,7 +34,7 @@ type AboutAccelereBannerProps = {
  */
 export default function AboutAccelereBanner({ bannerImage }: AboutAccelereBannerProps = {}) {
   const t = useTranslations("about.accelere");
-  const bg = bannerImage || "/assets/v2/about/accelere.webp";
+  const bg = bannerImage || "/images/250130_FWS_archive_161512.jpg";
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -66,25 +66,25 @@ export default function AboutAccelereBanner({ bannerImage }: AboutAccelereBanner
       {/* Gradient overlay for text/logo legibility */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
 
-      {/* Bottom-left: tagline + logos */}
-      <div className="absolute bottom-[6%] left-[4%] flex flex-col gap-[1.2%]">
-        <p className="m-0 font-sans text-white/70 uppercase tracking-[0.18em] leading-snug text-[clamp(8px,0.9vw,14px)]">
+      {/* Bottom-center: tagline + logos */}
+      <div className="absolute bottom-[6%] left-0 right-0 flex flex-col items-center gap-3">
+        <p className="m-0 font-sans text-white/75 uppercase tracking-[0.2em] leading-snug text-center text-[clamp(9px,1vw,15px)]">
           BEHIND EVERY GREAT DRIVER,<br />SOMEONE BELIEVED FIRST.
         </p>
-        <div className="flex items-center gap-[3%]">
+        <div className="flex items-center gap-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={THE_GRID_LOGO}
             alt="The Grid Agency"
-            className="h-[clamp(18px,1.8vw,30px)] w-auto object-contain"
+            className="h-[clamp(20px,2vw,34px)] w-auto object-contain"
             draggable={false}
           />
-          <span className="text-white/40 text-[clamp(10px,1vw,16px)]">×</span>
+          <span className="text-white/40 text-[clamp(12px,1.2vw,18px)]">×</span>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={COME_LOGO}
             alt="Côme Ensemble"
-            className="h-[clamp(18px,1.8vw,30px)] w-auto object-contain"
+            className="h-[clamp(20px,2vw,34px)] w-auto object-contain"
             draggable={false}
           />
         </div>
