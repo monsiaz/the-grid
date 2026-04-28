@@ -19,6 +19,9 @@ type ServicesCaseStudiesProps = {
 };
 
 function CaseStudyCard({ card }: { card: CaseStudy }) {
+  const hasFaceAtTop = /gasly|givenchy|portrait|pilote|driver/i.test(card.title || "") ||
+    /gasly|givenchy|portrait|pilote|driver/i.test(card.image || "");
+  const objectPosition = hasFaceAtTop ? "object-top" : "object-center";
   return (
     <motion.article
       className={`grid w-[min(86vw,360px)] shrink-0 gap-4 transition-opacity duration-500 min-[900px]:w-[420px] min-[1280px]:w-[470px] ${
@@ -35,7 +38,7 @@ function CaseStudyCard({ card }: { card: CaseStudy }) {
           fill
           quality={100}
           sizes="(max-width: 900px) 86vw, (max-width: 1280px) 420px, 470px"
-          className="object-cover object-center transition-transform duration-700 ease-out hover:scale-[1.03]"
+          className={`object-cover ${objectPosition} transition-transform duration-700 ease-out hover:scale-[1.03]`}
         />
       </div>
       <h3 className="display-card m-0 text-white min-[900px]:text-[18px]">
