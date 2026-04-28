@@ -404,6 +404,14 @@ const STATEMENTS = [
   `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_font_size_mobile_min_px" numeric;`,
   `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_font_size_mobile_mid_vw" numeric;`,
   `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_title_layout_font_size_mobile_max_px" numeric;`,
+
+  // ────────────────── news.category nullable (2026-04 fix) ──────────────────────────
+  //
+  // The `category` column was created as NOT NULL (from original Payload push) but the
+  // field is `required: false` in the collection definition. Creating a new article
+  // without selecting a category sends NULL → violates the NOT NULL constraint → 500.
+  // Drop the NOT NULL so optional selects can be left empty.
+  `ALTER TABLE "news" ALTER COLUMN "category" DROP NOT NULL;`,
 ];
 
 /** Neon/serverless Postgres often returns transient errors during Vercel build (cold compute, OOM, connection limits). */
