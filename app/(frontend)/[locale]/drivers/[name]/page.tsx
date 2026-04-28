@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import DriverDetailPage from "@/components/drivers/detail/DriverDetailPage";
 import LocaleAlternatesData from "@/components/LocaleAlternatesData";
 import { buildI18nMetadata } from "@/lib/i18nMetadata";
@@ -23,6 +23,18 @@ const DRIVER_PROBE_FIELDS = [
   "detail.agencyParagraphs",
   "detail.profileTitle",
 ];
+
+function normalizeMetaText(value: unknown): string {
+  return typeof value === "string" ? value.replace(/\s+/g, " ").trim() : "";
+}
+
+function truncateMetaDescription(value: string, maxLength = 158): string {
+  if (value.length <= maxLength) return value;
+  const cut = value.slice(0, maxLength + 1);
+  const lastSpace = cut.lastIndexOf(" ");
+  const truncated = (lastSpace > 110 ? cut.slice(0, lastSpace) : cut.slice(0, maxLength)).trim();
+  return `${truncated.replace(/[.,;:!?-]+$/, "")}…`;
+}
 
 export async function generateMetadata({ params }: DriverDetailRouteProps): Promise<Metadata> {
   const { name, locale } = await params;
@@ -56,8 +68,19 @@ export async function generateMetadata({ params }: DriverDetailRouteProps): Prom
     fallbackListPath: "/drivers",
   });
 
-  const title = driver?.name ? `${driver.name}` : undefined;
-  const description = driver?.role || undefined;
+  const metaT = await getTranslations({ locale, namespace: "meta.drivers" });
+  const role = normalizeMetaText(driver?.role);
+  const profileDescription = truncateMetaDescription(
+    normalizeMetaText(
+      (driver as { detail?: { profileParagraphs?: unknown } })?.detail?.profileParagraphs,
+    ),
+  );
+  const title = driver?.name ? metaT("detailTitle", { name: driver.name }) : undefined;
+  const description =
+    profileDescription ||
+    (driver?.name && role
+      ? metaT("detailDescription", { name: driver.name, role })
+      : undefined);
   const ogImage = driver?.image || undefined;
   return buildI18nMetadata({
     locale,
@@ -65,6 +88,9 @@ export async function generateMetadata({ params }: DriverDetailRouteProps): Prom
     namespace: "drivers",
     titleOverride: title,
     descriptionOverride: description,
+    keywordsExtra: [driver?.name, role].filter(
+      (keyword): keyword is string => typeof keyword === "string" && keyword.length > 0,
+    ),
     ogImage,
     alternatesOverride: alternates.hreflang,
     canonicalOverride: alternates.canonical,

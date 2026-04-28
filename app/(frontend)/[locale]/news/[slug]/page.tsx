@@ -65,6 +65,9 @@ export async function generateMetadata({ params }: NewsDetailRouteProps): Promis
     namespace: "news",
     titleOverride: title,
     descriptionOverride: description,
+    keywordsExtra: [title].filter(
+      (keyword): keyword is string => typeof keyword === "string" && keyword.length > 0,
+    ),
     ogImage,
     alternatesOverride: alternates.hreflang,
     canonicalOverride: alternates.canonical,

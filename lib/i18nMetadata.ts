@@ -14,6 +14,7 @@ type BuildMetadataOptions = {
   namespace: "home" | "about" | "services" | "drivers" | "news" | "contact" | "privacy";
   titleOverride?: string;
   descriptionOverride?: string;
+  keywordsExtra?: string[];
   ogImage?: string;
   /**
    * Optional override for hreflang emission. When provided, only these entries
@@ -55,6 +56,7 @@ export async function buildI18nMetadata({
   namespace,
   titleOverride,
   descriptionOverride,
+  keywordsExtra,
   ogImage = "/images/hero.webp",
   alternatesOverride,
   canonicalOverride,
@@ -77,6 +79,14 @@ export async function buildI18nMetadata({
       : (metaT(`${namespace}.description` as const) as string));
 
   const ogImageAlt = metaT("ogImageAlt");
+  const keywords = Array.from(
+    new Set(
+      [
+        ...metaT("keywords").split(",").map((s) => s.trim()),
+        ...(keywordsExtra ?? []).map((s) => s.trim()),
+      ].filter(Boolean),
+    ),
+  );
 
   let languageAlternates: Record<string, string>;
   if (alternatesOverride && Object.keys(alternatesOverride).length > 0) {
@@ -100,9 +110,9 @@ export async function buildI18nMetadata({
     metadataBase: new URL(SITE_URL),
     title,
     description,
-    keywords: metaT("keywords").split(",").map((s) => s.trim()),
+    keywords,
     alternates: {
-      canonical: canonicalOverride ?? canonicalPath,
+      canonical: canonicalAbsolute,
       languages: languageAlternates,
     },
     openGraph: {

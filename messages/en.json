@@ -4,35 +4,37 @@
       "title": "THE GRID — Motorsport Agency",
       "template": "%s | THE GRID"
     },
-    "description": "The Grid is a 360° motorsport agency combining driver management and strategic marketing to build careers and develop high-impact partnerships across the ecosystem.",
+    "description": "The Grid is a 360° motorsport agency combining driver management, sport marketing and partnerships to build careers across elite racing.",
     "keywords": "motorsport agency, driver management, Formula 1, Formula 2, Formula 3, karting, sport marketing, Pierre Gasly, Isack Hadjar, The Grid",
     "ogImageAlt": "The Grid — Opening the gates to elite motorsport",
     "home": {
-      "title": "THE GRID — Motorsport Agency",
-      "description": "The Grid is a 360° motorsport agency combining driver management and strategic marketing to build careers and develop high-impact partnerships across the ecosystem."
+      "title": "THE GRID — Motorsport Talent & Marketing Agency",
+      "description": "The Grid is a 360° motorsport agency combining driver management, sport marketing and partnerships to build careers across elite racing."
     },
     "about": {
-      "title": "About",
+      "title": "About The Grid Motorsport Agency",
       "description": "Meet The Grid: a motorsport agency leveraging 20+ years of experience in sport management, image & media and commercial development."
     },
     "services": {
-      "title": "Services",
+      "title": "Motorsport Services for Drivers & Partners",
       "description": "Discover how The Grid Agency supports drivers and partners across sport management, image & media and commercial development."
     },
     "drivers": {
-      "title": "Drivers",
-      "description": "Discover the drivers represented by The Grid Agency across Formula 1, Formula 2, Formula 3 and junior categories."
+      "title": "Motorsport Drivers Managed by The Grid",
+      "description": "Discover the drivers represented by The Grid Agency across Formula 1, Formula 2, Formula 3 and junior categories.",
+      "detailTitle": "{name} — Racing Driver",
+      "detailDescription": "Discover {name}, {role}, represented by The Grid Agency through sport management, image strategy and commercial development."
     },
     "news": {
-      "title": "News",
-      "description": "The latest sporting and commercial news from The Grid Agency, our drivers and our partners."
+      "title": "Motorsport News & Agency Updates",
+      "description": "Read the latest sporting, commercial and partnership news from The Grid Agency, its represented drivers and motorsport ecosystem."
     },
     "contact": {
-      "title": "Contact",
-      "description": "Get in touch with The Grid Agency for driver management, partnerships and commercial opportunities."
+      "title": "Contact The Grid Motorsport Agency",
+      "description": "Contact The Grid Agency for driver management, sport marketing partnerships, commercial development and motorsport opportunities."
     },
     "privacy": {
-      "title": "Privacy Policy",
+      "title": "Privacy Policy for The Grid Agency",
       "description": "Learn how The Grid Agency collects, uses, and protects your personal information in compliance with data privacy regulations."
     }
   },

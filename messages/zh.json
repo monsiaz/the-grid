@@ -4,35 +4,37 @@
       "title": "THE GRID — Motorsport Agency",
       "template": "%s | THE GRID"
     },
-    "description": "The Grid 是一家 360° motorsport agency，将车手管理与战略性市场营销结合起来，打造职业发展并在整个生态系统中发展高影响力合作伙伴关系。",
+    "description": "The Grid 是一家 360° 赛车经纪公司，结合车手管理、体育营销与合作伙伴关系，帮助精英赛车人才建立职业生涯。",
     "keywords": "赛车经纪公司, 车手管理, 一级方程式, 二级方程式, 三级方程式, 卡丁车, 体育营销, Pierre Gasly, Isack Hadjar, The Grid",
     "ogImageAlt": "The Grid — 开启精英赛车大门",
     "home": {
-      "title": "THE GRID — 赛车运动经纪公司",
-      "description": "The Grid 是一家 360° motorsport agency，将车手管理与战略性市场营销结合起来，打造职业发展并在整个生态系统中发展高影响力合作伙伴关系。"
+      "title": "THE GRID — 赛车人才与营销经纪公司",
+      "description": "The Grid 是一家 360° 赛车经纪公司，结合车手管理、体育营销与合作伙伴关系，帮助精英赛车人才建立职业生涯。"
     },
     "about": {
-      "title": "关于我们",
+      "title": "关于 The Grid 赛车经纪公司",
       "description": "认识 The Grid：一家利用 20+ 年体育管理、形象与媒体以及商业开发经验的 motorsport agency。"
     },
     "services": {
-      "title": "服务",
+      "title": "面向车手与合作伙伴的赛车服务",
       "description": "了解 The Grid Agency 如何在体育管理、形象与媒体以及商业开发等领域为车手与合作伙伴提供支持。"
     },
     "drivers": {
-      "title": "车手",
-      "description": "探索 The Grid Agency 代理的车手，覆盖 Formula 1、Formula 2、Formula 3 以及青年组别。"
+      "title": "The Grid 代理车手",
+      "description": "探索 The Grid Agency 代理的车手，覆盖 Formula 1、Formula 2、Formula 3 以及青年组别。",
+      "detailTitle": "{name} — 赛车手",
+      "detailDescription": "了解 {name}，{role}，由 The Grid Agency 在运动管理、形象策略与商业开发方面提供支持。"
     },
     "news": {
-      "title": "新闻",
-      "description": "来自 The Grid Agency、我们的车手与合作伙伴的最新体育与商业动态。"
+      "title": "赛车新闻与经纪公司动态",
+      "description": "阅读 The Grid Agency、旗下车手以及赛车生态系统的最新竞技、商业与合作伙伴动态。"
     },
     "contact": {
-      "title": "联系",
-      "description": "与 The Grid Agency 联系，获取车手管理、合作伙伴关系及商业机会。"
+      "title": "联系 The Grid Agency",
+      "description": "联系 The Grid Agency，了解车手管理、体育营销合作、商业开发与赛车机会。"
     },
     "privacy": {
-      "title": "隐私政策",
+      "title": "The Grid 隐私政策",
       "description": "了解The Grid Agency如何收集、使用和保护您的个人信息。"
     }
   },

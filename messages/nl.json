@@ -4,35 +4,37 @@
       "title": "THE GRID — Motorsport Agency",
       "template": "%s | THE GRID"
     },
-    "description": "The Grid is een 360° motorsport agency die talentmanagement en strategische marketing combineert om carrières op te bouwen en waardevolle partnerships te ontwikkelen binnen het hele ecosysteem.",
+    "description": "The Grid is een 360° motorsport agency die coureursmanagement, sportmarketing en partnerships combineert om carrières op topniveau te bouwen.",
     "keywords": "motorsportbureau, coureursmanagement, Formule 1, Formule 2, Formule 3, karting, sportmarketing, Pierre Gasly, Isack Hadjar, The Grid",
     "ogImageAlt": "The Grid — Het openen van de poorten naar elite motorsport",
     "home": {
-      "title": "THE GRID — Motorsport Agentschap",
-      "description": "The Grid is een 360° motorsport agency die talentmanagement en strategische marketing combineert om carrières op te bouwen en waardevolle partnerships te ontwikkelen binnen het hele ecosysteem."
+      "title": "THE GRID — Motorsport Talent- en Marketingbureau",
+      "description": "The Grid is een 360° motorsport agency die coureursmanagement, sportmarketing en partnerships combineert om carrières op topniveau te bouwen."
     },
     "about": {
-      "title": "Over",
+      "title": "Over The Grid Motorsport Agency",
       "description": "Maak kennis met The Grid: een motorsport agency met 20+ jaar ervaring in sportmanagement, beeld & media en commerciële ontwikkeling."
     },
     "services": {
-      "title": "Diensten",
+      "title": "Motorsportdiensten voor drivers en partners",
       "description": "Ontdek hoe The Grid Agency drivers en partners ondersteunt op het gebied van sportmanagement, beeld & media en commerciële ontwikkeling."
     },
     "drivers": {
-      "title": "Drivers",
-      "description": "Ontdek de drivers die worden vertegenwoordigd door The Grid Agency in Formula 1, Formula 2, Formula 3 en juniorcategorieën."
+      "title": "Drivers vertegenwoordigd door The Grid",
+      "description": "Ontdek de drivers die worden vertegenwoordigd door The Grid Agency in Formula 1, Formula 2, Formula 3 en juniorcategorieën.",
+      "detailTitle": "{name} — Racing driver",
+      "detailDescription": "Ontdek {name}, {role}, vertegenwoordigd door The Grid Agency via sportmanagement, imagestrategie en commerciële ontwikkeling."
     },
     "news": {
-      "title": "Nieuws",
-      "description": "Het nieuwste sportieve en commerciële nieuws van The Grid Agency, onze drivers en onze partners."
+      "title": "Motorsportnieuws & bureau-updates",
+      "description": "Lees het laatste sportieve, commerciële en partnershipnieuws van The Grid Agency, haar vertegenwoordigde drivers en het motorsportecosysteem."
     },
     "contact": {
-      "title": "Contact",
-      "description": "Neem contact op met The Grid Agency voor talentmanagement, partnerships en commerciële kansen."
+      "title": "Neem contact op met The Grid Agency",
+      "description": "Neem contact op met The Grid Agency voor coureursmanagement, sportmarketingpartnerships, commerciële ontwikkeling en motorsportkansen."
     },
     "privacy": {
-      "title": "Privacybeleid",
+      "title": "Privacybeleid van The Grid",
       "description": "Ontdek hoe The Grid Agency uw persoonlijke informatie verzamelt, gebruikt en beschermt."
     }
   },

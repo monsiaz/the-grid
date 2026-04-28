@@ -4,35 +4,37 @@
       "title": "THE GRID — Agencia de Motorsport",
       "template": "%s | THE GRID"
     },
-    "description": "The Grid es una agencia de motorsport 360° que combina gestión de pilotos y marketing estratégico para construir carreras y desarrollar alianzas de alto impacto en todo el ecosistema.",
+    "description": "The Grid es una agencia motorsport 360° que combina gestión de pilotos, sport marketing y partnerships para construir carreras en la élite.",
     "keywords": "agencia de motorsport, gestión de pilotos, Fórmula 1, Fórmula 2, Fórmula 3, karting, marketing deportivo, Pierre Gasly, Isack Hadjar, The Grid",
     "ogImageAlt": "The Grid — Abriendo las puertas al motorsport de élite",
     "home": {
-      "title": "THE GRID — Agencia de Motorsport",
-      "description": "The Grid es una agencia de motorsport 360° que combina gestión de pilotos y marketing estratégico para construir carreras y desarrollar alianzas de alto impacto en todo el ecosistema."
+      "title": "THE GRID — Agencia de Talento y Marketing Motorsport",
+      "description": "The Grid es una agencia motorsport 360° que combina gestión de pilotos, sport marketing y partnerships para construir carreras en la élite."
     },
     "about": {
-      "title": "Sobre",
+      "title": "Sobre The Grid Agency",
       "description": "Conoce The Grid: una agencia de motorsport que aprovecha más de 20 años de experiencia en gestión deportiva, imagen y medios, y desarrollo comercial."
     },
     "services": {
-      "title": "Servicios",
+      "title": "Servicios motorsport para pilotos y partners",
       "description": "Descubre cómo The Grid Agency apoya a pilotos y partners en gestión deportiva, imagen y medios, y desarrollo comercial."
     },
     "drivers": {
-      "title": "Pilotos",
-      "description": "Descubre los pilotos representados por The Grid Agency en Formula 1, Formula 2, Formula 3 y categorías junior."
+      "title": "Pilotos representados por The Grid",
+      "description": "Descubre los pilotos representados por The Grid Agency en Formula 1, Formula 2, Formula 3 y categorías junior.",
+      "detailTitle": "{name} — Piloto de competición",
+      "detailDescription": "Descubre a {name}, {role}, representado por The Grid Agency en gestión deportiva, estrategia de imagen y desarrollo comercial."
     },
     "news": {
-      "title": "Noticias",
-      "description": "Las últimas noticias deportivas y comerciales de The Grid Agency, de nuestros pilotos y de nuestros partners."
+      "title": "Noticias motorsport y de agencia",
+      "description": "Lee las últimas noticias deportivas, comerciales y de partnerships de The Grid Agency, sus pilotos representados y el ecosistema motorsport."
     },
     "contact": {
-      "title": "Contacto",
-      "description": "Contacta con The Grid Agency para gestión de pilotos, partnerships y oportunidades comerciales."
+      "title": "Contactar con The Grid Agency",
+      "description": "Contacta con The Grid Agency para gestión de pilotos, partnerships de sport marketing, desarrollo comercial y oportunidades motorsport."
     },
     "privacy": {
-      "title": "Política de Privacidad",
+      "title": "Política de privacidad de The Grid",
       "description": "Descubra cómo The Grid Agency recopila, utiliza y protege su información personal."
     }
   },
