@@ -33,7 +33,7 @@ export default function Drivers({ heading, headingAccent, backgroundImage }: Dri
         fill
         loading="lazy"
         sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
-        quality={65}
+        quality={100}
         className="absolute inset-0 object-cover"
         aria-hidden
       />

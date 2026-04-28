@@ -131,7 +131,7 @@ export default function Hero({
           priority
           fetchPriority="high"
           sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
-          quality={70}
+          quality={100}
           className="absolute inset-0 -z-0 object-cover"
           style={backgroundObjectPosition ? { objectPosition: backgroundObjectPosition } : undefined}
           aria-hidden
@@ -148,7 +148,7 @@ export default function Hero({
             priority={false}
             fetchPriority="auto"
             sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
-            quality={70}
+            quality={100}
             className="object-cover"
             aria-hidden
           />

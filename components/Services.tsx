@@ -49,7 +49,7 @@ export default function Services({ labels, backgroundImage }: ServicesProps) {
           fill
           loading="lazy"
           sizes="(max-width: 640px) 100vw, (max-width: 1200px) 100vw, (max-width: 1920px) 1920px, 2560px"
-          quality={92}
+          quality={100}
           /* Center horizontally and vertically so the whole scene stays visible */
           className="object-cover object-[62%_28%] min-[640px]:object-center"
           aria-hidden

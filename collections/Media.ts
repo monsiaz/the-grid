@@ -143,7 +143,7 @@ export const Media: CollectionConfig = {
     formatOptions: {
       format: "webp",
       options: {
-        quality: 92,
+        quality: 100,
         effort: 4,
       },
     },
@@ -152,19 +152,19 @@ export const Media: CollectionConfig = {
         name: "thumbnail",
         width: 400,
         withoutEnlargement: true,
-        formatOptions: { format: "webp", options: { quality: 85 } },
+        formatOptions: { format: "webp", options: { quality: 100 } },
       },
       {
         name: "card",
         width: 900,
         withoutEnlargement: true,
-        formatOptions: { format: "webp", options: { quality: 90 } },
+        formatOptions: { format: "webp", options: { quality: 100 } },
       },
       {
         name: "hero",
         width: 1920,
         withoutEnlargement: true,
-        formatOptions: { format: "webp", options: { quality: 92 } },
+        formatOptions: { format: "webp", options: { quality: 100 } },
       },
     ],
     adminThumbnail: "thumbnail",

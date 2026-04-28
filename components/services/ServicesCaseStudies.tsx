@@ -33,7 +33,7 @@ function CaseStudyCard({ card }: { card: CaseStudy }) {
           src={card.image}
           alt={card.title || ""}
           fill
-          quality={90}
+          quality={100}
           sizes="(max-width: 900px) 86vw, (max-width: 1280px) 420px, 470px"
           className="object-cover object-center transition-transform duration-700 ease-out hover:scale-[1.03]"
         />
