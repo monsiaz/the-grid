@@ -44,7 +44,9 @@ next-env.d.ts
 payload-types.ts
 *.db
 
-public/
+# Static assets for Next.js must be tracked — Vercel deploys from Git; ignoring /public/ breaks /assets/* and any image not served via CDN rewrite.
+# macOS AppleDouble sidecars (external disks):
+**/._*
 
 # lighthouse audit output (local only)
 /.lighthouse/

@@ -1,0 +1,457 @@
+[
+  {
+    "slug": "alessandro-giusti",
+    "files": [
+      {
+        "src": "BAR_F3_DL-2265.jpg",
+        "dst": "alessandro-giusti-1.webp",
+        "size": 136128
+      },
+      {
+        "src": "BAR_F3_FVE-0299.jpg",
+        "dst": "alessandro-giusti-2.webp",
+        "size": 185082
+      },
+      {
+        "src": "BCN_F3TEST_BV-9302.jpg",
+        "dst": "alessandro-giusti-3.webp",
+        "size": 60554
+      },
+      {
+        "src": "JER_F3_DL-9473.jpg",
+        "dst": "alessandro-giusti-4.webp",
+        "size": 120038
+      },
+      {
+        "src": "JER_F3_NB-3868.jpg",
+        "dst": "alessandro-giusti-5.webp",
+        "size": 84576
+      },
+      {
+        "src": "giusti_alessandro__1770751517_3829661228889613513_7074891203.jpg",
+        "dst": "alessandro-giusti-6.webp",
+        "size": 100068
+      },
+      {
+        "src": "giusti_alessandro__1771171200_3833148963113765526_7074891203.jpg",
+        "dst": "alessandro-giusti-7.webp",
+        "size": 81340
+      }
+    ]
+  },
+  {
+    "slug": "alex-truchot",
+    "files": [
+      {
+        "src": "KSP_305_0380 (1) (1).JPG",
+        "dst": "alex-truchot-1.webp",
+        "size": 114292
+      },
+      {
+        "src": "KSP_305_0407.JPG",
+        "dst": "alex-truchot-2.webp",
+        "size": 119766
+      },
+      {
+        "src": "UM5_3278.jpg",
+        "dst": "alex-truchot-3.webp",
+        "size": 110314
+      },
+      {
+        "src": "Z9M_0580.jpg",
+        "dst": "alex-truchot-4.webp",
+        "size": 136686
+      }
+    ]
+  },
+  {
+    "slug": "andrea-dupe",
+    "files": [
+      {
+        "src": "1.png",
+        "dst": "andrea-dupe-1.webp",
+        "size": 158514
+      },
+      {
+        "src": "2.png",
+        "dst": "andrea-dupe-2.webp",
+        "size": 153376
+      },
+      {
+        "src": "3.png",
+        "dst": "andrea-dupe-3.webp",
+        "size": 106954
+      },
+      {
+        "src": "4.png",
+        "dst": "andrea-dupe-4.webp",
+        "size": 529512
+      },
+      {
+        "src": "5.png",
+        "dst": "andrea-dupe-5.webp",
+        "size": 59338
+      },
+      {
+        "src": "6.png",
+        "dst": "andrea-dupe-6.webp",
+        "size": 70326
+      }
+    ]
+  },
+  {
+    "slug": "enzo-deligny",
+    "files": [
+      {
+        "src": "BAR_F3_DL-2741.jpg",
+        "dst": "enzo-deligny-1.webp",
+        "size": 87066
+      },
+      {
+        "src": "BAR_F3_DL-3549.jpg",
+        "dst": "enzo-deligny-2.webp",
+        "size": 192070
+      },
+      {
+        "src": "MAC_FR_SR-3275.jpg",
+        "dst": "enzo-deligny-3.webp",
+        "size": 192856
+      },
+      {
+        "src": "MAC_FR_SR-5752.jpg",
+        "dst": "enzo-deligny-4.webp",
+        "size": 60516
+      }
+    ]
+  },
+  {
+    "slug": "fred-makowiecki",
+    "files": [
+      {
+        "src": "Championnat du Monde FIA d’Endurance 2025 - Alpine A424 (1).jpg",
+        "dst": "fred-makowiecki-1.webp",
+        "size": 71106
+      },
+      {
+        "src": "Frederic-MAKOWIECKI.jpg",
+        "dst": "fred-makowiecki-2.webp",
+        "size": 42848
+      },
+      {
+        "src": "alpine_endurance_team_1745174472_3615107953963853587_2080504393.jpg",
+        "dst": "fred-makowiecki-3.webp",
+        "size": 241422
+      },
+      {
+        "src": "fred.makowiecki_1738795203_3561594764177864550_8788874378.jpg",
+        "dst": "fred-makowiecki-4.webp",
+        "size": 55588
+      },
+      {
+        "src": "thegrid.agency_1747036023_3630723775598923850_7234819750.jpg",
+        "dst": "fred-makowiecki-5.webp",
+        "size": 153226
+      }
+    ]
+  },
+  {
+    "slug": "isack-hadjar",
+    "files": [
+      {
+        "src": "110.png",
+        "dst": "isack-hadjar-1.webp",
+        "size": 60252
+      },
+      {
+        "src": "@GregoireTruchet-6018.jpg.jpeg",
+        "dst": "isack-hadjar-2.webp",
+        "size": 76104
+      },
+      {
+        "src": "IMG_2980.jpg.jpeg",
+        "dst": "isack-hadjar-3.webp",
+        "size": 151954
+      },
+      {
+        "src": "SI202512090302.jpg",
+        "dst": "isack-hadjar-4.webp",
+        "size": 83246
+      },
+      {
+        "src": "SI202602200152.jpg",
+        "dst": "isack-hadjar-5.webp",
+        "size": 98012
+      },
+      {
+        "src": "essesmag_1763480808_3768672629792234061_62415384298.jpg",
+        "dst": "isack-hadjar-6.webp",
+        "size": 48672
+      }
+    ]
+  },
+  {
+    "slug": "jack-iliffe",
+    "files": [
+      {
+        "src": "jack.iliffe_1757885060_3721732090896580146_47563081014.jpg",
+        "dst": "jack-iliffe-1.webp",
+        "size": 96206
+      },
+      {
+        "src": "jack.iliffe_1759075378_3731717207160455139_47563081014.jpg",
+        "dst": "jack-iliffe-2.webp",
+        "size": 117200
+      },
+      {
+        "src": "jack.iliffe_1759075378_3731717207177180394_47563081014.jpg",
+        "dst": "jack-iliffe-3.webp",
+        "size": 87558
+      },
+      {
+        "src": "jack.iliffe_1759075378_3731717207177210225_47563081014.jpg",
+        "dst": "jack-iliffe-4.webp",
+        "size": 65288
+      }
+    ]
+  },
+  {
+    "slug": "kush-maini",
+    "files": [
+      {
+        "src": "@GregoireTruchet-6457.jpg.jpeg",
+        "dst": "kush-maini-1.webp",
+        "size": 71076
+      },
+      {
+        "src": "@GregoireTruchet-6540.jpg.jpeg",
+        "dst": "kush-maini-2.webp",
+        "size": 100854
+      },
+      {
+        "src": "@GregoireTruchet-7347.jpg.jpeg",
+        "dst": "kush-maini-3.webp",
+        "size": 129050
+      },
+      {
+        "src": "BAR_F2_DL-4680.jpg",
+        "dst": "kush-maini-4.webp",
+        "size": 252988
+      },
+      {
+        "src": "BAR_F2_DL-5713.jpg",
+        "dst": "kush-maini-5.webp",
+        "size": 206640
+      },
+      {
+        "src": "BAR_F2_SR-3077.jpg",
+        "dst": "kush-maini-6.webp",
+        "size": 127420
+      }
+    ]
+  },
+  {
+    "slug": "louis-cochet",
+    "files": [
+      {
+        "src": "KSP_032_5215.JPG",
+        "dst": "louis-cochet-1.webp",
+        "size": 86038
+      },
+      {
+        "src": "louis_cochet_official_1771613110_3836889270363967678_41825914187.jpg",
+        "dst": "louis-cochet-2.webp",
+        "size": 113632
+      },
+      {
+        "src": "louis_cochet_official_1771848000_3838810441481316834_41825914187.jpg",
+        "dst": "louis-cochet-3.webp",
+        "size": 69640
+      },
+      {
+        "src": "louis_cochet_official_1771848000_3838810441498045559_41825914187.jpg",
+        "dst": "louis-cochet-4.webp",
+        "size": 119568
+      },
+      {
+        "src": "louis_cochet_official_1771848000_3838810441498052615_41825914187.jpg",
+        "dst": "louis-cochet-5.webp",
+        "size": 78924
+      }
+    ]
+  },
+  {
+    "slug": "luka-scelles",
+    "files": [
+      {
+        "src": "KSP_090_0166.JPG",
+        "dst": "luka-scelles-1.webp",
+        "size": 162456
+      },
+      {
+        "src": "KSP_090_3466.JPG",
+        "dst": "luka-scelles-2.webp",
+        "size": 126100
+      },
+      {
+        "src": "KSP_211_3161.JPG",
+        "dst": "luka-scelles-3.webp",
+        "size": 82622
+      },
+      {
+        "src": "KSP_211_5169.JPG",
+        "dst": "luka-scelles-4.webp",
+        "size": 120274
+      },
+      {
+        "src": "KSP_218_0084.JPG",
+        "dst": "luka-scelles-5.webp",
+        "size": 87020
+      },
+      {
+        "src": "KSP_218_3561.JPG",
+        "dst": "luka-scelles-6.webp",
+        "size": 165022
+      }
+    ]
+  },
+  {
+    "slug": "nathan-tye",
+    "files": [
+      {
+        "src": "WhatsApp Image 2026-02-23 at 08.14.30 (1).jpeg",
+        "dst": "nathan-tye-1.webp",
+        "size": 95332
+      },
+      {
+        "src": "WhatsApp Image 2026-02-23 at 08.14.32 (1).jpeg",
+        "dst": "nathan-tye-2.webp",
+        "size": 102028
+      },
+      {
+        "src": "WhatsApp Image 2026-02-23 at 08.14.37 (1).jpeg",
+        "dst": "nathan-tye-3.webp",
+        "size": 97496
+      },
+      {
+        "src": "WhatsApp Image 2026-02-23 at 08.14.42 (1).jpeg",
+        "dst": "nathan-tye-4.webp",
+        "size": 367886
+      },
+      {
+        "src": "WhatsApp Image 2026-02-26 at 21.02.18 (1).jpeg",
+        "dst": "nathan-tye-5.webp",
+        "size": 65260
+      }
+    ]
+  },
+  {
+    "slug": "pierre-gasly",
+    "files": [
+      {
+        "src": "@GregoireTruchet-2242.jpg",
+        "dst": "pierre-gasly-1.webp",
+        "size": 98598
+      },
+      {
+        "src": "@GregoireTruchet-2729.jpg",
+        "dst": "pierre-gasly-2.webp",
+        "size": 113448
+      },
+      {
+        "src": "@GregoireTruchet-3443.jpg",
+        "dst": "pierre-gasly-3.webp",
+        "size": 149768
+      },
+      {
+        "src": "@GregoireTruchet-3900.jpg",
+        "dst": "pierre-gasly-4.webp",
+        "size": 176900
+      },
+      {
+        "src": "@GregoireTruchet-6091.jpg",
+        "dst": "pierre-gasly-5.webp",
+        "size": 107204
+      },
+      {
+        "src": "@GregoireTruchet-6308.jpg",
+        "dst": "pierre-gasly-6.webp",
+        "size": 100192
+      },
+      {
+        "src": "@GregoireTruchet-7050.jpg",
+        "dst": "pierre-gasly-7.webp",
+        "size": 137346
+      },
+      {
+        "src": "@GregoireTruchet-9029.jpg",
+        "dst": "pierre-gasly-8.webp",
+        "size": 59620
+      }
+    ]
+  },
+  {
+    "slug": "stan-ratajski",
+    "files": [
+      {
+        "src": "UM5_8078.jpg",
+        "dst": "stan-ratajski-1.webp",
+        "size": 91384
+      },
+      {
+        "src": "UM5_8107.jpg",
+        "dst": "stan-ratajski-2.webp",
+        "size": 107318
+      },
+      {
+        "src": "Z9N_3933 (1).jpg",
+        "dst": "stan-ratajski-3.webp",
+        "size": 113768
+      },
+      {
+        "src": "Z9N_3943 (2).jpg",
+        "dst": "stan-ratajski-4.webp",
+        "size": 94294
+      },
+      {
+        "src": "Z9N_6383.jpg",
+        "dst": "stan-ratajski-5.webp",
+        "size": 87344
+      },
+      {
+        "src": "Z9N_6480.jpg",
+        "dst": "stan-ratajski-6.webp",
+        "size": 96482
+      }
+    ]
+  },
+  {
+    "slug": "vivek-kanthan",
+    "files": [
+      {
+        "src": "IMG_0991 (2).jpg",
+        "dst": "vivek-kanthan-1.webp",
+        "size": 133828
+      },
+      {
+        "src": "IMG_0998.jpg",
+        "dst": "vivek-kanthan-2.webp",
+        "size": 118356
+      },
+      {
+        "src": "IMG_1000 (2).jpg",
+        "dst": "vivek-kanthan-3.webp",
+        "size": 158918
+      },
+      {
+        "src": "thegrid.agency_1750665691_3661171640934591344_7234819750.jpg",
+        "dst": "vivek-kanthan-4.webp",
+        "size": 141360
+      },
+      {
+        "src": "vivekkanthan_1760906534_3747078054448238390_17589893835.jpg",
+        "dst": "vivek-kanthan-5.webp",
+        "size": 96246
+      }
+    ]
+  }
+]
