@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { ChevronLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import SafeNewsImage from "../SafeNewsImage";
 type NewsDetailData = {
   slug: string;
   title: string;
@@ -38,7 +38,7 @@ export default function NewsDetailTop({ detail }: NewsDetailTopProps) {
           whileHover={{ scale: 1.04 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <Image src={detail.heroImage} alt={detail.title} fill className="object-cover" sizes="(max-width: 1099px) 100vw, 433px" />
+          <SafeNewsImage src={detail.heroImage} alt={detail.title} fill className="object-cover" sizes="(max-width: 1099px) 100vw, 433px" />
         </motion.div>
       </motion.div>
 

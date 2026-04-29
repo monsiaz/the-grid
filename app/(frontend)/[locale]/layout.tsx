@@ -9,6 +9,7 @@ import { getSiteUrl } from "@/lib/siteUrl";
 import { getDesignSettings } from "@/lib/designSettings";
 import DesignVars from "@/components/DesignVars";
 import DesignBodyAttrs from "@/components/DesignBodyAttrs";
+import MotionPreferences from "@/components/MotionPreferences";
 import "../globals.css";
 
 const poppins = Poppins({
@@ -148,7 +149,9 @@ export default async function LocaleLayout({
         {designSettings && (
           <DesignBodyAttrs cardHoverStyle={designSettings.cardHoverStyle} />
         )}
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <MotionPreferences>
+          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        </MotionPreferences>
       </body>
     </html>
   );

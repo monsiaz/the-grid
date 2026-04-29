@@ -36,8 +36,8 @@ export default function ServicesPartner({ description, backgroundImage }: Servic
           alt=""
           fill
           loading="lazy"
-          sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
-          quality={100}
+          sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1600px"
+          quality={85}
           className="object-cover"
           aria-hidden
         />

@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { Link } from "@/i18n/navigation";
+import SafeNewsImage from "../SafeNewsImage";
 import {
   motion,
   fadeUp,
@@ -241,7 +241,7 @@ function ImageRenderer({ block, title }: { block: ImageBlockData; title: string 
       transition={smoothTransition}
     >
       <div className={`relative w-full overflow-hidden ${ratio} ${rounded}`}>
-        <Image
+        <SafeNewsImage
           src={block.image}
           alt={block.caption || title}
           fill
@@ -270,7 +270,7 @@ function TwoColumnRenderer({ block, title }: { block: TwoColumnBlockData; title:
       transition={smoothTransition}
     >
       <div className="surface-card-soft relative aspect-[4/5] w-full overflow-hidden rounded-[24px]">
-        <Image
+        <SafeNewsImage
           src={block.image}
           alt={block.caption || title}
           fill
@@ -344,7 +344,7 @@ function GalleryRenderer({ block, title }: { block: GalleryBlockData; title: str
             whileHover={{ scale: 1.06 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
           >
-            <Image
+            <SafeNewsImage
               src={item.image}
               alt={item.alt || `${title} — ${i + 1}`}
               fill

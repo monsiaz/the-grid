@@ -3,8 +3,24 @@ import { after } from "next/server";
 import { imageField } from "@/fields/imageField";
 import { logoField } from "@/fields/logoField";
 import { getSiteUrl } from "@/lib/siteUrl";
+import { hasLocalizedTextChange } from "@/lib/localizedChange";
 import { revalidateDriverDetail } from "@/lib/revalidate";
 import { authenticated, publicRead } from "@/lib/payloadAccess";
+
+const DRIVER_LOCALIZED_TEXT_PATHS = [
+  "name",
+  "role",
+  "detail.profileTitle",
+  "detail.profileParagraphs",
+  "detail.careerTitle",
+  "detail.careerParagraphs",
+  "detail.transitionTitle",
+  "detail.transitionParagraph",
+  "detail.agencyTitle",
+  "detail.agencyParagraphs",
+  "detail.statsCards.[].label",
+  "detailNews.[].title",
+];
 
 export const Drivers: CollectionConfig = {
   slug: "drivers",
@@ -329,12 +345,21 @@ export const Drivers: CollectionConfig = {
   ],
   hooks: {
     afterChange: [
-      ({ doc, req }: { doc: Record<string, unknown>; req: { locale?: string | null } }) => {
+      ({
+        doc,
+        previousDoc,
+        req,
+      }: {
+        doc: Record<string, unknown>;
+        previousDoc?: Record<string, unknown>;
+        req: { locale?: string | null };
+      }) => {
         revalidateDriverDetail((doc as { slug?: string }).slug);
         // Auto-translate all localized fields to every other locale when any locale is saved.
         const locale = req?.locale || "en";
         const apiKey = process.env.OPENAI_API_KEY;
         if (!apiKey) return;
+        if (!hasLocalizedTextChange({ doc, previousDoc, paths: DRIVER_LOCALIZED_TEXT_PATHS })) return;
         const secret = process.env.TRANSLATE_SECRET || process.env.PAYLOAD_SECRET || "";
         const base = getSiteUrl();
         const url = `${base}/api/translate-payload?scope=collections&collection=drivers&id=${doc.id}&force=1&sourceLocale=${locale}&secret=${encodeURIComponent(secret)}`;

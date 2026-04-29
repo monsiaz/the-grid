@@ -1,4 +1,5 @@
 import type { CollectionConfig } from "payload";
+import { authenticated } from "@/lib/payloadAccess";
 
 export const Users: CollectionConfig = {
   slug: "users",
@@ -13,7 +14,10 @@ export const Users: CollectionConfig = {
     description: "Comptes administrateurs du back-office. Chaque utilisateur peut se connecter avec son email et mot de passe.",
   },
   access: {
-    read: () => true,
+    read: authenticated,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
   },
   fields: [],
 };

@@ -2,9 +2,26 @@ import type { CollectionConfig } from "payload";
 import { after } from "next/server";
 import { imageField } from "@/fields/imageField";
 import { getSiteUrl } from "@/lib/siteUrl";
+import { hasLocalizedTextChange } from "@/lib/localizedChange";
 import { revalidateNewsDetail } from "@/lib/revalidate";
 import { newsContentBlocks } from "@/blocks/newsBlocks";
 import { authenticated, publicRead } from "@/lib/payloadAccess";
+
+const NEWS_LOCALIZED_TEXT_PATHS = [
+  "title",
+  "date",
+  "excerpt",
+  "introParagraphs",
+  "bodyParagraphs",
+  "content.[].text",
+  "content.[].caption",
+  "content.[].heading",
+  "content.[].images.[].alt",
+  "content.[].items.[].label",
+  "content.[].author",
+  "content.[].role",
+  "content.[].label",
+];
 
 export const News: CollectionConfig = {
   slug: "news",
@@ -166,11 +183,20 @@ export const News: CollectionConfig = {
   ],
   hooks: {
     afterChange: [
-      ({ doc, req }: { doc: Record<string, unknown>; req: { locale?: string | null } }) => {
+      ({
+        doc,
+        previousDoc,
+        req,
+      }: {
+        doc: Record<string, unknown>;
+        previousDoc?: Record<string, unknown>;
+        req: { locale?: string | null };
+      }) => {
         revalidateNewsDetail((doc as { slug?: string }).slug);
         const locale = req?.locale || "en";
         const apiKey = process.env.OPENAI_API_KEY;
         if (!apiKey) return;
+        if (!hasLocalizedTextChange({ doc, previousDoc, paths: NEWS_LOCALIZED_TEXT_PATHS })) return;
         const secret = process.env.TRANSLATE_SECRET || process.env.PAYLOAD_SECRET || "";
         const base = getSiteUrl();
         const url = `${base}/api/translate-payload?scope=collections&collection=news&id=${doc.id}&force=1&sourceLocale=${locale}&secret=${encodeURIComponent(secret)}`;

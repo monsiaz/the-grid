@@ -130,8 +130,8 @@ export default function Hero({
           fill
           priority
           fetchPriority="high"
-          sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
-          quality={100}
+          sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1600px"
+          quality={85}
           className="absolute inset-0 -z-0 object-cover"
           style={backgroundObjectPosition ? { objectPosition: backgroundObjectPosition } : undefined}
           aria-hidden
@@ -147,8 +147,8 @@ export default function Hero({
             fill
             priority={false}
             fetchPriority="auto"
-            sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1920px"
-            quality={100}
+            sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1600px"
+            quality={85}
             className="object-cover"
             aria-hidden
           />

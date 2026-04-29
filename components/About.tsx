@@ -89,8 +89,8 @@ export default function About({
         alt=""
         fill
         loading="lazy"
-        sizes="(max-width: 640px) 100vw, (max-width: 1200px) 100vw, (max-width: 1920px) 1920px, 2560px"
-        quality={100}
+        sizes="(max-width: 640px) 100vw, (max-width: 1200px) 100vw, (max-width: 1600px) 1600px, 1920px"
+        quality={85}
         className="absolute inset-0 object-cover"
         style={{ objectPosition: "38% 78%" }}
         aria-hidden

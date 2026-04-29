@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useTranslations } from "next-intl";
+import SafeNewsImage from "../SafeNewsImage";
 import {
   motion,
   fadeUp,
@@ -37,7 +37,7 @@ export default function NewsDetailGallery({ images, title }: NewsDetailGalleryPr
             whileHover={{ scale: 1.06 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
           >
-            <Image
+            <SafeNewsImage
               src={image}
               alt={t("galleryImageAlt", { title, index: index + 1 })}
               fill

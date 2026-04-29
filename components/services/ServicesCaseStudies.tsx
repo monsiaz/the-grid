@@ -41,7 +41,7 @@ function CaseStudyCard({ card }: { card: CaseStudy }) {
           src={card.image}
           alt={card.title || ""}
           fill
-          quality={100}
+          quality={85}
           sizes="(max-width: 900px) 86vw, (max-width: 1280px) 420px, 470px"
           className={`object-cover transition-transform duration-700 ease-out hover:scale-[1.03]${objectPosition ? ` ${objectPosition}` : ""}`}
           style={card.imageFocalPoint ? { objectPosition: card.imageFocalPoint } : undefined}

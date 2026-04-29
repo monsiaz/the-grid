@@ -99,7 +99,7 @@ function ServiceCard({
               src={card.image}
               alt={card.alt}
               fill
-              quality={100}
+              quality={85}
               sizes={sizes}
               className={`object-cover ${objectPosition} transition-transform duration-500 ease-out ${
                 needsMicroZoom ? "scale-[1.035] hover:scale-[1.06]" : "hover:scale-[1.03]"
