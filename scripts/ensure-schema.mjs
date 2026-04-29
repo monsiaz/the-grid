@@ -413,6 +413,51 @@ const STATEMENTS = [
   // to ALTER at cold-start (prevents lock contention and HTTP 500 on admin).
   `ALTER TABLE "services_page_case_studies" ADD COLUMN IF NOT EXISTS "image_focal_point" varchar;`,
 
+  // ────────────────── Image focal point controls (2026-04 migration) ───────────────
+  //
+  // Admin-wide focal point text fields added next to editable image fields. Payload
+  // includes these columns in SELECTs as soon as the fields exist in config, so the
+  // columns must be present before serverless functions query globals/collections.
+  `ALTER TABLE "news" ADD COLUMN IF NOT EXISTS "list_image_focal_point" varchar;`,
+  `ALTER TABLE "news" ADD COLUMN IF NOT EXISTS "hero_image_focal_point" varchar;`,
+  `ALTER TABLE "news_gallery_images" ADD COLUMN IF NOT EXISTS "image_focal_point" varchar;`,
+  `ALTER TABLE "news_blocks_image" ADD COLUMN IF NOT EXISTS "image_focal_point" varchar;`,
+  `ALTER TABLE "news_blocks_two_column" ADD COLUMN IF NOT EXISTS "image_focal_point" varchar;`,
+  `ALTER TABLE "news_blocks_gallery_images" ADD COLUMN IF NOT EXISTS "image_focal_point" varchar;`,
+
+  `ALTER TABLE "drivers" ADD COLUMN IF NOT EXISTS "image_focal_point" varchar;`,
+  `ALTER TABLE "drivers" ADD COLUMN IF NOT EXISTS "detail_profile_image_focal_point" varchar;`,
+  `ALTER TABLE "drivers" ADD COLUMN IF NOT EXISTS "detail_career_image_focal_point" varchar;`,
+  `ALTER TABLE "drivers" ADD COLUMN IF NOT EXISTS "detail_agency_image_focal_point" varchar;`,
+  `ALTER TABLE "drivers" ADD COLUMN IF NOT EXISTS "detail_gallery_left_focal_point" varchar;`,
+  `ALTER TABLE "drivers" ADD COLUMN IF NOT EXISTS "detail_gallery_center_focal_point" varchar;`,
+  `ALTER TABLE "drivers" ADD COLUMN IF NOT EXISTS "detail_gallery_right_focal_point" varchar;`,
+  `ALTER TABLE "drivers_detail_news" ADD COLUMN IF NOT EXISTS "image_focal_point" varchar;`,
+
+  `ALTER TABLE "team_members" ADD COLUMN IF NOT EXISTS "image_focal_point" varchar;`,
+
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "hero_background_image_focal_point" varchar;`,
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "about_background_image_focal_point" varchar;`,
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "services_background_image_focal_point" varchar;`,
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "drivers_background_image_focal_point" varchar;`,
+  `ALTER TABLE "homepage_homepage_news_items" ADD COLUMN IF NOT EXISTS "image_focal_point" varchar;`,
+
+  `ALTER TABLE "about_page" ADD COLUMN IF NOT EXISTS "hero_background_image_focal_point" varchar;`,
+  `ALTER TABLE "about_page" ADD COLUMN IF NOT EXISTS "accelere_banner_image_focal_point" varchar;`,
+  `ALTER TABLE "about_page" ADD COLUMN IF NOT EXISTS "accelere_portrait_image_focal_point" varchar;`,
+  `ALTER TABLE "about_page_core_areas" ADD COLUMN IF NOT EXISTS "image_focal_point" varchar;`,
+  `ALTER TABLE "about_page_instagram_images" ADD COLUMN IF NOT EXISTS "image_focal_point" varchar;`,
+
+  `ALTER TABLE "services_page" ADD COLUMN IF NOT EXISTS "hero_background_image_focal_point" varchar;`,
+  `ALTER TABLE "services_page" ADD COLUMN IF NOT EXISTS "value_intro_image_focal_point" varchar;`,
+  `ALTER TABLE "services_page" ADD COLUMN IF NOT EXISTS "partner_background_image_focal_point" varchar;`,
+  `ALTER TABLE "services_page" ADD COLUMN IF NOT EXISTS "talent_intro_image_focal_point" varchar;`,
+  `ALTER TABLE "services_page_value_cards" ADD COLUMN IF NOT EXISTS "image_focal_point" varchar;`,
+  `ALTER TABLE "services_page_talent_cards" ADD COLUMN IF NOT EXISTS "image_focal_point" varchar;`,
+
+  `ALTER TABLE "drivers_page" ADD COLUMN IF NOT EXISTS "hero_background_image_focal_point" varchar;`,
+  `ALTER TABLE "contact_page" ADD COLUMN IF NOT EXISTS "hero_background_image_focal_point" varchar;`,
+
   // ────────────────── Drivers: teamLogo field (2026-04 migration) ─────────────────────
   //
   // New `teamLogo` text field added via `logoField()` helper in Drivers collection.
