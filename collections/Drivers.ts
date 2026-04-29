@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { after } from "next/server";
+import { focalPointField } from "@/fields/focalPointField";
 import { imageField } from "@/fields/imageField";
 import { logoField } from "@/fields/logoField";
 import { getSiteUrl } from "@/lib/siteUrl";
@@ -96,6 +97,10 @@ export const Drivers: CollectionConfig = {
               label: "Grid card image",
               required: true,
               description: "Vignette pilote (grille /drivers/ et teaser homepage).",
+            }),
+            focalPointField({
+              name: "imageFocalPoint",
+              label: "Grid card image — cadrage",
             }),
             logoField({
               name: "teamLogo",
@@ -273,15 +278,27 @@ export const Drivers: CollectionConfig = {
                   description:
                     "Photo principale du bloc profil (page détail pilote). Si vide, la photo ‘Grid card image’ est utilisée — privilégiez un portrait haute résolution (≥ 1200 px de large) pour éviter l'effet flou.",
                 }),
+                focalPointField({
+                  name: "profileImageFocalPoint",
+                  label: "Profile image — cadrage",
+                }),
                 imageField({
                   name: "careerImage",
                   label: "Career image",
                   description: "Photo verticale au centre du bloc carrière. Si vide, le bloc image est masqué.",
                 }),
+                focalPointField({
+                  name: "careerImageFocalPoint",
+                  label: "Career image — cadrage",
+                }),
                 imageField({
                   name: "agencyImage",
                   label: "Agency image",
                   description: "Photo large du bloc agence. Si vide, le bloc image est masqué.",
+                }),
+                focalPointField({
+                  name: "agencyImageFocalPoint",
+                  label: "Agency image — cadrage",
                 }),
                 imageField({
                   name: "galleryLeft",
@@ -289,17 +306,29 @@ export const Drivers: CollectionConfig = {
                   description:
                     "Mini galerie d'en-tête, visuel gauche. Réservé Pierre Gasly & Isack Hadjar — la mini-galerie ne s'affiche que si au moins une des 3 images de galerie est renseignée.",
                 }),
+                focalPointField({
+                  name: "galleryLeftFocalPoint",
+                  label: "Gallery left — cadrage",
+                }),
                 imageField({
                   name: "galleryCenter",
                   label: "Gallery — center",
                   description:
                     "Mini galerie d'en-tête, visuel central (le plus visible). Réservé Pierre Gasly & Isack Hadjar.",
                 }),
+                focalPointField({
+                  name: "galleryCenterFocalPoint",
+                  label: "Gallery center — cadrage",
+                }),
                 imageField({
                   name: "galleryRight",
                   label: "Gallery — right",
                   description:
                     "Mini galerie d'en-tête, visuel droit. Réservé Pierre Gasly & Isack Hadjar.",
+                }),
+                focalPointField({
+                  name: "galleryRightFocalPoint",
+                  label: "Gallery right — cadrage",
                 }),
               ],
             },
@@ -336,6 +365,7 @@ export const Drivers: CollectionConfig = {
                   required: true,
                   description: "Vignette carrée de l'article lié (non cliquable).",
                 }),
+                focalPointField(),
               ],
             },
           ]

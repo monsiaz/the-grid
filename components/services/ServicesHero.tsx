@@ -8,6 +8,7 @@ type ServicesHeroProps = {
   title?: string | null;
   description?: string | null;
   backgroundImage?: string | null;
+  backgroundImageFocalPoint?: string | null;
   heroCta?: "large" | "slim";
   stickyHeader?: boolean;
   menuStyle?: "default" | "liquid";
@@ -36,6 +37,7 @@ export default function ServicesHero({
   title,
   description,
   backgroundImage,
+  backgroundImageFocalPoint,
   heroCta = "large",
   stickyHeader = false,
   menuStyle = "default",
@@ -53,6 +55,7 @@ export default function ServicesHero({
   return (
     <Hero
       backgroundImage={backgroundImage || "/assets/v2/services/hero.webp"}
+      backgroundObjectPosition={backgroundImageFocalPoint || undefined}
       minHeightClassName="min-h-[clamp(560px,90svh,800px)]"
       overlayClassName="bg-[linear-gradient(180deg,rgba(15,15,15,0.02)_0%,rgba(15,15,15,0.06)_60%,rgba(15,15,15,0.18)_100%)]"
       backdropAt="50% 55%"

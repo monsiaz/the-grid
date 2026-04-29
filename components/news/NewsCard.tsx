@@ -34,6 +34,7 @@ type NewsCardProps = {
   priority?: boolean;
   sizes?: string;
   imageClassName?: string;
+  imageFocalPoint?: string | null;
   /** Controls hover effect: zoom (default), lift (translateY), flat (none) */
   cardHoverStyle?: "zoom" | "lift" | "flat";
 };
@@ -61,6 +62,7 @@ export default function NewsCard({
   priority = false,
   sizes = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 320px",
   imageClassName,
+  imageFocalPoint,
   cardHoverStyle = "zoom",
 }: NewsCardProps) {
   const t = useTranslations("news.card");
@@ -91,6 +93,7 @@ export default function NewsCard({
             alt={title}
             fill
             className={`object-cover transition-transform duration-[600ms] ease-out ${cardHoverStyle === "zoom" ? "group-hover:scale-[1.06]" : ""} ${imageClassName ?? ""}`}
+            style={imageFocalPoint ? { objectPosition: imageFocalPoint } : undefined}
             sizes={sizes}
             priority={priority}
           />

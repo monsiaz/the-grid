@@ -48,6 +48,7 @@ export default async function ContactPage({
     hero: (
       <ContactHero
         backgroundImage={contactPage.heroBackgroundImage}
+        backgroundImageFocalPoint={contactPage.heroBackgroundImageFocalPoint || null}
         title={
           <>
             {t("hero.title")} <span className="text-muted">{t("hero.titleAccent")}</span>

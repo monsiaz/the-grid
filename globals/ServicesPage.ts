@@ -1,4 +1,5 @@
 import type { GlobalConfig } from "payload";
+import { focalPointField } from "@/fields/focalPointField";
 import { imageField } from "@/fields/imageField";
 import { createSectionOrderField } from "@/fields/sectionOrderField";
 import { getSiteUrl } from "@/lib/siteUrl";
@@ -65,6 +66,10 @@ export const ServicesPage: GlobalConfig = {
       defaultValue: "/assets/v2/services/hero.webp",
       description: "Image plein écran en haut de /services/.",
     }),
+    focalPointField({
+      name: "heroBackgroundImageFocalPoint",
+      label: "1. Hero — cadrage image",
+    }),
 
     // ─── 2. COMMERCIAL (Value) ──────────────────────────────────
     {
@@ -107,6 +112,10 @@ export const ServicesPage: GlobalConfig = {
       description:
         "Photo utilisée sur la première card de la grille Commercial. Laisser vide pour afficher l'intro en card texte.",
     }),
+    focalPointField({
+      name: "valueIntroImageFocalPoint",
+      label: "2. Commercial — Intro card cadrage",
+    }),
     {
       name: "valueCards",
       type: "array",
@@ -119,6 +128,7 @@ export const ServicesPage: GlobalConfig = {
           required: true,
           description: "Illustration de la card Commercial (flip card).",
         }),
+        focalPointField(),
         { name: "description", type: "textarea", localized: true },
       ],
     },
@@ -134,18 +144,7 @@ export const ServicesPage: GlobalConfig = {
           required: true,
           description: "Photo principale du case study.",
         }),
-        {
-          name: "imageFocalPoint",
-          type: "text",
-          defaultValue: "50% 50%",
-          admin: {
-            description:
-              "Cliquez sur l'aperçu pour choisir la zone à mettre en valeur dans le cadre 16/9.",
-            components: {
-              Field: "@/components/admin/FocalPointPicker",
-            },
-          },
-        },
+        focalPointField(),
         { name: "description", type: "textarea", localized: true },
         { name: "dimmed", type: "checkbox", defaultValue: false },
       ],
@@ -158,6 +157,10 @@ export const ServicesPage: GlobalConfig = {
       required: true,
       defaultValue: "/assets/v2/services/hintsa-partner-bg.webp",
       description: "Image plein largeur derrière la section Hintsa × The Grid.",
+    }),
+    focalPointField({
+      name: "partnerBackgroundImageFocalPoint",
+      label: "3. Hintsa — cadrage image",
     }),
     {
       name: "partnerHeading",
@@ -217,6 +220,10 @@ export const ServicesPage: GlobalConfig = {
       description:
         "Photo used on the first card of the Talent grid. Leave empty to display the intro as a plain text card.",
     }),
+    focalPointField({
+      name: "talentIntroImageFocalPoint",
+      label: "4. Talent — Intro card cadrage",
+    }),
     {
       name: "talentCards",
       type: "array",
@@ -229,6 +236,7 @@ export const ServicesPage: GlobalConfig = {
           required: true,
           description: "Illustration de la card Talent (flip card).",
         }),
+        focalPointField(),
         { name: "description", type: "textarea", localized: true },
       ],
     },

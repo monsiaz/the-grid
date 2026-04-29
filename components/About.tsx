@@ -15,6 +15,7 @@ type AboutProps = {
   text: string;
   buttonLabel?: string;
   backgroundImage?: string | null;
+  backgroundImageFocalPoint?: string | null;
   /** Image + gradient only (no pitch text / CTA). Used on the homepage strip with the F1 visual. */
   visualOnly?: boolean;
 };
@@ -74,6 +75,7 @@ export default function About({
   text,
   buttonLabel,
   backgroundImage,
+  backgroundImageFocalPoint,
   visualOnly = false,
 }: AboutProps) {
   const t = useTranslations("home");
@@ -92,7 +94,7 @@ export default function About({
         sizes="(max-width: 640px) 100vw, (max-width: 1200px) 100vw, (max-width: 1600px) 1600px, 1920px"
         quality={85}
         className="absolute inset-0 object-cover"
-        style={{ objectPosition: "38% 78%" }}
+        style={{ objectPosition: backgroundImageFocalPoint || "38% 78%" }}
         aria-hidden
       />
       <div className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(270deg,rgba(15,15,15,0.36)_0%,rgba(15,15,15,0.14)_55%,transparent_100%)]" />

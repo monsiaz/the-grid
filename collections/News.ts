@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { after } from "next/server";
+import { focalPointField } from "@/fields/focalPointField";
 import { imageField } from "@/fields/imageField";
 import { getSiteUrl } from "@/lib/siteUrl";
 import { hasLocalizedTextChange } from "@/lib/localizedChange";
@@ -86,6 +87,10 @@ export const News: CollectionConfig = {
       required: true,
       description: "Vignette affichée dans la grille /news/.",
     }),
+    focalPointField({
+      name: "listImageFocalPoint",
+      label: "List image — cadrage",
+    }),
     {
       name: "tag",
       type: "relationship",
@@ -135,6 +140,10 @@ export const News: CollectionConfig = {
       label: "Hero image",
       description: "Visuel principal en haut de l'article.",
     }),
+    focalPointField({
+      name: "heroImageFocalPoint",
+      label: "Hero image — cadrage",
+    }),
     {
       name: "introParagraphs",
       type: "textarea",
@@ -178,6 +187,7 @@ export const News: CollectionConfig = {
           required: true,
           description: "Photo affichée dans la galerie de l'article.",
         }),
+        focalPointField(),
       ],
     },
   ],

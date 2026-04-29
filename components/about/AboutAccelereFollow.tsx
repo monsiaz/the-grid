@@ -23,8 +23,9 @@ type AboutAccelereFollowProps = {
   quoteTitle?: string | null;
   instagramHandle?: string | null;
   instagramUrl?: string | null;
-  instagramImages: string[];
+  instagramImages: { image: string; imageFocalPoint?: string | null }[];
   portraitImage?: string | null;
+  portraitImageFocalPoint?: string | null;
 };
 
 export default function AboutAccelereFollow({
@@ -37,6 +38,7 @@ export default function AboutAccelereFollow({
   instagramUrl,
   instagramImages,
   portraitImage,
+  portraitImageFocalPoint,
 }: AboutAccelereFollowProps) {
   const t = useTranslations("about.follow");
   const gridOrder = [
@@ -86,6 +88,7 @@ export default function AboutAccelereFollow({
                 height={500}
                 sizes="(max-width: 900px) 100vw, 432px"
                 className="h-auto w-full object-cover"
+                style={portraitImageFocalPoint ? { objectPosition: portraitImageFocalPoint } : undefined}
               />
             </motion.div>
             <motion.div
@@ -147,9 +150,9 @@ export default function AboutAccelereFollow({
               whileInView="visible"
               viewport={viewport}
             >
-              {gridOrder.map((src, idx) => (
+              {gridOrder.map((item, idx) => (
                 <motion.div
-                  key={`${src}-${idx}`}
+                  key={`${item.image}-${idx}`}
                   variants={fadeUp}
                   transition={smoothTransition}
                   className="overflow-hidden"
@@ -159,13 +162,14 @@ export default function AboutAccelereFollow({
                     transition={{ duration: 0.4, ease: "easeOut" }}
                   >
                     <Image
-                      src={src}
+                      src={item.image}
                       alt={t("gridAlt")}
                       width={269}
                       height={360}
                       loading="lazy"
                       sizes="(max-width: 900px) 50vw, 20vw"
                       className="aspect-[269/360] h-auto w-full object-cover"
+                      style={item.imageFocalPoint ? { objectPosition: item.imageFocalPoint } : undefined}
                     />
                   </motion.div>
                 </motion.div>

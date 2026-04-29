@@ -15,6 +15,7 @@ import {
 type ServiceCard = {
   title: string;
   image: string;
+  imageFocalPoint?: string | null;
   alt: string;
   description?: string | null;
 };
@@ -26,6 +27,7 @@ type ServicesCardGridProps = {
   introText: string;
   /** Optional: when provided, the intro card becomes a flip card with image + title */
   introImage?: string | null;
+  introImageFocalPoint?: string | null;
   introTitle?: string | null;
   cards: ServiceCard[];
   servicesArrowStyle?: "default" | "slim";
@@ -70,7 +72,7 @@ function ServiceCard({
   const [flipped, setFlipped] = useState(false);
   const hasDescription = Boolean(card.description?.trim());
   const needsMicroZoom = /branding/i.test(card.title) || /branding/i.test(card.image);
-  const objectPosition = /private/i.test(card.title) || /private/i.test(card.image) ? "object-center" : "object-top";
+  const objectPosition = card.imageFocalPoint || (/private/i.test(card.title) || /private/i.test(card.image) ? "50% 50%" : "50% 0%");
   const isSlimArrow = servicesArrowStyle === "slim";
   const arrowWrapperClassName = isSlimArrow
     ? "ml-1.5 flex h-6 w-10 shrink-0 items-center justify-center rounded-full border border-accent/70 bg-transparent text-accent transition-colors duration-200 hover:bg-accent hover:text-primary"
@@ -101,9 +103,10 @@ function ServiceCard({
               fill
               quality={85}
               sizes={sizes}
-              className={`object-cover ${objectPosition} transition-transform duration-500 ease-out ${
+              className={`object-cover transition-transform duration-500 ease-out ${
                 needsMicroZoom ? "scale-[1.035] hover:scale-[1.06]" : "hover:scale-[1.03]"
               }`}
+              style={{ objectPosition }}
             />
           </div>
           {/* Footer: always fully visible, never clipped */}
@@ -161,6 +164,7 @@ export default function ServicesCardGrid({
   description,
   introText,
   introImage,
+  introImageFocalPoint,
   introTitle,
   cards,
   servicesArrowStyle = "default",
@@ -177,6 +181,7 @@ export default function ServicesCardGrid({
       ? {
           title: (introTitle || "").trim() || "PERFORMANCE",
           image: introImage,
+          imageFocalPoint: introImageFocalPoint ?? null,
           alt: (introTitle || "Performance").trim(),
           description: introText,
         }

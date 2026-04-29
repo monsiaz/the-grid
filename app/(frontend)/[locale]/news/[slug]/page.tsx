@@ -118,9 +118,13 @@ export default async function NewsDetailRoute({ params }: NewsDetailRouteProps) 
     title: newsDoc.title,
     date: newsDoc.date || "",
     heroImage: newsDoc.heroImage || newsDoc.listImage,
+    heroImageFocalPoint: newsDoc.heroImageFocalPoint || newsDoc.listImageFocalPoint || null,
     introParagraphs: newsDoc.introParagraphs?.split("\n") || [],
     bodyParagraphs: newsDoc.bodyParagraphs?.split("\n") || [],
-    galleryImages: newsDoc.galleryImages?.map((g: { image: string }) => g.image) || [],
+    galleryImages: newsDoc.galleryImages?.map((g: { image: string; imageFocalPoint?: string | null }) => ({
+      image: g.image,
+      imageFocalPoint: g.imageFocalPoint ?? null,
+    })) || [],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     contentBlocks: contentBlocks as any,
   };

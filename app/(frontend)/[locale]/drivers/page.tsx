@@ -48,6 +48,10 @@ function normalizeDriver(doc: unknown): DriverRowData | null {
   const name = candidate.name;
   const role = candidate.role;
   const image = candidate.image;
+  const imageFocalPoint =
+    typeof candidate.imageFocalPoint === "string" && candidate.imageFocalPoint.trim()
+      ? candidate.imageFocalPoint
+      : null;
   const instagramUrl = candidate.instagramUrl;
   const flags = candidate.flags;
   const teamLogo =
@@ -79,6 +83,7 @@ function normalizeDriver(doc: unknown): DriverRowData | null {
     name,
     role,
     image,
+    imageFocalPoint,
     flags,
     instagramUrl,
     teamLogo,
@@ -132,6 +137,7 @@ export default async function DriversPage({
         title={driversPage.heroTitle}
         description={driversPage.heroDescription}
         backgroundImage={driversPage.heroBackgroundImage}
+        backgroundImageFocalPoint={driversPage.heroBackgroundImageFocalPoint || null}
         heroCta={designSettings.heroCta}
         stickyHeader={designSettings.stickyHeader}
         menuStyle={designSettings.headerMenuStyle}

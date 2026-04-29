@@ -5,6 +5,7 @@ export type DriverCardData = {
   name: string;
   role: string;
   image: string;
+  imageFocalPoint?: string | null;
   flags: DriverCountryCode[];
   instagramUrl: string;
   teamLogo?: string | null;
@@ -15,6 +16,7 @@ export type DriverRelatedNews = {
   slug?: string | null;
   title: string;
   image: string;
+  imageFocalPoint?: string | null;
 };
 
 export type DriverStatCard = {
@@ -37,11 +39,17 @@ export type DriverDetailData = {
   grandPrixEntered: string;
   careerPodiums: string;
   profileImage?: string | null;
+  profileImageFocalPoint?: string | null;
   careerImage?: string | null;
+  careerImageFocalPoint?: string | null;
   agencyImage?: string | null;
+  agencyImageFocalPoint?: string | null;
   galleryLeft?: string | null;
+  galleryLeftFocalPoint?: string | null;
   galleryCenter?: string | null;
+  galleryCenterFocalPoint?: string | null;
   galleryRight?: string | null;
+  galleryRightFocalPoint?: string | null;
   relatedNews?: DriverRelatedNews[];
   statsCards?: DriverStatCard[];
 };

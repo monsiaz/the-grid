@@ -16,9 +16,10 @@ import {
 type ServicesPartnerProps = {
   description?: string | null;
   backgroundImage?: string | null;
+  backgroundImageFocalPoint?: string | null;
 };
 
-export default function ServicesPartner({ description, backgroundImage }: ServicesPartnerProps) {
+export default function ServicesPartner({ description, backgroundImage, backgroundImageFocalPoint }: ServicesPartnerProps) {
   const t = useTranslations("services.partner");
   const bg = backgroundImage || "/assets/v2/services/hintsa.webp";
   const sectionRef = useRef<HTMLElement>(null);
@@ -39,6 +40,7 @@ export default function ServicesPartner({ description, backgroundImage }: Servic
           sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1600px"
           quality={85}
           className="object-cover"
+          style={backgroundImageFocalPoint ? { objectPosition: backgroundImageFocalPoint } : undefined}
           aria-hidden
         />
       </motion.div>

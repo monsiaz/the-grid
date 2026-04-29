@@ -11,7 +11,7 @@ import {
 } from "../../motion";
 
 type NewsDetailGalleryProps = {
-  images: string[];
+  images: { image: string; imageFocalPoint?: string | null }[];
   title: string;
 };
 
@@ -25,9 +25,9 @@ export default function NewsDetailGallery({ images, title }: NewsDetailGalleryPr
       whileInView="visible"
       viewport={viewport}
     >
-      {images.map((image, index) => (
+      {images.map((item, index) => (
         <motion.div
-          key={`${image}-${index}`}
+          key={`${item.image}-${index}`}
           className="relative aspect-[321/380] w-full overflow-hidden"
           variants={fadeUp}
           transition={smoothTransition}
@@ -38,10 +38,11 @@ export default function NewsDetailGallery({ images, title }: NewsDetailGalleryPr
             transition={{ duration: 0.4, ease: "easeOut" }}
           >
             <SafeNewsImage
-              src={image}
+              src={item.image}
               alt={t("galleryImageAlt", { title, index: index + 1 })}
               fill
               className="object-cover"
+              style={item.imageFocalPoint ? { objectPosition: item.imageFocalPoint } : undefined}
               sizes="(max-width: 899px) 50vw, 20vw"
             />
           </motion.div>

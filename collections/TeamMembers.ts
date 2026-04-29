@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { after } from "next/server";
+import { focalPointField } from "@/fields/focalPointField";
 import { imageField } from "@/fields/imageField";
 import { revalidateAbout } from "@/lib/revalidate";
 import { getSiteUrl } from "@/lib/siteUrl";
@@ -46,6 +47,7 @@ export const TeamMembers: CollectionConfig = {
       required: true,
       description: "Photo de profil affichée sur la page À propos.",
     }),
+    focalPointField(),
     {
       name: "linkedinUrl",
       type: "text",

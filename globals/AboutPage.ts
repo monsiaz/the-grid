@@ -1,4 +1,5 @@
 import type { GlobalConfig } from "payload";
+import { focalPointField } from "@/fields/focalPointField";
 import { imageField } from "@/fields/imageField";
 import { createSectionOrderField } from "@/fields/sectionOrderField";
 import { getSiteUrl } from "@/lib/siteUrl";
@@ -54,6 +55,10 @@ export const AboutPage: GlobalConfig = {
       defaultValue: "/images/about/hero.webp",
       description: "Visible plein écran au top de la page À propos.",
     }),
+    focalPointField({
+      name: "heroBackgroundImageFocalPoint",
+      label: "Hero background image — cadrage",
+    }),
     {
       name: "coreIntroText",
       type: "textarea",
@@ -106,6 +111,7 @@ export const AboutPage: GlobalConfig = {
           description:
             "Photo de la carte (même recadrage que le site). Remplacez ici l’image affichée en public pour ce pilier.",
         }),
+        focalPointField(),
       ],
     },
     {
@@ -137,6 +143,10 @@ export const AboutPage: GlobalConfig = {
       defaultValue: "/assets/v2/about/accelere.webp",
       description: "Bannière pleine largeur avec le logo ACCÉLÈRE et les F3.",
     }),
+    focalPointField({
+      name: "accelereBannerImageFocalPoint",
+      label: "ACCÉLÈRE banner — cadrage",
+    }),
     {
       name: "accelereDescription",
       type: "textarea",
@@ -149,6 +159,10 @@ export const AboutPage: GlobalConfig = {
       required: true,
       defaultValue: "/assets/v2/about/accelere-portrait.webp",
       description: "Portrait affiché à gauche de la citation (ex : Pierre Gasly).",
+    }),
+    focalPointField({
+      name: "accelerePortraitImageFocalPoint",
+      label: "ACCÉLÈRE portrait — cadrage",
     }),
     {
       name: "accelereQuote",
@@ -192,6 +206,7 @@ export const AboutPage: GlobalConfig = {
           required: true,
           description: "Vignette du carrousel Instagram.",
         }),
+        focalPointField(),
       ],
     },
   ],

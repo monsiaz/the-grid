@@ -41,6 +41,7 @@ export type NewsCardData = {
   slug: string;
   title: string;
   image: string;
+  imageFocalPoint?: string | null;
   excerpt?: string | null;
   tag?: { label: string; accent?: boolean } | null;
   tagSlug?: string | null;
@@ -97,6 +98,7 @@ export default async function NewsPage({
       slug: string;
       title: string;
       listImage: string;
+      listImageFocalPoint?: string | null;
       excerpt?: string | null;
       introParagraphs?: string | null;
       category?: string | null;
@@ -126,6 +128,7 @@ export default async function NewsPage({
       slug: raw.slug,
       title: raw.title,
       image: raw.listImage,
+      imageFocalPoint: raw.listImageFocalPoint ?? null,
       excerpt: excerpt || null,
       tagSlug: resolved?.slug || null,
       tag: resolved

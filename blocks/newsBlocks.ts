@@ -1,4 +1,5 @@
 import type { Block } from "payload";
+import { focalPointField } from "@/fields/focalPointField";
 import { imageField } from "@/fields/imageField";
 
 /**
@@ -88,6 +89,7 @@ export const ImageBlock: Block = {
       required: true,
       description: "Visuel large au milieu de l'article.",
     }),
+    focalPointField(),
     {
       name: "caption",
       type: "text",
@@ -144,6 +146,7 @@ export const TwoColumnBlock: Block = {
       },
     },
     imageField({ name: "image", label: "Image", required: true }),
+    focalPointField(),
     {
       name: "text",
       type: "textarea",
@@ -191,6 +194,7 @@ export const GalleryBlock: Block = {
       minRows: 2,
       fields: [
         imageField({ name: "image", label: "Image", required: true }),
+        focalPointField(),
         {
           name: "alt",
           type: "text",

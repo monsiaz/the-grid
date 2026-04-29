@@ -1,4 +1,5 @@
 import type { GlobalConfig } from "payload";
+import { focalPointField } from "@/fields/focalPointField";
 import { imageField } from "@/fields/imageField";
 import { createSectionOrderField } from "@/fields/sectionOrderField";
 import { getSiteUrl } from "@/lib/siteUrl";
@@ -48,6 +49,10 @@ export const ContactPage: GlobalConfig = {
       label: "Hero background image",
       defaultValue: "/images/contact/hero.webp",
       description: "Image plein écran en haut de /contact/.",
+    }),
+    focalPointField({
+      name: "heroBackgroundImageFocalPoint",
+      label: "Hero background image — cadrage",
     }),
   ],
   hooks: {

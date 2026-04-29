@@ -23,6 +23,7 @@ export default function DriverDetailHero({ driver }: DriverDetailHeroProps) {
         fill
         priority
         className="object-cover object-top"
+        style={driver.imageFocalPoint ? { objectPosition: driver.imageFocalPoint } : undefined}
         sizes="100vw"
       />
 

@@ -1,4 +1,5 @@
 import type { GlobalConfig } from "payload";
+import { focalPointField } from "@/fields/focalPointField";
 import { imageField } from "@/fields/imageField";
 import { createSectionOrderField } from "@/fields/sectionOrderField";
 import { getSiteUrl } from "@/lib/siteUrl";
@@ -49,6 +50,10 @@ export const DriversPage: GlobalConfig = {
       label: "Hero background image",
       defaultValue: "/images/drivers/hero.webp",
       description: "Image plein écran au top de /drivers/.",
+    }),
+    focalPointField({
+      name: "heroBackgroundImageFocalPoint",
+      label: "Hero background image — cadrage",
     }),
   ],
   hooks: {

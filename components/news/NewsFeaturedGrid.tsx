@@ -7,6 +7,7 @@ type NewsCardData = {
   slug: string;
   title: string;
   image: string;
+  imageFocalPoint?: string | null;
   excerpt?: string | null;
   tag?: { label: string; accent?: boolean } | null;
 };
@@ -77,6 +78,7 @@ export default function NewsFeaturedGrid({
               href={`/news/${card.slug}`}
               title={card.title}
               image={card.image}
+              imageFocalPoint={card.imageFocalPoint}
               excerpt={card.excerpt}
               tag={card.tag}
               cardClassName={`${isFirst || isTopRowSideCard ? "h-[420px]" : "h-[360px]"} ${smSpan} ${lgSpan}`}
@@ -106,6 +108,7 @@ export default function NewsFeaturedGrid({
             href={`/news/${hero.slug}`}
             title={hero.title}
             image={hero.image}
+            imageFocalPoint={hero.imageFocalPoint}
             excerpt={hero.excerpt}
             tag={hero.tag}
             cardClassName="min-[1280px]:col-span-7 min-[1280px]:row-span-3"
@@ -119,6 +122,7 @@ export default function NewsFeaturedGrid({
             href={`/news/${secondary.slug}`}
             title={secondary.title}
             image={secondary.image}
+            imageFocalPoint={secondary.imageFocalPoint}
             excerpt={secondary.excerpt}
             tag={secondary.tag}
             cardClassName="min-[1280px]:col-span-5 min-[1280px]:row-span-2"
@@ -131,6 +135,7 @@ export default function NewsFeaturedGrid({
             href={`/news/${tertiary.slug}`}
             title={tertiary.title}
             image={tertiary.image}
+            imageFocalPoint={tertiary.imageFocalPoint}
             tag={tertiary.tag}
             cardClassName="min-[1280px]:col-span-2"
             sizes="(max-width: 1280px) 100vw, 240px"
@@ -140,6 +145,7 @@ export default function NewsFeaturedGrid({
             href={`/news/${quaternary.slug}`}
             title={quaternary.title}
             image={quaternary.image}
+            imageFocalPoint={quaternary.imageFocalPoint}
             tag={quaternary.tag}
             cardClassName="min-[1280px]:col-span-3"
             sizes="(max-width: 1280px) 100vw, 320px"
@@ -159,6 +165,7 @@ export default function NewsFeaturedGrid({
               href={`/news/${card.slug}`}
               title={card.title}
               image={card.image}
+              imageFocalPoint={card.imageFocalPoint}
               excerpt={card.excerpt}
               tag={card.tag}
               cardClassName={idx === 0 ? "h-[420px] sm:col-span-2" : "h-[360px]"}
@@ -189,6 +196,7 @@ export default function NewsFeaturedGrid({
           href={`/news/${hero.slug}`}
           title={hero.title}
           image={hero.image}
+          imageFocalPoint={hero.imageFocalPoint}
           excerpt={hero.excerpt}
           tag={hero.tag}
           cardClassName="min-[1280px]:col-span-8 min-[1280px]:row-span-2"
@@ -203,6 +211,7 @@ export default function NewsFeaturedGrid({
           href={`/news/${secondaryTop.slug}`}
           title={secondaryTop.title}
           image={secondaryTop.image}
+          imageFocalPoint={secondaryTop.imageFocalPoint}
           excerpt={secondaryTop.excerpt}
           tag={secondaryTop.tag}
           cardClassName="min-[1280px]:col-span-4"
@@ -216,6 +225,7 @@ export default function NewsFeaturedGrid({
           href={`/news/${secondaryBottom.slug}`}
           title={secondaryBottom.title}
           image={secondaryBottom.image}
+          imageFocalPoint={secondaryBottom.imageFocalPoint}
           excerpt={secondaryBottom.excerpt}
           tag={secondaryBottom.tag}
           cardClassName="min-[1280px]:col-span-4"
@@ -229,6 +239,7 @@ export default function NewsFeaturedGrid({
           href={`/news/${third.slug}`}
           title={third.title}
           image={third.image}
+          imageFocalPoint={third.imageFocalPoint}
           tag={third.tag}
           cardClassName="min-[1280px]:col-span-4"
           sizes="(max-width: 1280px) 100vw, 360px"
@@ -239,6 +250,7 @@ export default function NewsFeaturedGrid({
           href={`/news/${fourth.slug}`}
           title={fourth.title}
           image={fourth.image}
+          imageFocalPoint={fourth.imageFocalPoint}
           tag={fourth.tag}
           cardClassName="min-[1280px]:col-span-4"
           sizes="(max-width: 1280px) 100vw, 360px"
@@ -249,6 +261,7 @@ export default function NewsFeaturedGrid({
           href={`/news/${fifth.slug}`}
           title={fifth.title}
           image={fifth.image}
+          imageFocalPoint={fifth.imageFocalPoint}
           tag={fifth.tag}
           cardClassName="min-[1280px]:col-span-4"
           sizes="(max-width: 1280px) 100vw, 360px"
@@ -268,6 +281,7 @@ export default function NewsFeaturedGrid({
             href={`/news/${card.slug}`}
             title={card.title}
             image={card.image}
+            imageFocalPoint={card.imageFocalPoint}
             excerpt={card.excerpt}
             tag={card.tag}
             cardClassName={idx === 0 ? "h-[420px] sm:col-span-2" : "h-[360px]"}

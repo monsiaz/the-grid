@@ -39,6 +39,7 @@ type ImageBlockData = {
   blockType: "image";
   id?: string | null;
   image: string;
+  imageFocalPoint?: string | null;
   caption?: string | null;
   ratio?: "21:9" | "16:9" | "4:3" | "3:2" | "1:1" | "4:5" | null;
   rounded?: boolean | null;
@@ -49,6 +50,7 @@ type TwoColumnBlockData = {
   id?: string | null;
   layout?: "text-image" | "image-text" | null;
   image: string;
+  imageFocalPoint?: string | null;
   text: string;
   caption?: string | null;
 };
@@ -57,7 +59,7 @@ type GalleryBlockData = {
   blockType: "gallery";
   id?: string | null;
   columns?: "2" | "3" | "4" | "5" | null;
-  images: { image: string; alt?: string | null }[];
+  images: { image: string; imageFocalPoint?: string | null; alt?: string | null }[];
 };
 
 type StatsBlockData = {
@@ -246,6 +248,7 @@ function ImageRenderer({ block, title }: { block: ImageBlockData; title: string 
           alt={block.caption || title}
           fill
           className="object-cover"
+          style={block.imageFocalPoint ? { objectPosition: block.imageFocalPoint } : undefined}
           sizes="(max-width: 1344px) 100vw, 1344px"
         />
       </div>
@@ -275,6 +278,7 @@ function TwoColumnRenderer({ block, title }: { block: TwoColumnBlockData; title:
           alt={block.caption || title}
           fill
           className="object-cover"
+          style={block.imageFocalPoint ? { objectPosition: block.imageFocalPoint } : undefined}
           sizes="(max-width: 900px) 100vw, 50vw"
         />
       </div>
@@ -349,6 +353,7 @@ function GalleryRenderer({ block, title }: { block: GalleryBlockData; title: str
               alt={item.alt || `${title} — ${i + 1}`}
               fill
               className="object-cover"
+              style={item.imageFocalPoint ? { objectPosition: item.imageFocalPoint } : undefined}
               sizes="(max-width: 899px) 50vw, 20vw"
             />
           </motion.div>

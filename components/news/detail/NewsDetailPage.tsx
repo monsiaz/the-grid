@@ -15,9 +15,10 @@ type NewsDetailData = {
   title: string;
   date: string;
   heroImage: string;
+  heroImageFocalPoint?: string | null;
   introParagraphs: string[];
   bodyParagraphs: string[];
-  galleryImages: string[];
+  galleryImages: { image: string; imageFocalPoint?: string | null }[];
   /** Modular content blocks (Payload `blocks` field). Takes precedence over
    *  bodyParagraphs + galleryImages when populated. */
   contentBlocks: NewsBlock[];

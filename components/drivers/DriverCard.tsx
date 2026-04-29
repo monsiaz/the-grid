@@ -24,6 +24,7 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
           alt={driver.name}
           fill
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
+          style={driver.imageFocalPoint ? { objectPosition: driver.imageFocalPoint } : undefined}
           sizes="(max-width: 700px) 100vw, (max-width: 1200px) 50vw, (max-width: 1440px) 33vw, 336px"
         />
       </div>

@@ -10,8 +10,9 @@ type ServicesValueProps = {
   introTitle?: string | null;
   introText?: string | null;
   introImage?: string | null;
+  introImageFocalPoint?: string | null;
   servicesArrowStyle?: "default" | "slim";
-  cards: { title: string; image: string; alt: string; description?: string | null }[];
+  cards: { title: string; image: string; imageFocalPoint?: string | null; alt: string; description?: string | null }[];
 };
 export default function ServicesValue({
   heading,
@@ -20,6 +21,7 @@ export default function ServicesValue({
   introTitle,
   introText,
   introImage,
+  introImageFocalPoint,
   servicesArrowStyle = "default",
   cards,
 }: ServicesValueProps) {
@@ -49,6 +51,7 @@ export default function ServicesValue({
           introTitle={introTitle || null}
           introText={introText || ""}
           introImage={introImage || null}
+          introImageFocalPoint={introImageFocalPoint || null}
           cards={cards}
           servicesArrowStyle={servicesArrowStyle}
           gridClassName="px-[clamp(16px,3vw,40px)] min-[600px]:grid-cols-2 min-[900px]:grid-cols-3 min-[1200px]:grid-cols-5"

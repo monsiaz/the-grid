@@ -31,14 +31,17 @@ function resolveLabel(value: string | Record<string, string> | undefined, fallba
 export default function FocalPointPicker({ path, field }: FocalPointPickerProps) {
   const { value, setValue } = useField<string>({ path });
 
-  // Derive the sibling `image` field path:
-  // "caseStudies.0.imageFocalPoint" → "caseStudies.0.image"
-  const imagePath = path.replace(/\.[^.]+$/, ".image");
+  // Derive the sibling image field path:
+  // "caseStudies.0.imageFocalPoint" -> "caseStudies.0.image"
+  // "heroBackgroundImageFocalPoint" -> "heroBackgroundImage"
+  const imagePath = path.endsWith("FocalPoint")
+    ? path.slice(0, -"FocalPoint".length)
+    : path.replace(/\.[^.]+$/, ".image");
 
   // Read the sibling image URL from the form state
   const imageUrl = useFormFields(
     ([fields]) => {
-      const direct = fields[imagePath]?.value;
+      const direct = imagePath !== path ? fields[imagePath]?.value : undefined;
       if (typeof direct === "string" && direct.trim()) return direct;
 
       // Payload array rows can occasionally expose nested field paths with

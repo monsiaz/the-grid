@@ -1,4 +1,5 @@
 import type { GlobalConfig } from "payload";
+import { focalPointField } from "@/fields/focalPointField";
 import { imageField } from "@/fields/imageField";
 import { createSectionOrderField } from "@/fields/sectionOrderField";
 import { getSiteUrl } from "@/lib/siteUrl";
@@ -51,6 +52,10 @@ export const Homepage: GlobalConfig = {
       required: true,
       defaultValue: "/images/hero.webp",
       description: "Photo plein écran en haut de la home. Visible en arrière-plan du titre. Valeur par défaut : /images/hero.webp",
+    }),
+    focalPointField({
+      name: "heroBackgroundImageFocalPoint",
+      label: "Hero — cadrage image de fond",
     }),
     {
       type: "group",
@@ -365,6 +370,10 @@ export const Homepage: GlobalConfig = {
       description:
         "Bandeau sous le hero : visuel F1 + gradient (sans texte sur la home). Valeur par défaut : /assets/v2/home/services.webp",
     }),
+    focalPointField({
+      name: "aboutBackgroundImageFocalPoint",
+      label: "About strip — cadrage image",
+    }),
     {
       name: "aboutText",
       type: "textarea",
@@ -406,6 +415,10 @@ export const Homepage: GlobalConfig = {
       description:
         "Photo plein bloc derrière Sport management / Image & media / Commercial development. Valeur par défaut : /assets/v2/home/about.webp",
     }),
+    focalPointField({
+      name: "servicesBackgroundImageFocalPoint",
+      label: "Services section — cadrage image",
+    }),
     {
       name: "serviceLabels",
       type: "array",
@@ -433,6 +446,10 @@ export const Homepage: GlobalConfig = {
       required: true,
       defaultValue: "/images/drivers.webp",
       description: "Image plein largeur derrière le CTA « For deserving drivers ». Valeur par défaut : /images/drivers.webp",
+    }),
+    focalPointField({
+      name: "driversBackgroundImageFocalPoint",
+      label: "Drivers section — cadrage image",
     }),
     {
       name: "driversHeading",
@@ -492,6 +509,7 @@ export const Homepage: GlobalConfig = {
           required: true,
           description: "Vignette visible dans le carrousel d'actualités de la home.",
         }),
+        focalPointField(),
       ],
     },
   ],

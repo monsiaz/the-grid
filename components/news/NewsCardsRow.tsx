@@ -7,6 +7,7 @@ type NewsCardData = {
   slug: string;
   title: string;
   image: string;
+  imageFocalPoint?: string | null;
   excerpt?: string | null;
   tag?: { label: string; accent?: boolean } | null;
 };
@@ -40,6 +41,7 @@ export default function NewsCardsRow({
           href={`/news/${card.slug}`}
           title={card.title}
           image={card.image}
+          imageFocalPoint={card.imageFocalPoint}
           excerpt={card.excerpt}
           tag={card.tag}
           cardClassName={

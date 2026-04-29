@@ -49,6 +49,7 @@ export default function DriverDetailAgency({ detail }: DriverDetailAgencyProps) 
               alt={t("imageAlt")}
               fill
               className="object-cover"
+              style={detail.agencyImageFocalPoint ? { objectPosition: detail.agencyImageFocalPoint } : undefined}
               sizes="(max-width: 1200px) 100vw, 888px"
             />
           </motion.div>

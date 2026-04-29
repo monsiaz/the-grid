@@ -101,6 +101,7 @@ export default function DriverDetailCareer({ detail }: DriverDetailCareerProps) 
             alt={t("imageAlt")}
             fill
             className="rounded-[28px] object-cover"
+            style={detail.careerImageFocalPoint ? { objectPosition: detail.careerImageFocalPoint } : undefined}
             sizes="(max-width: 1200px) 100vw, 33vw"
           />
         </motion.div>

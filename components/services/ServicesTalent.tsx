@@ -10,8 +10,9 @@ type ServicesTalentProps = {
   introTitle?: string | null;
   introText?: string | null;
   introImage?: string | null;
+  introImageFocalPoint?: string | null;
   servicesArrowStyle?: "default" | "slim";
-  cards: { title: string; image: string; alt: string; description?: string | null }[];
+  cards: { title: string; image: string; imageFocalPoint?: string | null; alt: string; description?: string | null }[];
 };
 
 export default function ServicesTalent({
@@ -21,6 +22,7 @@ export default function ServicesTalent({
   introTitle,
   introText,
   introImage,
+  introImageFocalPoint,
   servicesArrowStyle = "default",
   cards,
 }: ServicesTalentProps) {
@@ -38,6 +40,7 @@ export default function ServicesTalent({
       description={description || ""}
       introText={introText || ""}
       introImage={introImage}
+      introImageFocalPoint={introImageFocalPoint || null}
       introTitle={introTitle}
       servicesArrowStyle={servicesArrowStyle}
       cards={cards}

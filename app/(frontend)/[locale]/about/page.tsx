@@ -70,6 +70,7 @@ export default async function AboutPage({
         title={aboutPage.heroTitle}
         description={aboutPage.heroDescription}
         backgroundImage={aboutPage.heroBackgroundImage}
+        backgroundImageFocalPoint={aboutPage.heroBackgroundImageFocalPoint || null}
         heroCta={designSettings.heroCta}
         stickyHeader={designSettings.stickyHeader}
         menuStyle={designSettings.headerMenuStyle}
@@ -93,12 +94,18 @@ export default async function AboutPage({
           name: m.name,
           role: m.role,
           image: m.image,
+          imageFocalPoint: (m as { imageFocalPoint?: string | null }).imageFocalPoint ?? null,
           bio: (m as { bio?: string | null }).bio ?? null,
           linkedinUrl: (m as { linkedinUrl?: string | null }).linkedinUrl ?? null,
         }))}
       />
     ),
-    accelereBanner: <AboutAccelereBanner bannerImage={aboutPage.accelereBannerImage} />,
+    accelereBanner: (
+      <AboutAccelereBanner
+        bannerImage={aboutPage.accelereBannerImage}
+        bannerImageFocalPoint={aboutPage.accelereBannerImageFocalPoint || null}
+      />
+    ),
     accelereFollow: (
       <AboutAccelereFollow
         description={aboutPage.accelereDescription}
@@ -108,8 +115,12 @@ export default async function AboutPage({
         quoteTitle={aboutPage.accelereQuoteTitle}
         instagramHandle={aboutPage.instagramHandle}
         instagramUrl={aboutInstagramUrl}
-        instagramImages={aboutPage.instagramImages?.map((i: { image: string }) => i.image) || []}
+        instagramImages={aboutPage.instagramImages?.map((i: { image: string; imageFocalPoint?: string | null }) => ({
+          image: i.image,
+          imageFocalPoint: i.imageFocalPoint ?? null,
+        })) || []}
         portraitImage={aboutPage.accelerePortraitImage}
+        portraitImageFocalPoint={aboutPage.accelerePortraitImageFocalPoint || null}
       />
     ),
   } as const;

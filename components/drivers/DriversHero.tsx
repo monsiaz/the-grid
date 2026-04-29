@@ -8,6 +8,7 @@ type DriversHeroProps = {
   title?: string | null;
   description?: string | null;
   backgroundImage?: string | null;
+  backgroundImageFocalPoint?: string | null;
   heroCta?: "large" | "slim";
   stickyHeader?: boolean;
   menuStyle?: "default" | "liquid";
@@ -19,6 +20,7 @@ type DriversHeroProps = {
 export default function DriversHero({
   description,
   backgroundImage,
+  backgroundImageFocalPoint,
   heroCta = "large",
   stickyHeader = false,
   menuStyle = "default",
@@ -33,6 +35,7 @@ export default function DriversHero({
   return (
     <Hero
       backgroundImage={backgroundImage || "/assets/v2/drivers/hero-collage.webp"}
+      backgroundObjectPosition={backgroundImageFocalPoint || undefined}
       title={
         <>
           {t("titleFor")} <span className="text-muted">{t("titleDeserving")}</span> {t("titleDrivers")}

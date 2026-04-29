@@ -4,6 +4,7 @@ import ContactFormsGrid from "@/components/contact/ContactFormsGrid";
 
 type ContactHeroProps = {
   backgroundImage: string;
+  backgroundImageFocalPoint?: string | null;
   title: React.ReactNode;
   firstNameLabel: string;
   lastNameLabel: string;
@@ -32,6 +33,7 @@ type ContactHeroProps = {
  */
 export default function ContactHero({
   backgroundImage,
+  backgroundImageFocalPoint,
   title,
   firstNameLabel,
   lastNameLabel,
@@ -49,6 +51,7 @@ export default function ContactHero({
   return (
     <Hero
       backgroundImage={backgroundImage}
+      backgroundObjectPosition={backgroundImageFocalPoint || undefined}
       centerContentVertically={false}
       minHeightClassName="min-h-[clamp(720px,100svh,1040px)]"
       /*

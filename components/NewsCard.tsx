@@ -9,6 +9,7 @@ type NewsItem = {
   title: string;
   excerpt: string;
   image: string;
+  imageFocalPoint?: string | null;
 };
 
 export default function NewsCard({ item, href }: { item: NewsItem; href: string }) {
@@ -37,6 +38,7 @@ export default function NewsCard({ item, href }: { item: NewsItem; href: string 
                 fill
                 sizes="(max-width: 900px) 78vw, 300px"
                 className="object-cover"
+                style={item.imageFocalPoint ? { objectPosition: item.imageFocalPoint } : undefined}
               />
             </motion.div>
           </div>

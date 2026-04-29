@@ -20,6 +20,7 @@ type CoreArea = {
   title: string;
   text: string;
   image: string;
+  imageFocalPoint?: string | null;
   priority?: boolean;
 };
 
@@ -27,6 +28,7 @@ type TeamMember = {
   name: string;
   role: string;
   image: string;
+  imageFocalPoint?: string | null;
   bio?: string | null;
   linkedinUrl?: string | null;
 };
@@ -102,6 +104,7 @@ function CoreAreaCard({ area, priority }: { area: CoreArea; priority?: boolean }
             height={628}
             sizes="(max-width: 700px) 100vw, (max-width: 1200px) 50vw, 400px"
             className="aspect-square w-full object-cover object-[center_15%]"
+            style={area.imageFocalPoint ? { objectPosition: area.imageFocalPoint } : undefined}
             priority={priority}
           />
         </motion.div>
@@ -232,6 +235,7 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
               height={628}
               sizes="(max-width: 700px) 100vw, (max-width: 980px) 50vw, (max-width: 1200px) 33vw, 300px"
               className="aspect-square w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+              style={member.imageFocalPoint ? { objectPosition: member.imageFocalPoint } : undefined}
             />
           </div>
           <div className="flex flex-1 flex-col justify-between gap-3 p-6">

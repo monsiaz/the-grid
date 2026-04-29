@@ -18,9 +18,10 @@ import {
 type ServicesProps = {
   labels: string[];
   backgroundImage?: string | null;
+  backgroundImageFocalPoint?: string | null;
 };
 
-export default function Services({ labels, backgroundImage }: ServicesProps) {
+export default function Services({ labels, backgroundImage, backgroundImageFocalPoint }: ServicesProps) {
   const t = useTranslations("home.services");
   const bg = backgroundImage || "/assets/v2/home/about.webp";
   const sectionRef = useRef<HTMLElement>(null);
@@ -52,6 +53,7 @@ export default function Services({ labels, backgroundImage }: ServicesProps) {
           quality={85}
           /* Center horizontally and vertically so the whole scene stays visible */
           className="object-cover object-[62%_28%] min-[640px]:object-center"
+          style={backgroundImageFocalPoint ? { objectPosition: backgroundImageFocalPoint } : undefined}
           aria-hidden
         />
       </motion.div>

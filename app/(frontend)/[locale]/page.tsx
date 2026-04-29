@@ -89,6 +89,7 @@ export default async function Home({
     hero: (
       <Hero
         backgroundImage={homepage.heroBackgroundImage}
+        backgroundObjectPosition={homepage.heroBackgroundImageFocalPoint || undefined}
         title={renderHeroTitle(homepage.heroTitle)}
         centerContentVertically={false}
         minHeightClassName="min-h-[clamp(440px,78svh,600px)]"
@@ -112,6 +113,7 @@ export default async function Home({
         text={homepage.aboutText}
         buttonLabel={homepage.aboutButtonLabel || undefined}
         backgroundImage={homepage.aboutBackgroundImage}
+        backgroundImageFocalPoint={homepage.aboutBackgroundImageFocalPoint || null}
       />
     ),
     experience: <Experience text={homepage.experienceText} />,
@@ -119,6 +121,7 @@ export default async function Home({
       <Services
         labels={homepage.serviceLabels?.map((s: { label: string }) => s.label) || []}
         backgroundImage={homepage.servicesBackgroundImage}
+        backgroundImageFocalPoint={homepage.servicesBackgroundImageFocalPoint || null}
       />
     ),
     news: <News items={homepage.homepageNewsItems || []} />,
@@ -127,6 +130,7 @@ export default async function Home({
         heading={homepage.driversHeading || undefined}
         headingAccent={homepage.driversHeadingAccent || undefined}
         backgroundImage={homepage.driversBackgroundImage}
+        backgroundImageFocalPoint={homepage.driversBackgroundImageFocalPoint || null}
       />
     ),
   } as const;

@@ -52,6 +52,7 @@ function RelatedNewsShowcaseCard({
           alt={item.title}
           fill
           className={`object-cover transition-transform duration-[700ms] ease-out group-hover:scale-[1.05] ${featured ? "object-[center_26%]" : "object-[center_22%]"}`}
+          style={item.imageFocalPoint ? { objectPosition: item.imageFocalPoint } : undefined}
           sizes={featured ? "(max-width: 900px) 100vw, 760px" : "(max-width: 900px) 100vw, 420px"}
           priority={featured}
           loading={featured ? "eager" : "lazy"}
@@ -278,6 +279,7 @@ export default function DriverDetailTop({ driver, detail }: DriverDetailTopProps
                     alt={t("gallery.left")}
                     fill
                     className="object-cover"
+                    style={detail.galleryLeftFocalPoint ? { objectPosition: detail.galleryLeftFocalPoint } : undefined}
                     sizes="90px"
                   />
                 ) : null}
@@ -293,6 +295,7 @@ export default function DriverDetailTop({ driver, detail }: DriverDetailTopProps
                     alt={t("gallery.center")}
                     fill
                     className="object-cover"
+                    style={detail.galleryCenterFocalPoint ? { objectPosition: detail.galleryCenterFocalPoint } : undefined}
                     sizes="(max-width: 700px) 100vw, 420px"
                   />
                 </motion.div>
@@ -304,6 +307,7 @@ export default function DriverDetailTop({ driver, detail }: DriverDetailTopProps
                     alt={t("gallery.right")}
                     fill
                     className="object-cover"
+                    style={detail.galleryRightFocalPoint ? { objectPosition: detail.galleryRightFocalPoint } : undefined}
                     sizes="90px"
                   />
                 ) : null}

@@ -10,9 +10,10 @@ const COME_LOGO = "/assets/come-logo-white.png";
 
 type AboutAccelereBannerProps = {
   bannerImage?: string | null;
+  bannerImageFocalPoint?: string | null;
 };
 
-export default function AboutAccelereBanner({ bannerImage }: AboutAccelereBannerProps = {}) {
+export default function AboutAccelereBanner({ bannerImage, bannerImageFocalPoint }: AboutAccelereBannerProps = {}) {
   const t = useTranslations("about.accelere");
   const bg = bannerImage || "/assets/accelere-bg.jpg";
   const sectionRef = useRef<HTMLElement>(null);
@@ -41,6 +42,7 @@ export default function AboutAccelereBanner({ bannerImage }: AboutAccelereBanner
           sizes="100vw"
           priority
           className="object-cover object-center"
+          style={bannerImageFocalPoint ? { objectPosition: bannerImageFocalPoint } : undefined}
         />
       </motion.div>
 

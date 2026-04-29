@@ -17,6 +17,7 @@ type NewsItem = {
   title: string;
   excerpt: string;
   image: string;
+  imageFocalPoint?: string | null;
 };
 
 type NewsProps = {
@@ -101,6 +102,7 @@ export default function News({ items }: NewsProps) {
                 title: item.title,
                 excerpt: item.excerpt,
                 image: item.image,
+                imageFocalPoint: item.imageFocalPoint,
               }}
               href={`/news/${item.newsSlug}`}
             />

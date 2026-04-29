@@ -9,6 +9,7 @@ type NewsDetailData = {
   title: string;
   date: string;
   heroImage: string;
+  heroImageFocalPoint?: string | null;
   introParagraphs: string[];
 };
 import {
@@ -38,7 +39,14 @@ export default function NewsDetailTop({ detail }: NewsDetailTopProps) {
           whileHover={{ scale: 1.04 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <SafeNewsImage src={detail.heroImage} alt={detail.title} fill className="object-cover" sizes="(max-width: 1099px) 100vw, 433px" />
+          <SafeNewsImage
+            src={detail.heroImage}
+            alt={detail.title}
+            fill
+            className="object-cover"
+            style={detail.heroImageFocalPoint ? { objectPosition: detail.heroImageFocalPoint } : undefined}
+            sizes="(max-width: 1099px) 100vw, 433px"
+          />
         </motion.div>
       </motion.div>
 

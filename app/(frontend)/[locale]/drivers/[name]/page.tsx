@@ -137,6 +137,7 @@ export default async function DriverDetailRoutePage({ params }: DriverDetailRout
     name: driverDoc.name,
     role: driverDoc.role,
     image: driverDoc.image,
+    imageFocalPoint: driverDoc.imageFocalPoint || null,
     flags: driverDoc.flags as ("FR" | "IN" | "GB" | "US" | "PL")[],
     instagramUrl: driverDoc.instagramUrl,
     teamLogo:
@@ -161,6 +162,7 @@ export default async function DriverDetailRoutePage({ params }: DriverDetailRout
     slug?: string | null;
     title: string;
     image: string;
+    imageFocalPoint?: string | null;
   };
 
   const linkedRaw = Array.isArray(driverDoc.detailNewsLinks)
@@ -174,24 +176,26 @@ export default async function DriverDetailRoutePage({ params }: DriverDetailRout
         slug?: unknown;
         title?: unknown;
         listImage?: unknown;
+        listImageFocalPoint?: unknown;
       };
       const slug = typeof doc.slug === "string" ? doc.slug.trim() : "";
       const title = typeof doc.title === "string" ? doc.title.trim() : "";
       const image =
         typeof doc.listImage === "string" ? doc.listImage.trim() : "";
       if (!slug || !title || !image) return null;
-      return { slug, title, image };
+      const imageFocalPoint = typeof doc.listImageFocalPoint === "string" ? doc.listImageFocalPoint : null;
+      return { slug, title, image, imageFocalPoint };
     })
     .filter((n): n is LinkedNews => n !== null);
 
   const legacyNews: LinkedNews[] = Array.isArray(driverDoc.detailNews)
-    ? (driverDoc.detailNews as { title?: string; image?: string | null }[])
+    ? (driverDoc.detailNews as { title?: string; image?: string | null; imageFocalPoint?: string | null }[])
         .map((item): LinkedNews | null => {
           if (!item) return null;
           const title = typeof item.title === "string" ? item.title.trim() : "";
           const image = typeof item.image === "string" ? item.image.trim() : "";
           if (!title || !image) return null;
-          return { slug: null, title, image };
+          return { slug: null, title, image, imageFocalPoint: item.imageFocalPoint ?? null };
         })
         .filter((n): n is LinkedNews => n !== null)
     : [];
@@ -218,12 +222,14 @@ export default async function DriverDetailRoutePage({ params }: DriverDetailRout
         slug?: unknown;
         title?: unknown;
         listImage?: unknown;
+        listImageFocalPoint?: unknown;
       };
       const slug = typeof doc.slug === "string" ? doc.slug.trim() : "";
       const title = typeof doc.title === "string" ? doc.title.trim() : "";
       const image = typeof doc.listImage === "string" ? doc.listImage.trim() : "";
       if (!slug || !title || !image) return null;
-      return { slug, title, image };
+      const imageFocalPoint = typeof doc.listImageFocalPoint === "string" ? doc.listImageFocalPoint : null;
+      return { slug, title, image, imageFocalPoint };
     })
     .filter((n): n is LinkedNews => n !== null);
 
@@ -253,11 +259,17 @@ export default async function DriverDetailRoutePage({ params }: DriverDetailRout
     grandPrixEntered: driverDoc.detail?.grandPrixEntered || "--",
     careerPodiums: driverDoc.detail?.careerPodiums || "--",
     profileImage: driverDoc.detail?.profileImage || null,
+    profileImageFocalPoint: driverDoc.detail?.profileImageFocalPoint || null,
     careerImage: driverDoc.detail?.careerImage || null,
+    careerImageFocalPoint: driverDoc.detail?.careerImageFocalPoint || null,
     agencyImage: driverDoc.detail?.agencyImage || null,
+    agencyImageFocalPoint: driverDoc.detail?.agencyImageFocalPoint || null,
     galleryLeft: driverDoc.detail?.galleryLeft || null,
+    galleryLeftFocalPoint: driverDoc.detail?.galleryLeftFocalPoint || null,
     galleryCenter: driverDoc.detail?.galleryCenter || null,
+    galleryCenterFocalPoint: driverDoc.detail?.galleryCenterFocalPoint || null,
     galleryRight: driverDoc.detail?.galleryRight || null,
+    galleryRightFocalPoint: driverDoc.detail?.galleryRightFocalPoint || null,
     relatedNews,
     statsCards: Array.isArray(driverDoc.detail?.statsCards)
       ? (driverDoc.detail.statsCards as unknown[])

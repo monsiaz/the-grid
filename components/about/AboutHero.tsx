@@ -8,6 +8,7 @@ type AboutHeroProps = {
   title?: string | null;
   description?: string | null;
   backgroundImage?: string | null;
+  backgroundImageFocalPoint?: string | null;
   heroCta?: "large" | "slim";
   stickyHeader?: boolean;
   menuStyle?: "default" | "liquid";
@@ -19,6 +20,7 @@ type AboutHeroProps = {
 export default function AboutHero({
   description,
   backgroundImage,
+  backgroundImageFocalPoint,
   heroCta = "large",
   stickyHeader = false,
   menuStyle = "default",
@@ -36,7 +38,7 @@ export default function AboutHero({
     <Hero
       backgroundImage={backgroundImage || "/images/about/hero.webp"}
       /* Slight top bias so both figures’ heads stay in frame (was 50% 24%) */
-      backgroundObjectPosition="48% 14%"
+      backgroundObjectPosition={backgroundImageFocalPoint || "48% 14%"}
       minHeightClassName="min-h-[clamp(560px,90svh,800px)]"
       overlayClassName="bg-[linear-gradient(180deg,rgba(15,15,15,0.02)_0%,rgba(15,15,15,0.06)_60%,rgba(15,15,15,0.18)_100%)]"
       backdropAt="50% 55%"

@@ -15,9 +15,10 @@ type DriversProps = {
   heading?: string;
   headingAccent?: string;
   backgroundImage?: string | null;
+  backgroundImageFocalPoint?: string | null;
 };
 
-export default function Drivers({ heading, headingAccent, backgroundImage }: DriversProps) {
+export default function Drivers({ heading, headingAccent, backgroundImage, backgroundImageFocalPoint }: DriversProps) {
   const t = useTranslations("home.drivers");
   const headingValue = heading ?? t("headingFallback");
   const headingAccentValue = headingAccent ?? t("headingAccentFallback");
@@ -35,6 +36,7 @@ export default function Drivers({ heading, headingAccent, backgroundImage }: Dri
         sizes="(max-width: 480px) 480px, (max-width: 900px) 900px, (max-width: 1440px) 1440px, 1600px"
         quality={85}
         className="absolute inset-0 object-cover"
+        style={backgroundImageFocalPoint ? { objectPosition: backgroundImageFocalPoint } : undefined}
         aria-hidden
       />
       {/* Very light global tint — decorative only; must not steal clicks (footer locale menu overlaps this band when open). */}

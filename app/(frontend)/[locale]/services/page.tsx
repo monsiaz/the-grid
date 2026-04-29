@@ -84,6 +84,7 @@ export default async function ServicesPage({
         title={servicesPage.heroTitle}
         description={servicesPage.heroDescription}
         backgroundImage={servicesPage.heroBackgroundImage}
+        backgroundImageFocalPoint={servicesPage.heroBackgroundImageFocalPoint || null}
         heroCta={designSettings.heroCta}
         stickyHeader={designSettings.stickyHeader}
         menuStyle={designSettings.headerMenuStyle}
@@ -102,10 +103,12 @@ export default async function ServicesPage({
         introTitle={servicesPage.valueIntroTitle || "STRATEGY\n& POSITIONING"}
         introText={servicesPage.valueIntroText}
         introImage={servicesPage.valueIntroImage || "/assets/v2/services/value-strategy.webp"}
+        introImageFocalPoint={servicesPage.valueIntroImageFocalPoint || null}
         servicesArrowStyle={designSettings.servicesArrowStyle}
-        cards={servicesPage.valueCards?.map((c: { title: string; image: string; description?: string | null }) => ({
+        cards={servicesPage.valueCards?.map((c: { title: string; image: string; imageFocalPoint?: string | null; description?: string | null }) => ({
           title: c.title,
           image: c.image,
+          imageFocalPoint: c.imageFocalPoint || null,
           alt: c.title.replace("\n", " "),
           description: c.description || null,
         })) || []}
@@ -115,6 +118,7 @@ export default async function ServicesPage({
       <ServicesPartner
         description={servicesPage.partnerDescription}
         backgroundImage={servicesPage.partnerBackgroundImage}
+        backgroundImageFocalPoint={servicesPage.partnerBackgroundImageFocalPoint || null}
       />
     ),
     talent: (
@@ -125,10 +129,12 @@ export default async function ServicesPage({
         introTitle={servicesPage.talentIntroTitle}
         introText={servicesPage.talentIntroText}
         introImage={servicesPage.talentIntroImage}
+        introImageFocalPoint={servicesPage.talentIntroImageFocalPoint || null}
         servicesArrowStyle={designSettings.servicesArrowStyle}
-        cards={servicesPage.talentCards?.map((c: { title: string; image: string; description?: string | null }) => ({
+        cards={servicesPage.talentCards?.map((c: { title: string; image: string; imageFocalPoint?: string | null; description?: string | null }) => ({
           title: c.title,
           image: c.image,
+          imageFocalPoint: c.imageFocalPoint || null,
           alt: c.title,
           description: c.description || null,
         })) || []}
