@@ -445,6 +445,9 @@ const STATEMENTS = [
   `ALTER TABLE "about_page" ADD COLUMN IF NOT EXISTS "hero_background_image_focal_point" varchar;`,
   `ALTER TABLE "about_page" ADD COLUMN IF NOT EXISTS "accelere_banner_image_focal_point" varchar;`,
   `ALTER TABLE "about_page" ADD COLUMN IF NOT EXISTS "accelere_portrait_image_focal_point" varchar;`,
+  `UPDATE "about_page"
+   SET "accelere_banner_image" = '/assets/v2/about/accelere.webp'
+   WHERE "accelere_banner_image" IS NULL OR trim("accelere_banner_image") = '';`,
   `ALTER TABLE "about_page_core_areas" ADD COLUMN IF NOT EXISTS "image_focal_point" varchar;`,
   `ALTER TABLE "about_page_instagram_images" ADD COLUMN IF NOT EXISTS "image_focal_point" varchar;`,
 
