@@ -104,6 +104,7 @@ export default function ImagePicker(props: ImagePickerProps) {
 
   // Track tiles that failed to load their image
   const [imgErrors, setImgErrors] = useState<Set<string>>(new Set());
+  const [previewFailed, setPreviewFailed] = useState(false);
 
   // Reset broken-tile tracking whenever the docs list refreshes
   useEffect(() => {
@@ -285,7 +286,11 @@ export default function ImagePicker(props: ImagePickerProps) {
     [handleModalUpload],
   );
 
-  const previewUrl = useMemo(() => (raw ? normalizeUrl(raw) : ""), [raw]);
+  const previewUrl = useMemo(() => (raw.trim() ? normalizeUrl(raw.trim()) : ""), [raw]);
+
+  useEffect(() => {
+    setPreviewFailed(false);
+  }, [previewUrl]);
 
   const pageCount = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
@@ -348,7 +353,7 @@ export default function ImagePicker(props: ImagePickerProps) {
             onFileSelect(e.dataTransfer.files?.[0]);
           }}
         >
-          {previewUrl ? (
+          {previewUrl && !previewFailed ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={previewUrl}
@@ -356,14 +361,14 @@ export default function ImagePicker(props: ImagePickerProps) {
               className="grid-image-picker__preview-img"
               loading="lazy"
               decoding="async"
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).style.opacity = "0.15";
-              }}
+              onError={() => setPreviewFailed(true)}
             />
           ) : (
             <div className="grid-image-picker__preview-empty">
-              Aucune image
-              <span className="grid-image-picker__preview-hint">Glisse ici pour uploader</span>
+              {previewUrl ? "Aperçu indisponible" : "Aucune image"}
+              <span className="grid-image-picker__preview-hint">
+                {previewUrl ? "L'URL est conservée, mais la miniature ne charge pas." : "Glisse ici pour uploader"}
+              </span>
             </div>
           )}
         </div>

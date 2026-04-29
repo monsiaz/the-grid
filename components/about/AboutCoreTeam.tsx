@@ -40,6 +40,7 @@ type AboutCoreTeamProps = {
   founderName?: string;
   founderRole?: string;
   founderImage?: string | null;
+  founderImageFocalPoint?: string | null;
   founderLinkedinUrl?: string;
   teamMembers: TeamMember[];
 };
@@ -304,6 +305,7 @@ export default function AboutCoreTeam({
   founderName = "Guillaume Le Goff",
   founderRole = "Founder & Partner",
   founderImage,
+  founderImageFocalPoint,
   founderLinkedinUrl = "https://www.linkedin.com/in/glegoff/",
   teamMembers,
 }: AboutCoreTeamProps) {
@@ -385,6 +387,7 @@ export default function AboutCoreTeam({
               name={founderName}
               role={founderRole}
               image={founderImage || "https://sgq4ppufmm4e3svk.public.blob.vercel-storage.com/assets/v2/about/guillaume-le-goff.webp"}
+              imageFocalPoint={founderImageFocalPoint}
               bio={_founderBio}
               linkedinUrl={founderLinkedinUrl}
               t={t}
@@ -404,6 +407,7 @@ function FounderCard({
   name,
   role,
   image,
+  imageFocalPoint,
   bio,
   linkedinUrl,
   t,
@@ -411,6 +415,7 @@ function FounderCard({
   name: string;
   role: string;
   image?: string | null;
+  imageFocalPoint?: string | null;
   bio?: string | null;
   linkedinUrl: string;
   t: ReturnType<typeof useTranslations<"about.team">>;
@@ -446,6 +451,7 @@ function FounderCard({
                 height={628}
                 sizes="(max-width: 700px) 100vw, (max-width: 980px) 50vw, (max-width: 1200px) 33vw, 300px"
                 className="aspect-square w-full object-cover object-center transition-transform duration-500 ease-out"
+                style={imageFocalPoint ? { objectPosition: imageFocalPoint } : undefined}
               />
             </div>
           )}

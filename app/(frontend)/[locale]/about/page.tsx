@@ -46,12 +46,17 @@ export default async function AboutPage({
     getDesignSettings(),
   ]);
   const teamMembers = await payload.find({ collection: "team-members", sort: "order", locale });
-  const founderName = (aboutPage.founderName as string | undefined) || "Guillaume Le Goff";
-  // Prefer the bio stored in the team-member record (editable per-locale in the admin)
-  // so editors don't have to maintain two separate bio fields.
-  const founderTeamMember = (teamMembers.docs as Array<{ name?: string | null; bio?: string | null }>)
-    .find((m) => typeof m.name === "string" && m.name.trim().toLowerCase() === founderName.trim().toLowerCase());
-  const resolvedFounderBio = founderTeamMember?.bio ?? (aboutPage.founderBio as string | null | undefined);
+  const founderTeamMember = (
+    teamMembers.docs as Array<{
+      name?: string | null;
+      role?: string | null;
+      image?: string | null;
+      imageFocalPoint?: string | null;
+      bio?: string | null;
+      linkedinUrl?: string | null;
+      order?: number | null;
+    }>
+  ).find((m) => typeof m.name === "string" && m.name.trim().toLowerCase() === "guillaume le goff") ?? teamMembers.docs[0];
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/about" });
   const aboutInstagramUrl =
     typeof aboutPage.instagramUrl === "string" &&
@@ -83,13 +88,12 @@ export default async function AboutPage({
       <AboutCoreTeam
         coreIntroText={aboutPage.coreIntroText}
         coreAreas={aboutPage.coreAreas || []}
-        founderBio={resolvedFounderBio}
-        founderName={founderName}
-        founderRole={aboutPage.founderRole || "Founder & Partner"}
-        founderImage="/assets/v2/about/guillaume-le-goff.webp"
-        founderLinkedinUrl={
-          aboutPage.founderLinkedinUrl || "https://www.linkedin.com/in/glegoff/"
-        }
+        founderBio={(founderTeamMember as { bio?: string | null } | undefined)?.bio ?? null}
+        founderName={(founderTeamMember as { name?: string | null } | undefined)?.name || "Guillaume Le Goff"}
+        founderRole={(founderTeamMember as { role?: string | null } | undefined)?.role || "Founder & Partner"}
+        founderImage={(founderTeamMember as { image?: string | null } | undefined)?.image || null}
+        founderImageFocalPoint={(founderTeamMember as { imageFocalPoint?: string | null } | undefined)?.imageFocalPoint ?? null}
+        founderLinkedinUrl={(founderTeamMember as { linkedinUrl?: string | null } | undefined)?.linkedinUrl || "https://www.linkedin.com/in/glegoff/"}
         teamMembers={teamMembers.docs.map((m) => ({
           name: m.name,
           role: m.role,

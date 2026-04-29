@@ -448,6 +448,14 @@ const STATEMENTS = [
   `ALTER TABLE "about_page_core_areas" ADD COLUMN IF NOT EXISTS "image_focal_point" varchar;`,
   `ALTER TABLE "about_page_instagram_images" ADD COLUMN IF NOT EXISTS "image_focal_point" varchar;`,
 
+  // Founder content now lives only in the Team Members collection. Keep the
+  // About global schema clean so the BO no longer exposes or stores duplicate
+  // founder fields.
+  `ALTER TABLE "about_page" DROP COLUMN IF EXISTS "founder_name";`,
+  `ALTER TABLE "about_page" DROP COLUMN IF EXISTS "founder_linkedin_url";`,
+  `ALTER TABLE "about_page_locales" DROP COLUMN IF EXISTS "founder_bio";`,
+  `ALTER TABLE "about_page_locales" DROP COLUMN IF EXISTS "founder_role";`,
+
   `ALTER TABLE "services_page" ADD COLUMN IF NOT EXISTS "hero_background_image_focal_point" varchar;`,
   `ALTER TABLE "services_page" ADD COLUMN IF NOT EXISTS "value_intro_image_focal_point" varchar;`,
   `ALTER TABLE "services_page" ADD COLUMN IF NOT EXISTS "partner_background_image_focal_point" varchar;`,

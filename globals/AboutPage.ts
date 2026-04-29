@@ -114,28 +114,6 @@ export const AboutPage: GlobalConfig = {
         focalPointField(),
       ],
     },
-    {
-      name: "founderBio",
-      type: "textarea",
-      required: true,
-      localized: true,
-    },
-    {
-      name: "founderName",
-      type: "text",
-      defaultValue: "Guillaume Le Goff",
-    },
-    {
-      name: "founderRole",
-      type: "text",
-      localized: true,
-      defaultValue: "Founder",
-    },
-    {
-      name: "founderLinkedinUrl",
-      type: "text",
-      defaultValue: "https://www.linkedin.com/in/glegoff/",
-    },
     imageField({
       name: "accelereBannerImage",
       label: "ACCÉLÈRE banner background image",

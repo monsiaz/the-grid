@@ -154,11 +154,6 @@ const ABOUT_PAGE_UPDATES = {
       image: "/assets/v2/about/core-commercial-development.webp",
     },
   ],
-  founderBio:
-    "With 20 years of experience in motorsport, Guillaume has worked across multiple roles in the paddock. He served as a simulation & race engineer for ART Grand Prix for six years before co-founding AOTech — a company specialising in simulators, aerodynamics, and composite parts manufacturing — in 2010.\n\nAfter a two-year stint at McLaren in a business development position, Guillaume went on to found Soter Analytics, a tech start-up, and The Grid Agency simultaneously in 2018. Both businesses thrived, and Guillaume chose to focus exclusively on The Grid in 2021.",
-  founderName: "Guillaume Le Goff",
-  founderRole: "Founder & Partner",
-  founderLinkedinUrl: "https://www.linkedin.com/in/glegoff/",
   accelereDescription:
     "ACCÉLÈRE is an initiative by Côme Ensemble, the endowment fund of Côme Maison Financière. Its mission is simple: to empower and structure the next generation of French motorsport talent, regardless of background.\n\nSponsored by Formula 1 driver Pierre Gasly, and developed in partnership with The Grid Agency, ACCÉLÈRE brings together those who understand the system and are committed to making it fairer.",
   accelereQuote:
@@ -498,10 +493,6 @@ async function main() {
     heroDescription: ABOUT_PAGE_UPDATES.heroDescription,
     coreIntroText: ABOUT_PAGE_UPDATES.coreIntroText,
     coreAreas: aboutCoreAreas,
-    founderBio: ABOUT_PAGE_UPDATES.founderBio,
-    founderName: ABOUT_PAGE_UPDATES.founderName,
-    founderRole: ABOUT_PAGE_UPDATES.founderRole,
-    founderLinkedinUrl: ABOUT_PAGE_UPDATES.founderLinkedinUrl,
     accelereDescription: ABOUT_PAGE_UPDATES.accelereDescription,
     accelereQuote: ABOUT_PAGE_UPDATES.accelereQuote,
     accelereQuoteAuthor: ABOUT_PAGE_UPDATES.accelereQuoteAuthor,
