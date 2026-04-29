@@ -2,6 +2,7 @@
 
 import React, { useCallback, useRef, useState } from "react";
 import { useField, useFormFields } from "@payloadcms/ui";
+import "./ImagePicker.scss";
 
 type FocalPointPickerProps = {
   path: string;
@@ -36,13 +37,32 @@ export default function FocalPointPicker({ path, field }: FocalPointPickerProps)
 
   // Read the sibling image URL from the form state
   const imageUrl = useFormFields(
-    ([fields]) => (fields[imagePath]?.value ?? "") as string,
+    ([fields]) => {
+      const direct = fields[imagePath]?.value;
+      if (typeof direct === "string" && direct.trim()) return direct;
+
+      // Payload array rows can occasionally expose nested field paths with
+      // slightly different prefixes. Fall back to an image field in the same row.
+      const parentPath = path.includes(".") ? path.slice(0, path.lastIndexOf(".")) : "";
+      const sibling = Object.entries(fields).find(([fieldPath, fieldState]) => {
+        return (
+          fieldPath !== path &&
+          fieldPath.endsWith(".image") &&
+          (!parentPath || fieldPath.startsWith(`${parentPath}.`)) &&
+          typeof fieldState?.value === "string" &&
+          fieldState.value.trim().length > 0
+        );
+      });
+
+      return (sibling?.[1]?.value ?? "") as string;
+    },
   );
 
   const label = resolveLabel(field?.label) || "Position du cadrage";
   const description = resolveLabel(field?.admin?.description);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
   const [dragging, setDragging] = useState(false);
 
   // Parse current stored value to percentages (default: 50 50)
@@ -73,34 +93,15 @@ export default function FocalPointPicker({ path, field }: FocalPointPickerProps)
     window.addEventListener("mouseup", onUp);
   }, [computePos]);
 
-  if (!imageUrl) {
-    return (
-      <div className="grid-image-picker">
-        <div className="grid-image-picker__label-row">
-          <span className="grid-image-picker__label">{label}</span>
-        </div>
-        <div className="grid-image-picker__hint" style={{ marginTop: 6 }}>
-          Ajoutez d&apos;abord une image ci-dessus pour activer le cadrage.
-        </div>
-      </div>
-    );
-  }
+  const normalizedImageUrl =
+    imageUrl && (imageUrl.startsWith("/") || imageUrl.startsWith("http"))
+      ? imageUrl
+      : imageUrl
+        ? `/${imageUrl}`
+        : "";
 
-  return (
-    <div className="grid-image-picker">
-      <div className="grid-image-picker__label-row">
-        <span className="grid-image-picker__label">{label}</span>
-        <button
-          type="button"
-          className="grid-image-picker__btn grid-image-picker__btn--ghost"
-          onClick={() => setValue("50% 50%")}
-          title="Recentrer"
-        >
-          Centrer
-        </button>
-      </div>
-
-      {/* 16:9 preview with crosshair */}
+  const preview = (
+    <>
       <div
         ref={containerRef}
         onMouseDown={onMouseDown}
@@ -113,11 +114,12 @@ export default function FocalPointPicker({ path, field }: FocalPointPickerProps)
           cursor: dragging ? "grabbing" : "crosshair",
           userSelect: "none",
           border: "1px solid rgba(255,255,255,0.12)",
+          background: "rgba(255,255,255,0.04)",
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={imageUrl.startsWith("/") || imageUrl.startsWith("http") ? imageUrl : `/${imageUrl}`}
+          src={normalizedImageUrl}
           alt=""
           draggable={false}
           style={{
@@ -130,18 +132,16 @@ export default function FocalPointPicker({ path, field }: FocalPointPickerProps)
           }}
         />
 
-        {/* Grid overlay (rule of thirds) */}
         <svg
           aria-hidden
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }}
         >
-          <line x1="33.33%" y1="0" x2="33.33%" y2="100%" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
-          <line x1="66.66%" y1="0" x2="66.66%" y2="100%" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
-          <line x1="0" y1="33.33%" x2="100%" y2="33.33%" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
-          <line x1="0" y1="66.66%" x2="100%" y2="66.66%" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
+          <line x1="33.33%" y1="0" x2="33.33%" y2="100%" stroke="rgba(255,255,255,0.22)" strokeWidth="1" />
+          <line x1="66.66%" y1="0" x2="66.66%" y2="100%" stroke="rgba(255,255,255,0.22)" strokeWidth="1" />
+          <line x1="0" y1="33.33%" x2="100%" y2="33.33%" stroke="rgba(255,255,255,0.22)" strokeWidth="1" />
+          <line x1="0" y1="66.66%" x2="100%" y2="66.66%" stroke="rgba(255,255,255,0.22)" strokeWidth="1" />
         </svg>
 
-        {/* Focal point crosshair */}
         <div
           aria-hidden
           style={{
@@ -159,13 +159,89 @@ export default function FocalPointPicker({ path, field }: FocalPointPickerProps)
           }}
         />
       </div>
-
-      <div style={{ display: "flex", justifyContent: "space-between", marginTop: 6, fontSize: 11, opacity: 0.55 }}>
-        <span>Cliquez ou glissez pour cadrer</span>
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8, fontSize: 12, opacity: 0.7 }}>
+        <span>Cliquez ou glissez pour choisir le cadrage prod 16/9.</span>
         <span style={{ fontVariantNumeric: "tabular-nums" }}>{fx}% / {fy}%</span>
+      </div>
+    </>
+  );
+
+  if (!imageUrl) {
+    return (
+      <div className="grid-image-picker">
+        <div className="grid-image-picker__label-row">
+          <span className="grid-image-picker__label">{label}</span>
+        </div>
+        <div className="grid-image-picker__hint">
+          Ajoutez d&apos;abord une image ci-dessus pour activer le cadrage.
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid-image-picker">
+      <div className="grid-image-picker__label-row">
+        <span className="grid-image-picker__label">{label}</span>
+        <div className="grid-image-picker__toolbar">
+          <button
+            type="button"
+            className="grid-image-picker__btn grid-image-picker__btn--primary"
+            onClick={() => setOpen(true)}
+          >
+            Cadrer / preview
+          </button>
+          <button
+            type="button"
+            className="grid-image-picker__btn grid-image-picker__btn--ghost"
+            onClick={() => setValue("50% 50%")}
+            title="Recentrer"
+          >
+            Centrer
+          </button>
+        </div>
+      </div>
+
+      <div className="grid-image-picker__hint">
+        Cadrage actuel&nbsp;: {fx}% / {fy}%. Ouvrez la preview pour ajuster sans encombrer le formulaire.
       </div>
       {description ? (
         <div className="grid-image-picker__desc">{description}</div>
+      ) : null}
+      {open ? (
+        <div
+          className="grid-image-picker__modal"
+          role="dialog"
+          aria-modal="true"
+          onClick={(e) => {
+            if (e.currentTarget === e.target) setOpen(false);
+          }}
+        >
+          <div className="grid-image-picker__modal-inner" style={{ maxWidth: 980 }}>
+            <header className="grid-image-picker__modal-header">
+              <h3>Prévisualisation du cadrage</h3>
+              <div className="grid-image-picker__modal-filters">
+                <button
+                  type="button"
+                  className="grid-image-picker__btn grid-image-picker__btn--ghost"
+                  onClick={() => setValue("50% 50%")}
+                >
+                  Centrer
+                </button>
+                <button
+                  type="button"
+                  className="grid-image-picker__btn"
+                  onClick={() => setOpen(false)}
+                >
+                  Fermer
+                </button>
+              </div>
+            </header>
+            <div style={{ padding: "1rem" }}>
+              {preview}
+            </div>
+          </div>
+        </div>
       ) : null}
     </div>
   );
