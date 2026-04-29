@@ -64,6 +64,7 @@ export default function FocalPointPicker({ path, field }: FocalPointPickerProps)
   const containerRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const [dragging, setDragging] = useState(false);
+  const [imageRatio, setImageRatio] = useState<number | null>(null);
 
   // Parse current stored value to percentages (default: 50 50)
   const parsed = (value || "50% 50%").match(/(\d+(?:\.\d+)?)/g);
@@ -99,6 +100,8 @@ export default function FocalPointPicker({ path, field }: FocalPointPickerProps)
       : imageUrl
         ? `/${imageUrl}`
         : "";
+  const frameRatio = 16 / 9;
+  const hasVisibleCrop = imageRatio == null || Math.abs(imageRatio - frameRatio) > 0.03;
 
   const preview = (
     <>
@@ -122,6 +125,12 @@ export default function FocalPointPicker({ path, field }: FocalPointPickerProps)
           src={normalizedImageUrl}
           alt=""
           draggable={false}
+          onLoad={(event) => {
+            const img = event.currentTarget;
+            if (img.naturalWidth && img.naturalHeight) {
+              setImageRatio(img.naturalWidth / img.naturalHeight);
+            }
+          }}
           style={{
             width: "100%",
             height: "100%",
@@ -160,9 +169,62 @@ export default function FocalPointPicker({ path, field }: FocalPointPickerProps)
         />
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8, fontSize: 12, opacity: 0.7 }}>
-        <span>Cliquez ou glissez pour choisir le cadrage prod 16/9.</span>
+        <span>
+          {hasVisibleCrop
+            ? "Cliquez ou glissez pour choisir le cadrage prod 16/9."
+            : "Image deja au format 16/9 : le point bouge, mais la photo ne glisse presque pas car elle reste entiere."}
+        </span>
         <span style={{ fontVariantNumeric: "tabular-nums" }}>{fx}% / {fy}%</span>
       </div>
+      {!hasVisibleCrop ? (
+        <div style={{ marginTop: 12 }}>
+          <div style={{ marginBottom: 6, fontSize: 12, opacity: 0.7 }}>
+            Apercu zoome de controle : il sert seulement a visualiser le point focal quand le rendu prod ne croppe pas la photo.
+          </div>
+          <div
+            style={{
+              position: "relative",
+              aspectRatio: "16 / 9",
+              width: "100%",
+              overflow: "hidden",
+              borderRadius: 8,
+              border: "1px solid rgba(255,255,255,0.1)",
+              background: "rgba(255,255,255,0.04)",
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={normalizedImageUrl}
+              alt=""
+              draggable={false}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                objectPosition: `${fx}% ${fy}%`,
+                transform: "scale(1.18)",
+                transformOrigin: `${fx}% ${fy}%`,
+                display: "block",
+                pointerEvents: "none",
+              }}
+            />
+            <div
+              aria-hidden
+              style={{
+                position: "absolute",
+                left: `${fx}%`,
+                top: `${fy}%`,
+                transform: "translate(-50%, -50%)",
+                width: 22,
+                height: 22,
+                borderRadius: "50%",
+                background: "rgba(220,38,38,0.35)",
+                border: "2px solid #ef4444",
+              }}
+            />
+          </div>
+        </div>
+      ) : null}
     </>
   );
 
