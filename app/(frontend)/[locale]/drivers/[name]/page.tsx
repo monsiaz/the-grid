@@ -208,7 +208,7 @@ export default async function DriverDetailRoutePage({ params }: DriverDetailRout
       : (
           await payload.find({
             collection: "news",
-            sort: "-createdAt",
+            sort: "-date",
             limit: 6,
             locale,
             depth: 0,
