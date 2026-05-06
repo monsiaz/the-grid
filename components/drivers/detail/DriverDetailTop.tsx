@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { DriverCardData, DriverDetailData, DriverRelatedNews } from "../driversData";
+import { resolveGalleryImages } from "../driversData";
+import DriverGalleryCarousel from "./DriverGalleryCarousel";
 import {
   motion,
   fadeUp,
-  slideInLeft,
   slideInRight,
   staggerContainer,
   smoothTransition,
@@ -185,19 +185,22 @@ export default function DriverDetailTop({ driver, detail }: DriverDetailTopProps
     driver.image ||
     (driver.slug === "pierre-gasly" ? LEGACY_GASLY_IMAGES.profile : driver.image);
 
-  // Gallery: only show the inline gallery when the CMS has at least a center image.
-  const hasGallery = Boolean(
-    detail.galleryCenter || detail.galleryLeft || detail.galleryRight,
-  );
-  const galleryCenter =
-    detail.galleryCenter ||
-    (driver.slug === "pierre-gasly" ? LEGACY_GASLY_IMAGES.galleryCenter : null);
-  const galleryLeft =
-    detail.galleryLeft ||
-    (driver.slug === "pierre-gasly" ? LEGACY_GASLY_IMAGES.galleryLeft : null);
-  const galleryRight =
-    detail.galleryRight ||
-    (driver.slug === "pierre-gasly" ? LEGACY_GASLY_IMAGES.galleryRight : null);
+  // Gallery: resolve carousel images (new array field + legacy 3-col fallback + Gasly hard-coded fallback).
+  const detailWithGaslyFallback =
+    driver.slug === "pierre-gasly" &&
+    !detail.galleryImages?.length &&
+    !detail.galleryLeft &&
+    !detail.galleryCenter &&
+    !detail.galleryRight
+      ? {
+          ...detail,
+          galleryLeft: LEGACY_GASLY_IMAGES.galleryLeft,
+          galleryCenter: LEGACY_GASLY_IMAGES.galleryCenter,
+          galleryRight: LEGACY_GASLY_IMAGES.galleryRight,
+        }
+      : detail;
+  const galleryImages = resolveGalleryImages(detailWithGaslyFallback);
+  const hasGallery = galleryImages.length > 0;
 
   const relatedNews = detail.relatedNews ?? [];
   const hasRelatedNews = relatedNews.length > 0;
@@ -269,58 +272,12 @@ export default function DriverDetailTop({ driver, detail }: DriverDetailTopProps
         animate="visible"
         transition={{ ...smoothTransition, delay: 0.15 }}
       >
-        {hasGallery && galleryCenter ? (
-          <div className="grid gap-2">
-            <div className="grid grid-cols-[90px_1fr_90px] items-center max-[700px]:grid-cols-1">
-              <div className="relative h-[120px] opacity-50 max-[700px]:hidden">
-                {galleryLeft ? (
-                  <Image
-                    src={galleryLeft}
-                    alt={t("gallery.left")}
-                    fill
-                    className="object-cover"
-                    style={detail.galleryLeftFocalPoint ? { objectPosition: detail.galleryLeftFocalPoint } : undefined}
-                    sizes="90px"
-                  />
-                ) : null}
-              </div>
-              <div className="relative h-[220px] overflow-hidden">
-                <motion.div
-                  className="relative h-full w-full"
-                  whileHover={{ scale: 1.04 }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
-                >
-                  <Image
-                    src={galleryCenter}
-                    alt={t("gallery.center")}
-                    fill
-                    className="object-cover"
-                    style={detail.galleryCenterFocalPoint ? { objectPosition: detail.galleryCenterFocalPoint } : undefined}
-                    sizes="(max-width: 700px) 100vw, 420px"
-                  />
-                </motion.div>
-              </div>
-              <div className="relative h-[120px] opacity-50 max-[700px]:hidden">
-                {galleryRight ? (
-                  <Image
-                    src={galleryRight}
-                    alt={t("gallery.right")}
-                    fill
-                    className="object-cover"
-                    style={detail.galleryRightFocalPoint ? { objectPosition: detail.galleryRightFocalPoint } : undefined}
-                    sizes="90px"
-                  />
-                ) : null}
-              </div>
-            </div>
-            <div
-              className="flex items-center justify-center gap-2 text-[20px] leading-[1.2]"
-              aria-hidden
-            >
-              <ChevronLeft className="h-[1em] w-[1em] shrink-0" />
-              <ChevronRight className="h-[1em] w-[1em] shrink-0" />
-            </div>
-          </div>
+        {hasGallery ? (
+          <DriverGalleryCarousel
+            images={galleryImages}
+            prevLabel={t("gallery.prev")}
+            nextLabel={t("gallery.next")}
+          />
         ) : null}
 
         {hasRelatedNews ? (

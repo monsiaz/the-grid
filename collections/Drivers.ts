@@ -324,36 +324,32 @@ export const Drivers: CollectionConfig = {
                   name: "agencyImageFocalPoint",
                   label: "Agency image — cadrage",
                 }),
-                imageField({
-                  name: "galleryLeft",
-                  label: "Gallery — left",
-                  description:
-                    "Mini galerie d'en-tête, visuel gauche. Réservé Pierre Gasly & Isack Hadjar — la mini-galerie ne s'affiche que si au moins une des 3 images de galerie est renseignée.",
-                }),
-                focalPointField({
-                  name: "galleryLeftFocalPoint",
-                  label: "Gallery left — cadrage",
-                }),
-                imageField({
-                  name: "galleryCenter",
-                  label: "Gallery — center",
-                  description:
-                    "Mini galerie d'en-tête, visuel central (le plus visible). Réservé Pierre Gasly & Isack Hadjar.",
-                }),
-                focalPointField({
-                  name: "galleryCenterFocalPoint",
-                  label: "Gallery center — cadrage",
-                }),
-                imageField({
-                  name: "galleryRight",
-                  label: "Gallery — right",
-                  description:
-                    "Mini galerie d'en-tête, visuel droit. Réservé Pierre Gasly & Isack Hadjar.",
-                }),
-                focalPointField({
-                  name: "galleryRightFocalPoint",
-                  label: "Gallery right — cadrage",
-                }),
+                {
+                  name: "galleryImages",
+                  type: "array",
+                  label: "Gallery images",
+                  maxRows: 12,
+                  admin: {
+                    description:
+                      "Images du carousel galerie sur la fiche pilote (jusqu'à 12). Si vide, les champs legacy galleryLeft/galleryCenter/galleryRight sont utilisés automatiquement.",
+                  },
+                  fields: [
+                    imageField({
+                      name: "image",
+                      label: "Image",
+                    }),
+                    focalPointField({
+                      name: "focalPoint",
+                      label: "Cadrage",
+                    }),
+                  ],
+                },
+                { type: "text" as const, name: "galleryLeft", label: "Gallery — left (legacy)", admin: { hidden: true } },
+                { type: "text" as const, name: "galleryLeftFocalPoint", label: "Gallery left — cadrage (legacy)", admin: { hidden: true } },
+                { type: "text" as const, name: "galleryCenter", label: "Gallery — center (legacy)", admin: { hidden: true } },
+                { type: "text" as const, name: "galleryCenterFocalPoint", label: "Gallery center — cadrage (legacy)", admin: { hidden: true } },
+                { type: "text" as const, name: "galleryRight", label: "Gallery — right (legacy)", admin: { hidden: true } },
+                { type: "text" as const, name: "galleryRightFocalPoint", label: "Gallery right — cadrage (legacy)", admin: { hidden: true } },
               ],
             },
             {

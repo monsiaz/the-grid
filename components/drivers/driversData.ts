@@ -34,6 +34,11 @@ export type DriverStatCard = {
   label: string;
 };
 
+export type DriverGalleryImage = {
+  image: string;
+  focalPoint?: string | null;
+};
+
 export type DriverDetailData = {
   slug: string;
   profileTitle: string;
@@ -54,6 +59,7 @@ export type DriverDetailData = {
   careerImageFocalPoint?: string | null;
   agencyImage?: string | null;
   agencyImageFocalPoint?: string | null;
+  galleryImages?: DriverGalleryImage[] | null;
   galleryLeft?: string | null;
   galleryLeftFocalPoint?: string | null;
   galleryCenter?: string | null;
@@ -63,6 +69,19 @@ export type DriverDetailData = {
   relatedNews?: DriverRelatedNews[];
   statsCards?: DriverStatCard[];
 };
+
+/** Returns a normalized list of gallery images, merging galleryImages (new) with the 3 legacy fields. */
+export function resolveGalleryImages(detail: Pick<DriverDetailData, "galleryImages" | "galleryLeft" | "galleryLeftFocalPoint" | "galleryCenter" | "galleryCenterFocalPoint" | "galleryRight" | "galleryRightFocalPoint">): DriverGalleryImage[] {
+  if (detail.galleryImages && detail.galleryImages.length > 0) {
+    return detail.galleryImages.filter((g) => Boolean(g.image));
+  }
+  const candidates: Array<DriverGalleryImage | null> = [
+    detail.galleryLeft ? { image: detail.galleryLeft, focalPoint: detail.galleryLeftFocalPoint ?? null } : null,
+    detail.galleryCenter ? { image: detail.galleryCenter, focalPoint: detail.galleryCenterFocalPoint ?? null } : null,
+    detail.galleryRight ? { image: detail.galleryRight, focalPoint: detail.galleryRightFocalPoint ?? null } : null,
+  ];
+  return candidates.filter((g): g is DriverGalleryImage => g !== null);
+}
 
 export const driversCards: DriverCardData[] = [
   {

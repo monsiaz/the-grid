@@ -192,7 +192,9 @@
       "gallery": {
         "left": "Galleria piloti a sinistra",
         "center": "Galleria piloti al centro",
-        "right": "Galleria piloti a destra"
+        "right": "Galleria piloti a destra",
+        "prev": "Immagine precedente",
+        "next": "Immagine successiva"
       },
       "career": {
         "highestFinish": "Highest race finish",

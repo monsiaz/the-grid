@@ -192,7 +192,9 @@
       "gallery": {
         "left": "Coureursgalerij links",
         "center": "Coureursgalerij midden",
-        "right": "Coureursgalerij rechts"
+        "right": "Coureursgalerij rechts",
+        "prev": "Vorige afbeelding",
+        "next": "Volgende afbeelding"
       },
       "career": {
         "highestFinish": "Highest race finish",
