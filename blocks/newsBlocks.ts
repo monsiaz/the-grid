@@ -99,6 +99,14 @@ export const ImageBlock: Block = {
       },
     },
     {
+      name: "credit",
+      type: "text",
+      localized: true,
+      admin: {
+        description: "Crédit photo affiché discrètement sous l'image (ex: ©Grégoire Truchet). Optionnel.",
+      },
+    },
+    {
       name: "ratio",
       type: "select",
       required: true,
@@ -164,6 +172,14 @@ export const TwoColumnBlock: Block = {
         description: "Légende optionnelle sous l'image.",
       },
     },
+    {
+      name: "credit",
+      type: "text",
+      localized: true,
+      admin: {
+        description: "Crédit photo affiché discrètement sous l'image (ex: ©Grégoire Truchet). Optionnel.",
+      },
+    },
   ],
 };
 
@@ -200,6 +216,12 @@ export const GalleryBlock: Block = {
           type: "text",
           localized: true,
           admin: { description: "Texte alternatif (accessibilité + SEO)." },
+        },
+        {
+          name: "credit",
+          type: "text",
+          localized: true,
+          admin: { description: "Crédit photo affiché discrètement sous l'image (ex: ©Grégoire Truchet). Optionnel." },
         },
       ],
     },

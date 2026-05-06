@@ -16,9 +16,10 @@ type NewsDetailData = {
   date: string;
   heroImage: string;
   heroImageFocalPoint?: string | null;
+  heroImageCredit?: string | null;
   introParagraphs: string[];
   bodyParagraphs: string[];
-  galleryImages: { image: string; imageFocalPoint?: string | null }[];
+  galleryImages: { image: string; imageFocalPoint?: string | null; credit?: string | null }[];
   /** Modular content blocks (Payload `blocks` field). Takes precedence over
    *  bodyParagraphs + galleryImages when populated. */
   contentBlocks: NewsBlock[];
@@ -40,7 +41,7 @@ export default function NewsDetailPage({ detail, siteProps }: NewsDetailPageProp
       <Header activeItem="news" />
       <section className="mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)] pt-20 pb-24">
         <div className="grid gap-10">
-          <NewsDetailTop detail={detail} />
+          <NewsDetailTop detail={detail} heroImageCredit={detail.heroImageCredit} />
           {useBlocks ? (
             <NewsContentBlocks blocks={detail.contentBlocks} title={detail.title} />
           ) : (
