@@ -37,7 +37,7 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
           <div className="flex-1 min-w-0 flex flex-col">
             <h2
               className="display-card m-0 line-clamp-2 text-white"
-              style={{ fontSize: "clamp(22px,2vw,28px)", lineHeight: 1.15 }}
+              style={{ fontSize: "clamp(24px,2.2vw,30px)", lineHeight: 1.05, minHeight: "2.1em" }}
             >
               {driver.name}
             </h2>

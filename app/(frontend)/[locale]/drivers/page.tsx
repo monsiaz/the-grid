@@ -34,7 +34,7 @@ type DriverRowData = DriverCardData & {
   gridRow: number;
 };
 
-const DRIVER_COUNTRY_CODES: readonly DriverCountryCode[] = ["FR", "IN", "GB", "US", "PL", "CN", "ES"];
+const DRIVER_COUNTRY_CODES: readonly DriverCountryCode[] = ["FR", "IN", "GB", "US", "PL"];
 
 function isDriverCountryCode(value: string): value is DriverCountryCode {
   return DRIVER_COUNTRY_CODES.includes(value as DriverCountryCode);
