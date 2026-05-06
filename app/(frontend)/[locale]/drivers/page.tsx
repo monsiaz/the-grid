@@ -59,6 +59,17 @@ function normalizeDriver(doc: unknown): DriverRowData | null {
       ? candidate.teamLogo
       : null;
 
+  const teamLogos = Array.isArray(candidate.teamLogos)
+    ? (candidate.teamLogos as unknown[])
+        .filter(
+          (entry): entry is { logo: string } =>
+            !!entry &&
+            typeof entry === "object" &&
+            typeof (entry as Record<string, unknown>).logo === "string" &&
+            Boolean((entry as Record<string, unknown>).logo),
+        )
+    : null;
+
   if (
     typeof slug !== "string" ||
     typeof name !== "string" ||
@@ -87,6 +98,7 @@ function normalizeDriver(doc: unknown): DriverRowData | null {
     flags,
     instagramUrl,
     teamLogo,
+    teamLogos: teamLogos && teamLogos.length > 0 ? teamLogos : null,
     gridRow,
   };
 }
