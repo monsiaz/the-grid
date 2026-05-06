@@ -71,7 +71,7 @@ export default async function Home({
 
   const payload = await getPayloadClient();
   const [homepage, siteSettings, designSettings] = await Promise.all([
-    payload.findGlobal({ slug: "homepage", locale }),
+    payload.findGlobal({ slug: "homepage", locale, depth: 1 }),
     payload.findGlobal({ slug: "site-settings", locale }),
     getDesignSettings(),
   ]);
@@ -83,63 +83,93 @@ export default async function Home({
     image: string;
     imageFocalPoint?: string | null;
   };
+  type NewsDoc = {
+    slug?: string;
+    title?: string;
+    excerpt?: string;
+    listImage?: string;
+    listImageFocalPoint?: string | null;
+    heroImage?: string;
+    heroImageFocalPoint?: string | null;
+  };
   const HOME_NEWS_TARGET = 6;
-  const rawNewsItems: HomepageNewsItem[] = homepage.homepageNewsItems || [];
-  const candidateSlugs = Array.from(
-    new Set(rawNewsItems.map((i) => i.newsSlug).filter(Boolean)),
-  );
-  let validSlugs = new Set<string>();
-  if (candidateSlugs.length > 0) {
-    const existing = await payload.find({
-      collection: "news",
-      where: { slug: { in: candidateSlugs } },
-      limit: candidateSlugs.length,
-      depth: 0,
-      pagination: false,
-      locale,
-    });
-    validSlugs = new Set(
-      (existing.docs as Array<{ slug?: string }>)
-        .map((d) => d.slug)
-        .filter((s): s is string => Boolean(s)),
-    );
+
+  function mapNewsDocToItem(d: NewsDoc & { slug: string; title: string }): HomepageNewsItem {
+    return {
+      newsSlug: d.slug,
+      title: d.title,
+      excerpt: d.excerpt || "",
+      image: d.listImage || d.heroImage || "",
+      imageFocalPoint: d.listImageFocalPoint || d.heroImageFocalPoint || null,
+    };
   }
-  const curatedItems = rawNewsItems.filter((item) =>
-    validSlugs.has(item.newsSlug),
-  );
-  let homepageNewsItems: HomepageNewsItem[] = curatedItems;
-  if (homepageNewsItems.length < HOME_NEWS_TARGET) {
+
+  async function buildFallbackItems(exclude: Set<string>): Promise<HomepageNewsItem[]> {
     const latest = await payload.find({
       collection: "news",
       sort: "-date",
-      limit: HOME_NEWS_TARGET + curatedItems.length,
+      limit: HOME_NEWS_TARGET + exclude.size,
       depth: 0,
       pagination: false,
       locale,
     });
-    type NewsDoc = {
-      slug?: string;
-      title?: string;
-      excerpt?: string;
-      listImage?: string;
-      listImageFocalPoint?: string | null;
-      heroImage?: string;
-      heroImageFocalPoint?: string | null;
-    };
-    const used = new Set(curatedItems.map((i) => i.newsSlug));
-    const fallback: HomepageNewsItem[] = (latest.docs as NewsDoc[])
+    return (latest.docs as NewsDoc[])
       .filter((d): d is NewsDoc & { slug: string; title: string } =>
-        Boolean(d.slug && d.title) && !used.has(d.slug as string),
+        Boolean(d.slug && d.title) && !exclude.has(d.slug as string),
       )
-      .map((d) => ({
-        newsSlug: d.slug,
-        title: d.title,
-        excerpt: d.excerpt || "",
-        image: d.listImage || d.heroImage || "",
-        imageFocalPoint: d.listImageFocalPoint || d.heroImageFocalPoint || null,
-      }))
-      .filter((d) => d.image);
-    homepageNewsItems = [...curatedItems, ...fallback].slice(0, HOME_NEWS_TARGET);
+      .map(mapNewsDocToItem)
+      .filter((d) => d.image)
+      .slice(0, HOME_NEWS_TARGET);
+  }
+
+  let homepageNewsItems: HomepageNewsItem[];
+
+  const featuredDocs = (homepage.homepageFeaturedNews as NewsDoc[] | null | undefined) || [];
+  const featuredItems = featuredDocs
+    .filter((d): d is NewsDoc & { slug: string; title: string } =>
+      Boolean(d.slug && d.title),
+    )
+    .map(mapNewsDocToItem)
+    .filter((d) => d.image)
+    .slice(0, HOME_NEWS_TARGET);
+
+  if (featuredItems.length > 0) {
+    if (featuredItems.length < HOME_NEWS_TARGET) {
+      const used = new Set(featuredItems.map((i) => i.newsSlug));
+      const fallback = await buildFallbackItems(used);
+      homepageNewsItems = [...featuredItems, ...fallback].slice(0, HOME_NEWS_TARGET);
+    } else {
+      homepageNewsItems = featuredItems;
+    }
+  } else {
+    const rawNewsItems: HomepageNewsItem[] = (homepage.homepageNewsItems as HomepageNewsItem[] | undefined) || [];
+    const candidateSlugs = Array.from(
+      new Set(rawNewsItems.map((i) => i.newsSlug).filter(Boolean)),
+    );
+    let validSlugs = new Set<string>();
+    if (candidateSlugs.length > 0) {
+      const existing = await payload.find({
+        collection: "news",
+        where: { slug: { in: candidateSlugs } },
+        limit: candidateSlugs.length,
+        depth: 0,
+        pagination: false,
+        locale,
+      });
+      validSlugs = new Set(
+        (existing.docs as Array<{ slug?: string }>)
+          .map((d) => d.slug)
+          .filter((s): s is string => Boolean(s)),
+      );
+    }
+    const curatedItems = rawNewsItems.filter((item) => validSlugs.has(item.newsSlug));
+    if (curatedItems.length < HOME_NEWS_TARGET) {
+      const used = new Set(curatedItems.map((i) => i.newsSlug));
+      const fallback = await buildFallbackItems(used);
+      homepageNewsItems = [...curatedItems, ...fallback].slice(0, HOME_NEWS_TARGET);
+    } else {
+      homepageNewsItems = curatedItems.slice(0, HOME_NEWS_TARGET);
+    }
   }
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/" });
   const orderedSections = resolveSectionOrder(
