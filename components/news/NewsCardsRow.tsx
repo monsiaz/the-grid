@@ -26,7 +26,7 @@ export default function NewsCardsRow({
 
   return (
     <motion.div
-      className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 min-[1280px]:grid-cols-6"
+      className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-6"
       variants={staggerContainer}
       initial="hidden"
       animate="visible"
@@ -36,17 +36,17 @@ export default function NewsCardsRow({
         const isSecondLast = idx === total - 2;
 
         // Default desktop: each card spans 2 of 6 cols → 3 per row.
-        let desktopSpan = "min-[1280px]:col-span-2";
+        let desktopSpan = "lg:col-span-2";
         // Default tablet (2-col): each card spans 1.
         let tabletSpan = "";
 
         if (remainder === 1 && isLast) {
           // Lone trailing card → fill the whole row on every breakpoint.
-          desktopSpan = "min-[1280px]:col-span-6";
+          desktopSpan = "lg:col-span-6";
           tabletSpan = "sm:col-span-2";
         } else if (remainder === 2 && (isLast || isSecondLast)) {
           // Two trailing cards → split the row 50/50 on desktop (no gap).
-          desktopSpan = "min-[1280px]:col-span-3";
+          desktopSpan = "lg:col-span-3";
         }
 
         // Tablet odd-tail handling: if total is odd, the very last card spans both cols.

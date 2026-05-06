@@ -12,10 +12,9 @@ export default function middleware(request: NextRequest) {
   // `skipTrailingSlashRedirect: true` in next.config.ts ensures Next.js itself
   // never counter-redirects back, so there is no redirect loop.
   if (!pathname.endsWith("/")) {
-    return NextResponse.redirect(
-      new URL(`${pathname}/`, request.nextUrl),
-      308,
-    );
+    const redirectUrl = new URL(request.nextUrl);
+    redirectUrl.pathname = `${pathname}/`;
+    return NextResponse.redirect(redirectUrl, 308);
   }
 
   return intlMiddleware(request);
