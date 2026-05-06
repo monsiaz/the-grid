@@ -18,7 +18,11 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
         compact ? "min-h-[460px]" : "min-h-[488px]"
       } max-[900px]:min-h-0`}
     >
-      <div className="relative aspect-square w-full overflow-hidden">
+      <Link
+        href={`/drivers/${driver.slug}`}
+        aria-label={t("learnMoreSr", { name: driver.name })}
+        className="relative block aspect-square w-full overflow-hidden"
+      >
         <Image
           src={driver.image}
           alt={driver.name}
@@ -27,7 +31,7 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
           style={driver.imageFocalPoint ? { objectPosition: driver.imageFocalPoint } : undefined}
           sizes="(max-width: 700px) 100vw, (max-width: 1200px) 50vw, (max-width: 1440px) 33vw, 336px"
         />
-      </div>
+      </Link>
       <div className="flex flex-1 flex-col justify-between p-6">
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1 min-w-0 flex flex-col">

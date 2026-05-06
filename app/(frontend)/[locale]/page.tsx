@@ -75,6 +75,37 @@ export default async function Home({
     payload.findGlobal({ slug: "site-settings", locale }),
     getDesignSettings(),
   ]);
+
+  type HomepageNewsItem = {
+    newsSlug: string;
+    title: string;
+    excerpt: string;
+    image: string;
+    imageFocalPoint?: string | null;
+  };
+  const rawNewsItems: HomepageNewsItem[] = homepage.homepageNewsItems || [];
+  const candidateSlugs = Array.from(
+    new Set(rawNewsItems.map((i) => i.newsSlug).filter(Boolean)),
+  );
+  let validSlugs = new Set<string>();
+  if (candidateSlugs.length > 0) {
+    const existing = await payload.find({
+      collection: "news",
+      where: { slug: { in: candidateSlugs } },
+      limit: candidateSlugs.length,
+      depth: 0,
+      pagination: false,
+      locale,
+    });
+    validSlugs = new Set(
+      (existing.docs as Array<{ slug?: string }>)
+        .map((d) => d.slug)
+        .filter((s): s is string => Boolean(s)),
+    );
+  }
+  const homepageNewsItems = rawNewsItems.filter((item) =>
+    validSlugs.has(item.newsSlug),
+  );
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/" });
   const orderedSections = resolveSectionOrder(
     homepage.sectionOrder,
@@ -124,7 +155,7 @@ export default async function Home({
         backgroundImageFocalPoint={homepage.servicesBackgroundImageFocalPoint || null}
       />
     ),
-    news: <News items={homepage.homepageNewsItems || []} />,
+    news: <News items={homepageNewsItems} />,
     drivers: (
       <Drivers
         heading={homepage.driversHeading || undefined}

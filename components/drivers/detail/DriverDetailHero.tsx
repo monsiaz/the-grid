@@ -15,7 +15,7 @@ type DriverDetailHeroProps = {
 export default function DriverDetailHero({ driver }: DriverDetailHeroProps) {
   const t = useTranslations("drivers.detail");
   return (
-    <div className="relative w-full overflow-hidden bg-black" style={{ height: "clamp(320px, 55vh, 560px)" }}>
+    <div className="relative w-full overflow-hidden bg-black" style={{ height: "calc(100svh - 76px)", minHeight: 320 }}>
       {/* Full-width photo */}
       <Image
         src={driver.image}
