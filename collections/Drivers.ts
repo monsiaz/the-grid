@@ -119,6 +119,8 @@ export const Drivers: CollectionConfig = {
                 { label: "Great Britain", value: "GB" },
                 { label: "United States", value: "US" },
                 { label: "Poland", value: "PL" },
+                { label: "China (CN)", value: "CN" },
+                { label: "Spain (ES)", value: "ES" },
               ],
             },
             {

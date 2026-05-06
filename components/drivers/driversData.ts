@@ -1,4 +1,4 @@
-export type DriverCountryCode = "FR" | "IN" | "GB" | "US" | "PL";
+export type DriverCountryCode = "FR" | "IN" | "GB" | "US" | "PL" | "CN" | "ES";
 
 export type DriverCardData = {
   slug: string;
