@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, type Variants } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, type Variants } from "framer-motion";
 
 // ── F1-inspired animation variants ──────────────────────────────────
 
@@ -105,4 +105,4 @@ export const fastTransition = {
 };
 
 // Re-export motion for convenience
-export { motion, useScroll, useTransform };
+export { motion, AnimatePresence, useScroll, useTransform };

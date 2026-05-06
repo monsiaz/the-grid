@@ -6,8 +6,7 @@ import { buildRouteAlternates } from "@/lib/routeAlternates";
 import LocaleAlternatesData from "@/components/LocaleAlternatesData";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import NewsCardsRow from "@/components/news/NewsCardsRow";
-import NewsHeading from "@/components/news/NewsHeading";
+import NewsList from "@/components/news/NewsList";
 import { getPayloadClient } from "@/lib/payload";
 
 export const revalidate = 60;
@@ -139,10 +138,6 @@ export default async function NewsPage({
     });
   }
 
-  const filteredCards = activeFilter
-    ? newsCards.filter((c) => c.tagSlug === activeFilter)
-    : newsCards;
-
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/news" });
 
   const headingTags = tagDocs
@@ -153,10 +148,11 @@ export default async function NewsPage({
     <main id="main" className="bg-primary text-secondary w-full ">
       <Header activeItem="news" />
       <section className="mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)] pt-16 pb-20">
-        <div className="grid gap-10">
-          <NewsHeading activeFilter={activeFilter} tags={headingTags} />
-          <NewsCardsRow cards={filteredCards} variant="magazine" />
-        </div>
+        <NewsList
+          initialFilter={activeFilter}
+          tags={headingTags}
+          cards={newsCards}
+        />
       </section>
       <LocaleAlternatesData alternates={alternates} />
       <Footer
