@@ -483,6 +483,13 @@ const STATEMENTS = [
   // Drop the NOT NULL so optional selects can be left empty.
   `ALTER TABLE "news" ALTER COLUMN "category" DROP NOT NULL;`,
 
+  // ────────────────── Drivers flags enum: add CN + ES (2026-05 migration) ────────────
+  //
+  // Postgres enum `enum_drivers_flags` was created with FR/IN/GB/US/PL. The Drivers
+  // collection now also accepts CN and ES — without ALTER TYPE the INSERTs fail.
+  `ALTER TYPE "enum_drivers_flags" ADD VALUE IF NOT EXISTS 'CN';`,
+  `ALTER TYPE "enum_drivers_flags" ADD VALUE IF NOT EXISTS 'ES';`,
+
   // ────────────────── Photo credit fields (2026-05 migration) ─────────────────────────
   //
   // Localized `credit` text added to Media + News heroImage + legacy galleryImages
