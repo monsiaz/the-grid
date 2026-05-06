@@ -83,6 +83,7 @@ export default async function Home({
     image: string;
     imageFocalPoint?: string | null;
   };
+  const HOME_NEWS_TARGET = 6;
   const rawNewsItems: HomepageNewsItem[] = homepage.homepageNewsItems || [];
   const candidateSlugs = Array.from(
     new Set(rawNewsItems.map((i) => i.newsSlug).filter(Boolean)),
@@ -103,9 +104,43 @@ export default async function Home({
         .filter((s): s is string => Boolean(s)),
     );
   }
-  const homepageNewsItems = rawNewsItems.filter((item) =>
+  const curatedItems = rawNewsItems.filter((item) =>
     validSlugs.has(item.newsSlug),
   );
+  let homepageNewsItems: HomepageNewsItem[] = curatedItems;
+  if (homepageNewsItems.length < HOME_NEWS_TARGET) {
+    const latest = await payload.find({
+      collection: "news",
+      sort: "-date",
+      limit: HOME_NEWS_TARGET + curatedItems.length,
+      depth: 0,
+      pagination: false,
+      locale,
+    });
+    type NewsDoc = {
+      slug?: string;
+      title?: string;
+      excerpt?: string;
+      listImage?: string;
+      listImageFocalPoint?: string | null;
+      heroImage?: string;
+      heroImageFocalPoint?: string | null;
+    };
+    const used = new Set(curatedItems.map((i) => i.newsSlug));
+    const fallback: HomepageNewsItem[] = (latest.docs as NewsDoc[])
+      .filter((d): d is NewsDoc & { slug: string; title: string } =>
+        Boolean(d.slug && d.title) && !used.has(d.slug as string),
+      )
+      .map((d) => ({
+        newsSlug: d.slug,
+        title: d.title,
+        excerpt: d.excerpt || "",
+        image: d.listImage || d.heroImage || "",
+        imageFocalPoint: d.listImageFocalPoint || d.heroImageFocalPoint || null,
+      }))
+      .filter((d) => d.image);
+    homepageNewsItems = [...curatedItems, ...fallback].slice(0, HOME_NEWS_TARGET);
+  }
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/" });
   const orderedSections = resolveSectionOrder(
     homepage.sectionOrder,
