@@ -25,7 +25,7 @@ export default function NewsCardsRow({
     cards.length === 1
       ? "grid-cols-1 min-[1280px]:grid-cols-1"
       : variant === "magazine"
-        ? "min-[1280px]:grid-cols-3"
+        ? "min-[1280px]:grid-cols-2"
         : "min-[1280px]:grid-cols-3";
 
   return (
@@ -35,7 +35,7 @@ export default function NewsCardsRow({
       initial="hidden"
       animate="visible"
     >
-      {cards.map((card) => (
+      {cards.map((card, index) => (
         <NewsCard
           key={card.slug}
           href={`/news/${card.slug}`}
@@ -46,12 +46,11 @@ export default function NewsCardsRow({
           tag={card.tag}
           cardClassName={
             variant === "magazine"
-              ? `h-[380px] ${cards.length === 1 ? "min-[1280px]:col-span-3 min-[1280px]:h-[420px] sm:col-span-2" : ""}`
-              : "h-[360px]"
+              ? `h-[380px] ${cards.length === 1 ? "min-[1280px]:col-span-2 min-[1280px]:h-[420px] sm:col-span-2" : ""}`
+              : `h-[360px] ${index === 0 && cards.length === 2 ? "min-[1280px]:col-span-2" : ""}`
           }
           titleClassName={variant === "magazine" ? "text-[clamp(20px,1.7vw,28px)]" : ""}
           showExcerpt={variant === "magazine"}
-          sizes="(max-width:700px) 100vw, (max-width:1200px) 50vw, 380px"
         />
       ))}
     </motion.div>
