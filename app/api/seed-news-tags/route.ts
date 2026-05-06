@@ -79,8 +79,22 @@ const TAGS: TagSeed[] = [
     },
   },
   {
-    slug: "commercial",
+    slug: "features",
     order: 2,
+    accent: false,
+    names: {
+      en: "Features",
+      fr: "Parutions",
+      es: "Apariciones",
+      de: "Erscheinungen",
+      it: "Apparizioni",
+      nl: "Verschijningen",
+      zh: "刊登",
+    },
+  },
+  {
+    slug: "commercial",
+    order: 3,
     accent: true,
     names: {
       en: "Commercial",
