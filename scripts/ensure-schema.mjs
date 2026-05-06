@@ -488,9 +488,30 @@ const STATEMENTS = [
   // Localized `credit` text added to Media + News heroImage + legacy galleryImages
   // + every image-bearing news content block. Required so figcaption "©Photographer"
   // can render under each image without breaking SQL queries.
+  //
+  // `media_locales` and `news_gallery_images_locales` did not exist before this
+  // migration (Media.alt and gallery.image were both non-localized). Create them.
+  `CREATE TABLE IF NOT EXISTS "media_locales" (
+     "id" serial PRIMARY KEY,
+     "_locale" varchar NOT NULL,
+     "_parent_id" integer NOT NULL REFERENCES "media"("id") ON DELETE CASCADE,
+     "credit" varchar
+   );`,
+  `CREATE INDEX IF NOT EXISTS "media_locales_parent_idx" ON "media_locales" ("_parent_id");`,
+  `CREATE UNIQUE INDEX IF NOT EXISTS "media_locales_locale_parent_idx" ON "media_locales" ("_locale", "_parent_id");`,
   `ALTER TABLE "media_locales" ADD COLUMN IF NOT EXISTS "credit" varchar;`,
-  `ALTER TABLE "news_locales" ADD COLUMN IF NOT EXISTS "hero_image_credit" varchar;`,
+
+  `CREATE TABLE IF NOT EXISTS "news_gallery_images_locales" (
+     "id" serial PRIMARY KEY,
+     "_locale" varchar NOT NULL,
+     "_parent_id" varchar NOT NULL REFERENCES "news_gallery_images"("id") ON DELETE CASCADE,
+     "credit" varchar
+   );`,
+  `CREATE INDEX IF NOT EXISTS "news_gallery_images_locales_parent_idx" ON "news_gallery_images_locales" ("_parent_id");`,
+  `CREATE UNIQUE INDEX IF NOT EXISTS "news_gallery_images_locales_locale_parent_idx" ON "news_gallery_images_locales" ("_locale", "_parent_id");`,
   `ALTER TABLE "news_gallery_images_locales" ADD COLUMN IF NOT EXISTS "credit" varchar;`,
+
+  `ALTER TABLE "news_locales" ADD COLUMN IF NOT EXISTS "hero_image_credit" varchar;`,
   `ALTER TABLE "news_blocks_image_locales" ADD COLUMN IF NOT EXISTS "credit" varchar;`,
   `ALTER TABLE "news_blocks_two_column_locales" ADD COLUMN IF NOT EXISTS "credit" varchar;`,
   `ALTER TABLE "news_blocks_gallery_images_locales" ADD COLUMN IF NOT EXISTS "credit" varchar;`,
