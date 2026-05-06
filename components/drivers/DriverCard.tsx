@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import DriverFlags from "./DriverFlags";
 import TeamLogo from "./TeamLogo";
 import type { DriverCardData } from "./driversData";
+import { resolveTeamLogos } from "./driversData";
 
 type DriverCardProps = {
   driver: DriverCardData;
@@ -12,6 +13,7 @@ type DriverCardProps = {
 
 export default async function DriverCard({ driver, compact = false }: DriverCardProps) {
   const t = await getTranslations("drivers.card");
+  const logos = resolveTeamLogos(driver);
   return (
     <article
       className={`surface-card-soft group flex flex-col overflow-hidden transition-transform duration-300 ease-out hover:-translate-y-2 ${
@@ -42,10 +44,10 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
               {driver.name}
             </h2>
             <p className="m-0 mt-1.5 text-white/60 uppercase line-clamp-2" style={{ fontFamily: "var(--font-poppins), sans-serif", fontSize: "clamp(10px, 0.9vw, 12px)", letterSpacing: "0.15em", lineHeight: 1.4, minHeight: "2.8em" }}>{driver.role}</p>
-            <div className="mt-4 flex items-center h-[24px]">
-              {driver.teamLogo ? (
-                <TeamLogo src={driver.teamLogo} variant="card" />
-              ) : null}
+            <div className="mt-4 flex items-center gap-3 h-[24px]">
+              {logos.map((src, i) => (
+                <TeamLogo key={`${driver.slug}-logo-${i}`} src={src} variant="card" />
+              ))}
             </div>
           </div>
           <ul className="flex list-none items-center gap-1 p-0 m-0 shrink-0 mt-1.5" aria-label={t("nationalities")}>
