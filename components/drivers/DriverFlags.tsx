@@ -1,4 +1,4 @@
-import { FR, IN, GB, US, PL } from "country-flag-icons/react/3x2";
+import { FR, IN, GB, US, PL, CN, ES } from "country-flag-icons/react/3x2";
 import type { DriverCountryCode } from "./driversData";
 
 const FLAG_BY_CODE: Record<DriverCountryCode, typeof FR> = {
@@ -7,6 +7,8 @@ const FLAG_BY_CODE: Record<DriverCountryCode, typeof FR> = {
   GB,
   US,
   PL,
+  CN,
+  ES,
 };
 
 const COUNTRY_NAME: Record<DriverCountryCode, string> = {
@@ -15,6 +17,8 @@ const COUNTRY_NAME: Record<DriverCountryCode, string> = {
   GB: "United Kingdom",
   US: "United States",
   PL: "Poland",
+  CN: "China",
+  ES: "Spain",
 };
 
 type DriverFlagsProps = {
