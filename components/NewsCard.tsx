@@ -43,8 +43,8 @@ export default function NewsCard({ item, href }: { item: NewsItem; href: string 
             </motion.div>
           </div>
           <div className="grid gap-2 p-6">
-            <h3 className="display-card m-0 text-white">{item.title}</h3>
-            <p className="body-md text-soft m-0 italic">{item.excerpt}</p>
+            <h3 className="display-card m-0 text-white line-clamp-3" style={{ minHeight: "calc(1.15em * 3)" }}>{item.title}</h3>
+            <p className="body-md text-soft m-0 italic line-clamp-2">{item.excerpt}</p>
           </div>
         </article>
       </Link>
