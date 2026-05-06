@@ -270,17 +270,6 @@ export default async function DriverDetailRoutePage({ params }: DriverDetailRout
     galleryCenterFocalPoint: driverDoc.detail?.galleryCenterFocalPoint || null,
     galleryRight: driverDoc.detail?.galleryRight || null,
     galleryRightFocalPoint: driverDoc.detail?.galleryRightFocalPoint || null,
-    galleryImages: Array.isArray(driverDoc.detail?.galleryImages)
-      ? (driverDoc.detail.galleryImages as unknown[])
-          .map((item: unknown) => {
-            const entry = item as { image?: unknown; focalPoint?: unknown } | null;
-            const image = typeof entry?.image === "string" ? entry.image.trim() : "";
-            if (!image) return null;
-            const focalPoint = typeof entry?.focalPoint === "string" ? entry.focalPoint : null;
-            return { image, focalPoint };
-          })
-          .filter((item): item is { image: string; focalPoint: string | null } => item !== null)
-      : null,
     relatedNews,
     statsCards: Array.isArray(driverDoc.detail?.statsCards)
       ? (driverDoc.detail.statsCards as unknown[])

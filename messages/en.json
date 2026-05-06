@@ -192,9 +192,7 @@
       "gallery": {
         "left": "Driver gallery left",
         "center": "Driver gallery center",
-        "right": "Driver gallery right",
-        "prev": "Previous image",
-        "next": "Next image"
+        "right": "Driver gallery right"
       },
       "career": {
         "imageAlt": "Career highlight",
