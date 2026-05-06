@@ -470,11 +470,23 @@ export const Homepage: GlobalConfig = {
       },
     },
     {
+      name: "homepageFeaturedNews",
+      type: "relationship",
+      relationTo: "news",
+      hasMany: true,
+      maxRows: 6,
+      label: "Featured news (carrousel home)",
+      admin: {
+        description: "Sélection manuelle des articles à mettre en avant dans le carrousel home. Si vide, fallback automatique sur les 6 derniers articles publiés.",
+      },
+    },
+    {
       name: "homepageNewsItems",
       type: "array",
       label: "Featured News (carrousel home)",
       admin: {
-        description: "Articles mis en avant dans le carrousel d'actualités de la home. Chaque entrée = une carte avec image, titre et extrait.",
+        hidden: true,
+        description: "Legacy — préférer homepageFeaturedNews",
       },
       fields: [
         {
