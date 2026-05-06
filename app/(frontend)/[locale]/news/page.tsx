@@ -143,13 +143,6 @@ export default async function NewsPage({
     ? newsCards.filter((c) => c.tagSlug === activeFilter)
     : newsCards;
 
-  // All cards use portrait format (3 per row). No editorial bento grid.
-  const chunkSize = 3;
-  const rowCards: NewsCardData[][] = [];
-  for (let i = 0; i < filteredCards.length; i += chunkSize) {
-    rowCards.push(filteredCards.slice(i, i + chunkSize));
-  }
-
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/news" });
 
   const headingTags = tagDocs
@@ -162,13 +155,7 @@ export default async function NewsPage({
       <section className="mx-auto w-full max-w-[1344px] px-[clamp(20px,4vw,48px)] pt-16 pb-20">
         <div className="grid gap-10">
           <NewsHeading activeFilter={activeFilter} tags={headingTags} />
-          <div className="grid gap-5">
-            {rowCards
-              .filter((row) => row.length > 0)
-              .map((row, index) => (
-                <NewsCardsRow key={index} cards={row} variant="magazine" />
-              ))}
-          </div>
+          <NewsCardsRow cards={filteredCards} variant="magazine" />
         </div>
       </section>
       <LocaleAlternatesData alternates={alternates} />
