@@ -7,7 +7,6 @@ import LocaleAlternatesData from "@/components/LocaleAlternatesData";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import NewsCardsRow from "@/components/news/NewsCardsRow";
-import NewsFeaturedGrid from "@/components/news/NewsFeaturedGrid";
 import NewsHeading from "@/components/news/NewsHeading";
 import { getPayloadClient } from "@/lib/payload";
 
@@ -56,8 +55,6 @@ export default async function NewsPage({
 }) {
   const [{ locale }, { filter }] = await Promise.all([params, searchParams]);
   setRequestLocale(locale);
-  const heroVariant = "editorial" as const;
-  const rowVariant = "magazine" as const;
 
   const payload = await getPayloadClient();
   const siteSettings = await payload.findGlobal({ slug: "site-settings", locale });
@@ -75,25 +72,28 @@ export default async function NewsPage({
 
   const tagDocs: TagDoc[] = (tagsResult.docs || []) as TagDoc[];
 
-  /** Build a slug→tag lookup for fast resolution. */
   const tagBySlug = new Map<string, TagDoc>();
   for (const td of tagDocs) {
     if (td.slug) tagBySlug.set(td.slug, td);
   }
 
-  /** If the requested filter doesn't match any tag, ignore it. */
   const activeFilter: string | null =
     filter && tagBySlug.has(filter) ? filter : null;
 
+  // fallbackLocale: false prevents Payload from returning content in a different
+  // locale when the requested locale has no translation. Without this, an article
+  // only entered in NL would surface its NL title on the EN page.
   const news = await payload.find({
     collection: "news",
     sort: "-createdAt",
     limit: 100,
     locale,
     depth: 1,
-  });
+    fallbackLocale: false,
+  } as Parameters<typeof payload.find>[0]);
 
-  const newsCards: NewsCardData[] = news.docs.map((n) => {
+  const newsCards: NewsCardData[] = [];
+  for (const n of news.docs) {
     const raw = n as unknown as {
       slug: string;
       title: string;
@@ -104,6 +104,9 @@ export default async function NewsPage({
       category?: string | null;
       tag?: TagDoc | string | number | null;
     };
+
+    // Drop articles with no title in the requested locale.
+    if (!raw.title || !raw.title.trim()) continue;
 
     const manualExcerpt = raw.excerpt ?? null;
     let excerpt = manualExcerpt ? manualExcerpt.trim() : "";
@@ -116,7 +119,6 @@ export default async function NewsPage({
       excerpt = firstLine.length > 180 ? `${firstLine.slice(0, 177).trimEnd()}…` : firstLine;
     }
 
-    // Resolve tag: relationship (object after depth=1) > legacy category fallback.
     let resolved: TagDoc | null = null;
     if (raw.tag && typeof raw.tag === "object" && "slug" in raw.tag) {
       resolved = raw.tag as TagDoc;
@@ -124,7 +126,7 @@ export default async function NewsPage({
       resolved = tagBySlug.get(raw.category) || null;
     }
 
-    return {
+    newsCards.push({
       slug: raw.slug,
       title: raw.title,
       image: raw.listImage,
@@ -134,33 +136,18 @@ export default async function NewsPage({
       tag: resolved
         ? { label: resolved.name || resolved.slug || "", accent: !!resolved.accent }
         : null,
-    };
-  });
+    });
+  }
 
   const filteredCards = activeFilter
     ? newsCards.filter((c) => c.tagSlug === activeFilter)
     : newsCards;
 
-  let featuredCards: NewsCardData[];
-  let rowCards: NewsCardData[][];
-
-  if (activeFilter) {
-    // Filtered view: no hero bento, just a clean 4-per-row stream of matches.
-    featuredCards = [];
-    rowCards = [];
-    const chunkSize = rowVariant === "magazine" ? 2 : 3;
-    for (let i = 0; i < filteredCards.length; i += chunkSize) {
-      rowCards.push(filteredCards.slice(i, i + chunkSize));
-    }
-  } else {
-    // Use a larger, more editorial hero area on desktop, then flow the rest below.
-    const featuredCount = 6;
-    const chunkSize = 2;
-    featuredCards = filteredCards.slice(0, featuredCount);
-    rowCards = [];
-    for (let i = featuredCount; i < filteredCards.length; i += chunkSize) {
-      rowCards.push(filteredCards.slice(i, i + chunkSize));
-    }
+  // All cards use portrait format (3 per row). No editorial bento grid.
+  const chunkSize = 3;
+  const rowCards: NewsCardData[][] = [];
+  for (let i = 0; i < filteredCards.length; i += chunkSize) {
+    rowCards.push(filteredCards.slice(i, i + chunkSize));
   }
 
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/news" });
@@ -176,11 +163,10 @@ export default async function NewsPage({
         <div className="grid gap-10">
           <NewsHeading activeFilter={activeFilter} tags={headingTags} />
           <div className="grid gap-5">
-            <NewsFeaturedGrid cards={featuredCards} variant={heroVariant} />
             {rowCards
               .filter((row) => row.length > 0)
               .map((row, index) => (
-                <NewsCardsRow key={index} cards={row} variant={rowVariant} />
+                <NewsCardsRow key={index} cards={row} variant="magazine" />
               ))}
           </div>
         </div>
