@@ -99,7 +99,7 @@ export default async function sitemap(props: {
 
     const [drivers, news] = await Promise.all([
       payload.find({ collection: "drivers", limit: 200, depth: 0, locale }),
-      payload.find({ collection: "news", limit: 500, depth: 0, sort: "-date", locale }),
+      payload.find({ collection: "news", limit: 500, depth: 0, sort: "-createdAt", locale }),
     ]);
 
     for (const doc of drivers.docs) {
