@@ -102,34 +102,12 @@ export const Drivers: CollectionConfig = {
               name: "imageFocalPoint",
               label: "Grid card image — cadrage",
             }),
-            {
-              name: "teamLogos",
-              type: "array",
-              label: "Logos écurie (jusqu'à 3)",
-              maxRows: 3,
-              admin: {
-                description:
-                  "Logos des écuries affichés sous le nom du pilote (jusqu'à 3 côte à côte). Utilisez des fichiers PNG ou SVG avec fond transparent. Pour équilibrer visuellement des logos de proportions différentes, ajoutez de la marge transparente autour des logos les plus massifs avant upload.",
-              },
-              fields: [
-                logoField({
-                  name: "logo",
-                  label: "Logo",
-                }),
-              ],
-            },
-            {
+            logoField({
               name: "teamLogo",
-              type: "text",
-              label: "Logo écurie (legacy)",
-              admin: {
-                hidden: true,
-                description: "Champ historique — conservé pour compatibilité. Utilisez 'Logos écurie' ci-dessus.",
-                components: {
-                  Field: "@/components/admin/LogoPicker",
-                },
-              },
-            },
+              label: "Logo écurie",
+              description:
+                "Logo de l'écurie affiché sous le nom du pilote. 💡 ASTUCE FORMAT : Utilisez des fichiers PNG ou SVG avec fond transparent. Pour équilibrer visuellement des logos de proportions différentes (ex: un logo Red Bull 'carré' paraîtra plus gros qu'un logo Alpine 'allongé'), n'hésitez pas à ajouter de la marge transparente autour des logos les plus massifs avant upload. Les couleurs d'origine sont conservées.",
+            }),
             {
               name: "flags",
               type: "select",

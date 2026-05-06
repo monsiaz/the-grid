@@ -9,17 +9,7 @@ export type DriverCardData = {
   flags: DriverCountryCode[];
   instagramUrl: string;
   teamLogo?: string | null;
-  teamLogos?: { logo: string }[] | null;
 };
-
-/** Returns a normalized list of logo URLs, merging teamLogos (new) with teamLogo legacy fallback. */
-export function resolveTeamLogos(driver: Pick<DriverCardData, "teamLogos" | "teamLogo">): string[] {
-  if (driver.teamLogos && driver.teamLogos.length > 0) {
-    return driver.teamLogos.map((entry) => entry.logo).filter(Boolean);
-  }
-  if (driver.teamLogo) return [driver.teamLogo];
-  return [];
-}
 
 export type DriverRelatedNews = {
   /** If set, the card becomes a <Link> to /news/<slug>/. */

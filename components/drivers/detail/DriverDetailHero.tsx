@@ -7,7 +7,6 @@ import { useTranslations } from "next-intl";
 import DriverFlags from "../DriverFlags";
 import TeamLogo from "../TeamLogo";
 import type { DriverCardData } from "../driversData";
-import { resolveTeamLogos } from "../driversData";
 
 type DriverDetailHeroProps = {
   driver: DriverCardData;
@@ -15,7 +14,6 @@ type DriverDetailHeroProps = {
 
 export default function DriverDetailHero({ driver }: DriverDetailHeroProps) {
   const t = useTranslations("drivers.detail");
-  const logos = resolveTeamLogos(driver);
   return (
     <div className="relative w-full overflow-hidden bg-black" style={{ height: "calc(100svh - 76px)", minHeight: 320 }}>
       {/* Full-width photo */}
@@ -67,11 +65,9 @@ export default function DriverDetailHero({ driver }: DriverDetailHeroProps) {
             >
               {driver.role}
             </p>
-            {logos.length > 0 ? (
-              <div className="mt-4 flex items-center gap-3 h-[32px]">
-                {logos.map((src, i) => (
-                  <TeamLogo key={`${driver.slug}-hero-logo-${i}`} src={src} variant="hero" />
-                ))}
+            {driver.teamLogo ? (
+              <div className="mt-4 flex items-center h-[32px]">
+                <TeamLogo src={driver.teamLogo} variant="hero" />
               </div>
             ) : null}
           </div>
