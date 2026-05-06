@@ -482,6 +482,58 @@ const STATEMENTS = [
   // without selecting a category sends NULL → violates the NOT NULL constraint → 500.
   // Drop the NOT NULL so optional selects can be left empty.
   `ALTER TABLE "news" ALTER COLUMN "category" DROP NOT NULL;`,
+
+  // ────────────────── Photo credit fields (2026-05 migration) ─────────────────────────
+  //
+  // Localized `credit` text added to Media + News heroImage + legacy galleryImages
+  // + every image-bearing news content block. Required so figcaption "©Photographer"
+  // can render under each image without breaking SQL queries.
+  `ALTER TABLE "media_locales" ADD COLUMN IF NOT EXISTS "credit" varchar;`,
+  `ALTER TABLE "news_locales" ADD COLUMN IF NOT EXISTS "hero_image_credit" varchar;`,
+  `ALTER TABLE "news_gallery_images_locales" ADD COLUMN IF NOT EXISTS "credit" varchar;`,
+  `ALTER TABLE "news_blocks_image_locales" ADD COLUMN IF NOT EXISTS "credit" varchar;`,
+  `ALTER TABLE "news_blocks_two_column_locales" ADD COLUMN IF NOT EXISTS "credit" varchar;`,
+  `ALTER TABLE "news_blocks_gallery_images_locales" ADD COLUMN IF NOT EXISTS "credit" varchar;`,
+
+  // ────────────────── Drivers: teamLogos array (2026-05 migration) ──────────────────
+  //
+  // Migration teamLogo (single text) → teamLogos (array of {logo: text}, max 3).
+  // Legacy `team_logo` column is kept; new array stored in dedicated child table.
+  `CREATE TABLE IF NOT EXISTS "drivers_team_logos" (
+     "_order" integer NOT NULL,
+     "_parent_id" integer NOT NULL REFERENCES "drivers"("id") ON DELETE CASCADE,
+     "id" varchar PRIMARY KEY,
+     "logo" varchar
+   );`,
+  `CREATE INDEX IF NOT EXISTS "drivers_team_logos_parent_idx" ON "drivers_team_logos" ("_parent_id");`,
+
+  // ────────────────── Drivers: detail.galleryImages array (2026-05 migration) ───────
+  //
+  // Migration of detail.galleryLeft/Center/Right (3 fixed text fields) →
+  // detail.galleryImages (array of {image, focalPoint}, max 12). Lives inside
+  // the `detail` group so the table is `drivers_detail_gallery_images`.
+  `CREATE TABLE IF NOT EXISTS "drivers_detail_gallery_images" (
+     "_order" integer NOT NULL,
+     "_parent_id" integer NOT NULL REFERENCES "drivers"("id") ON DELETE CASCADE,
+     "id" varchar PRIMARY KEY,
+     "image" varchar,
+     "focal_point" varchar
+   );`,
+  `CREATE INDEX IF NOT EXISTS "drivers_detail_gallery_images_parent_idx" ON "drivers_detail_gallery_images" ("_parent_id");`,
+
+  // ────────────────── Homepage: featured news relationship (2026-05 migration) ──────
+  //
+  // New `homepageFeaturedNews` (relationship hasMany news, max 6). Payload stores
+  // hasMany relationships in a polymorphic `<global>_rels` table.
+  `CREATE TABLE IF NOT EXISTS "homepage_rels" (
+     "id" serial PRIMARY KEY,
+     "order" integer,
+     "parent_id" integer NOT NULL REFERENCES "homepage"("id") ON DELETE CASCADE,
+     "path" varchar NOT NULL,
+     "news_id" integer
+   );`,
+  `CREATE INDEX IF NOT EXISTS "homepage_rels_parent_idx" ON "homepage_rels" ("parent_id");`,
+  `CREATE INDEX IF NOT EXISTS "homepage_rels_news_idx" ON "homepage_rels" ("news_id");`,
 ];
 
 /** Neon/serverless Postgres often returns transient errors during Vercel build (cold compute, OOM, connection limits). */
