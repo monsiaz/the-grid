@@ -232,6 +232,14 @@ export const Media: CollectionConfig = {
       },
     },
     {
+      name: "credit",
+      type: "text",
+      localized: true,
+      admin: {
+        description: "Crédit photo affiché discrètement sous l'image (ex: ©Grégoire Truchet). Optionnel.",
+      },
+    },
+    {
       name: "caption",
       type: "textarea",
       admin: {

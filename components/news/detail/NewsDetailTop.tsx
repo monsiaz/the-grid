@@ -21,34 +21,42 @@ import {
 
 type NewsDetailTopProps = {
   detail: NewsDetailData;
+  heroImageCredit?: string | null;
 };
 
-export default function NewsDetailTop({ detail }: NewsDetailTopProps) {
+export default function NewsDetailTop({ detail, heroImageCredit }: NewsDetailTopProps) {
   const t = useTranslations("news.detail");
   return (
     <div className="grid items-start gap-10 min-[1100px]:grid-cols-[433px_minmax(0,1fr)]">
-      <motion.div
-        className="surface-card-soft relative aspect-[4/5] w-full overflow-hidden min-[700px]:h-[512px] min-[700px]:aspect-auto"
-        variants={slideInLeft}
-        initial="hidden"
-        animate="visible"
-        transition={smoothTransition}
-      >
+      <figure className="m-0 grid gap-2">
         <motion.div
-          className="relative h-full w-full"
-          whileHover={{ scale: 1.04 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="surface-card-soft relative aspect-[4/5] w-full overflow-hidden min-[700px]:h-[512px] min-[700px]:aspect-auto"
+          variants={slideInLeft}
+          initial="hidden"
+          animate="visible"
+          transition={smoothTransition}
         >
-          <SafeNewsImage
-            src={detail.heroImage}
-            alt={detail.title}
-            fill
-            className="object-cover"
-            style={detail.heroImageFocalPoint ? { objectPosition: detail.heroImageFocalPoint } : undefined}
-            sizes="(max-width: 1099px) 100vw, 433px"
-          />
+          <motion.div
+            className="relative h-full w-full"
+            whileHover={{ scale: 1.04 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            <SafeNewsImage
+              src={detail.heroImage}
+              alt={detail.title}
+              fill
+              className="object-cover"
+              style={detail.heroImageFocalPoint ? { objectPosition: detail.heroImageFocalPoint } : undefined}
+              sizes="(max-width: 1099px) 100vw, 433px"
+            />
+          </motion.div>
         </motion.div>
-      </motion.div>
+        {heroImageCredit ? (
+          <figcaption className="m-0 pt-2 text-[12px] italic text-white/40">
+            {heroImageCredit}
+          </figcaption>
+        ) : null}
+      </figure>
 
       <motion.div
         className="grid gap-10"

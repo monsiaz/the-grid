@@ -145,6 +145,14 @@ export const News: CollectionConfig = {
       label: "Hero image — cadrage",
     }),
     {
+      name: "heroImageCredit",
+      type: "text",
+      localized: true,
+      admin: {
+        description: "Crédit photo de l'image hero (ex: ©Grégoire Truchet). Affiché discrètement sous l'image. Optionnel.",
+      },
+    },
+    {
       name: "introParagraphs",
       type: "textarea",
       localized: true,
@@ -188,6 +196,14 @@ export const News: CollectionConfig = {
           description: "Photo affichée dans la galerie de l'article.",
         }),
         focalPointField(),
+        {
+          name: "credit",
+          type: "text",
+          localized: true,
+          admin: {
+            description: "Crédit photo affiché discrètement sous l'image (ex: ©Grégoire Truchet). Optionnel.",
+          },
+        },
       ],
     },
   ],

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Link } from "@/i18n/navigation";
 import SafeNewsImage from "../SafeNewsImage";
 import {
@@ -9,6 +10,7 @@ import {
   smoothTransition,
   viewport,
 } from "../../motion";
+import NewsGalleryLightbox from "./NewsGalleryLightbox";
 
 /**
  * Type shapes mirror the Payload block definitions in `blocks/newsBlocks.ts`.
@@ -41,6 +43,7 @@ type ImageBlockData = {
   image: string;
   imageFocalPoint?: string | null;
   caption?: string | null;
+  credit?: string | null;
   ratio?: "21:9" | "16:9" | "4:3" | "3:2" | "1:1" | "4:5" | null;
   rounded?: boolean | null;
 };
@@ -53,13 +56,14 @@ type TwoColumnBlockData = {
   imageFocalPoint?: string | null;
   text: string;
   caption?: string | null;
+  credit?: string | null;
 };
 
 type GalleryBlockData = {
   blockType: "gallery";
   id?: string | null;
   columns?: "2" | "3" | "4" | "5" | null;
-  images: { image: string; imageFocalPoint?: string | null; alt?: string | null }[];
+  images: { image: string; imageFocalPoint?: string | null; alt?: string | null; credit?: string | null }[];
 };
 
 type StatsBlockData = {
@@ -257,6 +261,9 @@ function ImageRenderer({ block, title }: { block: ImageBlockData; title: string 
           {block.caption}
         </figcaption>
       ) : null}
+      {block.credit ? (
+        <p className="m-0 pt-2 text-[12px] italic text-white/40">{block.credit}</p>
+      ) : null}
     </motion.figure>
   );
 }
@@ -286,6 +293,9 @@ function TwoColumnRenderer({ block, title }: { block: TwoColumnBlockData; title:
         <figcaption className="body-sm m-0 italic text-secondary/60">
           {block.caption}
         </figcaption>
+      ) : null}
+      {block.credit ? (
+        <p className="m-0 pt-2 text-[12px] italic text-white/40">{block.credit}</p>
       ) : null}
     </motion.figure>
   );
@@ -326,40 +336,61 @@ const GALLERY_COLS: Record<string, string> = {
 };
 
 function GalleryRenderer({ block, title }: { block: GalleryBlockData; title: string }) {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   if (!block.images?.length) return null;
   const cols = GALLERY_COLS[block.columns ?? "3"] ?? GALLERY_COLS["3"];
+  const lightboxImages = block.images.map((item, i) => ({
+    src: item.image,
+    alt: item.alt || `${title} — ${i + 1}`,
+    credit: item.credit ?? null,
+  }));
   return (
-    <motion.div
-      className={`grid grid-cols-2 gap-5 ${cols}`}
-      variants={staggerContainer}
-      initial="hidden"
-      whileInView="visible"
-      viewport={viewport}
-    >
-      {block.images.map((item, i) => (
-        <motion.div
-          key={`${item.image}-${i}`}
-          className="relative aspect-[321/380] w-full overflow-hidden rounded-[20px]"
-          variants={fadeUp}
-          transition={smoothTransition}
-        >
+    <>
+      <motion.div
+        className={`grid grid-cols-2 gap-5 ${cols}`}
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewport}
+      >
+        {block.images.map((item, i) => (
           <motion.div
-            className="relative h-full w-full"
-            whileHover={{ scale: 1.06 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
+            key={`${item.image}-${i}`}
+            className="relative aspect-[321/380] w-full overflow-hidden rounded-[20px]"
+            variants={fadeUp}
+            transition={smoothTransition}
           >
-            <SafeNewsImage
-              src={item.image}
-              alt={item.alt || `${title} — ${i + 1}`}
-              fill
-              className="object-cover"
-              style={item.imageFocalPoint ? { objectPosition: item.imageFocalPoint } : undefined}
-              sizes="(max-width: 899px) 50vw, 20vw"
-            />
+            <button
+              type="button"
+              aria-label={item.alt || `${title} — ${i + 1}`}
+              className="relative block h-full w-full cursor-zoom-in"
+              onClick={() => setLightboxIndex(i)}
+            >
+              <motion.div
+                className="relative h-full w-full"
+                whileHover={{ scale: 1.06 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                <SafeNewsImage
+                  src={item.image}
+                  alt={item.alt || `${title} — ${i + 1}`}
+                  fill
+                  className="object-cover"
+                  style={item.imageFocalPoint ? { objectPosition: item.imageFocalPoint } : undefined}
+                  sizes="(max-width: 899px) 50vw, 20vw"
+                />
+              </motion.div>
+            </button>
           </motion.div>
-        </motion.div>
-      ))}
-    </motion.div>
+        ))}
+      </motion.div>
+      <NewsGalleryLightbox
+        images={lightboxImages}
+        openIndex={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        onNavigate={setLightboxIndex}
+      />
+    </>
   );
 }
 
