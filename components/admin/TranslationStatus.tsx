@@ -62,30 +62,49 @@ export default function TranslationStatus() {
       setError(null);
     });
 
-    (async () => {
+    const probe = async () => {
+      const results: Record<Locale, boolean> = {
+        en: false, fr: false, es: false, de: false, it: false, nl: false, zh: false,
+      };
+      await Promise.all(
+        locales.map(async (loc) => {
+          if (loc === defaultLocale) { results[loc] = true; return; }
+          const res = await fetch(
+            `/api/${slug}/${docId}?locale=${loc}&fallback-locale=null&depth=0`,
+            { credentials: "include", cache: "no-store" },
+          );
+          if (!res.ok) { results[loc] = false; return; }
+          const doc = (await res.json()) as Record<string, unknown>;
+          results[loc] = probeFields.some((f) => hasValue(getAtPath(doc, f)));
+        }),
+      );
+      return results;
+    };
+
+    let pollHandle: ReturnType<typeof setTimeout> | null = null;
+    const tick = async (attempt: number) => {
       try {
-        const results: Record<Locale, boolean> = {
-          en: false, fr: false, es: false, de: false, it: false, nl: false, zh: false,
-        };
-        await Promise.all(
-          locales.map(async (loc) => {
-            if (loc === defaultLocale) { results[loc] = true; return; }
-            const res = await fetch(
-              `/api/${slug}/${docId}?locale=${loc}&fallback-locale=null&depth=0`,
-              { credentials: "include", cache: "no-store" },
-            );
-            if (!res.ok) { results[loc] = false; return; }
-            const doc = (await res.json()) as Record<string, unknown>;
-            results[loc] = probeFields.some((f) => hasValue(getAtPath(doc, f)));
-          }),
-        );
-        if (!cancelled) { setTranslated(results); setStatus("ready"); }
+        const results = await probe();
+        if (cancelled) return;
+        setTranslated(results);
+        setStatus("ready");
+        const allDone = locales.every((l) => results[l]);
+        // Poll while not all locales are translated yet — handles the async
+        // auto-translate that runs in the background after a save (typically
+        // 30-90s on Vercel). Stop after ~3 min to avoid a forever-poll.
+        if (!allDone && attempt < 18) {
+          pollHandle = setTimeout(() => tick(attempt + 1), 10_000);
+        }
       } catch (e) {
         if (!cancelled) { setError(e instanceof Error ? e.message : String(e)); setStatus("error"); }
       }
-    })();
+    };
+    tick(0);
 
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+      if (pollHandle) clearTimeout(pollHandle);
+    };
   }, [docId, slug, probeFields]);
 
   if (!docId || !slug || !probeFields) return null;
