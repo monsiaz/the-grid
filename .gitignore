@@ -55,3 +55,7 @@ payload-types.ts
 *.pdf
 /terminals/
 /backups/
+
+# claude code worktrees + playwright artifacts
+/.claude/worktrees/
+/.playwright-mcp/

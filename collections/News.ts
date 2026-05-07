@@ -55,7 +55,10 @@ export const News: CollectionConfig = {
     },
     components: {
       edit: {
-        beforeDocumentControls: ["@/components/admin/TranslationStatus"],
+        beforeDocumentControls: [
+          "@/components/admin/NewsLocaleWarning",
+          "@/components/admin/TranslationStatus",
+        ],
       },
     },
   },
