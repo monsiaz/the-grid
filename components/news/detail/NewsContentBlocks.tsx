@@ -246,7 +246,7 @@ function ImageRenderer({ block, title }: { block: ImageBlockData; title: string 
       variants={fadeUp}
       transition={smoothTransition}
     >
-      <div className={`relative w-full overflow-hidden ${ratio} ${rounded}`}>
+      <div className={`group relative w-full overflow-hidden ${ratio} ${rounded}`}>
         <SafeNewsImage
           src={block.image}
           alt={block.caption || title}
@@ -255,14 +255,21 @@ function ImageRenderer({ block, title }: { block: ImageBlockData; title: string 
           style={block.imageFocalPoint ? { objectPosition: block.imageFocalPoint } : undefined}
           sizes="(max-width: 1344px) 100vw, 1344px"
         />
+        {block.credit ? (
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-end px-4 pt-8 pb-3 bg-gradient-to-t from-black/75 to-transparent opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100"
+            aria-hidden
+          >
+            <span className="text-[12px] italic text-white/90 drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">
+              {block.credit}
+            </span>
+          </div>
+        ) : null}
       </div>
       {block.caption ? (
         <figcaption className="body-sm m-0 italic text-secondary/60">
           {block.caption}
         </figcaption>
-      ) : null}
-      {block.credit ? (
-        <p className="m-0 pt-2 text-[12px] italic text-white/40">{block.credit}</p>
       ) : null}
     </motion.figure>
   );
@@ -279,7 +286,7 @@ function TwoColumnRenderer({ block, title }: { block: TwoColumnBlockData; title:
       variants={fadeUp}
       transition={smoothTransition}
     >
-      <div className="surface-card-soft relative aspect-[4/5] w-full overflow-hidden rounded-[24px]">
+      <div className="surface-card-soft group relative aspect-[4/5] w-full overflow-hidden rounded-[24px]">
         <SafeNewsImage
           src={block.image}
           alt={block.caption || title}
@@ -288,14 +295,21 @@ function TwoColumnRenderer({ block, title }: { block: TwoColumnBlockData; title:
           style={block.imageFocalPoint ? { objectPosition: block.imageFocalPoint } : undefined}
           sizes="(max-width: 900px) 100vw, 50vw"
         />
+        {block.credit ? (
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-end px-4 pt-8 pb-3 bg-gradient-to-t from-black/75 to-transparent opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100"
+            aria-hidden
+          >
+            <span className="text-[12px] italic text-white/90 drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">
+              {block.credit}
+            </span>
+          </div>
+        ) : null}
       </div>
       {block.caption ? (
         <figcaption className="body-sm m-0 italic text-secondary/60">
           {block.caption}
         </figcaption>
-      ) : null}
-      {block.credit ? (
-        <p className="m-0 pt-2 text-[12px] italic text-white/40">{block.credit}</p>
       ) : null}
     </motion.figure>
   );
@@ -356,7 +370,7 @@ function GalleryRenderer({ block, title }: { block: GalleryBlockData; title: str
         {block.images.map((item, i) => (
           <motion.div
             key={`${item.image}-${i}`}
-            className="relative aspect-[321/380] w-full overflow-hidden rounded-[20px]"
+            className="group relative aspect-[321/380] w-full overflow-hidden rounded-[20px]"
             variants={fadeUp}
             transition={smoothTransition}
           >
@@ -381,6 +395,16 @@ function GalleryRenderer({ block, title }: { block: GalleryBlockData; title: str
                 />
               </motion.div>
             </button>
+            {item.credit ? (
+              <div
+                className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-end px-3 pt-6 pb-2 bg-gradient-to-t from-black/75 to-transparent opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100"
+                aria-hidden
+              >
+                <span className="text-[11px] italic text-white/90 drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">
+                  {item.credit}
+                </span>
+              </div>
+            ) : null}
           </motion.div>
         ))}
       </motion.div>
