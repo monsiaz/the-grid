@@ -333,7 +333,8 @@ async function translateHandler(request: Request) {
             locale: locale as never,
             data: target as never,
             depth: 0,
-          overrideAccess: true,
+            overrideAccess: true,
+            context: { fromAutoTranslate: true } as never,
           });
           log.push(`  ${c.slug}/${sourceDoc.id} ${locale}: ${count} updated`);
         }

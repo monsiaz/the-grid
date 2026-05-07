@@ -251,10 +251,11 @@ export const News: CollectionConfig = {
       }: {
         data: Record<string, unknown>;
         originalDoc?: Record<string, unknown>;
-        req: { locale?: string | null; payloadAPI?: string };
+        req: { locale?: string | null; payloadAPI?: string; context?: { fromAutoTranslate?: boolean } };
         operation: "create" | "update";
       }) => {
         if (operation !== "update") return data;
+        if (req?.context?.fromAutoTranslate) return data;
         const locale = req?.locale;
         if (!locale || locale === defaultLocale) return data;
         if (!hasLocalizedTextChange({ doc: data, previousDoc: originalDoc, paths: NEWS_LOCALIZED_TEXT_PATHS })) {
