@@ -63,7 +63,10 @@ function walkLocalizedFields(
     if (type === "blocks" && Array.isArray(field.blocks)) {
       for (const block of field.blocks) {
         if (Array.isArray(block.fields)) {
-          walkLocalizedFields(block.fields, [...pathStack, name as string, "[]", block.slug], onField);
+          // Use a `?:slug` segment so the extractor knows to FILTER the array
+          // by blockType (Payload stores blocks as `{blockType, ...fields}`,
+          // not nested under a `slug` key) instead of descending into a key.
+          walkLocalizedFields(block.fields, [...pathStack, name as string, "[]", `?:${block.slug}`], onField);
         }
       }
       continue;
@@ -89,6 +92,14 @@ function extractValues(doc: unknown, pathStack: PathSegment[]) {
         for (let i = 0; i < node.length; i++) {
           recurse(node[i], [...idxPath, i], rest);
         }
+      }
+      return;
+    }
+    if (typeof head === "string" && head.startsWith("?:")) {
+      // Block-type filter: only descend if blockType matches; consume the segment.
+      const wanted = head.slice(2);
+      if (node && typeof node === "object" && (node as AnyRecord).blockType === wanted) {
+        recurse(node, idxPath, rest);
       }
       return;
     }
