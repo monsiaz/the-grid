@@ -122,9 +122,10 @@ function RelatedNewsShowcase({
 }: RelatedNewsShowcaseProps) {
   if (items.length === 0) return null;
 
-  const [featuredItem, ...secondaryItems] = items;
-
-  if (secondaryItems.length === 0) {
+  // 1–2 items: render as normal-sized cards in a max-width grid so the section
+  // doesn't blow up into a single huge banner. Keeps a consistent reading
+  // rhythm whether the driver has 1, 2, or many attached articles.
+  if (items.length <= 2) {
     return (
       <div className="grid gap-4">
         <div className="flex items-center gap-4">
@@ -132,17 +133,25 @@ function RelatedNewsShowcase({
           <div className="h-px flex-1 bg-white/10" />
         </div>
         <motion.div
-          className="grid"
+          className={`grid gap-4 ${items.length === 2 ? "min-[680px]:grid-cols-2" : "max-w-[480px]"}`}
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
         >
-          <RelatedNewsShowcaseCard item={featuredItem} featured learnMoreLabel={learnMoreLabel} />
+          {items.map((item) => (
+            <RelatedNewsShowcaseCard
+              key={item.slug || item.title}
+              item={item}
+              learnMoreLabel={learnMoreLabel}
+            />
+          ))}
         </motion.div>
       </div>
     );
   }
+
+  const [featuredItem, ...secondaryItems] = items;
 
   return (
     <div className="grid gap-4">
