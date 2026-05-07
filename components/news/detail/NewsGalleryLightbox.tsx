@@ -63,21 +63,28 @@ export default function NewsGalleryLightbox({ images, openIndex, onClose, onNavi
     <dialog
       ref={dialogRef}
       className="fixed inset-0 m-0 h-full w-full max-h-none max-w-none bg-transparent p-0 backdrop:bg-black/85"
-      onClick={(e) => {
-        if (e.target === dialogRef.current) onClose();
-      }}
     >
+      {/* Full-screen click-catcher: any click outside the image / credit / nav buttons closes. */}
+      <button
+        type="button"
+        aria-label="Fermer"
+        onClick={onClose}
+        className="absolute inset-0 z-0 h-full w-full cursor-zoom-out bg-transparent"
+      />
       <AnimatePresence mode="wait">
         {isOpen && current && (
           <motion.div
             key={openIndex}
-            initial={{ opacity: 0, scale: 0.96 }}
+            initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.96 }}
-            transition={{ duration: 0.22, ease: "easeOut" }}
-            className="pointer-events-none flex h-full w-full flex-col items-center justify-center gap-3 px-16"
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.12, ease: "easeOut" }}
+            className="pointer-events-none relative z-10 flex h-full w-full flex-col items-center justify-center gap-3 px-16"
           >
-            <div className="pointer-events-auto relative max-h-[80vh] w-full max-w-[1200px]">
+            <div
+              className="pointer-events-auto relative max-h-[80vh] w-full max-w-[1200px]"
+              onClick={(e) => e.stopPropagation()}
+            >
               <div className="relative aspect-[3/2] w-full overflow-hidden">
                 <SafeNewsImage
                   src={current.src}
@@ -89,7 +96,10 @@ export default function NewsGalleryLightbox({ images, openIndex, onClose, onNavi
               </div>
             </div>
             {current.credit ? (
-              <p className="pointer-events-auto m-0 text-center text-[12px] italic text-white/40">
+              <p
+                className="pointer-events-auto m-0 text-center text-[12px] italic text-white/60"
+                onClick={(e) => e.stopPropagation()}
+              >
                 {current.credit}
               </p>
             ) : null}
@@ -101,7 +111,7 @@ export default function NewsGalleryLightbox({ images, openIndex, onClose, onNavi
       <button
         onClick={onClose}
         aria-label="Fermer"
-        className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+        className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
       >
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
           <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -113,7 +123,7 @@ export default function NewsGalleryLightbox({ images, openIndex, onClose, onNavi
         <button
           onClick={prev}
           aria-label="Image précédente"
-          className="absolute left-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+          className="absolute left-2 top-1/2 z-20 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
         >
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
             <path d="M13 4l-7 6 7 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -126,7 +136,7 @@ export default function NewsGalleryLightbox({ images, openIndex, onClose, onNavi
         <button
           onClick={next}
           aria-label="Image suivante"
-          className="absolute right-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+          className="absolute right-2 top-1/2 z-20 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
         >
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
             <path d="M7 4l7 6-7 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

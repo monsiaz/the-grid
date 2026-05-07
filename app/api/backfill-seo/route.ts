@@ -143,6 +143,169 @@ export async function POST(req: Request) {
     }
   }
 
+  // ─── News collection — per-doc per-locale ─────────────────────────────
+  log.push(`\n• news (per article)`);
+  const allNews = await payload
+    .find({ collection: "news", limit: 1000, depth: 0, locale: "all" as never })
+    .catch(() => ({ docs: [] as unknown[] }));
+  for (const doc of allNews.docs as Array<Record<string, unknown>>) {
+    const id = doc.id as number | string;
+    const slug = (doc.slug as string) ?? `#${id}`;
+    for (const locale of LOCALES) {
+      const localized = await payload
+        .findByID({
+          collection: "news",
+          id,
+          locale: locale as never,
+          fallbackLocale: false,
+          depth: 0,
+        })
+        .catch(() => null);
+      if (!localized) continue;
+      const seo =
+        ((localized as { seo?: Record<string, unknown> }).seo ?? {}) as {
+          metaTitle?: string;
+          metaDescription?: string;
+          keywords?: string;
+          ogImage?: string;
+        };
+      const titleVal = (localized as { title?: string }).title ?? "";
+      if (!titleVal.trim()) continue;
+      const excerpt = (localized as { excerpt?: string }).excerpt;
+      const intro = (localized as { introParagraphs?: string }).introParagraphs;
+      let descFallback = "";
+      if (excerpt && excerpt.trim()) {
+        descFallback = excerpt.trim();
+      } else if (intro) {
+        const first = intro.split("\n").map((s) => s.trim()).find(Boolean) || "";
+        descFallback = first.length > 180 ? `${first.slice(0, 177).trimEnd()}…` : first;
+      }
+      const kw = messagesByLocale[locale]?.meta?.keywords;
+      const keywordsFallback = typeof kw === "string" ? kw : "";
+
+      const next: Record<string, unknown> = { ...seo };
+      const writes: string[] = [];
+      if ((force || isEmpty(seo.metaTitle)) && titleVal) {
+        next.metaTitle = titleVal;
+        writes.push("title");
+      }
+      if ((force || isEmpty(seo.metaDescription)) && descFallback) {
+        next.metaDescription = descFallback;
+        writes.push("desc");
+      }
+      if ((force || isEmpty(seo.keywords)) && keywordsFallback) {
+        next.keywords = keywordsFallback;
+        writes.push("keywords");
+      }
+      if (writes.length === 0) {
+        skipped += 1;
+        continue;
+      }
+      if (dryRun) {
+        log.push(`  [${locale}] ${slug}: DRY ${writes.join(", ")}`);
+        written += 1;
+        continue;
+      }
+      try {
+        await payload.update({
+          collection: "news",
+          id,
+          locale: locale as never,
+          data: { seo: next } as never,
+          depth: 0,
+          overrideAccess: true,
+          context: { fromAutoTranslate: true } as never,
+        });
+        log.push(`  [${locale}] ${slug}: ✓ ${writes.join(", ")}`);
+        written += 1;
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        log.push(`  [${locale}] ${slug}: ✗ ${msg.slice(0, 100)}`);
+      }
+    }
+  }
+
+  // ─── Drivers collection — per-doc per-locale ──────────────────────────
+  log.push(`\n• drivers (per profile)`);
+  const allDrivers = await payload
+    .find({ collection: "drivers", limit: 200, depth: 0, locale: "all" as never })
+    .catch(() => ({ docs: [] as unknown[] }));
+  for (const doc of allDrivers.docs as Array<Record<string, unknown>>) {
+    const id = doc.id as number | string;
+    const slug = (doc.slug as string) ?? `#${id}`;
+    for (const locale of LOCALES) {
+      const localized = await payload
+        .findByID({
+          collection: "drivers",
+          id,
+          locale: locale as never,
+          fallbackLocale: false,
+          depth: 0,
+        })
+        .catch(() => null);
+      if (!localized) continue;
+      const seo =
+        ((localized as { seo?: Record<string, unknown> }).seo ?? {}) as {
+          metaTitle?: string;
+          metaDescription?: string;
+          keywords?: string;
+          ogImage?: string;
+        };
+      const driverName = (localized as { name?: string }).name ?? "";
+      const role = (localized as { role?: string }).role ?? "";
+      if (!driverName.trim()) continue;
+      const meta = messagesByLocale[locale]?.meta as Record<string, unknown> | undefined;
+      const driversNs = meta?.drivers as { detailTitle?: string; detailDescription?: string } | undefined;
+      const titleTpl = driversNs?.detailTitle ?? "{name}";
+      const descTpl = driversNs?.detailDescription ?? "{name}";
+      const titleFallback = titleTpl.replace("{name}", driverName).replace("{role}", role);
+      const descFallback = role
+        ? descTpl.replace("{name}", driverName).replace("{role}", role)
+        : "";
+      const kw = (meta?.keywords as string | undefined) ?? "";
+
+      const next: Record<string, unknown> = { ...seo };
+      const writes: string[] = [];
+      if ((force || isEmpty(seo.metaTitle)) && titleFallback) {
+        next.metaTitle = titleFallback;
+        writes.push("title");
+      }
+      if ((force || isEmpty(seo.metaDescription)) && descFallback) {
+        next.metaDescription = descFallback;
+        writes.push("desc");
+      }
+      if ((force || isEmpty(seo.keywords)) && kw) {
+        next.keywords = kw;
+        writes.push("keywords");
+      }
+      if (writes.length === 0) {
+        skipped += 1;
+        continue;
+      }
+      if (dryRun) {
+        log.push(`  [${locale}] ${slug}: DRY ${writes.join(", ")}`);
+        written += 1;
+        continue;
+      }
+      try {
+        await payload.update({
+          collection: "drivers",
+          id,
+          locale: locale as never,
+          data: { seo: next } as never,
+          depth: 0,
+          overrideAccess: true,
+          context: { fromAutoTranslate: true } as never,
+        });
+        log.push(`  [${locale}] ${slug}: ✓ ${writes.join(", ")}`);
+        written += 1;
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        log.push(`  [${locale}] ${slug}: ✗ ${msg.slice(0, 100)}`);
+      }
+    }
+  }
+
   return NextResponse.json({
     ok: true,
     written,
