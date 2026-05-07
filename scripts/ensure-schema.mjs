@@ -622,6 +622,7 @@ const STATEMENTS = [
   // `lockedLocales` (Payload select hasMany, non-localized) lets editors mark a locale
   // as "do not auto-retranslate". Stored in a child table per Payload conventions.
   `ALTER TABLE "news" ADD COLUMN IF NOT EXISTS "published_at" timestamp(3) with time zone;`,
+  `ALTER TABLE "news" ADD COLUMN IF NOT EXISTS "display_date" timestamp(3) with time zone;`,
   `DO $$ BEGIN
      CREATE TYPE "enum_news_locked_locales" AS ENUM ('fr','es','de','it','nl','zh');
    EXCEPTION WHEN duplicate_object THEN NULL; END $$;`,

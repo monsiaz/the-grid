@@ -235,16 +235,19 @@ export const StatsBlock: Block = {
     {
       name: "heading",
       type: "text",
+      label: "Titre du bloc",
       localized: true,
       admin: {
-        description: "Titre optionnel au-dessus des chiffres (ex. 'EN QUELQUES CHIFFRES').",
+        placeholder: "EN QUELQUES CHIFFRES",
+        description: "Optionnel. Affiché au-dessus des cartes.",
       },
     },
     {
       name: "columns",
       type: "select",
+      label: "Nombre de cartes par ligne",
       required: true,
-      defaultValue: "4",
+      defaultValue: "3",
       options: [
         { label: "2 cartes", value: "2" },
         { label: "3 cartes", value: "3" },
@@ -257,31 +260,40 @@ export const StatsBlock: Block = {
     {
       name: "items",
       type: "array",
+      label: "Cartes",
       required: true,
       minRows: 2,
       maxRows: 4,
-      labels: { singular: "Chiffre", plural: "Chiffres" },
+      labels: { singular: "Carte", plural: "Cartes" },
+      defaultValue: [
+        { value: "", label: "" },
+        { value: "", label: "" },
+        { value: "", label: "" },
+      ],
       admin: {
         description:
-          "Entre 2 et 4 cartes chiffres clés (grand nombre rouge + libellé blanc, comme sur la fiche pilote).",
+          "Une carte = un chiffre clé (entre 2 et 4 au total). Le grand nombre est en rouge, le libellé en blanc en-dessous.",
       },
       fields: [
         {
           name: "value",
           type: "text",
+          label: "Chiffre",
           required: true,
           admin: {
-            description:
-              "Le chiffre ou l'indicateur affiché en grand rouge. Conservé tel quel — formatez vous-même (ex. '03', '51', '2026', '1er').",
+            placeholder: "03",
+            description: "Le grand nombre affiché. Format libre (ex: 03, 51, 1er, 2026).",
           },
         },
         {
           name: "label",
           type: "text",
+          label: "Libellé",
           required: true,
           localized: true,
           admin: {
-            description: "Libellé sous le chiffre (ex. 'Career points', 'Podiums').",
+            placeholder: "Career points",
+            description: "Texte court affiché sous le chiffre.",
           },
         },
       ],

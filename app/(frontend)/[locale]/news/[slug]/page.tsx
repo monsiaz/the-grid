@@ -17,6 +17,16 @@ type NewsDetailRouteProps = {
 
 const NEWS_PROBE_FIELDS = ["title", "introParagraphs", "bodyParagraphs", "excerpt"];
 
+function formatNewsDate(iso: string | null, locale: Locale): string {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  // Locale-aware: e.g. "FEB 17, 2026" (en) / "17 FÉVR. 2026" (fr).
+  return d
+    .toLocaleDateString(locale, { day: "2-digit", month: "short", year: "numeric" })
+    .toUpperCase();
+}
+
 export async function generateMetadata({ params }: NewsDetailRouteProps): Promise<Metadata> {
   const { slug, locale } = await params;
   const payload = await getPayloadClient();
@@ -121,7 +131,12 @@ export default async function NewsDetailRoute({ params }: NewsDetailRouteProps) 
   const detail = {
     slug: newsDoc.slug,
     title: newsDoc.title,
-    date: newsDoc.date || "",
+    date: formatNewsDate(
+      (newsDoc as { displayDate?: string | null }).displayDate ??
+        (newsDoc as { publishedAt?: string | null }).publishedAt ??
+        null,
+      locale,
+    ),
     heroImage: newsDoc.heroImage || newsDoc.listImage,
     heroImageFocalPoint: newsDoc.heroImageFocalPoint || newsDoc.listImageFocalPoint || null,
     heroImageCredit: (newsDoc as { heroImageCredit?: string | null }).heroImageCredit || null,

@@ -12,7 +12,6 @@ import { locales as ALL_LOCALES, defaultLocale } from "@/i18n/config";
 
 const NEWS_LOCALIZED_TEXT_PATHS = [
   "title",
-  "date",
   "excerpt",
   "introParagraphs",
   "bodyParagraphs",
@@ -36,7 +35,7 @@ export const News: CollectionConfig = {
     group: "Contenu",
     useAsTitle: "title",
     description: "Gérez les articles publiés sur /news. Chaque article peut avoir des blocs de contenu riches (texte, images, stats, galeries).",
-    defaultColumns: ["title", "tag", "publishedAt", "date"],
+    defaultColumns: ["title", "tag", "publishedAt", "displayDate"],
     livePreview: {
       url: ({ data, locale }) => {
         const base = getSiteUrl();
@@ -121,7 +120,7 @@ export const News: CollectionConfig = {
         position: "sidebar",
         hidden: true,
         description:
-          "Legacy filter kept only as a fallback for articles not yet migrated to the new Tags system. Leave empty — use the Tag field above instead.",
+          "Ancien filtre, conservé uniquement comme filet de sécurité pour les articles pas encore migrés. Laisser vide — utiliser le champ Tag ci-dessus.",
       },
     },
     {
@@ -139,12 +138,16 @@ export const News: CollectionConfig = {
       },
     },
     {
-      name: "date",
-      type: "text",
-      localized: true,
+      name: "displayDate",
+      type: "date",
+      label: "Date d'affichage personnalisée",
       admin: {
+        date: {
+          pickerAppearance: "dayOnly",
+          displayFormat: "dd MMM yyyy",
+        },
         description:
-          "Override d'affichage (ex: FEB 17, 2026). Optionnel — si vide, le site formate automatiquement 'Date de publication' ci-dessus dans la langue active.",
+          "Optionnel — pour antédater un article ou utiliser une date différente de la date de publication. Si vide, on affiche 'Date de publication' formatée dans la langue active.",
       },
     },
     {
@@ -188,29 +191,38 @@ export const News: CollectionConfig = {
     {
       name: "content",
       type: "blocks",
-      label: "Content blocks",
+      label: "Contenu de l'article",
       blocks: newsContentBlocks,
       admin: {
         description:
-          "Contenu modulaire de l'article. Empilez librement des blocs (paragraphes, titres, images, citations, chiffres clés, galeries, CTA…) dans l'ordre que vous voulez — chaque bloc est déplaçable par glisser-déposer. Remplace les anciens champs 'Body paragraphs' et 'Gallery images' quand il contient au moins un bloc ; sinon l'article retombe automatiquement sur ces champs historiques.",
+          "Empilez les blocs dans l'ordre que vous voulez (paragraphes, titres, images, citations, chiffres clés, galeries, CTA). Glisser-déposer pour réordonner. C'est ici que vous écrivez le corps de l'article.",
       },
     },
     {
       name: "bodyParagraphs",
       type: "textarea",
+      label: "Paragraphes (ancien format)",
       localized: true,
       admin: {
+        condition: (data, siblingData) => {
+          const v = (siblingData as { bodyParagraphs?: string } | undefined)?.bodyParagraphs;
+          return typeof v === "string" && v.trim().length > 0;
+        },
         description:
-          "⚠️ Legacy — conservé comme filet de sécurité pour les anciens articles. Préférez 'Content blocks' ci-dessus. Utilisé uniquement si aucun bloc n'est défini. Un paragraphe par ligne.",
+          "Champ conservé pour les anciens articles. Pour un nouvel article, utilisez 'Contenu de l'article' ci-dessus à la place.",
       },
     },
     {
       name: "galleryImages",
       type: "array",
-      label: "Gallery Images (legacy)",
+      label: "Galerie (ancien format)",
       admin: {
+        condition: (data, siblingData) => {
+          const v = (siblingData as { galleryImages?: unknown[] } | undefined)?.galleryImages;
+          return Array.isArray(v) && v.length > 0;
+        },
         description:
-          "⚠️ Legacy — préférez un bloc 'Galerie d'images' dans 'Content blocks'. Utilisé uniquement si 'Content blocks' est vide.",
+          "Champ conservé pour les anciens articles. Pour un nouvel article, utilisez le bloc 'Galerie d'images' dans 'Contenu de l'article' ci-dessus.",
       },
       fields: [
         imageField({
