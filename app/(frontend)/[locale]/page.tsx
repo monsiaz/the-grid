@@ -107,7 +107,7 @@ export default async function Home({
   async function buildFallbackItems(exclude: Set<string>): Promise<HomepageNewsItem[]> {
     const latest = await payload.find({
       collection: "news",
-      sort: "-date",
+      sort: "-createdAt",
       limit: HOME_NEWS_TARGET + exclude.size,
       depth: 0,
       pagination: false,

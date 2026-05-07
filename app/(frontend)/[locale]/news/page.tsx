@@ -40,6 +40,7 @@ export type NewsCardData = {
   title: string;
   image: string;
   imageFocalPoint?: string | null;
+  imageCredit?: string | null;
   excerpt?: string | null;
   tag?: { label: string; accent?: boolean } | null;
   tagSlug?: string | null;
@@ -102,6 +103,7 @@ export default async function NewsPage({
       introParagraphs?: string | null;
       category?: string | null;
       tag?: TagDoc | string | number | null;
+      heroImageCredit?: string | null;
     };
 
     // Drop articles with no title in the requested locale.
@@ -130,6 +132,7 @@ export default async function NewsPage({
       title: raw.title,
       image: raw.listImage,
       imageFocalPoint: raw.listImageFocalPoint ?? null,
+      imageCredit: raw.heroImageCredit?.trim() || null,
       excerpt: excerpt || null,
       tagSlug: resolved?.slug || null,
       tag: resolved

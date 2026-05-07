@@ -68,7 +68,7 @@ export default function DriverDetailHero({ driver }: DriverDetailHeroProps) {
               {driver.role}
             </p>
             {logos.length > 0 ? (
-              <div className="mt-4 flex items-center gap-3 h-[32px]">
+              <div className="mt-4 flex items-center justify-start gap-2 h-[32px]">
                 {logos.map((src, i) => (
                   <TeamLogo key={`${driver.slug}-hero-logo-${i}`} src={src} variant="hero" />
                 ))}

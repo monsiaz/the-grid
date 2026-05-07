@@ -94,6 +94,7 @@ export default function NewsList({ initialFilter, tags, cards }: NewsListProps) 
                 title={card.title}
                 image={card.image}
                 imageFocalPoint={card.imageFocalPoint}
+                imageCredit={card.imageCredit}
                 excerpt={card.excerpt}
                 tag={card.tag}
                 cardClassName="h-[380px] w-full"

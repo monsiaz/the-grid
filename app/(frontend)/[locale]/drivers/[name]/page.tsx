@@ -145,6 +145,16 @@ export default async function DriverDetailRoutePage({ params }: DriverDetailRout
       ((driverDoc as { teamLogo?: string }).teamLogo?.trim() ?? "")
         ? (driverDoc as { teamLogo?: string }).teamLogo ?? null
         : null,
+    teamLogos: Array.isArray((driverDoc as { teamLogos?: unknown }).teamLogos)
+      ? ((driverDoc as { teamLogos?: unknown[] }).teamLogos as unknown[])
+          .filter(
+            (entry): entry is { logo: string } =>
+              !!entry &&
+              typeof entry === "object" &&
+              typeof (entry as Record<string, unknown>).logo === "string" &&
+              Boolean((entry as Record<string, unknown>).logo),
+          )
+      : null,
   };
 
   /**
@@ -202,41 +212,10 @@ export default async function DriverDetailRoutePage({ params }: DriverDetailRout
 
   const curatedNews = linkedNews.length > 0 ? linkedNews : legacyNews;
 
-  const fallbackNewsDocs =
-    curatedNews.length >= 3
-      ? []
-      : (
-          await payload.find({
-            collection: "news",
-            sort: "-date",
-            limit: 6,
-            locale,
-            depth: 0,
-          })
-        ).docs;
-
-  const fallbackNews: LinkedNews[] = fallbackNewsDocs
-    .map((item): LinkedNews | null => {
-      if (!item || typeof item !== "object") return null;
-      const doc = item as {
-        slug?: unknown;
-        title?: unknown;
-        listImage?: unknown;
-        listImageFocalPoint?: unknown;
-      };
-      const slug = typeof doc.slug === "string" ? doc.slug.trim() : "";
-      const title = typeof doc.title === "string" ? doc.title.trim() : "";
-      const image = typeof doc.listImage === "string" ? doc.listImage.trim() : "";
-      if (!slug || !title || !image) return null;
-      const imageFocalPoint = typeof doc.listImageFocalPoint === "string" ? doc.listImageFocalPoint : null;
-      return { slug, title, image, imageFocalPoint };
-    })
-    .filter((n): n is LinkedNews => n !== null);
-
   const relatedNews: LinkedNews[] = [];
   const seenNewsKeys = new Set<string>();
 
-  for (const item of [...curatedNews, ...fallbackNews]) {
+  for (const item of curatedNews) {
     const key = item.slug?.trim() || item.title.trim().toLowerCase();
     if (!key || seenNewsKeys.has(key)) continue;
     seenNewsKeys.add(key);

@@ -44,7 +44,7 @@ export default async function DriverCard({ driver, compact = false }: DriverCard
               {driver.name}
             </h2>
             <p className="m-0 mt-1.5 text-white/60 uppercase line-clamp-2" style={{ fontFamily: "var(--font-poppins), sans-serif", fontSize: "clamp(10px, 0.9vw, 12px)", letterSpacing: "0.15em", lineHeight: 1.4, minHeight: "2.8em" }}>{driver.role}</p>
-            <div className="mt-4 flex items-center gap-3 h-[24px]">
+            <div className="mt-4 flex items-center justify-start gap-2 h-[24px]">
               {logos.map((src, i) => (
                 <TeamLogo key={`${driver.slug}-logo-${i}`} src={src} variant="card" />
               ))}

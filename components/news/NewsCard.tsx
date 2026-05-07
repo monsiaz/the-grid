@@ -35,6 +35,8 @@ type NewsCardProps = {
   sizes?: string;
   imageClassName?: string;
   imageFocalPoint?: string | null;
+  /** Photo credit shown as a hover overlay on the image. */
+  imageCredit?: string | null;
   /** Controls hover effect: zoom (default), lift (translateY), flat (none) */
   cardHoverStyle?: "zoom" | "lift" | "flat";
 };
@@ -63,6 +65,7 @@ export default function NewsCard({
   sizes = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 320px",
   imageClassName,
   imageFocalPoint,
+  imageCredit,
   cardHoverStyle = "zoom",
 }: NewsCardProps) {
   const t = useTranslations("news.card");
@@ -109,6 +112,17 @@ export default function NewsCard({
         <div className="image-overlay-card pointer-events-none" />
         {showTag ? (
           <div className="pointer-events-none absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-black/60 to-transparent" />
+        ) : null}
+
+        {imageCredit ? (
+          <div
+            className="pointer-events-none absolute inset-x-0 top-0 flex justify-end px-4 pt-3 pb-6 bg-gradient-to-b from-black/70 to-transparent opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100"
+            aria-hidden
+          >
+            <span className="text-[11px] italic text-white/85 drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">
+              {imageCredit}
+            </span>
+          </div>
         ) : null}
 
         {showTag && tag ? (

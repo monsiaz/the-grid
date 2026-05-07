@@ -51,7 +51,7 @@ export default function TeamLogo({ src, variant = "card", className }: TeamLogoP
   return (
     <span
       className={`inline-flex shrink-0 items-center justify-start ${className ?? ""}`}
-      style={{ width: preset.slotWidth, height: preset.slotHeight }}
+      style={{ width: size.width, height: preset.slotHeight }}
       aria-hidden
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
