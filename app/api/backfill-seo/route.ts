@@ -43,6 +43,7 @@ export async function POST(req: Request) {
 
   const dryRun = url.searchParams.get("dry") === "1";
   const force = url.searchParams.get("force") === "1";
+  const scope = url.searchParams.get("scope") || "all";
 
   const payload = await getPayloadClient();
   const messagesByLocale: Record<string, Messages> = {};
@@ -54,7 +55,9 @@ export async function POST(req: Request) {
   let written = 0;
   let skipped = 0;
 
-  for (const [slug, namespace] of Object.entries(GLOBAL_TO_NAMESPACE)) {
+  if (scope !== "all" && scope !== "globals") {
+    log.push("(skipping globals)");
+  } else for (const [slug, namespace] of Object.entries(GLOBAL_TO_NAMESPACE)) {
     log.push(`\n• ${slug} (${namespace})`);
     for (const locale of LOCALES) {
       const current = await payload
@@ -144,7 +147,9 @@ export async function POST(req: Request) {
   }
 
   // ─── News collection — per-doc per-locale ─────────────────────────────
-  log.push(`\n• news (per article)`);
+  if (scope !== "all" && scope !== "news") {
+    log.push("\n(skipping news)");
+  } else { log.push(`\n• news (per article)`);
   const allNews = await payload
     .find({ collection: "news", limit: 1000, depth: 0, locale: "all" as never })
     .catch(() => ({ docs: [] as unknown[] }));
@@ -225,8 +230,12 @@ export async function POST(req: Request) {
     }
   }
 
+  } // end news scope block
+
   // ─── Drivers collection — per-doc per-locale ──────────────────────────
-  log.push(`\n• drivers (per profile)`);
+  if (scope !== "all" && scope !== "drivers") {
+    log.push("\n(skipping drivers)");
+  } else { log.push(`\n• drivers (per profile)`);
   const allDrivers = await payload
     .find({ collection: "drivers", limit: 200, depth: 0, locale: "all" as never })
     .catch(() => ({ docs: [] as unknown[] }));
@@ -306,8 +315,11 @@ export async function POST(req: Request) {
     }
   }
 
+  } // end drivers scope block
+
   return NextResponse.json({
     ok: true,
+    scope,
     written,
     skipped,
     dryRun,
