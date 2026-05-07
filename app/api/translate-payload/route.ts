@@ -307,7 +307,14 @@ async function translateHandler(request: Request) {
           sort: "id",
         });
     for (const sourceDoc of all.docs as AnyRecord[]) {
+      const lockedLocales = Array.isArray((sourceDoc as { lockedLocales?: unknown }).lockedLocales)
+        ? ((sourceDoc as { lockedLocales: unknown[] }).lockedLocales.filter((v) => typeof v === "string") as string[])
+        : [];
       for (const [locale, label] of locales) {
+        if (lockedLocales.includes(locale)) {
+          log.push(`  ${c.slug}/${sourceDoc.id} ${locale}: SKIPPED (locked — manual edits preserved)`);
+          continue;
+        }
         const existing = await payload
           .findByID({
             collection: c.slug as never,

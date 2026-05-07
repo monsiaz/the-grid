@@ -612,6 +612,26 @@ const STATEMENTS = [
   `ALTER TABLE "drivers_locales" ADD COLUMN IF NOT EXISTS "seo_meta_title" varchar;`,
   `ALTER TABLE "drivers_locales" ADD COLUMN IF NOT EXISTS "seo_meta_description" varchar;`,
   `ALTER TABLE "drivers_locales" ADD COLUMN IF NOT EXISTS "seo_keywords" varchar;`,
+
+  // ────────────────── News: publishedAt + lockedLocales (2026-05 migration) ─────────
+  //
+  // `publishedAt` (real timestamp, replaces the legacy localized text `date` for sorting
+  // and admin date-picker UX). The legacy `date` column stays — it remains an optional
+  // display-format override per locale.
+  //
+  // `lockedLocales` (Payload select hasMany, non-localized) lets editors mark a locale
+  // as "do not auto-retranslate". Stored in a child table per Payload conventions.
+  `ALTER TABLE "news" ADD COLUMN IF NOT EXISTS "published_at" timestamp(3) with time zone;`,
+  `DO $$ BEGIN
+     CREATE TYPE "enum_news_locked_locales" AS ENUM ('fr','es','de','it','nl','zh');
+   EXCEPTION WHEN duplicate_object THEN NULL; END $$;`,
+  `CREATE TABLE IF NOT EXISTS "news_locked_locales" (
+     "order" integer NOT NULL,
+     "parent_id" integer NOT NULL REFERENCES "news"("id") ON DELETE CASCADE,
+     "value" "enum_news_locked_locales"
+   );`,
+  `CREATE INDEX IF NOT EXISTS "news_locked_locales_parent_idx" ON "news_locked_locales" ("parent_id");`,
+  `CREATE INDEX IF NOT EXISTS "news_locked_locales_order_idx" ON "news_locked_locales" ("order");`,
 ];
 
 /** Neon/serverless Postgres often returns transient errors during Vercel build (cold compute, OOM, connection limits). */

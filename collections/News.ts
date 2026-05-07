@@ -8,6 +8,7 @@ import { hasLocalizedTextChange } from "@/lib/localizedChange";
 import { revalidateNewsDetail } from "@/lib/revalidate";
 import { newsContentBlocks } from "@/blocks/newsBlocks";
 import { authenticated, publicRead } from "@/lib/payloadAccess";
+import { locales as ALL_LOCALES, defaultLocale } from "@/i18n/config";
 
 const NEWS_LOCALIZED_TEXT_PATHS = [
   "title",
@@ -35,7 +36,7 @@ export const News: CollectionConfig = {
     group: "Contenu",
     useAsTitle: "title",
     description: "Gérez les articles publiés sur /news. Chaque article peut avoir des blocs de contenu riches (texte, images, stats, galeries).",
-    defaultColumns: ["title", "tag", "date"],
+    defaultColumns: ["title", "tag", "publishedAt", "date"],
     livePreview: {
       url: ({ data, locale }) => {
         const base = getSiteUrl();
@@ -121,11 +122,26 @@ export const News: CollectionConfig = {
       },
     },
     {
+      name: "publishedAt",
+      type: "date",
+      defaultValue: () => new Date().toISOString(),
+      admin: {
+        position: "sidebar",
+        date: {
+          pickerAppearance: "dayAndTime",
+          displayFormat: "dd MMM yyyy HH:mm",
+        },
+        description:
+          "Date et heure de publication. Utilisée pour le tri (plus récent en premier) et l'affichage par défaut sur le site. Pré-remplie à 'maintenant'.",
+      },
+    },
+    {
       name: "date",
       type: "text",
       localized: true,
       admin: {
-        description: "Display date (e.g. FEB 17, 2026)",
+        description:
+          "Override d'affichage (ex: FEB 17, 2026). Optionnel — si vide, le site formate automatiquement 'Date de publication' ci-dessus dans la langue active.",
       },
     },
     {
@@ -149,9 +165,12 @@ export const News: CollectionConfig = {
     {
       name: "heroImageCredit",
       type: "text",
+      label: "Crédit photo (image hero)",
       localized: true,
       admin: {
-        description: "Crédit photo de l'image hero (ex: ©Grégoire Truchet). Affiché discrètement sous l'image. Optionnel.",
+        description:
+          "Crédit photo affiché sous l'image hero (ex: ©Grégoire Truchet). Visible publiquement. Laissez vide si l'image n'a pas de crédit.",
+        placeholder: "©Nom du photographe",
       },
     },
     {
@@ -201,15 +220,57 @@ export const News: CollectionConfig = {
         {
           name: "credit",
           type: "text",
+          label: "Crédit photo",
           localized: true,
           admin: {
-            description: "Crédit photo affiché discrètement sous l'image (ex: ©Grégoire Truchet). Optionnel.",
+            description: "Crédit affiché sous l'image (ex: ©Grégoire Truchet). Optionnel.",
+            placeholder: "©Nom du photographe",
           },
         },
       ],
     },
+    {
+      name: "lockedLocales",
+      type: "select",
+      hasMany: true,
+      options: ALL_LOCALES.filter((l) => l !== defaultLocale).map((l) => ({ label: l.toUpperCase(), value: l })),
+      admin: {
+        position: "sidebar",
+        description:
+          "Langues verrouillées : la regénération automatique des traductions IA NE TOUCHERA PAS ces langues. Une langue est ajoutée automatiquement dès que vous éditez manuellement l'article dans cette langue. Décochez pour autoriser à nouveau l'écrasement par traduction IA.",
+      },
+    },
   ],
   hooks: {
+    beforeChange: [
+      ({
+        data,
+        originalDoc,
+        req,
+        operation,
+      }: {
+        data: Record<string, unknown>;
+        originalDoc?: Record<string, unknown>;
+        req: { locale?: string | null; payloadAPI?: string };
+        operation: "create" | "update";
+      }) => {
+        if (operation !== "update") return data;
+        const locale = req?.locale;
+        if (!locale || locale === defaultLocale) return data;
+        if (!hasLocalizedTextChange({ doc: data, previousDoc: originalDoc, paths: NEWS_LOCALIZED_TEXT_PATHS })) {
+          return data;
+        }
+        const current = Array.isArray((data as { lockedLocales?: unknown[] }).lockedLocales)
+          ? ((data as { lockedLocales?: unknown[] }).lockedLocales as string[])
+          : Array.isArray((originalDoc as { lockedLocales?: unknown[] } | undefined)?.lockedLocales)
+            ? ((originalDoc as { lockedLocales?: unknown[] }).lockedLocales as string[])
+            : [];
+        if (!current.includes(locale)) {
+          (data as Record<string, unknown>).lockedLocales = [...current, locale];
+        }
+        return data;
+      },
+    ],
     afterChange: [
       ({
         doc,
@@ -221,13 +282,17 @@ export const News: CollectionConfig = {
         req: { locale?: string | null };
       }) => {
         revalidateNewsDetail((doc as { slug?: string }).slug);
-        const locale = req?.locale || "en";
+        const editLocale = req?.locale || defaultLocale;
         const apiKey = process.env.OPENAI_API_KEY;
         if (!apiKey) return;
+        // Skip auto-translate when the edit is happening in a non-EN locale —
+        // EN is canonical, manual edits in FR/ES/etc. must NOT propagate back
+        // to other locales (would overwrite or corrupt EN with re-translated content).
+        if (editLocale !== defaultLocale) return;
         if (!hasLocalizedTextChange({ doc, previousDoc, paths: NEWS_LOCALIZED_TEXT_PATHS })) return;
         const secret = process.env.TRANSLATE_SECRET || process.env.PAYLOAD_SECRET || "";
         const base = getSiteUrl();
-        const url = `${base}/api/translate-payload?scope=collections&collection=news&id=${doc.id}&force=1&sourceLocale=${locale}&secret=${encodeURIComponent(secret)}`;
+        const url = `${base}/api/translate-payload?scope=collections&collection=news&id=${doc.id}&force=1&sourceLocale=${defaultLocale}&secret=${encodeURIComponent(secret)}`;
         after(() => fetch(url, { method: "POST" }).catch(() => {}));
       },
     ],
