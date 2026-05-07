@@ -44,6 +44,10 @@ export async function POST(req: Request) {
   const dryRun = url.searchParams.get("dry") === "1";
   const force = url.searchParams.get("force") === "1";
   const scope = url.searchParams.get("scope") || "all";
+  const onlyLocale = url.searchParams.get("locale");
+  const localesToRun: readonly string[] = onlyLocale
+    ? LOCALES.filter((l) => l === onlyLocale)
+    : LOCALES;
 
   const payload = await getPayloadClient();
   const messagesByLocale: Record<string, Messages> = {};
@@ -59,7 +63,7 @@ export async function POST(req: Request) {
     log.push("(skipping globals)");
   } else for (const [slug, namespace] of Object.entries(GLOBAL_TO_NAMESPACE)) {
     log.push(`\n• ${slug} (${namespace})`);
-    for (const locale of LOCALES) {
+    for (const locale of localesToRun) {
       const current = await payload
         .findGlobal({
           slug: slug as never,
@@ -156,7 +160,7 @@ export async function POST(req: Request) {
   for (const doc of allNews.docs as Array<Record<string, unknown>>) {
     const id = doc.id as number | string;
     const slug = (doc.slug as string) ?? `#${id}`;
-    for (const locale of LOCALES) {
+    for (const locale of localesToRun) {
       const localized = await payload
         .findByID({
           collection: "news",
@@ -242,7 +246,7 @@ export async function POST(req: Request) {
   for (const doc of allDrivers.docs as Array<Record<string, unknown>>) {
     const id = doc.id as number | string;
     const slug = (doc.slug as string) ?? `#${id}`;
-    for (const locale of LOCALES) {
+    for (const locale of localesToRun) {
       const localized = await payload
         .findByID({
           collection: "drivers",
