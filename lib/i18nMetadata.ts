@@ -29,6 +29,45 @@ type BuildMetadataOptions = {
   canonicalOverride?: string;
 };
 
+/**
+ * Shape of the editable `seo` group injected by `fields/seoField.ts` on
+ * every page-global and on the News + Drivers collections. All four fields
+ * are optional; consumers must treat empty strings as "no override".
+ */
+export type SeoGroup = {
+  metaTitle?: string | null;
+  metaDescription?: string | null;
+  keywords?: string | null;
+  ogImage?: string | null;
+};
+
+/**
+ * Pulls override values from a Payload `seo` group. Empty strings are
+ * normalized to `undefined` so callers can use `??` to fall through to the
+ * existing i18n / hardcoded defaults.
+ */
+export function pickSeoOverrides(seo: SeoGroup | null | undefined): {
+  titleOverride?: string;
+  descriptionOverride?: string;
+  keywordsExtra?: string[];
+  ogImage?: string;
+} {
+  const trim = (v: unknown): string | undefined => {
+    if (typeof v !== "string") return undefined;
+    const t = v.trim();
+    return t.length > 0 ? t : undefined;
+  };
+  const keywordsRaw = trim(seo?.keywords);
+  return {
+    titleOverride: trim(seo?.metaTitle),
+    descriptionOverride: trim(seo?.metaDescription),
+    keywordsExtra: keywordsRaw
+      ? keywordsRaw.split(",").map((s) => s.trim()).filter(Boolean)
+      : undefined,
+    ogImage: trim(seo?.ogImage),
+  };
+}
+
 function normalizePath(segment: string): string {
   if (!segment || segment === "/") return "/";
   const p = segment.startsWith("/") ? segment : `/${segment}`;

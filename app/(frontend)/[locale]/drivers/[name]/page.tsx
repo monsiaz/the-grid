@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import DriverDetailPage from "@/components/drivers/detail/DriverDetailPage";
 import LocaleAlternatesData from "@/components/LocaleAlternatesData";
-import { buildI18nMetadata } from "@/lib/i18nMetadata";
+import { buildI18nMetadata, pickSeoOverrides, type SeoGroup } from "@/lib/i18nMetadata";
 import { buildRouteAlternates } from "@/lib/routeAlternates";
 import { detectTranslatedLocales } from "@/lib/docTranslations";
 import { getPayloadClient } from "@/lib/payload";
@@ -81,17 +81,21 @@ export async function generateMetadata({ params }: DriverDetailRouteProps): Prom
     (driver?.name && role
       ? metaT("detailDescription", { name: driver.name, role })
       : undefined);
-  const ogImage = driver?.image || undefined;
+  const fallbackOgImage = driver?.image || undefined;
+  const seoOverrides = pickSeoOverrides((driver as { seo?: SeoGroup } | undefined)?.seo);
   return buildI18nMetadata({
     locale,
     pathSegment: `/drivers/${name}`,
     namespace: "drivers",
-    titleOverride: title,
-    descriptionOverride: description,
-    keywordsExtra: [driver?.name, role].filter(
-      (keyword): keyword is string => typeof keyword === "string" && keyword.length > 0,
-    ),
-    ogImage,
+    titleOverride: seoOverrides.titleOverride ?? title,
+    descriptionOverride: seoOverrides.descriptionOverride ?? description,
+    keywordsExtra: [
+      ...(seoOverrides.keywordsExtra ?? []),
+      ...[driver?.name, role].filter(
+        (keyword): keyword is string => typeof keyword === "string" && keyword.length > 0,
+      ),
+    ],
+    ogImage: seoOverrides.ogImage ?? fallbackOgImage,
     alternatesOverride: alternates.hreflang,
     canonicalOverride: alternates.canonical,
   });

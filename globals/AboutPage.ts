@@ -1,6 +1,7 @@
 import type { GlobalConfig } from "payload";
 import { focalPointField } from "@/fields/focalPointField";
 import { imageField } from "@/fields/imageField";
+import { seoField } from "@/fields/seoField";
 import { createSectionOrderField } from "@/fields/sectionOrderField";
 import { getSiteUrl } from "@/lib/siteUrl";
 import { revalidateAbout } from "@/lib/revalidate";
@@ -29,6 +30,7 @@ export const AboutPage: GlobalConfig = {
     },
   },
   fields: [
+    seoField(),
     createSectionOrderField("Page sections order", [
       { label: "Hero", value: "hero" },
       { label: "Core team", value: "coreTeam" },

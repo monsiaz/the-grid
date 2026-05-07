@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import NewsDetailPage from "@/components/news/detail/NewsDetailPage";
 import LocaleAlternatesData from "@/components/LocaleAlternatesData";
-import { buildI18nMetadata } from "@/lib/i18nMetadata";
+import { buildI18nMetadata, pickSeoOverrides, type SeoGroup } from "@/lib/i18nMetadata";
 import { buildRouteAlternates } from "@/lib/routeAlternates";
 import { detectTranslatedLocales } from "@/lib/docTranslations";
 import { getPayloadClient } from "@/lib/payload";
@@ -49,26 +49,31 @@ export async function generateMetadata({ params }: NewsDetailRouteProps): Promis
     fallbackListPath: "/news",
   });
 
-  const title = news?.title || undefined;
-  let description: string | undefined;
+  const seoOverrides = pickSeoOverrides((news as { seo?: SeoGroup } | undefined)?.seo);
+
+  const fallbackTitle = news?.title || undefined;
+  let fallbackDescription: string | undefined;
   const manualExcerpt = (news as { excerpt?: string | null } | undefined)?.excerpt ?? null;
   if (manualExcerpt && manualExcerpt.trim()) {
-    description = manualExcerpt.trim();
+    fallbackDescription = manualExcerpt.trim();
   } else if (news?.introParagraphs) {
     const first = news.introParagraphs.split("\n").map((s: string) => s.trim()).find(Boolean) || "";
-    description = first.length > 180 ? `${first.slice(0, 177).trimEnd()}…` : first;
+    fallbackDescription = first.length > 180 ? `${first.slice(0, 177).trimEnd()}…` : first;
   }
-  const ogImage = news?.heroImage || news?.listImage || undefined;
+  const fallbackOgImage = news?.heroImage || news?.listImage || undefined;
   return buildI18nMetadata({
     locale,
     pathSegment: `/news/${slug}`,
     namespace: "news",
-    titleOverride: title,
-    descriptionOverride: description,
-    keywordsExtra: [title].filter(
-      (keyword): keyword is string => typeof keyword === "string" && keyword.length > 0,
-    ),
-    ogImage,
+    titleOverride: seoOverrides.titleOverride ?? fallbackTitle,
+    descriptionOverride: seoOverrides.descriptionOverride ?? fallbackDescription,
+    keywordsExtra: [
+      ...(seoOverrides.keywordsExtra ?? []),
+      ...[fallbackTitle].filter(
+        (keyword): keyword is string => typeof keyword === "string" && keyword.length > 0,
+      ),
+    ],
+    ogImage: seoOverrides.ogImage ?? fallbackOgImage,
     alternatesOverride: alternates.hreflang,
     canonicalOverride: alternates.canonical,
   });

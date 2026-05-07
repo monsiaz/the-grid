@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/config";
-import { buildI18nMetadata } from "@/lib/i18nMetadata";
+import { buildI18nMetadata, pickSeoOverrides, type SeoGroup } from "@/lib/i18nMetadata";
 import { buildRouteAlternates } from "@/lib/routeAlternates";
 import LocaleAlternatesData from "@/components/LocaleAlternatesData";
 import ContactHero from "@/components/contact/ContactHero";
@@ -17,12 +17,18 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const alternates = buildRouteAlternates({ currentLocale: locale, pathSegment: "/contact" });
+  const payload = await getPayloadClient();
+  const contactPage = await payload
+    .findGlobal({ slug: "contact-page", locale })
+    .catch(() => null);
+  const seo = pickSeoOverrides((contactPage as { seo?: SeoGroup } | null)?.seo);
   return buildI18nMetadata({
     locale,
     pathSegment: "/contact",
     namespace: "contact",
     alternatesOverride: alternates.hreflang,
     canonicalOverride: alternates.canonical,
+    ...seo,
   });
 }
 

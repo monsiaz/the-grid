@@ -1,6 +1,7 @@
 import type { GlobalConfig } from "payload";
 import { focalPointField } from "@/fields/focalPointField";
 import { imageField } from "@/fields/imageField";
+import { seoField } from "@/fields/seoField";
 import { createSectionOrderField } from "@/fields/sectionOrderField";
 import { getSiteUrl } from "@/lib/siteUrl";
 import { revalidateServices } from "@/lib/revalidate";
@@ -35,6 +36,7 @@ export const ServicesPage: GlobalConfig = {
     },
   },
   fields: [
+    seoField(),
     createSectionOrderField("Page sections order", [
       { label: "Hero", value: "hero" },
       { label: "Commercial value grid", value: "value" },

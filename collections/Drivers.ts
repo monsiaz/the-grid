@@ -3,6 +3,7 @@ import { after } from "next/server";
 import { focalPointField } from "@/fields/focalPointField";
 import { imageField } from "@/fields/imageField";
 import { logoField } from "@/fields/logoField";
+import { seoField } from "@/fields/seoField";
 import { getSiteUrl } from "@/lib/siteUrl";
 import { hasLocalizedTextChange } from "@/lib/localizedChange";
 import { revalidateDriverDetail } from "@/lib/revalidate";
@@ -63,6 +64,7 @@ export const Drivers: CollectionConfig = {
     delete: authenticated,
   },
   fields: [
+    seoField(),
     {
       type: "tabs",
       tabs: [

@@ -562,6 +562,56 @@ const STATEMENTS = [
    );`,
   `CREATE INDEX IF NOT EXISTS "homepage_rels_parent_idx" ON "homepage_rels" ("parent_id");`,
   `CREATE INDEX IF NOT EXISTS "homepage_rels_news_idx" ON "homepage_rels" ("news_id");`,
+
+  // ────────────────── SEO group: editable title + meta per page (2026-05) ──────────
+  //
+  // `fields/seoField.ts` adds a localized `seo` group (metaTitle, metaDescription,
+  // keywords + non-localized ogImage) to every page-global plus News + Drivers.
+  // Localized text fields land in `<table>_locales` as `seo_meta_title` /
+  // `seo_meta_description` / `seo_keywords`. The ogImage is a plain text URL
+  // stored on the parent table as `seo_og_image`.
+  //
+  // Without these columns the admin still renders, but every save attempt against
+  // a page-global throws "column does not exist" until Payload's push catches up
+  // — defensive pre-creation here keeps prod admin alive.
+
+  // Globals — non-localized ogImage column on parent table
+  `ALTER TABLE "homepage" ADD COLUMN IF NOT EXISTS "seo_og_image" varchar;`,
+  `ALTER TABLE "about_page" ADD COLUMN IF NOT EXISTS "seo_og_image" varchar;`,
+  `ALTER TABLE "services_page" ADD COLUMN IF NOT EXISTS "seo_og_image" varchar;`,
+  `ALTER TABLE "contact_page" ADD COLUMN IF NOT EXISTS "seo_og_image" varchar;`,
+  `ALTER TABLE "drivers_page" ADD COLUMN IF NOT EXISTS "seo_og_image" varchar;`,
+  `ALTER TABLE "news" ADD COLUMN IF NOT EXISTS "seo_og_image" varchar;`,
+  `ALTER TABLE "drivers" ADD COLUMN IF NOT EXISTS "seo_og_image" varchar;`,
+
+  // Globals — localized metaTitle/metaDescription/keywords in <table>_locales
+  `ALTER TABLE "homepage_locales" ADD COLUMN IF NOT EXISTS "seo_meta_title" varchar;`,
+  `ALTER TABLE "homepage_locales" ADD COLUMN IF NOT EXISTS "seo_meta_description" varchar;`,
+  `ALTER TABLE "homepage_locales" ADD COLUMN IF NOT EXISTS "seo_keywords" varchar;`,
+
+  `ALTER TABLE "about_page_locales" ADD COLUMN IF NOT EXISTS "seo_meta_title" varchar;`,
+  `ALTER TABLE "about_page_locales" ADD COLUMN IF NOT EXISTS "seo_meta_description" varchar;`,
+  `ALTER TABLE "about_page_locales" ADD COLUMN IF NOT EXISTS "seo_keywords" varchar;`,
+
+  `ALTER TABLE "services_page_locales" ADD COLUMN IF NOT EXISTS "seo_meta_title" varchar;`,
+  `ALTER TABLE "services_page_locales" ADD COLUMN IF NOT EXISTS "seo_meta_description" varchar;`,
+  `ALTER TABLE "services_page_locales" ADD COLUMN IF NOT EXISTS "seo_keywords" varchar;`,
+
+  `ALTER TABLE "contact_page_locales" ADD COLUMN IF NOT EXISTS "seo_meta_title" varchar;`,
+  `ALTER TABLE "contact_page_locales" ADD COLUMN IF NOT EXISTS "seo_meta_description" varchar;`,
+  `ALTER TABLE "contact_page_locales" ADD COLUMN IF NOT EXISTS "seo_keywords" varchar;`,
+
+  `ALTER TABLE "drivers_page_locales" ADD COLUMN IF NOT EXISTS "seo_meta_title" varchar;`,
+  `ALTER TABLE "drivers_page_locales" ADD COLUMN IF NOT EXISTS "seo_meta_description" varchar;`,
+  `ALTER TABLE "drivers_page_locales" ADD COLUMN IF NOT EXISTS "seo_keywords" varchar;`,
+
+  `ALTER TABLE "news_locales" ADD COLUMN IF NOT EXISTS "seo_meta_title" varchar;`,
+  `ALTER TABLE "news_locales" ADD COLUMN IF NOT EXISTS "seo_meta_description" varchar;`,
+  `ALTER TABLE "news_locales" ADD COLUMN IF NOT EXISTS "seo_keywords" varchar;`,
+
+  `ALTER TABLE "drivers_locales" ADD COLUMN IF NOT EXISTS "seo_meta_title" varchar;`,
+  `ALTER TABLE "drivers_locales" ADD COLUMN IF NOT EXISTS "seo_meta_description" varchar;`,
+  `ALTER TABLE "drivers_locales" ADD COLUMN IF NOT EXISTS "seo_keywords" varchar;`,
 ];
 
 /** Neon/serverless Postgres often returns transient errors during Vercel build (cold compute, OOM, connection limits). */

@@ -2,6 +2,7 @@ import type { CollectionConfig } from "payload";
 import { after } from "next/server";
 import { focalPointField } from "@/fields/focalPointField";
 import { imageField } from "@/fields/imageField";
+import { seoField } from "@/fields/seoField";
 import { getSiteUrl } from "@/lib/siteUrl";
 import { hasLocalizedTextChange } from "@/lib/localizedChange";
 import { revalidateNewsDetail } from "@/lib/revalidate";
@@ -64,6 +65,7 @@ export const News: CollectionConfig = {
     delete: authenticated,
   },
   fields: [
+    seoField(),
     {
       name: "title",
       type: "text",
